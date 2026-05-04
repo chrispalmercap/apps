@@ -18,12 +18,11 @@
   --accent2: #7eb8c8;
 
   --physical: #f97316;
-  --biological: #22c55e;
+  --financial: #10b981;
   --social: #a78bfa;
   --emotional: #f472b6;
   --spiritual: #facc15;
 
-  --sidebar-w: 220px;
   --radius: 16px;
 }
 
@@ -33,153 +32,115 @@ body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   overflow: hidden;
 }
 
 /* ─── SIDEBAR ─────────────────────────────────────────────── */
 .sidebar {
-  width: var(--sidebar-w);
-  min-height: 100vh;
+  width: 64px;
+  height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 28px 0;
+  align-items: center;
+  padding: 16px 0;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
 }
 
-.sidebar-logo {
-  padding: 0 20px 28px;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo-mark {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--accent);
-  letter-spacing: -0.5px;
-}
-
-.logo-sub {
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
+.sidebar-logo, .sidebar-section-label, .cat-badge { display: none; }
 
 .new-goal-btn {
-  margin: 18px 14px;
-  padding: 11px 14px;
+  width: 40px; height: 40px;
   background: var(--accent);
   color: #0d0f14;
   border: none;
-  border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   transition: opacity 0.2s, transform 0.15s;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  position: relative;
 }
 .new-goal-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-.new-goal-btn svg { width: 15px; height: 15px; }
-
-.sidebar-section-label {
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--muted);
-  padding: 10px 20px 6px;
-}
+.new-goal-btn svg { width: 20px; height: 20px; }
 
 .cat-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  border-radius: 0;
+  border-radius: 12px;
   transition: background 0.15s;
   position: relative;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--muted);
+  margin: 2px 0;
 }
-.cat-item:hover { background: var(--surface2); color: var(--text); }
-.cat-item.active { background: var(--surface2); color: var(--text); }
+.cat-item:hover { background: var(--surface2); }
+.cat-item.active { background: var(--surface2); }
 .cat-item.active::before {
   content: '';
   position: absolute;
-  left: 0; top: 0; bottom: 0;
+  left: -10px; top: 25%; height: 50%;
   width: 3px;
   border-radius: 0 2px 2px 0;
 }
-.cat-item[data-cat="all"].active::before { background: var(--accent); }
 .cat-item[data-cat="physical"].active::before { background: var(--physical); }
-.cat-item[data-cat="biological"].active::before { background: var(--biological); }
+.cat-item[data-cat="financial"].active::before { background: var(--financial); }
 .cat-item[data-cat="social"].active::before { background: var(--social); }
 .cat-item[data-cat="emotional"].active::before { background: var(--emotional); }
 .cat-item[data-cat="spiritual"].active::before { background: var(--spiritual); }
 
-.cat-icon {
-  width: 28px; height: 28px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-.cat-item[data-cat="all"] .cat-icon { background: rgba(200,169,126,0.15); }
-.cat-item[data-cat="physical"] .cat-icon { background: rgba(249,115,22,0.15); }
-.cat-item[data-cat="biological"] .cat-icon { background: rgba(34,197,94,0.15); }
-.cat-item[data-cat="social"] .cat-icon { background: rgba(167,139,250,0.15); }
-.cat-item[data-cat="emotional"] .cat-icon { background: rgba(244,114,182,0.15); }
-.cat-item[data-cat="spiritual"] .cat-icon { background: rgba(250,204,21,0.15); }
+.cat-icon { font-size: 20px; line-height: 1; }
 
-.cat-badge {
-  margin-left: auto;
+/* Tooltip */
+.sb-tip {
+  position: absolute;
+  left: 52px; top: 50%;
+  transform: translateY(-50%);
   background: var(--surface3);
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 600;
-  border-radius: 20px;
-  padding: 2px 7px;
-  min-width: 20px;
-  text-align: center;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 100;
+  border: 1px solid var(--border);
 }
+.cat-item:hover .sb-tip,
+.new-goal-btn:hover .sb-tip,
+.icon-btn:hover .sb-tip { opacity: 1; }
 
 .sidebar-bottom {
   margin-top: auto;
-  padding: 16px 14px 0;
+  padding-top: 12px;
   border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
 }
 
 .sidebar-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 9px 12px;
-  border-radius: 9px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 13px;
   color: var(--muted);
   transition: background 0.15s, color 0.15s;
   border: none;
   background: none;
-  width: 100%;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
+  position: relative;
 }
+.sidebar-nav-btn svg { width: 20px; height: 20px; }
 .sidebar-nav-btn:hover { background: var(--surface2); color: var(--text); }
 .sidebar-nav-btn.active { background: var(--surface2); color: var(--text); }
 
@@ -381,7 +342,7 @@ body {
   border-radius: 0 2px 2px 0;
 }
 .habit-card[data-cat="physical"]::before { background: var(--physical); }
-.habit-card[data-cat="biological"]::before { background: var(--biological); }
+.habit-card[data-cat="financial"]::before { background: var(--financial); }
 .habit-card[data-cat="social"]::before { background: var(--social); }
 .habit-card[data-cat="emotional"]::before { background: var(--emotional); }
 .habit-card[data-cat="spiritual"]::before { background: var(--spiritual); }
@@ -407,7 +368,7 @@ body {
 }
 
 .habit-card[data-cat="physical"] .complete-btn { border-color: rgba(249,115,22,0.4); }
-.habit-card[data-cat="biological"] .complete-btn { border-color: rgba(34,197,94,0.4); }
+.habit-card[data-cat="financial"] .complete-btn { border-color: rgba(16,185,129,0.4); }
 .habit-card[data-cat="social"] .complete-btn { border-color: rgba(167,139,250,0.4); }
 .habit-card[data-cat="emotional"] .complete-btn { border-color: rgba(244,114,182,0.4); }
 .habit-card[data-cat="spiritual"] .complete-btn { border-color: rgba(250,204,21,0.4); }
@@ -417,7 +378,7 @@ body {
   border-color: transparent;
 }
 .habit-card[data-cat="physical"].completed .complete-btn { background: var(--physical); }
-.habit-card[data-cat="biological"].completed .complete-btn { background: var(--biological); }
+.habit-card[data-cat="financial"].completed .complete-btn { background: var(--financial); }
 .habit-card[data-cat="social"].completed .complete-btn { background: var(--social); }
 .habit-card[data-cat="emotional"].completed .complete-btn { background: var(--emotional); }
 .habit-card[data-cat="spiritual"].completed .complete-btn { background: var(--spiritual); }
@@ -473,7 +434,7 @@ body {
 }
 .habit-dot.done { background: var(--accent); }
 .habit-card[data-cat="physical"] .habit-dot.done { background: var(--physical); }
-.habit-card[data-cat="biological"] .habit-dot.done { background: var(--biological); }
+.habit-card[data-cat="financial"] .habit-dot.done { background: var(--financial); }
 .habit-card[data-cat="social"] .habit-dot.done { background: var(--social); }
 .habit-card[data-cat="emotional"] .habit-dot.done { background: var(--emotional); }
 .habit-card[data-cat="spiritual"] .habit-dot.done { background: var(--spiritual); }
@@ -821,7 +782,7 @@ body {
 .cat-sel-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
 .cat-sel-btn.selected { color: var(--text); }
 .cat-sel-btn[data-cat="physical"].selected { border-color: var(--physical); background: rgba(249,115,22,0.1); }
-.cat-sel-btn[data-cat="biological"].selected { border-color: var(--biological); background: rgba(34,197,94,0.1); }
+.cat-sel-btn[data-cat="financial"].selected { border-color: var(--financial); background: rgba(16,185,129,0.1); }
 .cat-sel-btn[data-cat="social"].selected { border-color: var(--social); background: rgba(167,139,250,0.1); }
 .cat-sel-btn[data-cat="emotional"].selected { border-color: var(--emotional); background: rgba(244,114,182,0.1); }
 .cat-sel-btn[data-cat="spiritual"].selected { border-color: var(--spiritual); background: rgba(250,204,21,0.1); }
@@ -1094,12 +1055,12 @@ body {
   transition: border-color 0.15s;
 }
 .integration-chip:hover { border-color: rgba(255,255,255,0.15); }
-.integration-chip.connected { border-color: rgba(34,197,94,0.3); }
+.integration-chip.connected { border-color: rgba(16,185,129,0.3); }
 .int-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--surface3); }
-.integration-chip.connected .int-dot { background: var(--biological); }
+.integration-chip.connected .int-dot { background: var(--financial); }
 .int-name { color: var(--text); font-weight: 500; }
 .int-status { color: var(--muted); }
-.integration-chip.connected .int-status { color: var(--biological); }
+.integration-chip.connected .int-status { color: var(--financial); }
 
 /* ─── TOAST ─────────────────────────────────────────────── */
 .toast {
@@ -1202,9 +1163,197 @@ body {
 .tl-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 .tl-desc { font-size: 12px; color: var(--muted); }
 
+/* ─── CALENDAR ENHANCED ──────────────────────────────────── */
+.cal-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.cal-view-tabs {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+}
+.cal-tab {
+  padding: 7px 14px;
+  border: none;
+  background: none;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.cal-tab:hover { color: var(--text); }
+.cal-tab.active { background: var(--surface2); color: var(--text); }
+.cal-filters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cal-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 12px;
+}
+.cal-search-wrap svg { width: 14px; height: 14px; color: var(--muted); flex-shrink: 0; }
+.cal-search-input {
+  background: none; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--text); width: 150px;
+}
+.cal-search-input::placeholder { color: var(--muted); }
+.cal-goal-select {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 7px 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--text); cursor: pointer; outline: none;
+}
+.cal-period-nav {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+}
+.cal-period-label { font-size: 15px; font-weight: 600; flex: 1; text-align: center; }
+.cal-today-btn {
+  background: var(--surface3); border: none; border-radius: 8px;
+  padding: 6px 12px; font-family: 'DM Sans', sans-serif; font-size: 12px;
+  font-weight: 600; color: var(--accent); cursor: pointer;
+  transition: background 0.15s;
+}
+.cal-today-btn:hover { background: var(--surface2); }
+.cal-day.selected { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* Day detail */
+.cal-day-detail {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; margin-top: 16px;
+}
+.cal-detail-date {
+  font-family: 'Playfair Display', serif; font-size: 17px;
+  font-weight: 700; margin-bottom: 14px; color: var(--accent);
+}
+.cal-detail-section { margin-bottom: 12px; }
+.cal-detail-section-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--muted); margin-bottom: 7px;
+}
+.cal-detail-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px; margin-bottom: 4px;
+  font-size: 13px; background: var(--surface2);
+}
+.cal-detail-item.missed { opacity: 0.45; }
+.cal-detail-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cal-empty-day { font-size: 13px; color: var(--muted); text-align: center; padding: 14px 0; }
+
+/* Week view */
+.cal-week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
+.cal-week-col {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; cursor: pointer;
+}
+.cal-week-col.today { border-color: rgba(200,169,126,0.5); }
+.cal-week-col.selected { border-color: var(--accent); }
+.cal-week-head { padding: 10px 6px; text-align: center; border-bottom: 1px solid var(--border); }
+.cal-week-day-name { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.cal-week-day-num { font-size: 18px; font-weight: 700; margin-top: 2px; }
+.cal-week-col.today .cal-week-day-num { color: var(--accent); }
+.cal-week-habits { padding: 6px; display: flex; flex-direction: column; gap: 3px; min-height: 60px; }
+.cal-week-habit {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 6px; border-radius: 5px; font-size: 10px;
+  background: var(--surface2); overflow: hidden;
+}
+.cal-week-habit.missed { opacity: 0.35; }
+.cal-week-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.cal-week-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Day view */
+.cal-day-view-header {
+  text-align: center; padding: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 14px;
+}
+.cal-day-view-date { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--accent); line-height: 1; }
+.cal-day-view-name { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.cal-day-habit-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px;
+}
+.cal-day-habit-row.done { border-color: rgba(200,169,126,0.3); }
+.cal-day-habit-row.missed { opacity: 0.45; }
+.cal-day-habit-icon { font-size: 22px; }
+.cal-day-habit-info { flex: 1; }
+.cal-day-habit-name { font-size: 14px; font-weight: 500; }
+.cal-day-habit-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.cal-day-status { font-size: 20px; }
+
+/* Year view */
+.cal-year-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.cal-year-month-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+}
+.cal-year-month-name { font-size: 11px; font-weight: 600; margin-bottom: 7px; }
+.cal-year-mini-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.cal-year-day { aspect-ratio: 1; border-radius: 2px; background: var(--surface3); cursor: pointer; }
+.cal-year-day:hover { opacity: 0.8; }
+.cal-year-day.partial { background: rgba(200,169,126,0.35); }
+.cal-year-day.perfect { background: var(--accent); }
+.cal-year-day.today { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+/* Legend */
+.cal-legend { display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+.cal-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.cal-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+.cal-legend-dot.perfect { background: var(--accent); }
+.cal-legend-dot.partial { background: rgba(200,169,126,0.25); border: 1px solid rgba(200,169,126,0.4); }
+
+/* ─── CATEGORY VIEW ──────────────────────────────────────── */
+.cat-view-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.cat-view-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.cat-view-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.cat-view-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.cat-empty { text-align: center; padding: 60px 20px; }
+
+/* Topbar nav icon active state */
+.icon-btn.active { background: var(--surface2); border-color: rgba(255,255,255,0.14); }
+#sb-home.active::before { background: var(--accent); }
+.topbar-right .icon-btn .sb-tip {
+  left: 50%; top: 46px;
+  transform: translateX(-50%);
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .insights-row, .goal-health-row { grid-template-columns: 1fr; }
   .content-area { padding: 16px; }
@@ -1216,66 +1365,35 @@ body {
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">Flourish</div>
-    <div class="logo-sub">Life Habits</div>
+  <div class="cat-item active" id="sb-home" onclick="navHome(this)">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    <span class="sb-tip">Home</span>
   </div>
 
   <button class="new-goal-btn" onclick="openPanel('goal-panel')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-    New Goal
+    <span class="sb-tip">New Goal</span>
   </button>
 
-  <div class="sidebar-section-label">Categories</div>
-
-  <div class="cat-item active" data-cat="all" onclick="filterCat('all', this)">
-    <div class="cat-icon">🌟</div>
-    All Goals
-    <span class="cat-badge" id="badge-all">5</span>
-  </div>
   <div class="cat-item" data-cat="physical" onclick="filterCat('physical', this)">
     <div class="cat-icon">🏃</div>
-    Physical
-    <span class="cat-badge" id="badge-physical">2</span>
-  </div>
-  <div class="cat-item" data-cat="biological" onclick="filterCat('biological', this)">
-    <div class="cat-icon">🌿</div>
-    Biological
-    <span class="cat-badge" id="badge-biological">1</span>
-  </div>
-  <div class="cat-item" data-cat="social" onclick="filterCat('social', this)">
-    <div class="cat-icon">🤝</div>
-    Social
-    <span class="cat-badge" id="badge-social">1</span>
+    <span class="sb-tip">Physical</span>
   </div>
   <div class="cat-item" data-cat="emotional" onclick="filterCat('emotional', this)">
     <div class="cat-icon">💛</div>
-    Emotional
-    <span class="cat-badge" id="badge-emotional">1</span>
+    <span class="sb-tip">Emotional</span>
+  </div>
+  <div class="cat-item" data-cat="financial" onclick="filterCat('financial', this)">
+    <div class="cat-icon">💰</div>
+    <span class="sb-tip">Financial</span>
+  </div>
+  <div class="cat-item" data-cat="social" onclick="filterCat('social', this)">
+    <div class="cat-icon">👫</div>
+    <span class="sb-tip">Social</span>
   </div>
   <div class="cat-item" data-cat="spiritual" onclick="filterCat('spiritual', this)">
     <div class="cat-icon">✨</div>
-    Spiritual
-    <span class="cat-badge" id="badge-spiritual">0</span>
-  </div>
-
-  <div class="sidebar-bottom">
-    <button class="sidebar-nav-btn active" onclick="switchView('home', this)">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      Dashboard
-    </button>
-    <button class="sidebar-nav-btn" onclick="switchView('insights', this)">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-      Insights
-    </button>
-    <button class="sidebar-nav-btn" onclick="switchView('timeline', this)">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
-      Timeline
-    </button>
-    <button class="sidebar-nav-btn" onclick="switchView('calendar', this)">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      Calendar
-    </button>
+    <span class="sb-tip">Spiritual</span>
   </div>
 </aside>
 
@@ -1287,6 +1405,18 @@ body {
       <div class="topbar-date" id="today-date"></div>
     </div>
     <div class="topbar-right">
+      <div class="icon-btn topbar-nav" id="topbar-insights" onclick="switchTopbarView('insights', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span class="sb-tip">Insights</span>
+      </div>
+      <div class="icon-btn topbar-nav" id="topbar-timeline" onclick="switchTopbarView('timeline', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        <span class="sb-tip">Journey</span>
+      </div>
+      <div class="icon-btn topbar-nav" id="topbar-calendar" onclick="switchTopbarView('calendar', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span class="sb-tip">Calendar</span>
+      </div>
       <div class="icon-btn" onclick="openPanel('notif-panel')">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
         <div class="notif-dot"></div>
@@ -1313,7 +1443,7 @@ body {
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-label">Today's Done</div>
-          <div class="stat-value" id="stat-done" style="color: var(--biological);">0</div>
+          <div class="stat-value" id="stat-done" style="color: var(--financial);">0</div>
           <div class="stat-sub" id="stat-done-sub">of 5 goals</div>
         </div>
         <div class="stat-card">
@@ -1343,7 +1473,7 @@ body {
             <svg viewBox="0 0 36 36">
               <circle class="health-ring-track" cx="18" cy="18" r="15.9"/>
               <circle class="health-ring-fill" cx="18" cy="18" r="15.9"
-                stroke="var(--biological)"
+                stroke="var(--financial)"
                 stroke-dasharray="100"
                 stroke-dashoffset="27"
                 id="ring-completion"/>
@@ -1352,7 +1482,7 @@ body {
           </div>
           <div>
             <div class="health-info-label">Completion</div>
-            <div class="health-info-val" style="color: var(--biological);">Good</div>
+            <div class="health-info-val" style="color: var(--financial);">Good</div>
             <div class="health-info-sub">Above your avg</div>
           </div>
         </div>
@@ -1436,7 +1566,7 @@ body {
       <!-- Insights Teaser -->
       <div class="section-header">
         <div class="section-title">Quick Insight</div>
-        <span class="section-link" onclick="switchView('insights', document.querySelector('.sidebar-nav-btn:nth-child(2)'))">See all</span>
+        <span class="section-link" onclick="switchTopbarView('insights', document.getElementById('topbar-insights'))">See all</span>
       </div>
       <div class="insights-row">
         <div class="insight-card">
@@ -1453,6 +1583,25 @@ body {
       </div>
 
     </div><!-- end home view -->
+
+    <!-- CATEGORY VIEW -->
+    <div class="view" id="view-category">
+      <div class="cat-view-header" id="cat-view-header">
+        <div class="cat-view-icon-wrap"><span id="cat-view-icon">🏃</span></div>
+        <div>
+          <div class="cat-view-title" id="cat-view-title">Physical</div>
+          <div class="cat-view-sub">Your goals in this area</div>
+        </div>
+        <button class="checkin-btn" style="margin-left:auto;" onclick="openPanelWithCat(currentFilter)">+ Add Goal</button>
+      </div>
+      <div class="habits-grid" id="cat-habits-list"></div>
+      <div class="cat-empty" id="cat-empty" style="display:none;">
+        <div style="font-size:36px;margin-bottom:12px;">🌱</div>
+        <div style="font-weight:600;font-size:16px;margin-bottom:6px;">No goals here yet</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:18px;">Start building this area of your life.</div>
+        <button class="checkin-btn" onclick="openPanelWithCat(currentFilter)">+ Add First Goal</button>
+      </div>
+    </div>
 
     <!-- INSIGHTS VIEW -->
     <div class="view insights-view" id="view-insights">
@@ -1490,10 +1639,10 @@ body {
           </div>
           <div class="underserved-arrow">→</div>
         </div>
-        <div class="underserved-item" onclick="openPanelWithCat('biological')">
-          <div class="underserved-icon">🌿</div>
+        <div class="underserved-item" onclick="openPanelWithCat('financial')">
+          <div class="underserved-icon">💰</div>
           <div>
-            <div class="underserved-name">Biological</div>
+            <div class="underserved-name">Financial</div>
             <div class="underserved-desc">Sleep consistency is your biggest lever right now</div>
           </div>
           <div class="underserved-arrow">→</div>
@@ -1511,33 +1660,61 @@ body {
 
     <!-- CALENDAR VIEW -->
     <div class="view" id="view-calendar">
-      <div class="section-header" style="margin-bottom: 16px;">
-        <div class="section-title">Calendar</div>
-      </div>
-      <div class="calendar-card">
-        <div class="cal-header">
-          <div class="cal-month" id="cal-month-label">May 2025</div>
-          <div class="cal-nav">
-            <button class="cal-nav-btn" onclick="changeMonth(-1)">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <button class="cal-nav-btn" onclick="changeMonth(1)">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
+      <!-- Controls -->
+      <div class="cal-controls">
+        <div class="cal-view-tabs">
+          <button class="cal-tab active" onclick="setCalView('month',this)">Month</button>
+          <button class="cal-tab" onclick="setCalView('week',this)">Week</button>
+          <button class="cal-tab" onclick="setCalView('day',this)">Day</button>
+          <button class="cal-tab" onclick="setCalView('year',this)">Year</button>
+        </div>
+        <div class="cal-filters">
+          <div class="cal-search-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/></svg>
+            <input id="cal-search" class="cal-search-input" placeholder="Go to date…" onkeydown="handleCalSearch(event)">
           </div>
+          <select id="cal-goal-filter" class="cal-goal-select" onchange="renderCalView()">
+            <option value="all">All Goals</option>
+          </select>
         </div>
-        <div class="cal-grid" id="cal-grid"></div>
       </div>
-      <div style="display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted);">
-          <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--accent);"></div> Perfect day
+
+      <!-- Period Navigation -->
+      <div class="cal-period-nav">
+        <button class="cal-nav-btn" onclick="changeCalPeriod(-1)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="cal-period-label" id="cal-period-label">May 2026</div>
+        <button class="cal-nav-btn" onclick="changeCalPeriod(1)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="cal-today-btn" onclick="goToToday()">Today</button>
+      </div>
+
+      <!-- Month View -->
+      <div id="cal-view-month">
+        <div class="calendar-card" style="padding:14px 16px;">
+          <div class="cal-grid" id="cal-grid"></div>
         </div>
-        <div style="display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted);">
-          <div style="width: 12px; height: 12px; border-radius: 3px; background: rgba(200,169,126,0.2);"></div> Partial
-        </div>
-        <div style="display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted);">
-          <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--surface2); border: 1px solid var(--border);"></div> Today
-        </div>
+      </div>
+
+      <!-- Week View -->
+      <div id="cal-view-week" style="display:none"></div>
+
+      <!-- Day View -->
+      <div id="cal-view-day" style="display:none"></div>
+
+      <!-- Year View -->
+      <div id="cal-view-year" style="display:none"></div>
+
+      <!-- Shared Day Detail Panel -->
+      <div id="cal-day-detail" class="cal-day-detail" style="display:none"></div>
+
+      <!-- Legend -->
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot perfect"></div> Perfect day</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot partial"></div> Partial</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--surface2);border:1px solid var(--border)"></div> Today</div>
       </div>
     </div>
 
@@ -1580,7 +1757,7 @@ body {
       <label class="form-label">Category</label>
       <div class="cat-selector">
         <button class="cat-sel-btn" data-cat="physical" onclick="selectCat(this)"><span class="cat-sel-emoji">🏃</span>Physical</button>
-        <button class="cat-sel-btn" data-cat="biological" onclick="selectCat(this)"><span class="cat-sel-emoji">🌿</span>Biological</button>
+        <button class="cat-sel-btn" data-cat="financial" onclick="selectCat(this)"><span class="cat-sel-emoji">💰</span>Financial</button>
         <button class="cat-sel-btn" data-cat="social" onclick="selectCat(this)"><span class="cat-sel-emoji">🤝</span>Social</button>
         <button class="cat-sel-btn" data-cat="emotional" onclick="selectCat(this)"><span class="cat-sel-emoji">💛</span>Emotional</button>
         <button class="cat-sel-btn" data-cat="spiritual" onclick="selectCat(this)"><span class="cat-sel-emoji">✨</span>Spiritual</button>
@@ -1734,7 +1911,7 @@ body {
 let habits = [
   { id: 1, name: 'Morning Run', affirmation: 'I am a runner', cat: 'physical', freq: 'Daily', streak: 14, done: false, paused: false, dots: [true, true, true, true, false, true, false], reminder: '07:00' },
   { id: 2, name: 'Strength Training', affirmation: 'I am strong and capable', cat: 'physical', freq: '3x/week', streak: 8, done: false, paused: false, dots: [true, false, true, false, false, true, false], reminder: '17:30' },
-  { id: 3, name: 'Sleep 8 Hours', affirmation: 'I am well-rested and restored', cat: 'biological', freq: 'Daily', streak: 5, done: false, paused: false, dots: [false, true, true, false, true, false, false], reminder: '21:30' },
+  { id: 3, name: 'Sleep 8 Hours', affirmation: 'I am well-rested and restored', cat: 'financial', freq: 'Daily', streak: 5, done: false, paused: false, dots: [false, true, true, false, true, false, false], reminder: '21:30' },
   { id: 4, name: 'Call a Friend', affirmation: 'I am a connector and nurturer', cat: 'social', freq: 'Weekly', streak: 3, done: false, paused: false, dots: [true, false, false, true, false, false, false], reminder: '19:00' },
   { id: 5, name: 'Journaling', affirmation: 'I am in tune with my feelings', cat: 'emotional', freq: 'Daily', streak: 2, done: false, paused: true, dots: [false, false, true, false, false, false, false], reminder: '08:30' },
 ];
@@ -1744,7 +1921,8 @@ let currentView = 'home';
 let selectedCat = '';
 let selectedAiGoal = null;
 let pauseTargetId = null;
-let calYear = 2026, calMonth = 4; // May 2026
+let calYear = 2026, calMonth = 4, calDay = 4;
+let calView = 'month', calSelectedDay = null;
 
 const aiGoals = {
   physical: [
@@ -1752,10 +1930,10 @@ const aiGoals = {
     { name: 'Daily Push-ups (50)', affirmation: 'I am strong', freq: 'Daily', reminder: '08:00' },
     { name: 'Evening Walk', affirmation: 'I am active and alive', freq: 'Daily', reminder: '18:00' },
   ],
-  biological: [
-    { name: 'Sleep by 10:30 PM', affirmation: 'I am someone who values restoration', freq: 'Daily', reminder: '21:30' },
-    { name: 'Drink 2L Water', affirmation: 'I am hydrated and clear-headed', freq: 'Daily', reminder: '09:00' },
-    { name: 'No sugar after 6 PM', affirmation: 'I am disciplined with my body', freq: 'Daily', reminder: '18:00' },
+  financial: [
+    { name: 'Review daily spending', affirmation: 'I am intentional with my money', freq: 'Daily', reminder: '20:00' },
+    { name: 'Save 10% of income', affirmation: 'I am building lasting wealth', freq: 'Monthly', reminder: '09:00' },
+    { name: 'No impulse purchases', affirmation: 'I am disciplined with my finances', freq: 'Daily', reminder: '12:00' },
   ],
   social: [
     { name: 'Call family once a week', affirmation: 'I am a devoted family member', freq: 'Weekly', reminder: '18:00' },
@@ -1864,16 +2042,61 @@ function toggleHabit(id) {
     h.dots[6] = false;
     h.streak = Math.max(0, h.streak - 1);
   }
-  renderHabits();
+  refreshHabitLists();
   updateStats();
 }
 
 function deleteHabit(id) {
   habits = habits.filter(h => h.id !== id);
-  renderHabits();
+  refreshHabitLists();
   updateStats();
   renderFocusBars();
   showToast('Habit removed.');
+}
+
+function refreshHabitLists() {
+  renderHabits();
+  if (document.getElementById('view-category').classList.contains('active')) {
+    renderCatHabits(currentFilter);
+  }
+}
+
+function renderCatHabits(cat) {
+  const filtered = habits.filter(h => h.cat === cat);
+  const list = document.getElementById('cat-habits-list');
+  const empty = document.getElementById('cat-empty');
+  list.innerHTML = '';
+  if (filtered.length === 0) {
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    filtered.forEach(h => {
+      const week = h.dots.map(d => `<div class="habit-dot${d ? ' done' : ''}"></div>`).join('');
+      list.innerHTML += `
+      <div class="habit-card${h.done ? ' completed' : ''}${h.paused ? ' paused' : ''}" data-cat="${h.cat}" id="habit-cat-${h.id}">
+        <button class="complete-btn" onclick="toggleHabit(${h.id})">
+          <svg class="circle-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/></svg>
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <div class="habit-info">
+          <div class="habit-name">${h.name}</div>
+          <div class="habit-affirmation">"${h.affirmation}"</div>
+          <div class="habit-meta">
+            <div class="habit-streak">🔥 ${h.streak} days</div>
+            <div class="habit-freq">${h.freq}</div>
+            ${h.paused ? '<div class="paused-badge">Paused</div>' : ''}
+          </div>
+        </div>
+        <div class="habit-right">
+          <div class="habit-week">${week}</div>
+          <div class="habit-actions">
+            <button class="habit-action-btn" onclick="openPause(${h.id})">⏸</button>
+            <button class="habit-action-btn" onclick="deleteHabit(${h.id})">🗑</button>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
 }
 
 function updateStats() {
@@ -1887,26 +2110,56 @@ function updateStats() {
   document.getElementById('ring-completion-val').textContent = pct + '%';
 }
 
-function filterCat(cat, el) {
-  currentFilter = cat;
+function navHome(el) {
   document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  renderHabits();
+  currentFilter = 'all';
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-home').classList.add('active');
+  document.querySelectorAll('.topbar-nav').forEach(b => b.classList.remove('active'));
 }
 
-function updateBadges() {
-  const cats = ['physical', 'biological', 'social', 'emotional', 'spiritual'];
-  cats.forEach(c => {
-    document.getElementById('badge-' + c).textContent = habits.filter(h => h.cat === c).length;
-  });
-  document.getElementById('badge-all').textContent = habits.length;
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = cat;
+  document.querySelectorAll('.topbar-nav').forEach(b => b.classList.remove('active'));
+
+  const catInfo = {
+    physical:  { emoji: '🏃', label: 'Physical',  color: 'var(--physical)' },
+    emotional: { emoji: '💛', label: 'Emotional', color: 'var(--emotional)' },
+    financial: { emoji: '💰', label: 'Financial', color: 'var(--financial)' },
+    social:    { emoji: '👫', label: 'Social',    color: 'var(--social)' },
+    spiritual: { emoji: '✨', label: 'Spiritual', color: 'var(--spiritual)' },
+  };
+  const info = catInfo[cat] || {};
+  document.getElementById('cat-view-icon').textContent = info.emoji;
+  const titleEl = document.getElementById('cat-view-title');
+  titleEl.textContent = info.label;
+  titleEl.style.color = info.color;
+
+  renderCatHabits(cat);
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-category').classList.add('active');
 }
+
+function switchTopbarView(view, btn) {
+  document.querySelectorAll('.topbar-nav').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('sb-home').classList.add('active');
+  currentView = view;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+}
+
+function updateBadges() {}
 
 // ─── FOCUS BARS ───────────────────────────
 function renderFocusBars() {
   const cats = [
     { key: 'physical', label: 'Physical', color: 'var(--physical)', emoji: '🏃' },
-    { key: 'biological', label: 'Bio', color: 'var(--biological)', emoji: '🌿' },
+    { key: 'financial', label: 'Financial', color: 'var(--financial)', emoji: '💰' },
     { key: 'social', label: 'Social', color: 'var(--social)', emoji: '🤝' },
     { key: 'emotional', label: 'Emotional', color: 'var(--emotional)', emoji: '💛' },
     { key: 'spiritual', label: 'Spiritual', color: 'var(--spiritual)', emoji: '✨' },
@@ -1949,43 +2202,312 @@ function renderTimeline() {
 }
 
 // ─── CALENDAR ─────────────────────────────
-function renderCalendar() {
-  const labels = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-month-label').textContent = `${months[calMonth]} ${calYear}`;
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const CAT_COLORS = { physical:'#f97316', emotional:'#f472b6', financial:'#10b981', social:'#a78bfa', spiritual:'#facc15' };
+const CAT_EMOJI  = { physical:'🏃', emotional:'💛', financial:'💰', social:'👫', spiritual:'✨' };
 
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+function getFilteredHabits() {
+  const f = document.getElementById('cal-goal-filter')?.value || 'all';
+  return f === 'all' ? habits : habits.filter(h => String(h.id) === f);
+}
+function getCompletedForDay(y, m, d) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(y, m, d);
+  if (target > today) return [];
+  if (target.getTime() === today.getTime()) return habits.filter(h => h.done);
+  const seed = y * 10000 + m * 100 + d;
+  return getFilteredHabits().filter((h, i) => {
+    const rate = h.streak > 10 ? 0.82 : h.streak > 5 ? 0.68 : 0.45;
+    return seededRandom(seed + i * 777) < rate;
+  });
+}
+function populateGoalFilter() {
+  const sel = document.getElementById('cal-goal-filter');
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="all">All Goals</option>' +
+    habits.map(h => `<option value="${h.id}">${h.name}</option>`).join('');
+  sel.value = cur;
+}
+function renderCalendar() { renderCalView(); }
+
+function setCalView(view, btn) {
+  calView = view;
+  document.querySelectorAll('.cal-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderCalView();
+}
+function renderCalView() {
+  populateGoalFilter();
+  if (calView === 'month') renderMonthView();
+  else if (calView === 'week') renderWeekView();
+  else if (calView === 'day')  renderDayView();
+  else if (calView === 'year') renderYearView();
+}
+function changeCalPeriod(dir) {
+  if (calView === 'month') {
+    calMonth += dir;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    if (calMonth < 0)  { calMonth = 11; calYear--; }
+  } else if (calView === 'week') {
+    const d = new Date(calYear, calMonth, calDay);
+    d.setDate(d.getDate() + dir * 7);
+    calYear = d.getFullYear(); calMonth = d.getMonth(); calDay = d.getDate();
+  } else if (calView === 'day') {
+    const d = new Date(calYear, calMonth, calDay);
+    d.setDate(d.getDate() + dir);
+    calYear = d.getFullYear(); calMonth = d.getMonth(); calDay = d.getDate();
+  } else if (calView === 'year') {
+    calYear += dir;
+  }
+  renderCalView();
+}
+function goToToday() {
+  const t = new Date();
+  calYear = t.getFullYear(); calMonth = t.getMonth(); calDay = t.getDate();
+  calSelectedDay = { y: calYear, m: calMonth, d: calDay };
+  renderCalView();
+}
+function handleCalSearch(e) {
+  if (e.key !== 'Enter') return;
+  const val = e.target.value.trim();
+  if (!val) return;
+  const parsed = new Date(val);
+  if (!isNaN(parsed)) {
+    calYear = parsed.getFullYear(); calMonth = parsed.getMonth(); calDay = parsed.getDate();
+    calSelectedDay = { y: calYear, m: calMonth, d: calDay };
+    renderCalView();
+    e.target.value = '';
+  }
+}
+function selectCalDay(y, m, d) {
+  calSelectedDay = { y, m, d };
+  calDay = d;
+  renderDayDetail();
+  // Refresh month grid selection highlight without full re-render
+  document.querySelectorAll('#cal-grid .cal-day.selected').forEach(el => el.classList.remove('selected'));
+  const cells = document.querySelectorAll('#cal-grid .cal-day.in-month');
+  if (cells.length >= d) cells[d - 1].classList.add('selected');
+  // week view: update column highlight
+  document.querySelectorAll('.cal-week-col').forEach(col => {
+    col.classList.toggle('selected', col.dataset.day == d && col.dataset.month == m && col.dataset.year == y);
+  });
+}
+
+// ─── MONTH VIEW ───────────────────────────
+function renderMonthView() {
+  document.getElementById('cal-view-month').style.display = '';
+  document.getElementById('cal-view-week').style.display = 'none';
+  document.getElementById('cal-view-day').style.display  = 'none';
+  document.getElementById('cal-view-year').style.display = 'none';
+  document.getElementById('cal-period-label').textContent = `${MONTHS[calMonth]} ${calYear}`;
+
+  const labels = ['Su','Mo','Tu','We','Th','Fr','Sa'];
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = labels.map(l => `<div class="cal-day-label">${l}</div>`).join('');
 
   const firstDay = new Date(calYear, calMonth, 1).getDay();
   const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const today = new Date();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const hs = getFilteredHabits();
 
-  // Perfect days simulation
-  const perfectDays = new Set([3, 5, 8, 12, 14, 15, 19, 21]);
-  const partialDays = new Set([1, 6, 9, 13, 17, 20, 22, 25]);
-
-  for (let i = 0; i < firstDay; i++) {
-    grid.innerHTML += `<div class="cal-day"></div>`;
-  }
+  for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="cal-day"></div>`;
   for (let d = 1; d <= daysInMonth; d++) {
-    const isToday = d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear();
-    const isPerfect = perfectDays.has(d) && !isToday;
-    const isPartial = partialDays.has(d) && !isToday;
+    const target = new Date(calYear, calMonth, d);
+    const isToday    = target.getTime() === today.getTime();
+    const isFuture   = target > today;
+    const isSelected = calSelectedDay && calSelectedDay.y === calYear && calSelectedDay.m === calMonth && calSelectedDay.d === d;
     let cls = 'cal-day in-month';
-    if (isToday) cls += ' today';
-    else if (isPerfect) cls += ' perfect';
-    else if (isPartial) cls += ' completed';
-    grid.innerHTML += `<div class="${cls}">${d}</div>`;
+    if (!isFuture) {
+      const done = getCompletedForDay(calYear, calMonth, d);
+      const pct  = hs.length ? done.length / hs.length : 0;
+      if (isToday)       cls += ' today';
+      else if (pct >= 1) cls += ' perfect';
+      else if (pct > 0)  cls += ' completed';
+    }
+    if (isSelected) cls += ' selected';
+    grid.innerHTML += `<div class="${cls}" onclick="selectCalDay(${calYear},${calMonth},${d})">${d}</div>`;
   }
+  renderDayDetail();
 }
 
-function changeMonth(dir) {
-  calMonth += dir;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
+// ─── WEEK VIEW ────────────────────────────
+function renderWeekView() {
+  document.getElementById('cal-view-month').style.display = 'none';
+  document.getElementById('cal-view-week').style.display  = '';
+  document.getElementById('cal-view-day').style.display   = 'none';
+  document.getElementById('cal-view-year').style.display  = 'none';
+
+  const anchor = new Date(calYear, calMonth, calDay);
+  const ws = new Date(anchor); ws.setDate(anchor.getDate() - anchor.getDay());
+  const we = new Date(ws);     we.setDate(ws.getDate() + 6);
+  document.getElementById('cal-period-label').textContent =
+    `${MONTHS_SHORT[ws.getMonth()]} ${ws.getDate()} – ${MONTHS_SHORT[we.getMonth()]} ${we.getDate()}, ${we.getFullYear()}`;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const hs = getFilteredHabits();
+  let html = '<div class="cal-week-grid">';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(ws); d.setDate(ws.getDate() + i);
+    const isToday    = d.getTime() === today.getTime();
+    const isSelected = calSelectedDay && calSelectedDay.y === d.getFullYear() && calSelectedDay.m === d.getMonth() && calSelectedDay.d === d.getDate();
+    const done       = getCompletedForDay(d.getFullYear(), d.getMonth(), d.getDate());
+    const doneIds    = new Set(done.map(h => h.id));
+    html += `<div class="cal-week-col${isToday?' today':''}${isSelected?' selected':''}"
+      data-year="${d.getFullYear()}" data-month="${d.getMonth()}" data-day="${d.getDate()}"
+      onclick="selectCalDay(${d.getFullYear()},${d.getMonth()},${d.getDate()})">
+      <div class="cal-week-head">
+        <div class="cal-week-day-name">${DAY_SHORT[d.getDay()]}</div>
+        <div class="cal-week-day-num">${d.getDate()}</div>
+      </div>
+      <div class="cal-week-habits">
+        ${hs.map(h => `<div class="cal-week-habit${doneIds.has(h.id)?'':' missed'}">
+          <div class="cal-week-dot" style="background:${CAT_COLORS[h.cat]}"></div>
+          <span class="cal-week-name">${h.name}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+  document.getElementById('cal-view-week').innerHTML = html;
+  renderDayDetail();
 }
+
+// ─── DAY VIEW ─────────────────────────────
+function renderDayView() {
+  document.getElementById('cal-view-month').style.display = 'none';
+  document.getElementById('cal-view-week').style.display  = 'none';
+  document.getElementById('cal-view-day').style.display   = '';
+  document.getElementById('cal-view-year').style.display  = 'none';
+  document.getElementById('cal-day-detail').style.display = 'none';
+
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(calYear, calMonth, calDay);
+  const isToday  = target.getTime() === today.getTime();
+  const isFuture = target > today;
+  document.getElementById('cal-period-label').textContent = `${DAY_NAMES[target.getDay()]}, ${MONTHS[calMonth]} ${calDay}`;
+
+  const done    = getCompletedForDay(calYear, calMonth, calDay);
+  const doneIds = new Set(done.map(h => h.id));
+  const hs      = getFilteredHabits();
+
+  let html = `<div class="cal-day-view-header">
+    <div class="cal-day-view-date">${calDay}</div>
+    <div class="cal-day-view-name">${DAY_NAMES[target.getDay()]}, ${MONTHS[calMonth]} ${calYear}</div>
+    ${isToday ? '<div style="margin-top:6px;font-size:10px;color:var(--accent);font-weight:700;letter-spacing:2px;text-transform:uppercase">TODAY</div>' : ''}
+  </div>`;
+
+  if (isFuture) {
+    html += `<div class="cal-empty-day" style="padding:40px 0">No data yet — this day is in the future.</div>`;
+  } else {
+    hs.forEach(h => {
+      const isDone = doneIds.has(h.id);
+      html += `<div class="cal-day-habit-row${isDone?' done':' missed'}">
+        <div class="cal-day-habit-icon">${CAT_EMOJI[h.cat]||'●'}</div>
+        <div class="cal-day-habit-info">
+          <div class="cal-day-habit-name">${h.name}</div>
+          <div class="cal-day-habit-time">${h.freq} · ⏰ ${h.reminder}</div>
+        </div>
+        <div class="cal-day-status">${isDone ? '✅' : '○'}</div>
+      </div>`;
+    });
+    if (!hs.length) html += `<div class="cal-empty-day" style="padding:40px 0">No goals match your filter.</div>`;
+  }
+  document.getElementById('cal-view-day').innerHTML = html;
+}
+
+// ─── YEAR VIEW ────────────────────────────
+function renderYearView() {
+  document.getElementById('cal-view-month').style.display = 'none';
+  document.getElementById('cal-view-week').style.display  = 'none';
+  document.getElementById('cal-view-day').style.display   = 'none';
+  document.getElementById('cal-view-year').style.display  = '';
+  document.getElementById('cal-day-detail').style.display = 'none';
+  document.getElementById('cal-period-label').textContent = `${calYear}`;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const hs = getFilteredHabits();
+  let html = '<div class="cal-year-grid">';
+  for (let m = 0; m < 12; m++) {
+    const daysInMonth = new Date(calYear, m + 1, 0).getDate();
+    const firstDay    = new Date(calYear, m, 1).getDay();
+    html += `<div class="cal-year-month-card">
+      <div class="cal-year-month-name">${MONTHS[m]}</div>
+      <div class="cal-year-mini-grid">
+        ${ ['S','M','T','W','T','F','S'].map(l => `<div style="text-align:center;font-size:7px;color:var(--muted);padding-bottom:1px">${l}</div>`).join('') }
+        ${ Array(firstDay).fill('<div></div>').join('') }
+        ${ Array.from({length: daysInMonth}, (_,i) => {
+          const d = i + 1;
+          const target = new Date(calYear, m, d);
+          const isToday  = target.getTime() === today.getTime();
+          const isFuture = target > today;
+          let cls = 'cal-year-day';
+          if (!isFuture && !isToday) {
+            const done = getCompletedForDay(calYear, m, d);
+            const pct  = hs.length ? done.length / hs.length : 0;
+            if (pct >= 1) cls += ' perfect'; else if (pct > 0) cls += ' partial';
+          }
+          if (isToday) cls += ' today';
+          return `<div class="${cls}" onclick="selectCalDayFromYear(${calYear},${m},${d})" title="${MONTHS[m]} ${d}"></div>`;
+        }).join('') }
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+  document.getElementById('cal-view-year').innerHTML = html;
+}
+function selectCalDayFromYear(y, m, d) {
+  calYear = y; calMonth = m; calDay = d;
+  calSelectedDay = { y, m, d };
+  calView = 'day';
+  document.querySelectorAll('.cal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.cal-tab:nth-child(3)').classList.add('active');
+  renderDayView();
+}
+
+// ─── DAY DETAIL (shared panel) ────────────
+function renderDayDetail() {
+  const detail = document.getElementById('cal-day-detail');
+  if (!calSelectedDay) { detail.style.display = 'none'; return; }
+  const { y, m, d } = calSelectedDay;
+  const target  = new Date(y, m, d);
+  const today   = new Date(); today.setHours(0,0,0,0);
+  const isFuture = target > today;
+  const all     = getFilteredHabits();
+  const done    = getCompletedForDay(y, m, d);
+  const doneIds = new Set(done.map(h => h.id));
+  const missed  = all.filter(h => !doneIds.has(h.id));
+
+  detail.style.display = '';
+  detail.innerHTML = `
+    <div class="cal-detail-date">${DAY_NAMES[target.getDay()]}, ${MONTHS[m]} ${d}, ${y}</div>
+    ${isFuture ? '<div class="cal-empty-day">No data yet — this day is in the future.</div>' : ''}
+    ${!isFuture && done.length === 0 && all.length === 0 ? '<div class="cal-empty-day">No goals match your filter.</div>' : ''}
+    ${done.length > 0 ? `<div class="cal-detail-section">
+      <div class="cal-detail-section-label">✓ Completed (${done.length})</div>
+      ${done.map(h => `<div class="cal-detail-item done">
+        <div class="cal-detail-dot" style="background:${CAT_COLORS[h.cat]}"></div>
+        <span>${h.name}</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--muted)">${h.freq}</span>
+      </div>`).join('')}
+    </div>` : ''}
+    ${!isFuture && missed.length > 0 ? `<div class="cal-detail-section">
+      <div class="cal-detail-section-label">✗ Missed (${missed.length})</div>
+      ${missed.map(h => `<div class="cal-detail-item missed">
+        <div class="cal-detail-dot" style="background:var(--muted)"></div>
+        <span>${h.name}</span>
+      </div>`).join('')}
+    </div>` : ''}`;
+}
+
+function changeMonth(dir) { changeCalPeriod(dir); }
 
 // ─── PANELS ───────────────────────────────
 function openPanel(id) {
@@ -2007,7 +2529,7 @@ function openPanelWithCat(cat) {
   openPanel('goal-panel');
   const btn = document.querySelector(`.cat-sel-btn[data-cat="${cat}"]`);
   if (btn) selectCat(btn);
-  switchView('home', document.querySelector('.sidebar-nav-btn'));
+  navHome(document.getElementById('sb-home'));
 }
 
 function openPause(id) {
@@ -2174,8 +2696,6 @@ function switchView(view, btn) {
   currentView = view;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
-  document.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
 }
 
 // ─── TOAST ────────────────────────────────
