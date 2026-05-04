@@ -3,23 +3,419 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App</title>
+  <title>Challenge Accepted</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --green: #4ade80;
+      --yellow: #facc15;
+      --dark: #0a0c10;
+      --surface: #111318;
+      --surface2: #1a1e28;
+      --text: #f0f4ff;
+      --muted: #6b7280;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0d0f14;
-      color: #f0f2f7;
-      height: 100vh;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* court lines bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .court-line {
+      position: fixed;
+      background: rgba(74, 222, 128, 0.08);
+      pointer-events: none;
+    }
+    .court-line.h { height: 2px; width: 100%; top: 50%; }
+    .court-line.v { width: 2px; height: 100%; left: 50%; top: 0; }
+    .court-line.service-l { height: 2px; width: 40%; left: 10%; top: 35%; }
+    .court-line.service-r { height: 2px; width: 40%; left: 50%; top: 35%; }
+    .court-line.service-l2 { height: 2px; width: 40%; left: 10%; top: 65%; }
+    .court-line.service-r2 { height: 2px; width: 40%; left: 50%; top: 65%; }
+
+    .net {
+      position: fixed;
+      left: 5%; right: 5%;
+      top: calc(50% - 24px);
+      height: 48px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 8px,
+        rgba(255,255,255,0.06) 8px,
+        rgba(255,255,255,0.06) 9px
+      );
+      border-top: 2px solid rgba(255,255,255,0.12);
+      border-bottom: 2px solid rgba(255,255,255,0.12);
+      pointer-events: none;
+    }
+
+    .ball {
+      position: fixed;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #d4f543, #a8c421);
+      box-shadow: 0 0 20px rgba(212, 245, 67, 0.4);
+      pointer-events: none;
+      animation: floatBall 8s ease-in-out infinite;
+    }
+    .ball::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      clip-path: ellipse(60% 100% at 50% 50%);
+    }
+
+    @keyframes floatBall {
+      0%   { transform: translate(20vw, 30vh); opacity: 0.7; }
+      25%  { transform: translate(70vw, 20vh); opacity: 1; }
+      50%  { transform: translate(60vw, 65vh); opacity: 0.8; }
+      75%  { transform: translate(15vw, 70vh); opacity: 1; }
+      100% { transform: translate(20vw, 30vh); opacity: 0.7; }
+    }
+
+    /* ---- card ---- */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 48px 40px 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(74, 222, 128, 0.06), 0 24px 48px rgba(0,0,0,0.5);
+    }
+
+    .racket-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+      display: block;
+      animation: swing 3s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    @keyframes swing {
+      0%, 100% { transform: rotate(-10deg); }
+      50%       { transform: rotate(10deg); }
+    }
+
+    .headline {
+      font-family: 'Black Ops One', cursive;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--green) 30%, var(--yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input::placeholder { color: var(--muted); }
+    input:focus { border-color: var(--green); }
+
+    .taunt-box {
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      min-height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: var(--text);
+      transition: opacity 0.3s;
+    }
+    .taunt-box em {
+      color: var(--green);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    }
+    button:hover { transform: translateY(-2px); opacity: 0.92; }
+    button:active { transform: translateY(0); }
+
+    .btn-new {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, var(--green), #22c55e);
+      color: #0a2a12;
+      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
+    }
+
+    .btn-copy {
+      width: 100%;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.82rem;
+      padding: 10px;
+    }
+    .btn-copy:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: none; }
+
+    .score-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .score-pill {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 10px 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .score-pill span {
+      display: block;
+      font-family: 'Black Ops One', cursive;
+      font-size: 1.4rem;
+      color: var(--yellow);
+      margin-top: 2px;
+    }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green);
+      color: #0a2a12;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+      z-index: 100;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .set-display {
+      font-family: 'Black Ops One', cursive;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 6px;
     }
   </style>
 </head>
 <body>
 
+  <div class="court-line h"></div>
+  <div class="court-line v"></div>
+  <div class="court-line service-l"></div>
+  <div class="court-line service-r"></div>
+  <div class="court-line service-l2"></div>
+  <div class="court-line service-r2"></div>
+  <div class="net"></div>
+  <div class="ball"></div>
+
+  <div class="card">
+    <span class="racket-icon">🎾</span>
+    <div class="headline">YOU'RE GOING DOWN</div>
+    <p class="sub">Generate your trash talk, then send it to your opponent.</p>
+
+    <div class="name-row">
+      <input id="myName"     type="text" placeholder="Your name" maxlength="20" />
+      <input id="friendName" type="text" placeholder="Their name" maxlength="20" />
+    </div>
+
+    <div class="taunt-box" id="tauntBox">
+      Hit <strong>New Taunt</strong> to generate your opening serve.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-new" onclick="newTaunt()">🎯 New Taunt</button>
+      <button class="btn-send" onclick="sendChallenge()">📲 Send It</button>
+    </div>
+    <button class="btn-copy" onclick="copyTaunt()">Copy text</button>
+
+    <div class="score-row">
+      <div class="score-pill">
+        Challenges sent
+        <span id="sent">0</span>
+      </div>
+      <div class="score-pill">
+        Taunts generated
+        <span id="generated">0</span>
+      </div>
+      <div class="score-pill">
+        🏆 Sets won
+        <span id="sets">0</span>
+        <div class="set-display" id="setDisplay"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
+    const TAUNTS = [
+      `{me} to {them}: Pack your bags. The only thing you're taking home tonight is a loss.`,
+      `Hey {them}, warm up those legs — you're going to be chasing balls all night.`,
+      `{them}, I've been watching your backhand. It's cute. See you on the court. 😈`,
+      `Dear {them}, I hope you've been practicing. You're going to need it.`,
+      `{them} — your serve is famous. Unfortunately, so is your second serve. See you soon.`,
+      `Just a friendly reminder that {me} has never lost to you when it actually mattered.`,
+      `{them}, the net is at 3 feet. That's still 3 feet higher than your chances tonight.`,
+      `I'm putting this in writing: {me} is going to demolish {them} on the court. No backsies.`,
+      `{them}, I've been doing cardio. I know. You're scared. You should be.`,
+      `Reminder: deuce is not 'almost winning.' Ask me how I know — I'll show you today.`,
+      `{me} challenge: {them} to a best-of-three. Loser buys dinner. Come hungry.`,
+      `{them}, your forehand has improved. Still not enough. Game, set, match — me.`,
+    ];
+
+    let sentCount = 0, generatedCount = 0, setsWon = 0;
+    let currentTaunt = '';
+
+    function getName(id, fallback) {
+      return document.getElementById(id).value.trim() || fallback;
+    }
+
+    function renderTaunt(template) {
+      const me   = getName('myName', 'Me');
+      const them = getName('friendName', 'Your friend');
+      return template.replaceAll('{me}', me).replaceAll('{them}', them);
+    }
+
+    function newTaunt() {
+      const t = TAUNTS[Math.floor(Math.random() * TAUNTS.length)];
+      currentTaunt = t;
+      document.getElementById('tauntBox').innerHTML = renderTaunt(t);
+      generatedCount++;
+      document.getElementById('generated').textContent = generatedCount;
+      save();
+    }
+
+    function sendChallenge() {
+      if (!currentTaunt) { newTaunt(); }
+      const text = renderTaunt(currentTaunt);
+      const url  = `sms:?&body=${encodeURIComponent(text)}`;
+      window.open(url, '_self');
+      sentCount++;
+      document.getElementById('sent').textContent = sentCount;
+      save();
+      toast('Challenge sent! 🎾');
+    }
+
+    function copyTaunt() {
+      if (!currentTaunt) { newTaunt(); }
+      const text = renderTaunt(currentTaunt);
+      navigator.clipboard.writeText(text).then(() => toast('Copied!')).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        toast('Copied!');
+      });
+    }
+
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function save() {
+      localStorage.setItem('tennis_stats', JSON.stringify({ sentCount, generatedCount, setsWon }));
+    }
+
+    function load() {
+      const d = JSON.parse(localStorage.getItem('tennis_stats') || '{}');
+      sentCount      = d.sentCount      || 0;
+      generatedCount = d.generatedCount || 0;
+      setsWon        = d.setsWon        || 0;
+      document.getElementById('sent').textContent      = sentCount;
+      document.getElementById('generated').textContent = generatedCount;
+      document.getElementById('sets').textContent      = setsWon;
+    }
+
+    // keyboard shortcut: Enter → new taunt
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') newTaunt();
+    });
+
+    load();
   </script>
 </body>
 </html>
