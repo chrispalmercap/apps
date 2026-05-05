@@ -1195,22 +1195,27 @@ body {
 .cal-tab:hover { color: var(--text); }
 .cal-tab.active { background: var(--surface2); color: var(--text); }
 .cal-filters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.cal-search-wrap {
+.cal-datespan-wrap {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 7px 12px;
+  padding: 6px 10px;
 }
-.cal-search-wrap svg { width: 14px; height: 14px; color: var(--muted); flex-shrink: 0; }
-.cal-search-input {
+.cal-date-input {
   background: none; border: none; outline: none;
-  font-family: 'DM Sans', sans-serif; font-size: 13px;
-  color: var(--text); width: 150px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--text); width: 120px; cursor: pointer;
 }
-.cal-search-input::placeholder { color: var(--muted); }
+.cal-date-input::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+.cal-datespan-arrow { color: var(--muted); font-size: 12px; }
+.cal-datespan-result {
+  font-size: 12px; font-weight: 600;
+  color: var(--accent); white-space: nowrap;
+  min-width: 60px;
+}
 .cal-goal-select {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 10px; padding: 7px 12px;
@@ -1669,9 +1674,11 @@ body {
           <button class="cal-tab" onclick="setCalView('year',this)">Year</button>
         </div>
         <div class="cal-filters">
-          <div class="cal-search-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/></svg>
-            <input id="cal-search" class="cal-search-input" placeholder="Go to date…" onkeydown="handleCalSearch(event)">
+          <div class="cal-datespan-wrap">
+            <input type="date" id="span-start" class="cal-date-input" onchange="calcDateSpan()">
+            <span class="cal-datespan-arrow">→</span>
+            <input type="date" id="span-end" class="cal-date-input" onchange="calcDateSpan()">
+            <span class="cal-datespan-result" id="span-result"></span>
           </div>
           <select id="cal-goal-filter" class="cal-goal-select" onchange="renderCalView()">
             <option value="all">All Goals</option>
@@ -2275,17 +2282,24 @@ function goToToday() {
   calSelectedDay = { y: calYear, m: calMonth, d: calDay };
   renderCalView();
 }
-function handleCalSearch(e) {
-  if (e.key !== 'Enter') return;
-  const val = e.target.value.trim();
-  if (!val) return;
-  const parsed = new Date(val);
-  if (!isNaN(parsed)) {
-    calYear = parsed.getFullYear(); calMonth = parsed.getMonth(); calDay = parsed.getDate();
-    calSelectedDay = { y: calYear, m: calMonth, d: calDay };
-    renderCalView();
-    e.target.value = '';
-  }
+function calcDateSpan() {
+  const a = document.getElementById('span-start').value;
+  const b = document.getElementById('span-end').value;
+  const el = document.getElementById('span-result');
+  if (!a || !b) { el.textContent = ''; return; }
+  const start = new Date(a), end = new Date(b);
+  const msPerDay = 86400000;
+  const days = Math.round((end - start) / msPerDay);
+  if (isNaN(days)) { el.textContent = ''; return; }
+  const abs = Math.abs(days);
+  const weeks = Math.floor(abs / 7);
+  const months = Math.round(abs / 30.44);
+  let label = abs === 0 ? 'Same day'
+    : abs === 1 ? (days < 0 ? '1 day before' : '1 day')
+    : abs < 14  ? `${abs} days`
+    : abs < 60  ? `${weeks} week${weeks !== 1 ? 's' : ''} (${abs}d)`
+    : `${months} month${months !== 1 ? 's' : ''} (${abs}d)`;
+  el.textContent = label;
 }
 function selectCalDay(y, m, d) {
   calSelectedDay = { y, m, d };
