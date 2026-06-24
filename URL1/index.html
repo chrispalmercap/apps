@@ -2311,9 +2311,6 @@ function initGraphHover(idx) {
   wrap.addEventListener('touchend', function(){ setTimeout(onLeave, 600); });
 }
 
-init();
-seedSampleData();
-
 // ── BODY SCORE ──────────────────────────────────────────
 function openBodyScore() {
   var i;
@@ -3752,6 +3749,9 @@ function toggleCondCard(name) {
   pfOpenCond = (pfOpenCond === name) ? null : name;
   switchProfileTab('conditions');
 }
+
+seedSampleData();
+init();
 </script>
 </body>
 </html>
