@@ -998,20 +998,7 @@ function renderRingPreview(idx) {
   var sectionLabel = ds.device && !ds.manual ? 'Device Data' : (ds.device ? 'Sync & Log' : 'Log Today');
 
   wrap.innerHTML =
-    '<div class="d-hero">'
-    + '<div class="d-ring-wrap"><svg width="130" height="130" viewBox="0 0 130 130">'
-    + '<circle class="d-bg" cx="65" cy="65" r="50"/>'
-    + '<circle class="d-fill" id="d-ring" cx="65" cy="65" r="50" stroke="' + col + '"'
-    + ' stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
-    + ' data-off="' + off + '" transform="rotate(-90 65 65)"/>'
-    + '</svg><div class="d-center"><div class="d-val" style="color:' + col + '">' + r.val + '</div>'
-    + '<div class="d-unit">' + r.unit + '</div></div></div>'
-    + '<div class="d-name">' + r.icon + '  ' + r.name + '</div>'
-    + '<div class="d-goal">' + r.goal + '</div>'
-    + '<div class="d-trend" style="background:' + tc + '18;color:' + tc + '">' + r.trend + '</div>'
-    + '</div>'
-
-    + '<div class="sec">Why It Matters</div>'
+    '<div class="sec">Why It Matters</div>'
     + '<div class="why-gc">' + r.why + '</div>'
 
     + '<div class="sec">Today\'s Progress</div>'
@@ -1040,8 +1027,6 @@ function renderRingPreview(idx) {
     + nutritionHtml;
 
   setTimeout(function() {
-    var dr = document.getElementById('d-ring');
-    if (dr) dr.style.strokeDashoffset = dr.getAttribute('data-off');
     var fills = wrap.querySelectorAll('.macro-fill, .goal-bar-fill');
     for (var fi = 0; fi < fills.length; fi++) {
       var w = fills[fi].getAttribute('data-w');
