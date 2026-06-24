@@ -24,20 +24,17 @@
 
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #070b15 0%, #0d1a2e 60%, #070f1e 100%);
+      background:
+        radial-gradient(ellipse 70% 45% at 15% -5%, rgba(99,102,241,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 35% at 90% 105%, rgba(14,165,233,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%),
+        linear-gradient(160deg, #070b15 0%, #0d1a2e 60%, #070f1e 100%);
       background-attachment: fixed;
       color: var(--text);
       min-height: 100vh;
       -webkit-tap-highlight-color: transparent;
     }
 
-    #ankh {
-      display: none;
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -46%);
-      width: 280px; opacity: 0.07;
-      pointer-events: none; z-index: 0;
-    }
 
     /* TOP BARS */
     #bar-home, #bar-detail {
@@ -82,7 +79,7 @@
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--muted); margin-bottom: 16px;
     }
-    .score-ring-wrap { position: relative; width: 160px; height: 160px; }
+    .score-ring-wrap { position: relative; width: 160px; height: 160px; flex-shrink:0; }
     .score-ring-wrap svg { display: block; }
     .s-bg   { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 10; }
     .s-fill {
@@ -458,33 +455,41 @@
     .pf-cond-option:last-child { border-bottom: none; }
     .pf-cond-option:hover { background: var(--surface2); }
 
-    /* ── WHEEL HOME ── */
-    .wheel-scene { display:flex; flex-direction:column; align-items:center; padding:16px 0 12px; }
-    .wheel-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:4px; }
-    .wheel-arc { position:relative; width:100%; max-width:390px; height:230px; flex-shrink:0; }
-    .wheel-node { position:absolute; display:flex; flex-direction:column; align-items:center; cursor:pointer; transform:translate(-50%,-50%); transition:transform 0.2s cubic-bezier(.34,1.56,.64,1); }
-    .wheel-node.active { transform:translate(-50%,-50%) scale(1.22); z-index:5; }
-    .wheel-node .rmini { position:relative; width:52px; height:52px; }
-    .wheel-node .rmini svg { display:block; }
-    .wheel-node .r-icon { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:18px; }
-    .wheel-node .r-val { font-size:11px; font-weight:800; margin-top:3px; }
-    .wheel-node .r-name { font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:.3px; text-align:center; max-width:60px; line-height:1.2; }
-    .wheel-preview-wrap { width:100%; max-width:380px; padding:0 16px; min-height:140px; }
-    .wheel-preview { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:16px; box-shadow:var(--shadow); animation:previewIn 0.22s cubic-bezier(.34,1.56,.64,1); }
+    /* ── HOME LAYOUT ── */
+    .home-scene { display:flex; flex-direction:column; align-items:center; padding:16px 0 16px; }
+    .home-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; }
+    /* Ring row */
+    .rings-scroll-outer { width:100%; padding:0 8px; }
+    .rings-scroll-inner { display:flex; flex-wrap:nowrap; justify-content:center; gap:4px; padding:8px 0 12px; }
+    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:14px; border:1px solid transparent; transition:background 0.15s, border-color 0.15s, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
+    .ring-tile-h:active { transform:scale(0.91); }
+    .ring-tile-h.active { background:rgba(100,160,255,0.1); border-color:rgba(100,160,255,0.22); box-shadow:0 0 16px rgba(100,160,255,0.13); }
+    .ring-tile-h .rmini { position:relative; width:44px; height:44px; }
+    .ring-tile-h .rmini svg { display:block; }
+    .ring-tile-h .r-icon { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .ring-tile-h .r-pct { font-size:11px; font-weight:800; }
+    .ring-tile-h .r-name { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:.2px; text-align:center; line-height:1.2; width:100%; }
+    /* Sticky ring row */
+    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 10px; background:rgba(8,13,26,0.93); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+    /* Preview panel */
+    .ring-preview-wrap { width:100%; padding:0 0 48px; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
-    .wp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-    .wp-name { font-size:15px; font-weight:800; color:var(--text); }
-    .wp-open-btn { padding:6px 14px; border-radius:10px; border:none; font-size:12px; font-weight:700; cursor:pointer; color:#fff; font-family:inherit; }
-    .wp-stats { display:flex; gap:8px; margin-bottom:10px; }
-    .wp-stat { flex:1; background:var(--surface2); border-radius:10px; padding:8px 10px; }
-    .wp-stat-lbl { font-size:9px; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); margin-bottom:3px; }
-    .wp-stat-val { font-size:16px; font-weight:800; }
-    .wp-stat-goal { font-size:10px; color:var(--muted); }
-    .wp-why { font-size:12px; color:var(--text2); line-height:1.55; }
-    .wheel-nav-row { display:flex; align-items:center; gap:14px; margin-top:8px; }
-    .wheel-nav-btn { width:36px; height:36px; border-radius:50%; border:1px solid var(--border); background:var(--surface); color:var(--text); font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; transition:background 0.15s; font-family:inherit; }
-    .wheel-nav-btn:hover { background:var(--surface2); }
-    .wheel-nav-lbl { font-size:11px; color:var(--muted); min-width:90px; text-align:center; }
+    .rp-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(22,32,64,0.9) 100%); border:1px solid var(--border); border-radius:18px; padding:16px; box-shadow:var(--shadow); animation:previewIn 0.22s cubic-bezier(.34,1.56,.64,1); }
+    .rp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; }
+    .rp-left { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
+    .rp-icon { font-size:20px; line-height:1; flex-shrink:0; }
+    .rp-name { font-size:15px; font-weight:800; color:var(--text); }
+    .rp-trend { font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+    .rp-open-btn { padding:7px 13px; border-radius:10px; border:none; font-size:12px; font-weight:700; cursor:pointer; color:#fff; font-family:inherit; white-space:nowrap; flex-shrink:0; }
+    .rp-stats { display:flex; gap:7px; margin-bottom:10px; }
+    .rp-stat { flex:1; background:var(--surface2); border-radius:10px; padding:8px 10px; border:1px solid rgba(100,160,255,0.07); }
+    .rp-stat-lbl { font-size:9px; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); margin-bottom:3px; }
+    .rp-stat-val { font-size:15px; font-weight:800; line-height:1.1; }
+    .rp-stat-sub { font-size:10px; color:var(--muted); }
+    .rp-bar-wrap { height:4px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; margin-bottom:11px; }
+    .rp-bar-fill { height:100%; border-radius:2px; transition:width 0.9s ease; }
+    .rp-why { font-size:12px; color:var(--text2); line-height:1.6; }
+    .rp-why strong { color:var(--text); }
 
     /* ── DEVICE DATA ── */
     .device-badge-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
@@ -502,13 +507,42 @@
 </head>
 <body>
 
-<svg id="ankh" viewBox="0 0 100 155" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="white" stroke-linecap="round">
-    <ellipse cx="50" cy="33" rx="21" ry="27" stroke-width="8"/>
-    <line x1="50" y1="60" x2="50" y2="150" stroke-width="8"/>
-    <line x1="13" y1="74" x2="87" y2="74" stroke-width="8"/>
-  </g>
-</svg>
+<!-- Background decorations -->
+<div id="deco-wrap" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden">
+  <!-- Corner glows -->
+  <div style="position:absolute;top:-120px;left:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(99,102,241,0.18) 0%,transparent 68%)"></div>
+  <div style="position:absolute;bottom:-100px;right:-100px;width:380px;height:380px;background:radial-gradient(circle,rgba(14,165,233,0.16) 0%,transparent 68%)"></div>
+  <div style="position:absolute;top:35%;right:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(139,92,246,0.11) 0%,transparent 70%)"></div>
+  <div style="position:absolute;bottom:20%;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%)"></div>
+  <!-- Dot grid -->
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.055" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+        <circle cx="1.5" cy="1.5" r="1.5" fill="#7090c8"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#dots)"/>
+  </svg>
+  <!-- Diagonal lines top-right -->
+  <svg style="position:absolute;top:0;right:0;width:220px;height:220px;opacity:0.04" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="diag" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="18" stroke="#a5b4fc" stroke-width="1"/>
+    </pattern></defs>
+    <rect width="220" height="220" fill="url(#diag)"/>
+  </svg>
+  <!-- Subtle arc lines bottom-left -->
+  <svg style="position:absolute;bottom:-20px;left:-20px;width:200px;height:200px;opacity:0.06" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="0" cy="200" r="80"  fill="none" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="0" cy="200" r="120" fill="none" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="0" cy="200" r="160" fill="none" stroke="#38bdf8" stroke-width="1"/>
+  </svg>
+  <!-- Hex ring top-center -->
+  <svg style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:160px;height:160px;opacity:0.05" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="none" stroke="#a5b4fc" stroke-width="2"/>
+    <polygon points="50,18 78,33 78,67 50,82 22,67 22,33" fill="none" stroke="#a5b4fc" stroke-width="1.5"/>
+    <polygon points="50,31 66,40 66,60 50,69 34,60 34,40" fill="none" stroke="#a5b4fc" stroke-width="1"/>
+  </svg>
+</div>
 
 <div id="bar-home">
   <span class="logo">BODY SCORE</span>
@@ -524,11 +558,11 @@
 
 <main>
   <div id="v-home">
-    <div class="wheel-scene">
-      <div class="wheel-score-area">
+    <div class="home-scene">
+      <div class="home-score-area">
         <div class="score-lbl">Today's Body Score</div>
         <div class="score-ring-wrap" style="cursor:pointer" onclick="openBodyScore()">
-          <svg width="140" height="140" viewBox="0 0 160 160">
+          <svg width="160" height="160" viewBox="0 0 160 160">
             <circle class="s-bg" cx="80" cy="80" r="65"/>
             <circle class="s-fill" id="score-ring" cx="80" cy="80" r="65"
               stroke="#22c55e" transform="rotate(-90 80 80)"/>
@@ -540,14 +574,16 @@
         </div>
         <div class="score-delta" id="score-delta" style="cursor:pointer" onclick="openBodyScore()"></div>
       </div>
-      <div class="wheel-arc" id="wheel-arc"></div>
-      <div class="wheel-preview-wrap">
-        <div class="wheel-preview" id="wheel-preview" style="display:none"></div>
+      <div class="rings-sticky">
+        <div class="rings-scroll-outer">
+          <div class="rings-scroll-inner" id="ring-row"></div>
+        </div>
+        <div style="width:100%;padding:0 16px;">
+          <div style="height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.5) 30%,rgba(139,92,246,0.6) 50%,rgba(100,160,255,0.5) 70%,transparent 100%);box-shadow:0 0 10px rgba(100,160,255,0.3),0 0 24px rgba(139,92,246,0.15)"></div>
+        </div>
       </div>
-      <div class="wheel-nav-row">
-        <button class="wheel-nav-btn" onclick="wheelStep(-1)">&#8249;</button>
-        <span class="wheel-nav-lbl" id="wheel-nav-lbl"></span>
-        <button class="wheel-nav-btn" onclick="wheelStep(1)">&#8250;</button>
+      <div class="ring-preview-wrap">
+        <div id="ring-preview"></div>
       </div>
     </div>
   </div>
@@ -809,64 +845,49 @@ function init() {
   delt.textContent = (SCORE.delta >= 0 ? '↑ +' : '↓ ') + Math.abs(SCORE.delta) + ' from yesterday';
   delt.style.color = SCORE.delta >= 0 ? '#22c55e' : '#f87171';
 
-  renderWheel();
+  renderRingRow();
 }
 
 var wheelActiveIdx = 0;
 
-function renderWheel() {
-  var arc = document.getElementById('wheel-arc');
-  if (!arc) return;
-  var W = Math.min(arc.offsetWidth || 390, 390);
-  var cx = W / 2;
-  var cy = 20;
-  var R = 170;
-  var startAngle = 25, endAngle = 155;
-  var step = (endAngle - startAngle) / (RINGS.length - 1);
+function renderRingRow() {
+  var row = document.getElementById('ring-row');
+  if (!row) return;
   var html = '';
   for (var i = 0; i < RINGS.length; i++) {
     var ring = RINGS[i];
-    var angleDeg = startAngle + step * i;
-    var angleRad = angleDeg * Math.PI / 180;
-    var x = cx + R * Math.cos(angleRad);
-    var y = cy + R * Math.sin(angleRad);
-    var Rv = 20, circ = +(2 * Math.PI * Rv).toFixed(2);
+    var Rv = 17, circ = +(2 * Math.PI * Rv).toFixed(2);
     var off = +(circ - circ * ring.pct).toFixed(2);
     var isActive = i === wheelActiveIdx;
-    html += '<div class="wheel-node' + (isActive ? ' active' : '') + '"'
-      + ' style="left:' + x.toFixed(1) + 'px;top:' + y.toFixed(1) + 'px;"'
-      + ' onclick="setWheelActive(' + i + ')">'
-      + '<div class="rmini"><svg width="52" height="52" viewBox="0 0 52 52">'
-      + '<circle class="r-bg" cx="26" cy="26" r="' + Rv + '" stroke="' + ring.color + '22"/>'
-      + '<circle class="r-fill" cx="26" cy="26" r="' + Rv + '" stroke="' + ring.color + '"'
+    var pct = Math.round(ring.pct * 100) + '%';
+    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
+      + '<div class="rmini"><svg width="44" height="44" viewBox="0 0 44 44">'
+      + '<circle class="r-bg" cx="22" cy="22" r="' + Rv + '" stroke="' + ring.color + '22"/>'
+      + '<circle class="r-fill" cx="22" cy="22" r="' + Rv + '" stroke="' + ring.color + '"'
       + ' stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
-      + ' data-off="' + off + '" transform="rotate(-90 26 26)"/>'
+      + ' data-off="' + off + '" transform="rotate(-90 22 22)"/>'
       + '</svg><div class="r-icon">' + ring.icon + '</div></div>'
-      + '<div class="r-val" style="color:' + ring.color + '">' + ring.val + '</div>'
+      + '<div class="r-pct" style="color:' + ring.color + '">' + pct + '</div>'
       + '<div class="r-name">' + ring.name + '</div>'
       + '</div>';
   }
-  arc.innerHTML = html;
+  row.innerHTML = html;
   setTimeout(function() {
-    var fills = arc.querySelectorAll('.r-fill');
+    var fills = row.querySelectorAll('.r-fill');
     for (var i = 0; i < fills.length; i++) {
       fills[i].style.strokeDashoffset = fills[i].getAttribute('data-off');
     }
   }, 200);
-  renderWheelPreview(wheelActiveIdx);
-  var lbl = document.getElementById('wheel-nav-lbl');
-  if (lbl) lbl.textContent = RINGS[wheelActiveIdx].name;
+  renderRingPreview(wheelActiveIdx);
 }
 
 function setWheelActive(idx) {
   wheelActiveIdx = idx;
-  var nodes = document.querySelectorAll('.wheel-node');
-  for (var i = 0; i < nodes.length; i++) {
-    nodes[i].classList.toggle('active', i === idx);
+  var tiles = document.querySelectorAll('.ring-tile-h');
+  for (var i = 0; i < tiles.length; i++) {
+    tiles[i].classList.toggle('active', i === idx);
   }
-  renderWheelPreview(idx);
-  var lbl = document.getElementById('wheel-nav-lbl');
-  if (lbl) lbl.textContent = RINGS[idx].name;
+  renderRingPreview(idx);
 }
 
 function wheelStep(dir) {
@@ -874,26 +895,174 @@ function wheelStep(dir) {
   setWheelActive(next);
 }
 
-function renderWheelPreview(idx) {
-  var wrap = document.getElementById('wheel-preview');
+function renderRingPreview(idx) {
+  var wrap = document.getElementById('ring-preview');
   if (!wrap) return;
   var r = RINGS[idx];
-  var sc = RING_SCALES[idx];
-  var cache = getMockData(idx);
-  var curVal = cache.length ? fmtVal(cache[cache.length-1].v, sc) : r.val;
-  var whyText = (r.why || '').replace(/<[^>]+>/g, '').substring(0, 120);
-  if (whyText.length === 120) whyText += '…';
-  wrap.innerHTML = '<div class="wp-header">'
-    + '<div class="wp-name">' + r.icon + ' ' + r.name + '</div>'
-    + '<button class="wp-open-btn" onclick="openDetail(' + idx + ')" style="background:' + r.color + '">Open →</button>'
+  var R = 50, circ = +(2 * Math.PI * R).toFixed(2);
+  var off = +(circ - circ * r.pct).toFixed(2);
+  var tc = r.trendUp ? '#5cc87a' : '#f87171';
+  var col = r.color;
+
+  var lc = r.logConfig;
+  var logFieldHtml = '';
+  if (lc.isWater) {
+    logFieldHtml = '<div class="quick-row">'
+      + '<button class="quick-btn" onclick="logQuick(' + idx + ',8)">+8 oz</button>'
+      + '<button class="quick-btn" onclick="logQuick(' + idx + ',12)">+12 oz</button>'
+      + '<button class="quick-btn" onclick="logQuick(' + idx + ',16)">+16 oz</button>'
+      + '<button class="quick-btn" onclick="logQuick(' + idx + ',32)">+32 oz</button>'
+      + '</div>'
+      + '<div class="log-row">'
+      + '<input class="log-input" id="log-input-' + idx + '" type="number" placeholder="Custom oz...">'
+      + '<button class="log-add" style="background:' + col + '" onclick="submitLog(' + idx + ')">Add</button>'
+      + '</div>';
+  } else if (r.macros) {
+    logFieldHtml = '<div class="food-search-row">'
+      + '<input class="food-input" id="log-input-' + idx + '" type="text" placeholder="' + lc.placeholder + '">'
+      + '<button class="food-add" style="background:' + col + '" onclick="submitLog(' + idx + ')">Log</button>'
+      + '</div>';
+  } else {
+    logFieldHtml = '<div class="log-field">'
+      + '<div class="log-label">' + lc.label + (lc.unit ? ' (' + lc.unit + ')' : '') + '</div>'
+      + '<div class="log-row">'
+      + '<input class="log-input" id="log-input-' + idx + '" type="text" placeholder="' + lc.placeholder + '">'
+      + '<button class="log-add" style="background:' + col + '" onclick="submitLog(' + idx + ')">Add</button>'
+      + '</div></div>';
+  }
+  var logHtml = '<div class="gc gc-p" id="log-card-' + idx + '">'
+    + logFieldHtml
+    + '<div class="log-entries" id="log-entries-' + idx + '"></div>'
+    + '</div>';
+
+  var macrosBarsHtml = '';
+  if (r.macros) {
+    var m = r.macros;
+    var macroList = [
+      {lbl:'Protein', cur:m.protein[0], goal:m.protein[1], color:'#94a3b8'},
+      {lbl:'Carbs',   cur:m.carbs[0],   goal:m.carbs[1],   color:'#a8a29e'},
+      {lbl:'Fat',     cur:m.fat[0],     goal:m.fat[1],     color:'#b0a890'},
+      {lbl:'Fiber',   cur:m.fiber[0],   goal:m.fiber[1],   color:'#86a896'},
+    ];
+    macrosBarsHtml = '<div class="sec">Macro Breakdown</div><div class="gc gc-p"><div class="macro-bar-row">'
+      + macroList.map(function(ml) {
+          var pct2 = Math.min(ml.cur / ml.goal * 100, 100);
+          return '<div class="macro-line">'
+            + '<div class="macro-labels"><span class="macro-lbl">' + ml.lbl + '</span>'
+            + '<span class="macro-pct" style="color:' + ml.color + '">' + ml.cur + 'g / ' + ml.goal + 'g</span></div>'
+            + '<div class="macro-track"><div class="macro-fill" style="width:0%;background:' + ml.color + '" data-w="' + pct2 + '"></div></div>'
+            + '</div>';
+        }).join('')
+      + '</div></div>';
+  }
+
+  var goalHtml = '<div id="goal-section-' + idx + '">' + renderGoalSection(idx) + '</div>';
+
+  var nutritionHtml = '';
+  if (r.nutrition) {
+    var nutItems = r.nutrition.items.map(function(item) {
+      return '<div class="nutrition-item"><div class="ni-icon">' + item[0] + '</div>'
+        + '<div class="ni-text"><strong>' + item[1] + '</strong>' + item[2] + '</div></div>';
+    }).join('');
+    nutritionHtml = '<div class="sec">Foods That Improve</div><div class="gc">' + nutItems + '</div>';
+  }
+
+  var inputsHtml = r.inputs.map(function(s) {
+    return '<div class="gc-row"><span class="gc-lbl">' + s[0] + '</span><span class="gc-val-sm">' + s[1] + '</span></div>';
+  }).join('');
+
+  var tipsHtml = r.tips.map(function(s) {
+    return '<div class="tip-row-d"><div class="tip-head"><div class="tip-dot" style="background:' + col + '"></div>' + s[0] + '</div>'
+      + '<div class="tip-desc">' + s[1] + '</div></div>';
+  }).join('');
+
+  var ds = r.dataSource || {manual:true, device:false, deviceLabel:''};
+  var deviceSectionHtml = '';
+  if (ds.device) {
+    var syncRows = '';
+    var todayKeyD = getDayKey(new Date());
+    if (rawDayLogs[idx] && rawDayLogs[idx][todayKeyD] && rawDayLogs[idx][todayKeyD].length) {
+      var dayE = rawDayLogs[idx][todayKeyD];
+      for (var di = 0; di < dayE.length; di++) {
+        var dTs = dayE[di].ts;
+        var dTstr = dTs.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+        syncRows += '<div class="device-entry"><span class="device-time">' + dTstr + '</span><span class="device-val" style="color:' + col + '">' + fmtVal(dayE[di].v, RING_SCALES[idx]) + ' ' + RING_SCALES[idx].unit + '</span></div>';
+      }
+    } else {
+      syncRows = '<div class="no-entries" style="padding:8px 0;font-size:12px;color:var(--muted)">No synced data today — connect your device</div>';
+    }
+    deviceSectionHtml = '<div class="gc gc-p">'
+      + '<div class="device-badge-row"><span class="device-badge">📡 Device Sync</span><span class="device-source-lbl">' + ds.deviceLabel + '</span></div>'
+      + syncRows + '</div>';
+  }
+  var sectionLabel = ds.device && !ds.manual ? 'Device Data' : (ds.device ? 'Sync & Log' : 'Log Today');
+
+  wrap.innerHTML =
+    '<div class="d-hero">'
+    + '<div class="d-ring-wrap"><svg width="130" height="130" viewBox="0 0 130 130">'
+    + '<circle class="d-bg" cx="65" cy="65" r="50"/>'
+    + '<circle class="d-fill" id="d-ring" cx="65" cy="65" r="50" stroke="' + col + '"'
+    + ' stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
+    + ' data-off="' + off + '" transform="rotate(-90 65 65)"/>'
+    + '</svg><div class="d-center"><div class="d-val" style="color:' + col + '">' + r.val + '</div>'
+    + '<div class="d-unit">' + r.unit + '</div></div></div>'
+    + '<div class="d-name">' + r.icon + '  ' + r.name + '</div>'
+    + '<div class="d-goal">' + r.goal + '</div>'
+    + '<div class="d-trend" style="background:' + tc + '18;color:' + tc + '">' + r.trend + '</div>'
     + '</div>'
-    + '<div class="wp-stats">'
-    + '<div class="wp-stat"><div class="wp-stat-lbl">Today</div><div class="wp-stat-val" style="color:' + r.color + '">' + curVal + '</div><div class="wp-stat-goal">' + sc.unit + '</div></div>'
-    + '<div class="wp-stat"><div class="wp-stat-lbl">Goal</div><div class="wp-stat-val">' + fmtVal(sc.target, sc) + '</div><div class="wp-stat-goal">' + sc.unit + '</div></div>'
-    + '<div class="wp-stat"><div class="wp-stat-lbl">Progress</div><div class="wp-stat-val" style="color:' + r.color + '">' + Math.round(r.pct * 100) + '%</div><div class="wp-stat-goal">of goal</div></div>'
-    + '</div>'
-    + '<div class="wp-why">' + whyText + '</div>';
-  wrap.style.display = 'block';
+
+    + '<div class="sec">Why It Matters</div>'
+    + '<div class="why-gc">' + r.why + '</div>'
+
+    + '<div class="sec">Today\'s Progress</div>'
+    + '<div class="gc gc-p" id="tracker-wrap-' + idx + '"></div>'
+
+    + '<div class="sec">My Goals</div>'
+    + goalHtml
+
+    + '<div class="sec">' + sectionLabel + '</div>'
+    + deviceSectionHtml
+    + (ds.manual ? logHtml : '')
+    + macrosBarsHtml
+
+    + '<div class="sec">Progress</div>'
+    + buildGraphHtml(idx)
+
+    + '<div class="sec">How It Affects Your Body</div>'
+    + buildBodyDiagHtml(idx)
+
+    + '<div class="sec">What Drives This</div>'
+    + '<div class="gc">' + inputsHtml + '</div>'
+
+    + '<div class="sec">Tips to Improve</div>'
+    + '<div class="gc">' + tipsHtml + '</div>'
+
+    + nutritionHtml;
+
+  setTimeout(function() {
+    var dr = document.getElementById('d-ring');
+    if (dr) dr.style.strokeDashoffset = dr.getAttribute('data-off');
+    var fills = wrap.querySelectorAll('.macro-fill, .goal-bar-fill');
+    for (var fi = 0; fi < fills.length; fi++) {
+      var w = fills[fi].getAttribute('data-w');
+      if (w) fills[fi].style.width = w + '%';
+    }
+  }, 80);
+
+  refreshLogEntries(idx);
+  var tw = document.getElementById('tracker-wrap-' + idx);
+  if (tw) {
+    tw.innerHTML = buildDayTrackerHtml(idx);
+    setTimeout(function() {
+      var fills = tw.querySelectorAll('.goal-bar-fill');
+      for (var fi = 0; fi < fills.length; fi++) {
+        var w2 = fills[fi].getAttribute('data-w');
+        if (w2) fills[fi].style.width = w2 + '%';
+      }
+    }, 80);
+  }
+  renderGraphInner(idx);
+  setTimeout(function() { initGraphHover(idx); }, 50);
 }
 
 // ── NAVIGATION ─────────────────────────────────
