@@ -462,7 +462,7 @@
     /* Ring row */
     .rings-scroll-outer { width:100%; padding:0 8px; }
     .rings-scroll-inner { display:flex; flex-wrap:nowrap; justify-content:center; gap:4px; padding:8px 0 12px; }
-    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; border:1px solid transparent; transition:background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
+    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; transition:transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
     .ring-tile-h:active { transform:scale(0.88); }
     .ring-tile-h .rmini { position:relative; width:48px; height:48px; }
     .ring-tile-h .rmini svg { display:block; }
@@ -895,7 +895,7 @@ function renderRingRow() {
     var isActive = i === wheelActiveIdx;
     var pct = Math.round(ring.pct * 100) + '%';
     html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
-      + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48" style="filter:drop-shadow(0 0 6px ' + ring.color + '88)">'
+      + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48">'
       + '<circle cx="24" cy="24" r="' + Rv + '" fill="none" stroke="' + ring.color + '" stroke-width="6" opacity="0.15" stroke-linecap="round"/>'
       + '<circle class="r-bloom" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
       + ' stroke-width="10" stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
