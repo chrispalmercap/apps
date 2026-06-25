@@ -562,8 +562,12 @@
       <div class="home-score-area">
         <div class="score-lbl">Today's Body Score</div>
         <div class="score-ring-wrap" style="cursor:pointer" onclick="openBodyScore()">
-          <svg width="160" height="160" viewBox="0 0 160 160">
+          <svg id="score-svg" width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 10px #22c55e88)">
             <circle class="s-bg" cx="80" cy="80" r="65"/>
+            <circle id="score-bloom" cx="80" cy="80" r="65" fill="none" stroke="#22c55e"
+              stroke-width="20" stroke-linecap="round" opacity="0.13"
+              stroke-dasharray="408" stroke-dashoffset="408" transform="rotate(-90 80 80)"
+              style="transition:stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1)"/>
             <circle class="s-fill" id="score-ring" cx="80" cy="80" r="65"
               stroke="#22c55e" transform="rotate(-90 80 80)"/>
           </svg>
@@ -836,7 +840,14 @@ function init() {
   var col  = getScoreColor(s);
   ring.style.stroke = col;
   num.style.color = col;
-  setTimeout(function() { ring.style.strokeDashoffset = off; }, 80);
+  var bloom = document.getElementById('score-bloom');
+  var svg   = document.getElementById('score-svg');
+  if (bloom) bloom.style.stroke = col;
+  if (svg)   svg.style.filter   = 'drop-shadow(0 0 12px ' + col + '90)';
+  setTimeout(function() {
+    ring.style.strokeDashoffset = off;
+    if (bloom) bloom.style.strokeDashoffset = off;
+  }, 80);
   var n = 0, step = s / 60;
   var t = setInterval(function() {
     n = Math.min(n + step, s); num.textContent = Math.round(n);
@@ -879,13 +890,7 @@ function renderRingRow() {
     var off = +(circ - circ * ring.pct).toFixed(2);
     var isActive = i === wheelActiveIdx;
     var pct = Math.round(ring.pct * 100) + '%';
-    var tileBg     = isActive ? ring.color + '28' : ring.color + '10';
-    var tileBorder = isActive ? ring.color + '60' : ring.color + '22';
-    var tileShadow = isActive
-      ? '0 0 20px ' + ring.color + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
-    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')"'
-      + ' style="background:' + tileBg + ';border-color:' + tileBorder + ';box-shadow:' + tileShadow + '">'
+    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
       + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48" style="filter:drop-shadow(0 0 6px ' + ring.color + '88)">'
       + '<circle cx="24" cy="24" r="' + Rv + '" fill="none" stroke="' + ring.color + '" stroke-width="6" opacity="0.15" stroke-linecap="round"/>'
       + '<circle class="r-bloom" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
@@ -914,14 +919,7 @@ function setWheelActive(idx) {
   wheelActiveIdx = idx;
   var tiles = document.querySelectorAll('.ring-tile-h');
   for (var i = 0; i < tiles.length; i++) {
-    var active = i === idx;
-    tiles[i].classList.toggle('active', active);
-    var c = RINGS[i].color;
-    tiles[i].style.background   = active ? c + '28' : c + '10';
-    tiles[i].style.borderColor  = active ? c + '60' : c + '22';
-    tiles[i].style.boxShadow    = active
-      ? '0 0 20px ' + c + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
+    tiles[i].classList.toggle('active', i === idx);
   }
   updateRingDivider(RINGS[idx].color);
   renderRingPreview(idx);
