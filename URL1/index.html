@@ -578,8 +578,8 @@
         <div class="rings-scroll-outer">
           <div class="rings-scroll-inner" id="ring-row"></div>
         </div>
-        <div style="width:100%;padding:0 16px;">
-          <div style="height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.5) 30%,rgba(139,92,246,0.6) 50%,rgba(100,160,255,0.5) 70%,transparent 100%);box-shadow:0 0 10px rgba(100,160,255,0.3),0 0 24px rgba(139,92,246,0.15)"></div>
+        <div style="width:100%;padding:0 16px;margin-top:4px;">
+          <div id="ring-divider-line" style="height:3px;border-radius:3px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.6) 30%,rgba(100,160,255,0.9) 50%,rgba(100,160,255,0.6) 70%,transparent 100%);box-shadow:0 0 14px rgba(100,160,255,0.5),0 0 32px rgba(100,160,255,0.25),0 1px 0 rgba(255,255,255,0.08)"></div>
         </div>
       </div>
       <div class="ring-preview-wrap">
@@ -833,7 +833,7 @@ function init() {
   var ring = document.getElementById('score-ring');
   var num  = document.getElementById('score-num');
   var delt = document.getElementById('score-delta');
-  var col  = s >= 75 ? '#22c55e' : s >= 50 ? '#fb923c' : '#f87171';
+  var col  = getScoreColor(s);
   ring.style.stroke = col;
   num.style.color = col;
   setTimeout(function() { ring.style.strokeDashoffset = off; }, 80);
@@ -846,6 +846,25 @@ function init() {
   delt.style.color = SCORE.delta >= 0 ? '#22c55e' : '#f87171';
 
   renderRingRow();
+}
+
+function getScoreColor(score) {
+  // smooth gradient: red(0) → orange(50) → yellow(70) → green(85-100)
+  var hue;
+  if (score <= 50)      hue = (score / 50) * 28;
+  else if (score <= 70) hue = 28 + ((score - 50) / 20) * 27;
+  else if (score <= 85) hue = 55 + ((score - 70) / 15) * 25;
+  else                  hue = 80 + ((score - 85) / 15) * 52;
+  var sat = score <= 50 ? 90 : 85;
+  var lit = score <= 50 ? 52 : 54;
+  return 'hsl(' + hue.toFixed(1) + ',' + sat + '%,' + lit + '%)';
+}
+
+function updateRingDivider(color) {
+  var el = document.getElementById('ring-divider-line');
+  if (!el) return;
+  el.style.background = 'linear-gradient(90deg,transparent 0%,' + color + 'aa 25%,' + color + ' 50%,' + color + 'aa 75%,transparent 100%)';
+  el.style.boxShadow = '0 0 14px ' + color + '88,0 0 32px ' + color + '44,0 1px 0 rgba(255,255,255,0.08)';
 }
 
 var wheelActiveIdx = 0;
@@ -878,6 +897,7 @@ function renderRingRow() {
       fills[i].style.strokeDashoffset = fills[i].getAttribute('data-off');
     }
   }, 200);
+  updateRingDivider(RINGS[wheelActiveIdx].color);
   renderRingPreview(wheelActiveIdx);
 }
 
@@ -887,6 +907,7 @@ function setWheelActive(idx) {
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.toggle('active', i === idx);
   }
+  updateRingDivider(RINGS[idx].color);
   renderRingPreview(idx);
 }
 
