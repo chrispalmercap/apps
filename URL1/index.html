@@ -462,8 +462,7 @@
     /* Ring row */
     .rings-scroll-outer { width:100%; padding:0 8px; }
     .rings-scroll-inner { display:flex; flex-wrap:nowrap; justify-content:center; gap:4px; padding:8px 0 12px; }
-    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; transition:transform 0.2s cubic-bezier(.34,1.56,.64,1), opacity 0.2s ease; flex:1; min-width:0; -webkit-tap-highlight-color:transparent; opacity:0.35; }
-    .ring-tile-h.active { opacity:1; }
+    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; border:1px solid transparent; transition:background 0.25s, border-color 0.25s, box-shadow 0.25s, opacity 0.3s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
     .ring-tile-h:active { transform:scale(0.88); }
     .ring-tile-h .rmini { position:relative; width:48px; height:48px; }
     .ring-tile-h .rmini svg { display:block; }
@@ -472,7 +471,7 @@
     .ring-tile-h .r-pct { font-size:11px; font-weight:900; letter-spacing:-0.3px; }
     .ring-tile-h .r-name { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:.2px; text-align:center; line-height:1.2; width:100%; }
     /* Sticky ring row */
-    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; background:rgba(8,13,26,0.82); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; }
     /* Preview panel */
     .ring-preview-wrap { width:100%; padding:0 0 48px; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
@@ -862,6 +861,19 @@ function init() {
   delt.style.color = SCORE.delta >= 0 ? '#22c55e' : '#f87171';
 
   renderRingRow();
+
+  var ringsDimmed = false;
+  window.addEventListener('scroll', function() {
+    var homeEl = document.getElementById('v-home');
+    if (!homeEl || homeEl.style.display === 'none') return;
+    var scrolled = (window.scrollY || window.pageYOffset) > 220;
+    if (scrolled === ringsDimmed) return;
+    ringsDimmed = scrolled;
+    var tiles = document.querySelectorAll('.ring-tile-h');
+    for (var i = 0; i < tiles.length; i++) {
+      tiles[i].style.opacity = scrolled ? (tiles[i].classList.contains('active') ? '1' : '0.3') : '1';
+    }
+  }, {passive:true});
 }
 
 function getScoreColor(score) {
@@ -895,7 +907,13 @@ function renderRingRow() {
     var off = +(circ - circ * ring.pct).toFixed(2);
     var isActive = i === wheelActiveIdx;
     var pct = Math.round(ring.pct * 100) + '%';
-    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
+    var tileBg     = isActive ? ring.color + '28' : ring.color + '10';
+    var tileBorder = isActive ? ring.color + '60' : ring.color + '22';
+    var tileShadow = isActive
+      ? '0 0 20px ' + ring.color + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
+      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
+    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')"'
+      + ' style="background:' + tileBg + ';border-color:' + tileBorder + ';box-shadow:' + tileShadow + '">'
       + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48">'
       + '<circle cx="24" cy="24" r="' + Rv + '" fill="none" stroke="' + ring.color + '" stroke-width="6" opacity="0.15" stroke-linecap="round"/>'
       + '<circle class="r-bloom" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
@@ -923,8 +941,17 @@ function renderRingRow() {
 function setWheelActive(idx) {
   wheelActiveIdx = idx;
   var tiles = document.querySelectorAll('.ring-tile-h');
+  var scrolled = (window.scrollY || window.pageYOffset) > 220;
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].classList.toggle('active', i === idx);
+    var act = i === idx;
+    tiles[i].classList.toggle('active', act);
+    var c = RINGS[i].color;
+    tiles[i].style.background  = act ? c + '28' : c + '10';
+    tiles[i].style.borderColor = act ? c + '60' : c + '22';
+    tiles[i].style.boxShadow   = act
+      ? '0 0 20px ' + c + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
+      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
+    tiles[i].style.opacity = scrolled ? (act ? '1' : '0.3') : '1';
   }
   updateRingDivider(RINGS[idx].color);
   renderRingPreview(idx);
