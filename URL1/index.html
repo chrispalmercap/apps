@@ -317,15 +317,10 @@
     }
     .body-sys-btn:hover { background: var(--surface); color: var(--text); }
     .body-sys-btn.active { color: var(--text); border-color: currentColor; background: var(--surface); }
-    .body-info-panel {
-      background: var(--surface2); border-radius: 10px; padding: 10px 12px;
-      border: 1px solid var(--border);
-    }
-    .body-info-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-    .body-info-fn { font-size: 11px; color: var(--muted); line-height: 1.45; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-    .body-info-facts { display: flex; flex-direction: column; gap: 6px; }
-    .body-info-fact { font-size: 11px; color: var(--text2); line-height: 1.45; display: flex; gap: 6px; }
-    .body-info-bullet { color: var(--muted); flex-shrink: 0; font-size: 13px; line-height: 1.3; }
+    .body-info-panel { display: flex; flex-direction: column; gap: 5px; }
+    .body-info-title { font-size: 12px; font-weight: 700; color: var(--text); }
+    .body-info-fn { font-size: 11px; color: var(--muted); line-height: 1.45; }
+    .body-info-facts { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
     .b-ic { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
     .b-tx { flex: 1; min-width: 0; }
     .b-tx strong { font-size: 12px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
@@ -3476,26 +3471,26 @@ function setBodyDiagGender(g, btn) {
 }
 
 function selectBodySystem(idx, sysKey, btn) {
+  // Clear all button states first
+  var grid = document.getElementById('bd-sys-grid-' + idx);
+  if (grid) {
+    var allBtns = grid.querySelectorAll('.body-sys-btn');
+    for (var i = 0; i < allBtns.length; i++) {
+      allBtns[i].classList.remove('active');
+      allBtns[i].style.color = '';
+      allBtns[i].style.borderColor = '';
+    }
+  }
   if (bdSelectedSys === sysKey) {
     bdSelectedSys = null;
-    btn.classList.remove('active');
   } else {
     bdSelectedSys = sysKey;
-    var grid = document.getElementById('bd-sys-grid-' + idx);
-    if (grid) {
-      var allBtns = grid.querySelectorAll('.body-sys-btn');
-      for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('active');
-    }
     btn.classList.add('active');
-    // color the active button with its system color
     var sys = null;
     for (var j = 0; j < BODY_SYSTEMS.length; j++) {
       if (BODY_SYSTEMS[j].key === sysKey) { sys = BODY_SYSTEMS[j]; break; }
     }
-    if (sys) {
-      btn.style.color = sys.color;
-      btn.style.borderColor = sys.color;
-    }
+    if (sys) { btn.style.color = sys.color; btn.style.borderColor = sys.color; }
   }
   updateBodyDiagOverlays(idx);
   renderBodyInfoPanel(idx);
@@ -3520,6 +3515,30 @@ function updateBodyDiagOverlays(idx) {
   g.innerHTML = html;
 }
 
+function bdFactCard(text, borderColor) {
+  // Split on em-dash for title / description, fallback to first sentence
+  var sep = text.indexOf(' — ');
+  var title, desc;
+  if (sep > 0 && sep < 80) {
+    title = text.slice(0, sep);
+    desc = text.slice(sep + 3);
+  } else {
+    var dot = text.indexOf('. ');
+    if (dot > 20 && dot < 90) {
+      title = text.slice(0, dot + 1);
+      desc = text.slice(dot + 2);
+    } else {
+      title = '';
+      desc = text;
+    }
+  }
+  return '<div class="body-diag-card" style="border-left:3px solid ' + borderColor + ';cursor:default;">'
+    + '<div class="b-tx">'
+    + (title ? '<strong>' + title + '</strong>' : '')
+    + '<span>' + desc + '</span>'
+    + '</div></div>';
+}
+
 function renderBodyInfoPanel(idx) {
   var panel = document.getElementById('bd-info-' + idx);
   if (!panel) return;
@@ -3528,12 +3547,11 @@ function renderBodyInfoPanel(idx) {
 
   if (!bdSelectedSys || !bodyData) {
     var defs = bodyData ? bodyData.defaultFacts : [];
+    var neutralColor = 'rgba(155,172,200,0.4)';
     var html = '<div class="body-info-title">Body Impact</div>';
     html += '<div class="body-info-fn">Select a system to see how ' + ring.name + ' affects it specifically.</div>';
     html += '<div class="body-info-facts">';
-    for (var d = 0; d < defs.length; d++) {
-      html += '<div class="body-info-fact"><span class="body-info-bullet">•</span>' + defs[d] + '</div>';
-    }
+    for (var d = 0; d < defs.length; d++) html += bdFactCard(defs[d], neutralColor);
     html += '</div>';
     panel.innerHTML = html;
     return;
@@ -3550,12 +3568,10 @@ function renderBodyInfoPanel(idx) {
   html += '<div class="body-info-fn">' + sys.fn + '</div>';
   if (facts.length > 0) {
     html += '<div class="body-info-facts">';
-    for (var f = 0; f < facts.length; f++) {
-      html += '<div class="body-info-fact"><span class="body-info-bullet" style="color:' + sys.color + '">•</span>' + facts[f] + '</div>';
-    }
+    for (var f = 0; f < facts.length; f++) html += bdFactCard(facts[f], sys.color + '55');
     html += '</div>';
   } else {
-    html += '<div style="font-size:11px;color:var(--muted)">Indirect influence — this system is less directly affected by ' + ring.name + '.</div>';
+    html += '<div class="body-info-facts"><div class="body-diag-card" style="border-left:3px solid rgba(155,172,200,0.3);cursor:default;"><div class="b-tx"><span>Indirect influence — this system is less directly affected by ' + ring.name + '.</span></div></div></div>';
   }
   panel.innerHTML = html;
 }
@@ -3570,10 +3586,11 @@ function buildBodyDiagHtml(idx) {
   var bodyData = RING_BODY_DATA[r.name];
   var defs = bodyData ? bodyData.defaultFacts : [];
 
+  var neutralColor = 'rgba(155,172,200,0.4)';
   var defaultHtml = '<div class="body-info-title">Body Impact</div>'
     + '<div class="body-info-fn">Select a system to see how ' + r.name + ' affects it specifically.</div>'
     + '<div class="body-info-facts">'
-    + defs.map(function(f){ return '<div class="body-info-fact"><span class="body-info-bullet">•</span>' + f + '</div>'; }).join('')
+    + defs.map(function(f){ return bdFactCard(f, neutralColor); }).join('')
     + '</div>';
 
   var sysBtns = BODY_SYSTEMS.map(function(sys) {
