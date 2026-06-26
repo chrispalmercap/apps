@@ -294,7 +294,7 @@
 
     /* ── BODY DIAGRAM ── */
     .body-diag-wrap { margin-bottom: 4px; }
-    .body-diag-gender { display: flex; gap: 6px; margin-bottom: 12px; }
+    .body-diag-gender { display: flex; gap: 6px; margin-bottom: 10px; }
     .body-diag-gender-btn {
       padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border);
       background: var(--surface2); color: var(--muted);
@@ -304,17 +304,28 @@
     .body-diag-gender-btn.male-btn.active { border-color: #06b6d4; color: #06b6d4; }
     .body-diag-gender-btn.female-btn.active { border-color: #ec4899; color: #ec4899; }
     .body-diag-layout { display: flex; gap: 12px; align-items: flex-start; }
-    .body-diag-svg-col { flex-shrink: 0; width: 110px; }
-    .body-diag-svg-col svg { width: 100%; height: auto; }
-    .body-diag-cards { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-    .body-diag-card {
-      display: flex; align-items: flex-start; gap: 9px;
-      padding: 8px 10px; border-radius: 10px;
-      background: var(--surface2); border: 1px solid var(--border);
-      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    .body-diag-svg-col { flex-shrink: 0; width: 106px; }
+    .body-diag-svg-col svg { width: 100%; height: auto; display: block; }
+    .body-diag-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+    .body-sys-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+    .body-sys-btn {
+      padding: 3px 8px; border-radius: 20px; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--muted);
+      font-size: 10px; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: background 0.12s, border-color 0.15s, color 0.15s;
+      white-space: nowrap; line-height: 1.6;
     }
-    .body-diag-card:hover { background: var(--surface); }
-    .body-diag-card.highlighted { background: var(--surface); border-color: rgba(0,0,0,0.12); }
+    .body-sys-btn:hover { background: var(--surface); color: var(--text); }
+    .body-sys-btn.active { color: var(--text); border-color: currentColor; background: var(--surface); }
+    .body-info-panel {
+      background: var(--surface2); border-radius: 10px; padding: 10px 12px;
+      border: 1px solid var(--border);
+    }
+    .body-info-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .body-info-fn { font-size: 11px; color: var(--muted); line-height: 1.45; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .body-info-facts { display: flex; flex-direction: column; gap: 6px; }
+    .body-info-fact { font-size: 11px; color: var(--text2); line-height: 1.45; display: flex; gap: 6px; }
+    .body-info-bullet { color: var(--muted); flex-shrink: 0; font-size: 13px; line-height: 1.3; }
     .b-ic { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
     .b-tx { flex: 1; min-width: 0; }
     .b-tx strong { font-size: 12px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
@@ -462,7 +473,7 @@
     /* Ring row */
     .rings-scroll-outer { width:100%; padding:0 8px; }
     .rings-scroll-inner { display:flex; flex-wrap:nowrap; justify-content:center; gap:4px; padding:8px 0 12px; }
-    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; border:1px solid transparent; transition:background 0.25s, border-color 0.25s, box-shadow 0.25s, opacity 0.3s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
+    .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; transition:opacity 0.3s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
     .ring-tile-h:active { transform:scale(0.88); }
     .ring-tile-h .rmini { position:relative; width:48px; height:48px; }
     .ring-tile-h .rmini svg { display:block; }
@@ -471,7 +482,7 @@
     .ring-tile-h .r-pct { font-size:11px; font-weight:900; letter-spacing:-0.3px; }
     .ring-tile-h .r-name { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:.2px; text-align:center; line-height:1.2; width:100%; }
     /* Sticky ring row */
-    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; background:var(--bg); }
+    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; background: radial-gradient(ellipse 70% 45% at 15% -5%, rgba(99,102,241,0.18) 0%, transparent 65%), radial-gradient(ellipse 55% 35% at 90% 105%, rgba(14,165,233,0.14) 0%, transparent 65%), radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%), linear-gradient(160deg, #070b15 0%, #0d1a2e 60%, #070f1e 100%); background-attachment:fixed; }
     /* Preview panel */
     .ring-preview-wrap { width:100%; padding:0 0 48px; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
@@ -635,7 +646,7 @@ var RINGS = [
         ['🫒','Olive Oil','Oleocanthal has anti-inflammatory properties that reduce systemic inflammation linked to low HRV.'],
       ]
     },
-    why:'<strong>HRV</strong> measures variation between heartbeats — the most sensitive signal of how well your body recovers from physical and mental stress. Higher HRV means your nervous system is balanced and ready. Lower means you\'re still under load.',
+    why:'<strong>HRV</strong> measures variation between heartbeats — the most sensitive signal of how well your body is recovering from stress. Higher HRV means your nervous system is balanced and ready to perform. Lower means you\'re still under load, even if you feel fine.',
     inputs:[['Sleep quality','#1 driver. Poor sleep tanks HRV by 10+ ms overnight.'],['Alcohol','Even 1–2 drinks drops HRV 10–15 ms the next day.'],['Training load','Hard workouts reduce HRV 24–48 hrs — normal adaptation.'],['Stress','Psychological stress degrades HRV just like physical load.']],
     tips:[['Sleep first','Consistent 7–9 hrs moves HRV more than any supplement or protocol.'],['Cut alcohol 2 weeks','Most people see HRV jump 8–12 ms. Nothing else works this fast.'],['Zone 2 cardio 3×/week','Best long-term HRV builder — mitochondrial adaptation over 6–8 weeks.'],['Cold exposure','1–3 min cold shower acutely boosts HRV within 30 minutes.']],
     body:[['🫀','Cardiovascular health','Higher HRV predicts lower risk of heart disease — it reflects vagal control of your heart.','cardiovascular'],['🧠','Stress resilience','Low HRV correlates with anxiety, poor decisions, and emotional reactivity.','nervous'],['💪','Recovery','Athletes with higher HRV recover faster and sustain bigger training loads.','musculoskeletal'],['🛡️','Immune function','Chronic low HRV correlates with elevated inflammation markers.','nervous'],['🔄','Menstrual cycle & HRV','Progesterone in the luteal phase drops HRV by 10–15ms — tracking this cycle helps predict low-recovery days and adjust training.','endocrine','f'],['🌡️','Menopause & HRV loss','Estrogen loss at menopause eliminates women\'s natural HRV advantage. Post-menopause, cardiac autonomic risk equalizes with men.','cardiovascular','f'],['💪','Men & HRV baseline','Men run 5–10ms lower baseline HRV than age-matched women — testosterone raises sympathetic tone. Your own trend matters far more than any absolute number.','nervous','m'],['🫀','Testosterone & cardiac recovery','Testosterone accelerates adrenergic recovery post-exercise, helping trained men rebound HRV faster than untrained peers despite their lower average baseline.','cardiovascular','m']],
@@ -657,7 +668,7 @@ var RINGS = [
         ['🥛','Warm Milk or Turkey','Tryptophan → serotonin → melatonin pathway. Small protein snack 1 hr before bed.'],
       ]
     },
-    why:'Sleep is the single most powerful recovery tool available. Your brain clears waste, muscle repairs, hormones reset, and memory consolidates. No supplement or training protocol compensates for chronic short sleep.',
+    why:'Sleep is the single most powerful recovery tool available. Your brain clears metabolic waste, muscles repair, hormones reset, and memories consolidate — all overnight. No supplement, habit, or training protocol fully compensates for chronic short sleep.',
     inputs:[['Consistency','Same bed and wake time anchors your circadian rhythm.'],['Light exposure','Morning sunlight sets your clock. Blue light at night delays melatonin.'],['Room temp','Core temp must drop ~2°F to initiate deep sleep. 65–68°F is optimal.'],['Caffeine','Half-life 5–7 hrs. A 3pm coffee = 50% active caffeine at 9pm.']],
     tips:[['Same wake time daily','More powerful than bedtime consistency — even on weekends.'],['No caffeine after 1pm','Most people see better deep sleep within 3 days.'],['Bedroom at 67°F','If you wake 2–4am, temperature is often the cause.'],['10-min walk after dinner','Lowers cortisol and blunts glucose — both improve sleep onset.']],
     body:[['🧠','Brain clearance','Deep sleep flushes beta-amyloid and tau linked to Alzheimer\'s. Chronic short sleep accelerates accumulation.','nervous'],['💪','Muscle repair','80% of growth hormone releases during slow-wave sleep — when muscle fibers rebuild.','musculoskeletal'],['⚖️','Hunger hormones','One bad night raises ghrelin +24% and drops leptin. This is why you crave carbs after poor sleep.','endocrine'],['🛡️','Immunity','Sleep deprivation reduces natural killer cell activity by up to 70%.','nervous'],['🔄','Hormonal sleep disruption','Estrogen and progesterone fluctuations during menstruation, pregnancy, and menopause are the leading cause of insomnia in women — more impactful than in men.','endocrine','f'],['🧠','More REM, more vulnerability','Women average 20 extra minutes of REM sleep nightly but are 40% more likely to experience insomnia, linked to cortisol dysregulation and rumination.','nervous','f'],['😮‍💨','Sleep apnea risk','Men are 3–5× more likely to develop obstructive sleep apnea — it fragments sleep architecture, suppresses HRV, and elevates RHR. Loud snoring + daytime fatigue = consider a sleep study.','nervous','m'],['💤','Testosterone & slow-wave sleep','Testosterone drives deeper slow-wave sleep in younger men, but levels decline ~1%/year after 30, progressively eroding SWS quality and growth hormone output.','endocrine','m']],
@@ -679,7 +690,7 @@ var RINGS = [
         ['🥛','Protein + Carbs Post-Session','Within 45 min. Supports mitochondrial biogenesis — the actual adaptation you\'re training for.'],
       ]
     },
-    why:'Zone 2 is sustained low-intensity cardio — you can speak in full sentences but it takes effort. It trains your mitochondria, the cellular engines that burn fat and produce energy. Best-researched predictor of longevity and metabolic health.',
+    why:'Zone 2 is sustained low-intensity cardio — you can speak in full sentences but it takes effort. It trains your mitochondria, the cellular engines that burn fat and produce energy. The best-researched single predictor of longevity and metabolic health.',
     inputs:[['Heart rate','60–70% of max HR. Talk test: full sentences with effort.'],['Duration','30–60 min sessions to get the mitochondrial training signal.'],['Weekly volume','150+ min/week is the evidence-based floor.'],['Consistency','Adaptations take 6–8 weeks — trust the process.']],
     tips:[['Slow your runs down','If Zone 2 is low, you\'re likely in Zone 3–4. Slow until you can talk easily.'],['Incline treadmill walk','3.5 mph at 5% grade = Zone 2, no impact, easy to sustain 45–60 min.'],['3–4 sessions per week','150 min/wk split across sessions. Each one compounds.'],['Bike or row for variety','Same cardio benefit, less joint stress — easier long sessions.']],
     body:[['⚡','Mitochondrial density','Zone 2 triggers mitochondrial biogenesis — more and better cellular engines for fat burning and energy production.','musculoskeletal'],['🩸','Metabolic flexibility','Trains fat oxidation at higher intensities — the mechanism behind sustained energy and body composition change.','endocrine'],['❤️','Cardiac output','Increases stroke volume over months, lowering resting HR — one of the best longevity markers.','cardiovascular'],['🧬','VO₂ max','Every 1-unit increase in VO₂ max = 9% lower mortality risk. Zone 2 is the primary driver.','pulmonary'],['🔥','Higher fat oxidation','Women burn 25–30% more fat than men at the same Zone 2 intensity — a hormonal advantage making Zone 2 especially effective for body composition.','endocrine','f'],['📅','Cycle-optimized training','Follicular phase (days 1–14): higher estrogen improves endurance capacity. Luteal phase: elevated progesterone increases core temp and perceived effort — reduce intensity accordingly.','endocrine','f'],['🔥','Carbohydrate-first metabolism','Men oxidize 25–30% more carbohydrate than women at the same Zone 2 intensity. Male endurance athletes need closer attention to intra-workout carb intake to sustain fat-burning adaptation.','endocrine','m'],['⚡','Testosterone-powered recovery','Testosterone activates satellite cells faster post-Zone 2, meaning men typically recover from sessions quicker and can sustain higher weekly training volume than women at equivalent fitness.','musculoskeletal','m']],
@@ -701,7 +712,7 @@ var RINGS = [
         ['🥗','Lighter Lunch','Heavy midday meals cause energy dips. Smaller, protein-forward lunch keeps you moving in the afternoon.'],
       ]
     },
-    why:'7,000–10,000 daily steps is associated with significant reductions in all-cause mortality, metabolic disease, and depression. The biggest benefit comes from the bottom end: going from 2,000 to 7,000 matters far more than 10,000 to 15,000.',
+    why:'7,000–10,000 daily steps is linked to significant reductions in all-cause mortality, metabolic disease, and depression. The biggest gains come from the bottom end — going from 2,000 to 7,000 steps matters far more than going from 10,000 to 15,000.',
     inputs:[['Watch/phone','Accelerometer tracks all movement — errands, pacing, everything.'],['Active breaks','5-min walks every hour have metabolic benefits beyond the count.'],['Intentional walks','Dog walks, stairs, parking further all accumulate.']],
     tips:[['Walk every phone call','Earbuds + walking adds 1,000–2,000 steps with zero schedule change.'],['Park far, always take stairs','1,000–1,500 extra steps/day with no dedicated time.'],['Post-meal walks','Even 10 min after eating blunts glucose spikes 20–30%.'],['Morning walk anchors the day','20 min after waking = light exposure + cortisol regulation + steps.']],
     body:[['🩺','Metabolic health','Regular walking lowers fasting glucose and improves insulin sensitivity without dietary change.','endocrine'],['🧠','Mental health','30 min walking produces dopamine and serotonin effects comparable to low-dose antidepressants.','nervous'],['🦴','Bone & joint health','Load-bearing movement stimulates bone density and cartilage maintenance.','musculoskeletal'],['❤️','Cardiovascular risk','7,000+ steps/day = 50–70% lower cardiac event risk vs. sedentary (<3,000).','cardiovascular'],['🦴','Osteoporosis prevention','Women lose up to 20% of bone density in the 5–7 years after menopause. Daily weight-bearing steps are the most accessible tool to stimulate osteoblast activity and slow this loss.','musculoskeletal','f'],['🔵','PCOS & insulin resistance','For women with PCOS, 7,000+ daily steps reduces fasting insulin by ~18% and supports menstrual regularity — comparable to early-stage metformin in effect.','endocrine','f'],['🫀','PSA & prostate health','Regular walking (7,000+ steps/day) is associated with measurable reductions in PSA velocity — the marker of prostate cell growth. Effect is dose-dependent and starts within 8 weeks.','gastrointestinal','m'],['❤️','Higher cardiovascular stakes','Men\'s cardiac risk is ~4× higher than women\'s before age 55. Each additional 2,000 steps above a sedentary baseline reduces cardiac event risk by roughly 10% — the benefit is especially pronounced for men.','cardiovascular','m']],
@@ -715,7 +726,7 @@ var RINGS = [
       entries:[['8:30 AM · Breakfast','Eggs + oatmeal — P:28g C:45g F:14g'],['1:00 PM · Lunch','Chicken rice bowl — P:52g C:68g F:18g']] },
     goalConfig:{ current:'78%', target:'100%', pct:.78, note:'42g protein + 90g carbs remaining' },
     macros:{ protein:[148,190], carbs:[210,300], fat:[62,78], fiber:[12,22] },
-    why:'Macros determine body composition far more than calories alone. Getting protein right is the lever for losing fat and building muscle simultaneously. Rule: 1g protein per lb of bodyweight. Carbs ~300g (1/5 fiber, 1/5 sugar, 3/5 starch).',
+    why:'Macros determine body composition far more than total calories alone. Getting protein right is the single lever for losing fat and building muscle simultaneously. Rule: 1g protein per lb of bodyweight. Carbs ~300g (1/5 fiber, 1/5 sugar, 3/5 starch).',
     inputs:[['Protein','Most important macro. Every meal: 30–50g.'],['Fiber','Proxy for gut health. Target 25–35g/day.'],['Total sugar','<60g/day from non-fruit sources.'],['Carb timing','Most effective front-loaded around workouts.']],
     tips:[['Eat protein first','Protein → veg → carbs at every meal. Limits carb overconsumption automatically.'],['Close the 42g gap tonight','Chicken, cottage cheese, or Greek yogurt + whey each work.'],['Fiber at 54% — add a salad','Side salad or apple at dinner is the easiest fix.'],['Eat within 45 min post-workout','Carbs + protein before 6:45pm. Glycogen window is real.']],
     body:[['💪','Muscle protein synthesis','Protein provides leucine → triggers mTOR → muscle building. Without it, training stimulus is partially wasted.','musculoskeletal'],['🔥','Thermic effect','Your body burns ~30 cal digesting 100 cal of protein — why high-protein aids fat loss beyond calorie math.','gastrointestinal'],['🧬','Hormones','Fat is required for testosterone and estrogen synthesis. Under 15% of calories suppresses hormonal function.','endocrine'],['⚡','Performance','Carb timing around workouts directly affects output and glycogen recovery speed.','musculoskeletal'],['🩸','Iron & oxygen delivery','Women need 18mg iron/day vs 8mg for men during reproductive years. Low iron impairs oxygen delivery, tanking HRV, endurance, and cognitive recovery.','gastrointestinal','f'],['⚠️','RED-S risk','Female athletes are 2–3× more likely to develop Relative Energy Deficiency in Sport. Under-fueling suppresses estrogen, destroys bone density, and halts muscle adaptation entirely.','endocrine','f'],['🩸','Lower iron needs','Men need only 8mg iron/day — less than half the 18mg women require. Excess iron supplementation raises oxidative stress and has been linked to higher cardiac risk in men.','gastrointestinal','m'],['💪','Higher protein synthesis ceiling','Testosterone significantly elevates the ceiling for muscle protein synthesis. Men sustain a stronger anabolic response to the same leucine-rich meal, particularly in the post-workout window.','musculoskeletal','m']],
@@ -737,7 +748,7 @@ var RINGS = [
         ['🫐','Berries','Strawberries are 91% water. High in potassium which improves cellular hydration efficiency.'],
       ]
     },
-    why:'Even mild dehydration (1–2% of bodyweight) measurably impairs cognitive function, exercise performance, and HRV. Most people walk around chronically slightly dehydrated without realizing it.',
+    why:'Even mild dehydration (1–2% of bodyweight) measurably impairs cognitive function, exercise performance, and HRV. Most people are chronically slightly dehydrated without knowing it. A simple rule: 1 oz per lb of bodyweight daily, more when sweating.',
     inputs:[['Direct intake','Water, sparkling water, herbal tea. Coffee counts ~50%.'],['Food moisture','Fruits and vegetables contribute 15–25% of daily hydration.'],['Sweat loss','Add 16–24 oz per hour of intense exercise.']],
     tips:[['16 oz after waking','You wake dehydrated every morning. Easiest habit to close the gap before 8am.'],['Full glass before every meal','Adds ~48 oz/day automatically. Reduces meal size ~13%.'],['Set an alarm every 2 hours','Thirst lags dehydration by 45 min. You\'re already impaired by the time you feel it.'],['Add electrolytes when sweating','Water + sodium + potassium rehydrates far more efficiently than water alone.']],
     body:[['🧠','Cognitive performance','1% dehydration reduces working memory and reaction time. 2% causes measurable mood decline.','nervous'],['❤️','Cardiovascular','Dehydration thickens blood, raises resting HR, and suppresses HRV directly.','cardiovascular'],['🦵','Exercise output','2% dehydration = 5–8% strength loss and 10–20% aerobic capacity loss.','musculoskeletal'],['🫘','Kidney function','Adequate hydration required to filter metabolic waste. Primary cause of kidney stones.','gastrointestinal'],['🦠','UTI prevention','Women are 50× more likely to get UTIs due to shorter urethral anatomy. Drinking 64–80oz/day flushes bacteria and cuts UTI risk by up to 50%.','gastrointestinal','f'],['🌊','Progesterone & water retention','Luteal phase progesterone causes water retention — this is normal physiology, not fat gain. Counter-intuitively, increasing water intake reduces bloating by flushing retained sodium.','endocrine','f'],['💧','Higher daily fluid need','Men need ~3.7L total fluid/day vs. 2.7L for women — driven by greater lean mass, larger body surface area, and a higher resting metabolic rate.','gastrointestinal','m'],['🏃','Higher sweat rate','Men sweat 40–70% more than women during matched-intensity exercise, dramatically increasing sodium and electrolyte losses during endurance sessions.','musculoskeletal','m']],
@@ -759,7 +770,7 @@ var RINGS = [
         ['🫐','Nitrate-Rich Vegetables','Beets, arugula, spinach convert to nitric oxide, widening blood vessels and reducing heart rate.'],
       ]
     },
-    why:'Resting heart rate reflects how much blood your heart pumps per beat (stroke volume). A lower RHR is a direct result of cardiovascular fitness. Every 10 bpm above 60 is associated with ~16% increased all-cause mortality risk in large population studies.',
+    why:'Resting heart rate reflects how much blood your heart pumps per beat — your stroke volume. A lower RHR is a direct result of cardiovascular fitness and aerobic capacity. Every 10 bpm above 60 is associated with ~16% higher all-cause mortality risk.',
     inputs:[['Morning measurement','Before getting out of bed — watch captures this during the sleep/wake transition.'],['Aerobic fitness','Primary driver. Zone 2 is the fastest lever over 6–8 weeks.'],['Hydration','Dehydration forces heart to beat faster to maintain output.'],['Alcohol','Elevates RHR 5–10 bpm for 24–48 hrs. Most reliable self-experiment available.']],
     tips:[['Zone 2 three times/week','Only reliable way to permanently lower RHR. Takes 6–8 weeks to show.'],['Eliminate evening alcohol','Two alcohol-free weeks → 3–5 bpm drop for most people.'],['Protect sleep','RHR is lowest when sleep quality is highest.'],['Watch the 30-day trend','Day-to-day is noise. A 30-day downward trend is the real signal.']],
     body:[['❤️','Heart efficiency','Lower RHR = higher stroke volume — more blood per beat. Direct measure of cardiac strength.','cardiovascular'],['🧬','Longevity','Studies of 3M+ people confirm RHR is an independent predictor of cardiovascular mortality.','cardiovascular'],['🧠','Nervous system','Chronically elevated RHR = stuck in fight-or-flight, cascading into poor sleep and recovery.','nervous'],['⚡','Recovery capacity','RHR elevated >5 bpm above baseline after training = still under stress. Scale back.','musculoskeletal'],['❤️‍🩹','Silent heart attacks','Women\'s heart attacks often present without chest pain — instead nausea, jaw pain, back pain, and extreme fatigue. A chronically elevated RHR is a key early warning signal specific to women.','cardiovascular','f'],['🧬','Post-menopause risk surge','Estrogen protects the cardiovascular system — before menopause, women\'s cardiac risk is 2–3× lower than men\'s. Within 10 years after menopause, that advantage disappears entirely.','endocrine','f'],['❤️','Naturally lower RHR','Men average 3–4 bpm lower RHR than women at equivalent fitness — driven by larger stroke volume and testosterone\'s effect on the myocardium.','cardiovascular','m'],['⚠️','Sudden cardiac arrest','Sudden cardiac death is 2–3× more common in men, often with no prior symptoms. An RHR chronically elevated above your personal baseline alongside low HRV is a key early warning pattern.','cardiovascular','m']],
@@ -781,7 +792,7 @@ var RINGS = [
         ['🥦','Iron-Rich Foods','Iron = hemoglobin = oxygen-carrying capacity. Spinach, broccoli, red meat 3×/week.'],
       ]
     },
-    why:'VO₂ Max — your maximal oxygen uptake — is the single most powerful predictor of both athletic performance and longevity. Every 1 unit increase reduces all-cause mortality risk by 9%. It reflects your mitochondrial density, cardiovascular efficiency, and the capacity to sustain intense effort.',
+    why:'VO₂ Max is the single most powerful predictor of athletic performance and longevity. Every 1 unit increase reduces all-cause mortality risk by 9%. It reflects your mitochondrial density, cardiovascular efficiency, and capacity to sustain intense effort.',
     inputs:[['Zone 2 cardio','Primary base builder. 150+ min/week over 6-8 weeks produces measurable gains.'],['HIIT intervals','4-6 × 4-min at 90-95% max HR. Pushes the ceiling of oxygen uptake.'],['Body composition','Reducing excess body fat improves VO₂ Max even without training changes.'],['Consistency','Adaptations take 4-6 weeks minimum — trust the process.']],
     tips:[['HIIT 1-2×/week','4-min intervals at near-max effort with equal rest. Most efficient VO₂ Max builder.'],['Zone 2 as the base','80% of training should be Zone 2. HIIT adds the ceiling on top.'],['Test every 6-8 weeks','Cooper test (12-min run distance) or a fitness watch estimate. Retest to track gains.'],['Protect your Zone 2','If you\'re going too hard, you\'re in Zone 3–4. Slow down until you can hold a conversation.']],
     body:[['❤️','Cardiovascular efficiency','VO₂ Max reflects stroke volume and cardiac output — higher values mean a stronger, more efficient heart.','cardiovascular'],['🫁','Lung capacity','Better oxygen extraction and CO₂ clearance at the alveolar level.','pulmonary'],['⚡','Mitochondrial density','VO₂ Max is a direct proxy for mitochondrial density — more engines, more energy.','musculoskeletal'],['🧬','Longevity signal','Every 1 unit increase = 9% lower all-cause mortality. Most powerful single predictor known.','nervous'],['📉','Structural difference','Women have 10–15% lower VO₂ Max than men due to smaller heart size and 9% less hemoglobin — but relative improvements carry equal or greater longevity benefit per unit gained.','pulmonary','f'],['📅','Test in follicular phase','For accurate baseline testing, measure VO₂ Max on days 1–14 of the cycle. Progesterone in the luteal phase elevates breathing rate and perceived exertion, artificially inflating effort scores.','endocrine','f'],['🩸','Hemoglobin advantage','Men carry ~9% more hemoglobin per liter of blood than women, giving meaningfully greater oxygen-carrying capacity. This is the primary physiological driver of the male–female VO₂ Max gap.','pulmonary','m'],['⚡','Faster training adaptations','Testosterone enables quicker VO₂ Max adaptations — men typically see measurable gains in 4–6 weeks of Zone 2 + intervals vs. 8–12 weeks for women at equivalent fitness.','musculoskeletal','m']],
@@ -871,7 +882,7 @@ function init() {
     ringsDimmed = scrolled;
     var tiles = document.querySelectorAll('.ring-tile-h');
     for (var i = 0; i < tiles.length; i++) {
-      tiles[i].style.opacity = scrolled ? (tiles[i].classList.contains('active') ? '1' : '0.3') : '1';
+      tiles[i].style.opacity = scrolled ? (tiles[i].classList.contains('active') ? '1' : '0.15') : '1';
     }
   }, {passive:true});
 }
@@ -907,13 +918,7 @@ function renderRingRow() {
     var off = +(circ - circ * ring.pct).toFixed(2);
     var isActive = i === wheelActiveIdx;
     var pct = Math.round(ring.pct * 100) + '%';
-    var tileBg     = isActive ? ring.color + '28' : ring.color + '10';
-    var tileBorder = isActive ? ring.color + '60' : ring.color + '22';
-    var tileShadow = isActive
-      ? '0 0 20px ' + ring.color + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
-    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')"'
-      + ' style="background:' + tileBg + ';border-color:' + tileBorder + ';box-shadow:' + tileShadow + '">'
+    html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
       + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48">'
       + '<circle cx="24" cy="24" r="' + Rv + '" fill="none" stroke="' + ring.color + '" stroke-width="6" opacity="0.15" stroke-linecap="round"/>'
       + '<circle class="r-bloom" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
@@ -945,12 +950,6 @@ function setWheelActive(idx) {
   for (var i = 0; i < tiles.length; i++) {
     var act = i === idx;
     tiles[i].classList.toggle('active', act);
-    var c = RINGS[i].color;
-    tiles[i].style.background  = act ? c + '28' : c + '10';
-    tiles[i].style.borderColor = act ? c + '60' : c + '22';
-    tiles[i].style.boxShadow   = act
-      ? '0 0 20px ' + c + '50,0 4px 12px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.04)';
     tiles[i].style.opacity = scrolled ? (act ? '1' : '0.3') : '1';
   }
   updateRingDivider(RINGS[idx].color);
@@ -2789,221 +2788,206 @@ var bdSelectedSys = null;
 var bdCurrentIdx  = null;
 
 var BD_OUTLINE_M = [
-  // Short hair
-  '<path d="M78,6 Q100,0 122,6 Q130,12 130,22 Q116,10 100,9 Q84,10 70,22 Q70,12 78,6Z" fill="#5c4838"/>',
-  '<path d="M76,10 Q74,18 76,26 Q70,24 70,22Z" fill="#5c4838"/>',
-  '<path d="M124,10 Q126,18 124,26 Q130,24 130,22Z" fill="#5c4838"/>',
-  // Skull
-  '<ellipse cx="100" cy="30" rx="24" ry="27" fill="#f5c9a0" stroke="rgba(80,65,50,0.5)" stroke-width="1.5"/>',
-  // Square jaw (male)
-  '<path d="M78,42 Q76,54 80,60 Q90,66 100,66 Q110,66 120,60 Q124,54 122,42" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  // Ears
-  '<path d="M76,24 Q71,29 71,38 Q72,44 76,45 Q78,43 78,38 Q78,29 76,24Z" fill="#f0b890" stroke="rgba(80,65,50,0.4)" stroke-width="1"/>',
-  '<path d="M124,24 Q129,29 129,38 Q128,44 124,45 Q122,43 122,38 Q122,29 124,24Z" fill="#f0b890" stroke="rgba(80,65,50,0.4)" stroke-width="1"/>',
-  // Brow ridge (prominent male)
-  '<path d="M83,17 Q92,14 100,14 Q108,14 117,17" fill="none" stroke="rgba(80,65,50,0.4)" stroke-width="2.2"/>',
-  // Eyebrows (thick)
-  '<path d="M83,18 Q90,16 96,18" stroke="rgba(60,45,30,0.65)" stroke-width="2.2" fill="none" stroke-linecap="round"/>',
-  '<path d="M104,18 Q110,16 117,18" stroke="rgba(60,45,30,0.65)" stroke-width="2.2" fill="none" stroke-linecap="round"/>',
-  // Eyes
-  '<ellipse cx="90" cy="24" rx="5.5" ry="3.5" fill="#4a3828" opacity="0.85"/>',
-  '<ellipse cx="110" cy="24" rx="5.5" ry="3.5" fill="#4a3828" opacity="0.85"/>',
-  '<ellipse cx="90" cy="24" rx="2.5" ry="2" fill="#1a1008"/>',
-  '<ellipse cx="110" cy="24" rx="2.5" ry="2" fill="#1a1008"/>',
-  // Nose
-  '<path d="M100,29 L97,39 Q100,42 103,39 Z" fill="#d0c4aa" stroke="rgba(80,65,50,0.2)" stroke-width="0.8"/>',
-  '<path d="M95,39 Q100,43 105,39" fill="none" stroke="rgba(80,65,50,0.3)" stroke-width="1.2"/>',
-  // Mouth
-  '<path d="M91,49 Q100,53 109,49" fill="none" stroke="rgba(80,65,50,0.4)" stroke-width="1.5" stroke-linecap="round"/>',
-  '<path d="M93,49 Q100,47 107,49" fill="none" stroke="rgba(80,65,50,0.2)" stroke-width="1"/>',
-  // Cheekbone shadow
-  '<path d="M76,36 Q80,40 84,40" fill="none" stroke="rgba(80,65,50,0.14)" stroke-width="2.5"/>',
-  '<path d="M124,36 Q120,40 116,40" fill="none" stroke="rgba(80,65,50,0.14)" stroke-width="2.5"/>',
-  // Neck (thick male, sternocleidomastoid)
-  '<path d="M87,58 L85,78 L115,78 L113,58 Q100,64 87,58Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.5"/>',
-  '<path d="M87,64 Q76,70 58,78 M113,64 Q124,70 142,78" fill="none" stroke="#d8ccb4" stroke-width="6" stroke-linecap="round" opacity="0.55"/>',
-  // Clavicles
-  '<path d="M85,78 Q70,74 58,80 M115,78 Q130,74 142,80" stroke="rgba(80,65,50,0.22)" stroke-width="2" fill="none" stroke-linecap="round"/>',
-  // Torso (inverted V — wide shoulders, narrow waist, narrow hips)
-  '<path d="M44,80 Q52,62 100,60 Q148,62 156,80 L153,134 L155,196 Q134,214 100,214 Q66,214 45,196 L47,134 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.5"/>',
-  // Pec shadows L/R
-  '<path d="M62,86 Q76,80 98,80 L98,122 Q80,126 68,116 Q56,106 62,86Z" fill="#e8a87a" opacity="0.5"/>',
-  '<path d="M138,86 Q124,80 102,80 L102,122 Q120,126 132,116 Q144,106 138,86Z" fill="#e8a87a" opacity="0.5"/>',
-  // Pec cleft / sternum line
-  '<line x1="100" y1="80" x2="100" y2="150" stroke="rgba(80,65,50,0.18)" stroke-width="1.5"/>',
-  // Pec lower fold L/R
-  '<path d="M100,80 Q82,94 74,120 Q80,130 92,128 Q99,124 100,118" fill="none" stroke="rgba(80,65,50,0.3)" stroke-width="1.5"/>',
-  '<path d="M100,80 Q118,94 126,120 Q120,130 108,128 Q101,124 100,118" fill="none" stroke="rgba(80,65,50,0.3)" stroke-width="1.5"/>',
-  // Nipples
-  '<circle cx="80" cy="110" r="2.5" fill="#d4885a" stroke="rgba(80,65,50,0.25)" stroke-width="0.8"/>',
-  '<circle cx="120" cy="110" r="2.5" fill="#d4885a" stroke="rgba(80,65,50,0.25)" stroke-width="0.8"/>',
-  // Abs (3 rows × 2)
-  '<line x1="100" y1="128" x2="100" y2="196" stroke="rgba(80,65,50,0.12)" stroke-width="1"/>',
-  '<rect x="92" y="128" width="7" height="10" rx="2.5" fill="#e8a87a" opacity="0.45"/>',
-  '<rect x="101" y="128" width="7" height="10" rx="2.5" fill="#e8a87a" opacity="0.45"/>',
-  '<rect x="90" y="143" width="8" height="10" rx="2.5" fill="#e8a87a" opacity="0.38"/>',
-  '<rect x="102" y="143" width="8" height="10" rx="2.5" fill="#e8a87a" opacity="0.38"/>',
-  '<rect x="90" y="158" width="8" height="9" rx="2.5" fill="#e8a87a" opacity="0.28"/>',
-  '<rect x="102" y="158" width="8" height="9" rx="2.5" fill="#e8a87a" opacity="0.28"/>',
-  // Obliques
-  '<path d="M52,160 Q64,170 76,188 M148,160 Q136,170 124,188" fill="none" stroke="rgba(80,65,50,0.2)" stroke-width="2"/>',
-  // Navel
-  '<circle cx="100" cy="170" r="3" fill="#d4885a" stroke="rgba(80,65,50,0.3)" stroke-width="1"/>',
-  // Deltoids (large male)
-  '<path d="M44,80 Q34,92 28,114 Q24,130 26,152 L40,150 Q46,128 54,106 Z" fill="#e8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="1.2"/>',
-  '<path d="M156,80 Q166,92 172,114 Q176,130 174,152 L160,150 Q154,128 146,106 Z" fill="#e8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="1.2"/>',
-  // Upper arms (thick bicep/tricep)
-  '<path d="M26,154 Q18,178 16,202" stroke="#f5c9a0" stroke-width="21" stroke-linecap="round" fill="none"/>',
-  '<path d="M30,158 Q22,178 22,198" fill="none" stroke="#e8a87a" stroke-width="10" stroke-linecap="round" opacity="0.5"/>',
-  '<path d="M174,154 Q182,178 184,202" stroke="#f5c9a0" stroke-width="21" stroke-linecap="round" fill="none"/>',
-  '<path d="M170,158 Q178,178 178,198" fill="none" stroke="#e8a87a" stroke-width="10" stroke-linecap="round" opacity="0.5"/>',
-  // Forearms (tapered)
-  '<path d="M16,204 Q10,234 12,256" stroke="#f5c9a0" stroke-width="16" stroke-linecap="round" fill="none"/>',
-  '<path d="M20,208 Q15,234 16,254" fill="none" stroke="#e8a87a" stroke-width="7" stroke-linecap="round" opacity="0.4"/>',
-  '<path d="M184,204 Q190,234 188,256" stroke="#f5c9a0" stroke-width="16" stroke-linecap="round" fill="none"/>',
-  '<path d="M180,208 Q185,234 184,254" fill="none" stroke="#e8a87a" stroke-width="7" stroke-linecap="round" opacity="0.4"/>',
-  // Hands
-  '<path d="M7,258 Q4,267 5,277 Q9,285 18,286 Q28,286 32,277 Q35,268 29,259 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M8,261 Q4,270 4,280 M14,258 Q11,268 10,279 M19,257 Q18,267 18,279 M24,258 Q24,267 24,279" stroke="rgba(80,65,50,0.22)" stroke-width="1" fill="none" stroke-linecap="round"/>',
-  '<path d="M8,262 Q3,258 2,265 Q2,272 6,275" fill="none" stroke="rgba(80,65,50,0.28)" stroke-width="1.5" stroke-linecap="round"/>',
-  '<path d="M193,258 Q196,267 195,277 Q191,285 182,286 Q172,286 168,277 Q165,268 171,259 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M192,261 Q196,270 196,280 M186,258 Q189,268 190,279 M181,257 Q182,267 182,279 M176,258 Q176,267 176,279" stroke="rgba(80,65,50,0.22)" stroke-width="1" fill="none" stroke-linecap="round"/>',
-  '<path d="M192,262 Q197,258 198,265 Q198,272 194,275" fill="none" stroke="rgba(80,65,50,0.28)" stroke-width="1.5" stroke-linecap="round"/>',
-  // Pelvis (narrow male)
-  '<path d="M53,210 Q49,226 54,238 L146,238 Q151,226 147,210 Q126,230 100,230 Q74,230 53,210Z" fill="#e8a87a" stroke="rgba(80,65,50,0.35)" stroke-width="1.5"/>',
-  '<ellipse cx="61" cy="215" rx="7" ry="4" fill="#d4885a" opacity="0.5"/>',
-  '<ellipse cx="139" cy="215" rx="7" ry="4" fill="#d4885a" opacity="0.5"/>',
-  // Thighs (quad definition)
-  '<path d="M58,238 Q48,280 50,344" stroke="#f5c9a0" stroke-width="31" stroke-linecap="round" fill="none"/>',
-  '<path d="M66,244 Q60,282 62,330" fill="none" stroke="#e8a87a" stroke-width="7" stroke-linecap="round" opacity="0.38"/>',
-  '<path d="M66,308 Q58,324 62,340 Q70,334 76,322 Z" fill="#e8a87a" opacity="0.5"/>',
-  '<path d="M142,238 Q152,280 150,344" stroke="#f5c9a0" stroke-width="31" stroke-linecap="round" fill="none"/>',
-  '<path d="M134,244 Q140,282 138,330" fill="none" stroke="#e8a87a" stroke-width="7" stroke-linecap="round" opacity="0.38"/>',
-  '<path d="M134,308 Q142,324 138,340 Q130,334 124,322 Z" fill="#e8a87a" opacity="0.5"/>',
-  // Kneecaps
-  '<ellipse cx="52" cy="347" rx="12" ry="7" fill="#e8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="1.2"/>',
-  '<ellipse cx="148" cy="347" rx="12" ry="7" fill="#e8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="1.2"/>',
-  // Lower legs + calf
-  '<path d="M50,351 Q46,386 48,430" stroke="#f5c9a0" stroke-width="25" stroke-linecap="round" fill="none"/>',
-  '<path d="M54,356 Q50,378 52,396" fill="none" stroke="#e8a87a" stroke-width="10" stroke-linecap="round" opacity="0.5"/>',
-  '<path d="M59,354 Q58,386 59,424" fill="none" stroke="rgba(80,65,50,0.1)" stroke-width="2"/>',
-  '<path d="M150,351 Q154,386 152,430" stroke="#f5c9a0" stroke-width="25" stroke-linecap="round" fill="none"/>',
-  '<path d="M146,356 Q150,378 148,396" fill="none" stroke="#e8a87a" stroke-width="10" stroke-linecap="round" opacity="0.5"/>',
-  '<path d="M141,354 Q142,386 141,424" fill="none" stroke="rgba(80,65,50,0.1)" stroke-width="2"/>',
-  // Feet
-  '<path d="M43,432 Q41,440 48,446 Q60,452 76,450 Q86,446 87,440 Q85,434 80,432 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M44,436 Q42,444 44,449 M51,439 Q50,447 51,451 M58,440 Q58,448 58,452 M65,439 Q66,447 65,451 M72,438 Q74,446 73,450" stroke="rgba(80,65,50,0.22)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
-  '<path d="M157,432 Q159,440 152,446 Q140,452 124,450 Q114,446 113,440 Q115,434 120,432 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M156,436 Q158,444 156,449 M149,439 Q150,447 149,451 M142,440 Q142,448 142,452 M135,439 Q134,447 135,451 M128,438 Q126,446 127,450" stroke="rgba(80,65,50,0.22)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
+  // ── HEAD ──
+  '<ellipse cx="100" cy="30" rx="24" ry="27" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.4"/>',
+  '<path d="M78,42 Q76,56 80,62 Q90,68 100,68 Q110,68 120,62 Q124,56 122,42" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.68)" stroke-width="1.2"/>',
+  '<path d="M76,24 Q70,30 70,39 Q71,46 76,47 Q78,44 78,39 Q78,30 76,24Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.6)" stroke-width="1"/>',
+  '<path d="M124,24 Q130,30 130,39 Q129,46 124,47 Q122,44 122,39 Q122,30 124,24Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.6)" stroke-width="1"/>',
+  '<path d="M83,17 Q92,13 100,14 Q108,13 117,17" fill="none" stroke="rgba(155,172,200,0.38)" stroke-width="1.2"/>',
+  '<ellipse cx="90" cy="24" rx="7.5" ry="5.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<ellipse cx="110" cy="24" rx="7.5" ry="5.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<path d="M97,28 Q96,34 95,41 M103,28 Q104,34 105,41" fill="none" stroke="rgba(155,172,200,0.22)" stroke-width="0.8"/>',
+  '<path d="M79,34 Q78,40 80,46 M121,34 Q122,40 120,46" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8"/>',
+  '<path d="M97,64 Q100,67 103,64" fill="none" stroke="rgba(155,172,200,0.22)" stroke-width="0.9"/>',
+  // ── NECK ──
+  '<path d="M87,58 L85,78 L115,78 L113,58Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.62)" stroke-width="1.1"/>',
+  '<path d="M97,65 Q100,62 103,65 L103,73 Q100,76 97,73Z" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  '<path d="M88,60 L88,78 M112,60 L112,78" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" fill="none"/>',
+  // ── CLAVICLES ──
+  '<path d="M85,78 Q68,74 52,80" stroke="rgba(155,172,200,0.72)" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
+  '<path d="M115,78 Q132,74 148,80" stroke="rgba(155,172,200,0.72)" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
+  '<circle cx="87" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.8"/>',
+  '<circle cx="113" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.8"/>',
+  // ── TORSO (male) ──
+  '<path d="M40,80 Q48,58 100,56 Q152,58 160,80 L158,118 Q154,148 146,170 Q148,186 150,196 Q130,216 100,218 Q70,216 50,196 Q52,186 54,170 Q46,148 42,118 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.72)" stroke-width="1.4"/>',
+  '<path d="M85,78 Q100,82 115,78 L113,92 L100,94 L87,92Z" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<rect x="99" y="92" width="2" height="60" rx="1" fill="rgba(155,172,200,0.2)"/>',
+  '<path d="M100,90 Q86,88 76,93 Q68,98 70,106 Q80,101 100,99 M100,90 Q114,88 124,93 Q132,98 130,106 Q120,101 100,99" fill="none" stroke="rgba(155,172,200,0.38)" stroke-width="1.1"/>',
+  '<path d="M100,104 Q84,101 73,108 Q65,114 68,122 Q78,117 100,115 M100,104 Q116,101 127,108 Q135,114 132,122 Q122,117 100,115" fill="none" stroke="rgba(155,172,200,0.33)" stroke-width="1.05"/>',
+  '<path d="M100,119 Q83,116 72,124 Q64,131 67,139 Q78,134 100,132 M100,119 Q117,116 128,124 Q136,131 133,139 Q122,134 100,132" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1"/>',
+  '<path d="M100,133 Q84,131 73,139 Q66,145 69,153 Q79,148 100,146 M100,133 Q116,131 127,139 Q134,145 131,153 Q121,148 100,146" fill="none" stroke="rgba(155,172,200,0.24)" stroke-width="0.95"/>',
+  '<path d="M100,146 Q85,144 75,152 Q69,158 72,164 M100,146 Q115,144 125,152 Q131,158 128,164" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.9"/>',
+  '<path d="M72,164 Q82,174 100,176 Q118,174 128,164" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="1.1"/>',
+  '<line x1="100" y1="94" x2="100" y2="200" stroke="rgba(155,172,200,0.16)" stroke-width="0.8"/>',
+  '<circle cx="100" cy="172" r="2.5" fill="none" stroke="rgba(155,172,200,0.38)" stroke-width="1"/>',
+  '<path d="M50,196 Q56,188 64,186" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="1.1" stroke-linecap="round"/>',
+  '<path d="M150,196 Q144,188 136,186" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="1.1" stroke-linecap="round"/>',
+  '<path d="M64,186 Q72,208 82,218" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.9" stroke-linecap="round"/>',
+  '<path d="M136,186 Q128,208 118,218" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.9" stroke-linecap="round"/>',
+  // ── LEFT DELTOID ──
+  '<path d="M40,80 Q28,92 22,116 Q18,132 20,154 L36,152 Q42,128 52,104 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.68)" stroke-width="1.2"/>',
+  // ── LEFT UPPER ARM ──
+  '<path d="M26,154 Q18,178 16,202" stroke="rgba(7,11,21,0.97)" stroke-width="26" stroke-linecap="round" fill="none"/>',
+  '<path d="M26,154 Q18,178 16,202" stroke="rgba(155,172,200,0.65)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M30,158 Q22,178 22,200" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT FOREARM ──
+  '<path d="M16,204 Q10,234 12,256" stroke="rgba(7,11,21,0.97)" stroke-width="20" stroke-linecap="round" fill="none"/>',
+  '<path d="M16,204 Q10,234 12,256" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M22,204 Q16,234 18,254" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT HAND ──
+  '<path d="M7,258 Q4,267 5,277 Q9,285 18,286 Q28,286 32,277 Q35,268 29,259 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.1"/>',
+  '<path d="M8,261 Q4,270 4,280 M14,258 Q11,268 10,279 M19,257 Q18,267 18,279 M24,258 Q24,267 24,279" stroke="rgba(155,172,200,0.22)" stroke-width="1" fill="none" stroke-linecap="round"/>',
+  '<path d="M8,262 Q3,258 2,265 Q2,272 6,275" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1.3" stroke-linecap="round"/>',
+  // ── RIGHT DELTOID ──
+  '<path d="M160,80 Q172,92 178,116 Q182,132 180,154 L164,152 Q158,128 148,104 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.68)" stroke-width="1.2"/>',
+  // ── RIGHT UPPER ARM ──
+  '<path d="M174,154 Q182,178 184,202" stroke="rgba(7,11,21,0.97)" stroke-width="26" stroke-linecap="round" fill="none"/>',
+  '<path d="M174,154 Q182,178 184,202" stroke="rgba(155,172,200,0.65)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M170,158 Q178,178 178,200" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT FOREARM ──
+  '<path d="M184,204 Q190,234 188,256" stroke="rgba(7,11,21,0.97)" stroke-width="20" stroke-linecap="round" fill="none"/>',
+  '<path d="M184,204 Q190,234 188,256" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M178,204 Q184,234 182,254" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT HAND ──
+  '<path d="M193,258 Q196,267 195,277 Q191,285 182,286 Q172,286 168,277 Q165,268 171,259 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.1"/>',
+  '<path d="M192,261 Q196,270 196,280 M186,258 Q189,268 190,279 M181,257 Q182,267 182,279 M176,258 Q176,267 176,279" stroke="rgba(155,172,200,0.22)" stroke-width="1" fill="none" stroke-linecap="round"/>',
+  '<path d="M192,262 Q197,258 198,265 Q198,272 194,275" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1.3" stroke-linecap="round"/>',
+  // ── PELVIS ──
+  '<path d="M53,210 Q49,226 54,238 L146,238 Q151,226 147,210 Q126,230 100,230 Q74,230 53,210Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.65)" stroke-width="1.3"/>',
+  '<ellipse cx="57" cy="214" rx="5" ry="3.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<ellipse cx="143" cy="214" rx="5" ry="3.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<path d="M93,238 Q100,241 107,238" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  // ── LEFT THIGH ──
+  '<path d="M58,238 Q48,280 50,344" stroke="rgba(7,11,21,0.97)" stroke-width="36" stroke-linecap="round" fill="none"/>',
+  '<path d="M58,238 Q48,280 50,344" stroke="rgba(155,172,200,0.65)" stroke-width="1.3" stroke-linecap="round" fill="none"/>',
+  '<path d="M44,244 Q38,284 40,334" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT KNEECAP ──
+  '<ellipse cx="52" cy="347" rx="12" ry="7" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.62)" stroke-width="1.2"/>',
+  '<line x1="52" y1="354" x2="52" y2="360" stroke="rgba(155,172,200,0.35)" stroke-width="1.5" stroke-linecap="round"/>',
+  // ── LEFT LOWER LEG ──
+  '<path d="M50,351 Q46,386 48,430" stroke="rgba(7,11,21,0.97)" stroke-width="28" stroke-linecap="round" fill="none"/>',
+  '<path d="M50,351 Q46,386 48,430" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M55,360 Q54,390 54,425" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1" stroke-linecap="round"/>',
+  // ── LEFT FOOT ──
+  '<path d="M43,432 Q41,440 48,446 Q60,452 76,450 Q86,446 87,440 Q85,434 80,432 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.1"/>',
+  '<path d="M44,436 Q42,444 44,449 M51,439 Q50,447 51,451 M58,440 Q58,448 58,452 M65,439 Q66,447 65,451 M72,438 Q74,446 73,450" stroke="rgba(155,172,200,0.22)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
+  '<circle cx="39" cy="432" r="2.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  // ── RIGHT THIGH ──
+  '<path d="M142,238 Q152,280 150,344" stroke="rgba(7,11,21,0.97)" stroke-width="36" stroke-linecap="round" fill="none"/>',
+  '<path d="M142,238 Q152,280 150,344" stroke="rgba(155,172,200,0.65)" stroke-width="1.3" stroke-linecap="round" fill="none"/>',
+  '<path d="M156,244 Q162,284 160,334" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT KNEECAP ──
+  '<ellipse cx="148" cy="347" rx="12" ry="7" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.62)" stroke-width="1.2"/>',
+  '<line x1="148" y1="354" x2="148" y2="360" stroke="rgba(155,172,200,0.35)" stroke-width="1.5" stroke-linecap="round"/>',
+  // ── RIGHT LOWER LEG ──
+  '<path d="M150,351 Q154,386 152,430" stroke="rgba(7,11,21,0.97)" stroke-width="28" stroke-linecap="round" fill="none"/>',
+  '<path d="M150,351 Q154,386 152,430" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M145,360 Q146,390 146,425" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1" stroke-linecap="round"/>',
+  // ── RIGHT FOOT ──
+  '<path d="M157,432 Q159,440 152,446 Q140,452 124,450 Q114,446 113,440 Q115,434 120,432 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.1"/>',
+  '<path d="M156,436 Q158,444 156,449 M149,439 Q150,447 149,451 M142,440 Q142,448 142,452 M135,439 Q134,447 135,451 M128,438 Q126,446 127,450" stroke="rgba(155,172,200,0.22)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
+  '<circle cx="162" cy="432" r="2.5" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
 ].join('');
 
 var BD_OUTLINE_F = [
-  // Long flowing hair (behind body) — warm chestnut brown
-  '<path d="M74,8 Q100,2 126,8 Q138,15 140,32 Q138,68 134,95 Q128,100 122,92 Q128,62 126,28 Q114,12 100,10 Q86,12 74,28 Q72,62 78,92 Q72,100 66,95 Q62,68 60,32 Q62,15 74,8Z" fill="#9e6030"/>',
-  '<path d="M74,6 Q100,0 126,6 Q130,11 128,20 Q114,10 100,9 Q86,10 72,20 Q70,11 74,6Z" fill="#9e6030"/>',
-  // Hair sides (visible behind neck/shoulders)
-  '<path d="M64,96 Q62,110 66,122 Q62,116 60,106 Q60,100 64,96Z" fill="#9e6030" opacity="0.8"/>',
-  '<path d="M136,96 Q138,110 134,122 Q138,116 140,106 Q140,100 136,96Z" fill="#9e6030" opacity="0.8"/>',
-  // Skull (slightly smaller, oval)
-  '<ellipse cx="100" cy="30" rx="22" ry="27" fill="#f5c9a0" stroke="rgba(80,65,50,0.5)" stroke-width="1.5"/>',
-  // Jaw (soft, rounded female)
-  '<path d="M80,42 Q79,54 84,62 Q91,68 100,69 Q109,68 116,62 Q121,54 120,42" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  // Ears (smaller, with earring hint)
-  '<path d="M78,26 Q74,30 74,39 Q75,44 78,45 Q80,43 80,39 Q80,30 78,26Z" fill="#f0b890" stroke="rgba(80,65,50,0.35)" stroke-width="1"/>',
-  '<circle cx="78" cy="48" r="2" fill="#c8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="0.8"/>',
-  '<path d="M122,26 Q126,30 126,39 Q125,44 122,45 Q120,43 120,39 Q120,30 122,26Z" fill="#f0b890" stroke="rgba(80,65,50,0.35)" stroke-width="1"/>',
-  '<circle cx="122" cy="48" r="2" fill="#c8a87a" stroke="rgba(80,65,50,0.3)" stroke-width="0.8"/>',
-  // Eyebrows (arched, thin female)
-  '<path d="M83,18 Q90,15 97,17" stroke="rgba(60,45,30,0.55)" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
-  '<path d="M103,17 Q110,15 117,18" stroke="rgba(60,45,30,0.55)" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
-  // Eyes (larger, with lashes)
-  '<ellipse cx="90" cy="24" rx="6" ry="4.5" fill="#4a3828" opacity="0.85"/>',
-  '<ellipse cx="110" cy="24" rx="6" ry="4.5" fill="#4a3828" opacity="0.85"/>',
-  '<ellipse cx="90" cy="24" rx="3" ry="2.2" fill="#1a1008"/>',
-  '<ellipse cx="110" cy="24" rx="3" ry="2.2" fill="#1a1008"/>',
-  // Lashes top (left)
-  '<path d="M84,21 Q83,19 85,18 M87,20 Q86,18 88,17 M91,20 Q91,18 93,18 M95,21 Q96,19 97,18" stroke="rgba(30,20,10,0.55)" stroke-width="0.9" fill="none" stroke-linecap="round"/>',
-  // Lashes top (right)
-  '<path d="M116,21 Q117,19 115,18 M113,20 Q114,18 112,17 M109,20 Q109,18 107,18 M105,21 Q104,19 103,18" stroke="rgba(30,20,10,0.55)" stroke-width="0.9" fill="none" stroke-linecap="round"/>',
-  // Cheek blush
-  '<ellipse cx="83" cy="33" rx="7" ry="4.5" fill="#e8a898" opacity="0.22"/>',
-  '<ellipse cx="117" cy="33" rx="7" ry="4.5" fill="#e8a898" opacity="0.22"/>',
-  // Nose (small, button)
-  '<path d="M100,28 L98,37 Q100,40 102,37 Z" fill="#d0c4aa" stroke="rgba(80,65,50,0.15)" stroke-width="0.8"/>',
-  '<path d="M96,38 Q100,41 104,38" fill="none" stroke="rgba(80,65,50,0.25)" stroke-width="1"/>',
-  // Lips (fuller)
-  '<path d="M91,49 Q96,53 100,53 Q104,53 109,49" fill="#c4928a" opacity="0.55" stroke="none"/>',
-  '<path d="M91,49 Q96,46 100,47 Q104,46 109,49" fill="#d4a898" opacity="0.4" stroke="none"/>',
-  '<path d="M91,49 Q100,55 109,49" fill="none" stroke="rgba(80,65,50,0.25)" stroke-width="0.8"/>',
-  // Neck (narrower, graceful)
-  '<path d="M91,60 L90,78 L110,78 L109,60 Q100,66 91,60Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.5"/>',
-  '<path d="M91,67 Q80,72 66,78 M109,67 Q120,72 134,78" fill="none" stroke="#d8ccb4" stroke-width="4" stroke-linecap="round" opacity="0.45"/>',
-  // Clavicles
-  '<path d="M90,78 Q76,74 66,80 M110,78 Q124,74 134,80" stroke="rgba(80,65,50,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
-  // Torso — hourglass (narrower shoulders, defined waist, wider hips)
-  '<path d="M57,80 Q63,62 100,60 Q137,62 143,80 L140,126 Q154,158 152,200 Q132,222 100,224 Q68,222 48,200 Q46,158 60,126 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.5"/>',
-  // Bust L (filled, rounded)
-  '<path d="M60,100 Q56,116 60,130 Q68,142 80,138 Q90,130 91,118 L91,84" fill="#e8a87a" stroke="rgba(80,65,50,0.25)" stroke-width="1" opacity="0.65"/>',
-  // Bust R
-  '<path d="M140,100 Q144,116 140,130 Q132,142 120,138 Q110,130 109,118 L109,84" fill="#e8a87a" stroke="rgba(80,65,50,0.25)" stroke-width="1" opacity="0.65"/>',
-  // Underboob fold L/R
-  '<path d="M62,130 Q73,138 89,134" fill="none" stroke="rgba(80,65,50,0.32)" stroke-width="1.3"/>',
-  '<path d="M138,130 Q127,138 111,134" fill="none" stroke="rgba(80,65,50,0.32)" stroke-width="1.3"/>',
-  // Center bust cleft
-  '<path d="M100,84 Q98,100 100,116" fill="none" stroke="rgba(80,65,50,0.2)" stroke-width="1.5"/>',
-  // Nipples
-  '<circle cx="76" cy="120" r="2" fill="#c4928a" opacity="0.5"/>',
-  '<circle cx="124" cy="120" r="2" fill="#c4928a" opacity="0.5"/>',
-  // Waist cinch (visible shadow at sides)
-  '<path d="M56,130 Q48,162 50,198 M144,130 Q152,162 150,198" fill="none" stroke="rgba(80,65,50,0.0)"/>',
-  // Rib hints (subtle)
-  '<path d="M64,104 Q72,100 87,102 M136,104 Q128,100 113,102" fill="none" stroke="rgba(80,65,50,0.12)" stroke-width="1.5"/>',
-  '<path d="M62,114 Q71,110 86,112 M138,114 Q129,110 114,112" fill="none" stroke="rgba(80,65,50,0.1)" stroke-width="1.5"/>',
-  // Navel
-  '<circle cx="100" cy="170" r="2.5" fill="#d4885a" stroke="rgba(80,65,50,0.3)" stroke-width="0.8"/>',
-  // Deltoids (smaller, sloped female)
-  '<path d="M57,80 Q48,90 44,108 Q42,122 44,138 L54,136 Q58,120 64,102 Z" fill="#e8a87a" stroke="rgba(80,65,50,0.28)" stroke-width="1.2"/>',
-  '<path d="M143,80 Q152,90 156,108 Q158,122 156,138 L146,136 Q142,120 136,102 Z" fill="#e8a87a" stroke="rgba(80,65,50,0.28)" stroke-width="1.2"/>',
-  // Upper arms (slimmer)
-  '<path d="M44,140 Q36,162 34,186" stroke="#f5c9a0" stroke-width="16" stroke-linecap="round" fill="none"/>',
-  '<path d="M48,144 Q40,164 40,184" fill="none" stroke="#e8a87a" stroke-width="6" stroke-linecap="round" opacity="0.4"/>',
-  '<path d="M156,140 Q164,162 166,186" stroke="#f5c9a0" stroke-width="16" stroke-linecap="round" fill="none"/>',
-  '<path d="M152,144 Q160,164 160,184" fill="none" stroke="#e8a87a" stroke-width="6" stroke-linecap="round" opacity="0.4"/>',
-  // Forearms (slimmer)
-  '<path d="M34,188 Q28,218 30,244" stroke="#f5c9a0" stroke-width="13" stroke-linecap="round" fill="none"/>',
-  '<path d="M37,192 Q32,218 34,242" fill="none" stroke="#e8a87a" stroke-width="5" stroke-linecap="round" opacity="0.35"/>',
-  '<path d="M166,188 Q172,218 170,244" stroke="#f5c9a0" stroke-width="13" stroke-linecap="round" fill="none"/>',
-  '<path d="M163,192 Q168,218 166,242" fill="none" stroke="#e8a87a" stroke-width="5" stroke-linecap="round" opacity="0.35"/>',
-  // Hands (smaller, longer fingers)
-  '<path d="M24,246 Q21,256 22,266 Q26,274 35,275 Q44,274 47,265 Q50,256 44,247 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.35)" stroke-width="1.2"/>',
-  '<path d="M24,249 Q20,259 20,270 M29,247 Q26,257 25,269 M34,246 Q33,256 33,268 M38,247 Q38,257 38,268" stroke="rgba(80,65,50,0.18)" stroke-width="1" fill="none" stroke-linecap="round"/>',
-  '<path d="M24,250 Q19,246 18,253 Q18,261 22,264" fill="none" stroke="rgba(80,65,50,0.25)" stroke-width="1.3" stroke-linecap="round"/>',
-  '<path d="M176,246 Q179,256 178,266 Q174,274 165,275 Q156,274 153,265 Q150,256 156,247 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.35)" stroke-width="1.2"/>',
-  '<path d="M176,249 Q180,259 180,270 M171,247 Q174,257 175,269 M166,246 Q167,256 167,268 M162,247 Q162,257 162,268" stroke="rgba(80,65,50,0.18)" stroke-width="1" fill="none" stroke-linecap="round"/>',
-  '<path d="M176,250 Q181,246 182,253 Q182,261 178,264" fill="none" stroke="rgba(80,65,50,0.25)" stroke-width="1.3" stroke-linecap="round"/>',
-  // Pelvis (wider female)
-  '<path d="M46,200 Q40,218 46,234 L154,234 Q160,218 154,200 Q132,226 100,226 Q68,226 46,200Z" fill="#e8a87a" stroke="rgba(80,65,50,0.35)" stroke-width="1.5"/>',
-  '<ellipse cx="52" cy="207" rx="9" ry="5" fill="#d4885a" opacity="0.55"/>',
-  '<ellipse cx="148" cy="207" rx="9" ry="5" fill="#d4885a" opacity="0.55"/>',
-  '<path d="M44,198 Q38,212 40,230 M156,198 Q162,212 160,230" fill="none" stroke="rgba(80,65,50,0.2)" stroke-width="3" stroke-linecap="round"/>',
-  // Thighs (fuller, rounder)
-  '<path d="M64,234 Q54,276 56,340" stroke="#f5c9a0" stroke-width="32" stroke-linecap="round" fill="none"/>',
-  '<path d="M74,238 Q68,276 70,330" fill="none" stroke="#e8a87a" stroke-width="8" stroke-linecap="round" opacity="0.38"/>',
-  '<path d="M136,234 Q146,276 144,340" stroke="#f5c9a0" stroke-width="32" stroke-linecap="round" fill="none"/>',
-  '<path d="M126,238 Q132,276 130,330" fill="none" stroke="#e8a87a" stroke-width="8" stroke-linecap="round" opacity="0.38"/>',
-  // Kneecaps (smaller female)
-  '<ellipse cx="58" cy="343" rx="10" ry="6" fill="#e8a87a" stroke="rgba(80,65,50,0.25)" stroke-width="1.2"/>',
-  '<ellipse cx="142" cy="343" rx="10" ry="6" fill="#e8a87a" stroke="rgba(80,65,50,0.25)" stroke-width="1.2"/>',
-  // Lower legs (tapered calf)
-  '<path d="M56,347 Q52,382 54,428" stroke="#f5c9a0" stroke-width="22" stroke-linecap="round" fill="none"/>',
-  '<path d="M60,352 Q56,374 58,392" fill="none" stroke="#e8a87a" stroke-width="8" stroke-linecap="round" opacity="0.45"/>',
-  '<path d="M142,347 Q148,382 146,428" stroke="#f5c9a0" stroke-width="22" stroke-linecap="round" fill="none"/>',
-  '<path d="M138,352 Q142,374 140,392" fill="none" stroke="#e8a87a" stroke-width="8" stroke-linecap="round" opacity="0.45"/>',
-  // Feet (narrower)
-  '<path d="M49,430 Q47,438 54,444 Q64,450 78,448 Q87,444 88,438 Q86,432 81,430 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M50,434 Q48,442 50,447 M57,437 Q56,445 57,449 M64,438 Q64,446 64,450 M71,437 Q72,445 71,449 M77,436 Q79,444 78,448" stroke="rgba(80,65,50,0.2)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
-  '<path d="M151,430 Q153,438 146,444 Q136,450 122,448 Q113,444 112,438 Q114,432 119,430 Z" fill="#f5c9a0" stroke="rgba(80,65,50,0.4)" stroke-width="1.2"/>',
-  '<path d="M150,434 Q152,442 150,447 M143,437 Q144,445 143,449 M136,438 Q136,446 136,450 M129,437 Q128,445 129,449 M123,436 Q121,444 122,448" stroke="rgba(80,65,50,0.2)" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
+  // ── HEAD ──
+  '<ellipse cx="100" cy="30" rx="22" ry="27" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.4"/>',
+  '<path d="M80,42 Q79,56 84,62 Q91,69 100,70 Q109,69 116,62 Q121,56 120,42" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.65)" stroke-width="1.2"/>',
+  '<path d="M78,26 Q72,31 72,40 Q73,46 78,47 Q80,44 80,40 Q80,31 78,26Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.58)" stroke-width="1"/>',
+  '<path d="M122,26 Q128,31 128,40 Q127,46 122,47 Q120,44 120,40 Q120,31 122,26Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.58)" stroke-width="1"/>',
+  '<path d="M84,17 Q92,14 100,15 Q108,14 116,17" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  '<ellipse cx="90" cy="24" rx="7" ry="5" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  '<ellipse cx="110" cy="24" rx="7" ry="5" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  '<path d="M97,29 Q96,35 96,41 M103,29 Q104,35 104,41" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8"/>',
+  '<path d="M80,36 Q80,42 82,47 M120,36 Q120,42 118,47" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8"/>',
+  '<path d="M97,64 Q100,67 103,64" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.8"/>',
+  // ── NECK ──
+  '<path d="M91,60 L90,78 L110,78 L109,60Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.6)" stroke-width="1.1"/>',
+  '<path d="M91,67 L91,78 M109,67 L109,78" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" fill="none"/>',
+  // ── CLAVICLES ──
+  '<path d="M90,78 Q74,74 62,80" stroke="rgba(155,172,200,0.68)" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
+  '<path d="M110,78 Q126,74 138,80" stroke="rgba(155,172,200,0.68)" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
+  '<circle cx="91" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.8"/>',
+  '<circle cx="109" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.8"/>',
+  // ── TORSO (female — hourglass) ──
+  '<path d="M52,80 Q58,60 100,58 Q142,60 148,80 L145,120 Q158,148 138,164 Q146,184 148,200 Q128,224 100,226 Q72,224 52,200 Q54,184 62,164 Q42,148 55,120 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.72)" stroke-width="1.4"/>',
+  '<path d="M60,100 C56,116 60,130 Q68,142 80,138 Q90,130 91,118 L91,84" fill="none" stroke="rgba(155,172,200,0.35)" stroke-width="1.1"/>',
+  '<path d="M140,100 C144,116 140,130 Q132,142 120,138 Q110,130 109,118 L109,84" fill="none" stroke="rgba(155,172,200,0.35)" stroke-width="1.1"/>',
+  '<path d="M62,130 Q73,138 89,134" fill="none" stroke="rgba(155,172,200,0.25)" stroke-width="1"/>',
+  '<path d="M138,130 Q127,138 111,134" fill="none" stroke="rgba(155,172,200,0.25)" stroke-width="1"/>',
+  '<rect x="99" y="82" width="2" height="52" rx="1" fill="rgba(155,172,200,0.18)"/>',
+  '<path d="M100,82 Q88,80 78,85 Q70,90 72,98 Q80,94 100,92 M100,82 Q112,80 122,85 Q130,90 128,98 Q120,94 100,92" fill="none" stroke="rgba(155,172,200,0.34)" stroke-width="1.05"/>',
+  '<path d="M100,96 Q86,93 75,100 Q67,106 70,114 Q79,109 100,107 M100,96 Q114,93 125,100 Q133,106 130,114 Q121,109 100,107" fill="none" stroke="rgba(155,172,200,0.29)" stroke-width="1"/>',
+  '<path d="M100,110 Q85,107 74,115 Q66,122 69,130 Q79,125 100,123 M100,110 Q115,107 126,115 Q134,122 131,130 Q121,125 100,123" fill="none" stroke="rgba(155,172,200,0.24)" stroke-width="0.95"/>',
+  '<path d="M100,123 Q86,121 76,129 M100,123 Q114,121 124,129" fill="none" stroke="rgba(155,172,200,0.2)" stroke-width="0.9"/>',
+  '<path d="M72,130 Q82,142 100,144 Q118,142 128,130" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="1.05"/>',
+  '<line x1="100" y1="84" x2="100" y2="192" stroke="rgba(155,172,200,0.15)" stroke-width="0.8"/>',
+  '<circle cx="100" cy="170" r="2.5" fill="none" stroke="rgba(155,172,200,0.36)" stroke-width="1"/>',
+  '<path d="M52,200 Q54,190 66,184" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="1.1" stroke-linecap="round"/>',
+  '<path d="M148,200 Q146,190 134,184" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="1.1" stroke-linecap="round"/>',
+  // ── LEFT DELTOID ──
+  '<path d="M52,80 Q42,90 38,110 Q36,124 38,142 L50,140 Q56,122 62,100 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.62)" stroke-width="1.2"/>',
+  // ── LEFT UPPER ARM ──
+  '<path d="M42,142 Q34,164 32,188" stroke="rgba(7,11,21,0.97)" stroke-width="19" stroke-linecap="round" fill="none"/>',
+  '<path d="M42,142 Q34,164 32,188" stroke="rgba(155,172,200,0.62)" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+  '<path d="M45,145 Q38,166 38,186" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT FOREARM ──
+  '<path d="M32,190 Q26,220 28,246" stroke="rgba(7,11,21,0.97)" stroke-width="15" stroke-linecap="round" fill="none"/>',
+  '<path d="M32,190 Q26,220 28,246" stroke="rgba(155,172,200,0.58)" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+  '<path d="M36,192 Q31,220 32,244" fill="none" stroke="rgba(155,172,200,0.17)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT HAND ──
+  '<path d="M22,248 Q19,258 20,268 Q24,276 33,277 Q42,276 45,267 Q48,258 42,249 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.58)" stroke-width="1.1"/>',
+  '<path d="M22,251 Q18,261 18,272 M27,249 Q24,259 23,271 M32,248 Q31,258 31,270 M36,249 Q36,259 36,270" stroke="rgba(155,172,200,0.2)" stroke-width="1" fill="none" stroke-linecap="round"/>',
+  '<path d="M22,252 Q17,248 16,255 Q16,263 20,266" fill="none" stroke="rgba(155,172,200,0.25)" stroke-width="1.2" stroke-linecap="round"/>',
+  // ── RIGHT DELTOID ──
+  '<path d="M148,80 Q158,90 162,110 Q164,124 162,142 L150,140 Q144,122 138,100 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.62)" stroke-width="1.2"/>',
+  // ── RIGHT UPPER ARM ──
+  '<path d="M158,142 Q166,164 168,188" stroke="rgba(7,11,21,0.97)" stroke-width="19" stroke-linecap="round" fill="none"/>',
+  '<path d="M158,142 Q166,164 168,188" stroke="rgba(155,172,200,0.62)" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+  '<path d="M155,145 Q162,166 162,186" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT FOREARM ──
+  '<path d="M168,190 Q174,220 172,246" stroke="rgba(7,11,21,0.97)" stroke-width="15" stroke-linecap="round" fill="none"/>',
+  '<path d="M168,190 Q174,220 172,246" stroke="rgba(155,172,200,0.58)" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+  '<path d="M164,192 Q169,220 168,244" fill="none" stroke="rgba(155,172,200,0.17)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT HAND ──
+  '<path d="M178,248 Q181,258 180,268 Q176,276 167,277 Q158,276 155,267 Q152,258 158,249 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.58)" stroke-width="1.1"/>',
+  '<path d="M178,251 Q182,261 182,272 M173,249 Q176,259 177,271 M168,248 Q169,258 169,270 M164,249 Q164,259 164,270" stroke="rgba(155,172,200,0.2)" stroke-width="1" fill="none" stroke-linecap="round"/>',
+  '<path d="M178,252 Q183,248 184,255 Q184,263 180,266" fill="none" stroke="rgba(155,172,200,0.25)" stroke-width="1.2" stroke-linecap="round"/>',
+  // ── PELVIS (wider female) ──
+  '<path d="M52,200 Q44,218 50,234 L150,234 Q156,218 148,200 Q126,226 100,228 Q74,226 52,200Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.65)" stroke-width="1.3"/>',
+  '<ellipse cx="50" cy="206" rx="6" ry="4" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<ellipse cx="150" cy="206" rx="6" ry="4" fill="none" stroke="rgba(155,172,200,0.3)" stroke-width="0.9"/>',
+  '<path d="M93,234 Q100,237 107,234" fill="none" stroke="rgba(155,172,200,0.26)" stroke-width="0.9"/>',
+  // ── LEFT THIGH ──
+  '<path d="M64,234 Q54,276 56,340" stroke="rgba(7,11,21,0.97)" stroke-width="36" stroke-linecap="round" fill="none"/>',
+  '<path d="M64,234 Q54,276 56,340" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M50,240 Q44,280 46,334" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── LEFT KNEECAP ──
+  '<ellipse cx="58" cy="343" rx="10" ry="6" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.2"/>',
+  '<line x1="58" y1="349" x2="58" y2="355" stroke="rgba(155,172,200,0.32)" stroke-width="1.4" stroke-linecap="round"/>',
+  // ── LEFT LOWER LEG ──
+  '<path d="M56,347 Q52,382 54,428" stroke="rgba(7,11,21,0.97)" stroke-width="25" stroke-linecap="round" fill="none"/>',
+  '<path d="M56,347 Q52,382 54,428" stroke="rgba(155,172,200,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M60,355 Q59,386 59,422" fill="none" stroke="rgba(155,172,200,0.26)" stroke-width="1" stroke-linecap="round"/>',
+  // ── LEFT FOOT ──
+  '<path d="M49,430 Q47,438 54,444 Q64,450 78,448 Q87,444 88,438 Q86,432 81,430 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.58)" stroke-width="1.1"/>',
+  '<path d="M50,434 Q48,442 50,447 M57,437 Q56,445 57,449 M64,438 Q64,446 64,450 M71,437 Q72,445 71,449 M77,436 Q79,444 78,448" stroke="rgba(155,172,200,0.2)" stroke-width="1.1" fill="none" stroke-linecap="round"/>',
+  '<circle cx="44" cy="430" r="2.5" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
+  // ── RIGHT THIGH ──
+  '<path d="M136,234 Q146,276 144,340" stroke="rgba(7,11,21,0.97)" stroke-width="36" stroke-linecap="round" fill="none"/>',
+  '<path d="M136,234 Q146,276 144,340" stroke="rgba(155,172,200,0.62)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M150,240 Q156,280 154,334" fill="none" stroke="rgba(155,172,200,0.18)" stroke-width="0.8" stroke-linecap="round"/>',
+  // ── RIGHT KNEECAP ──
+  '<ellipse cx="142" cy="343" rx="10" ry="6" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.6)" stroke-width="1.2"/>',
+  '<line x1="142" y1="349" x2="142" y2="355" stroke="rgba(155,172,200,0.32)" stroke-width="1.4" stroke-linecap="round"/>',
+  // ── RIGHT LOWER LEG ──
+  '<path d="M142,347 Q148,382 146,428" stroke="rgba(7,11,21,0.97)" stroke-width="25" stroke-linecap="round" fill="none"/>',
+  '<path d="M142,347 Q148,382 146,428" stroke="rgba(155,172,200,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+  '<path d="M138,355 Q139,386 139,422" fill="none" stroke="rgba(155,172,200,0.26)" stroke-width="1" stroke-linecap="round"/>',
+  // ── RIGHT FOOT ──
+  '<path d="M151,430 Q153,438 146,444 Q136,450 122,448 Q113,444 112,438 Q114,432 119,430 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.58)" stroke-width="1.1"/>',
+  '<path d="M150,434 Q152,442 150,447 M143,437 Q144,445 143,449 M136,438 Q136,446 136,450 M129,437 Q128,445 129,449 M123,436 Q121,444 122,448" stroke="rgba(155,172,200,0.2)" stroke-width="1.1" fill="none" stroke-linecap="round"/>',
+  '<circle cx="156" cy="430" r="2.5" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
 ].join('');
 
 var BD_OVERLAYS = {
@@ -3026,28 +3010,37 @@ var BD_OVERLAYS = {
     +'<path d="M82,332 C80,370 78,400 76,430 M118,332 C120,370 122,400 124,430" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
   },
   nervous: { color:'#a78bfa', svg:
-    // Brain — organic cerebral hemisphere outline
-    '<path d="M78,10 C64,12 56,22 56,32 C56,42 60,50 68,54 C72,56 76,56 80,56 L100,58 L120,56 C124,56 128,56 132,54 C140,50 144,42 144,32 C144,22 136,12 122,10 C114,6 86,6 78,10 Z" fill="#a78bfa" opacity="0.65"/>'
-    // Cerebellum (lower posterior brain)
-    +'<path d="M82,54 C78,60 78,64 82,66 L100,68 L118,66 C122,64 122,60 118,54" fill="#a78bfa" opacity="0.5"/>'
-    // Corpus callosum hint
-    +'<line x1="72" y1="32" x2="128" y2="32" stroke="#a78bfa" stroke-width="1.5" opacity="0.25"/>'
-    // Brainstem
-    +'<rect x="97" y="56" width="6" height="14" rx="3" fill="#a78bfa" opacity="0.65"/>'
-    // Spinal cord
-    +'<rect x="98" y="68" width="4" height="148" rx="2" fill="#a78bfa" opacity="0.45"/>'
-    // Cervical nerves
-    +'<path d="M98,75 L86,73 M102,75 L114,73 M98,82 L85,81 M102,82 L115,81" stroke="#a78bfa" stroke-width="1.5" fill="none" opacity="0.4"/>'
-    // Brachial plexus
-    +'<path d="M98,88 C86,90 68,94 46,112 M102,88 C114,90 132,94 154,112" stroke="#a78bfa" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    // Thoracic nerves (5 pairs)
-    +'<path d="M98,100 L82,104 M102,100 L118,104 M98,114 L80,118 M102,114 L120,118 M98,128 L80,132 M102,128 L120,132 M98,142 L82,146 M102,142 L118,146 M98,156 L83,160 M102,156 L117,160" stroke="#a78bfa" stroke-width="1.2" fill="none" opacity="0.3"/>'
-    // Lumbar plexus
-    +'<path d="M98,164 C88,170 74,180 64,200 M102,164 C112,170 126,180 136,200" stroke="#a78bfa" stroke-width="2" fill="none" opacity="0.35"/>'
-    // Sciatic nerves
-    +'<path d="M74,224 C70,268 68,340 70,430 M126,224 C130,268 132,340 130,430" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3"/>'
+    '<path d="M100,7 C86,7 78,13 76,21 C72,27 72,35 76,41 C78,47 84,51 92,53 L100,55 L108,53 C116,51 122,47 124,41 C128,35 128,27 124,21 C122,13 114,7 100,7Z" fill="#a78bfa" opacity="0.18"/>'
+    +'<line x1="100" y1="8" x2="100" y2="48" stroke="#a78bfa" stroke-width="1.2" opacity="0.85"/>'
+    +'<path d="M100,10 C95,8 88,8 82,12" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.72" stroke-linecap="round"/>'
+    +'<path d="M78,13 C76,18 76,25 78,31 C80,37 82,42 84,46" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.68" stroke-linecap="round"/>'
+    +'<path d="M82,11 C80,17 80,24 82,31 C84,37 86,42 88,47" fill="none" stroke="#a78bfa" stroke-width="1.3" opacity="0.62" stroke-linecap="round"/>'
+    +'<path d="M87,11 C85,18 85,26 87,34 C89,40 91,45 93,50" fill="none" stroke="#a78bfa" stroke-width="1.6" opacity="0.82" stroke-linecap="round"/>'
+    +'<path d="M92,10 C90,17 90,26 92,34 C94,40 96,46 97,51" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
+    +'<path d="M78,32 C82,30 88,30 94,32 C97,33 99,35 99,39" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.78" stroke-linecap="round"/>'
+    +'<path d="M78,37 C80,41 82,45 86,49" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
+    +'<path d="M80,42 C84,46 88,49 92,51" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.52" stroke-linecap="round"/>'
+    +'<path d="M100,10 C105,8 112,8 118,12" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.72" stroke-linecap="round"/>'
+    +'<path d="M122,13 C124,18 124,25 122,31 C120,37 118,42 116,46" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.68" stroke-linecap="round"/>'
+    +'<path d="M118,11 C120,17 120,24 118,31 C116,37 114,42 112,47" fill="none" stroke="#a78bfa" stroke-width="1.3" opacity="0.62" stroke-linecap="round"/>'
+    +'<path d="M113,11 C115,18 115,26 113,34 C111,40 109,45 107,50" fill="none" stroke="#a78bfa" stroke-width="1.6" opacity="0.82" stroke-linecap="round"/>'
+    +'<path d="M108,10 C110,17 110,26 108,34 C106,40 104,46 103,51" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
+    +'<path d="M122,32 C118,30 112,30 106,32 C103,33 101,35 101,39" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.78" stroke-linecap="round"/>'
+    +'<path d="M122,37 C120,41 118,45 114,49" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
+    +'<path d="M120,42 C116,46 112,49 108,51" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.52" stroke-linecap="round"/>'
+    +'<path d="M88,51 C84,53 82,57 84,61 L100,63 L116,61 C118,57 116,53 112,51" fill="#a78bfa" opacity="0.18"/>'
+    +'<path d="M84,53 Q92,51 100,53 Q108,51 116,53" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.68"/>'
+    +'<path d="M83,56 Q92,54 100,56 Q108,54 117,56" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.58"/>'
+    +'<path d="M84,59 Q92,57 100,59 Q108,57 116,59" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.48"/>'
+    +'<rect x="97" y="62" width="6" height="14" rx="3" fill="#a78bfa" opacity="0.68"/>'
+    +'<rect x="98.5" y="74" width="3" height="142" rx="1.5" fill="#a78bfa" opacity="0.45"/>'
+    +'<path d="M98,80 L85,78 M102,80 L115,78 M98,87 L84,86 M102,87 L116,86" stroke="#a78bfa" stroke-width="1.5" fill="none" opacity="0.4"/>'
+    +'<path d="M98,92 C86,94 68,98 46,112 M102,92 C114,94 132,98 154,112" stroke="#a78bfa" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
+    +'<path d="M98,104 L82,108 M102,104 L118,108 M98,118 L80,122 M102,118 L120,122 M98,132 L80,136 M102,132 L120,136 M98,146 L82,150 M102,146 L118,150 M98,160 L83,164 M102,160 L117,164" stroke="#a78bfa" stroke-width="1.2" fill="none" opacity="0.3"/>'
+    +'<path d="M98,168 C88,174 74,184 64,204 M102,168 C112,174 126,184 136,204" stroke="#a78bfa" stroke-width="2" fill="none" opacity="0.35"/>'
+    +'<path d="M74,224 C70,268 68,344 70,430 M126,224 C130,268 132,344 130,430" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3"/>'
   },
-  musculoskeletal: { color:'#f97316', svg:
+    musculoskeletal: { color:'#f97316', svg:
     // Skull (circle, not filled — outline)
     '<circle cx="100" cy="26" r="23" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
     +'<path d="M84,48 L86,54 L100,56 L114,54 L116,48" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
@@ -3150,6 +3143,322 @@ var BD_OVERLAYS = {
     +'<ellipse cx="63" cy="212" rx="8" ry="6" fill="#ec4899" opacity="0.78"/>'
     +'<ellipse cx="137" cy="212" rx="8" ry="6" fill="#ec4899" opacity="0.78"/>'
   },
+  // ── NEW SYSTEM OVERLAYS ──────────────────────────────────────────────────
+  skeletal: { color:'#cbd5e1', svg:
+    // Skull
+    '<circle cx="100" cy="26" r="23" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.55"/>'
+    +'<path d="M86,48 L88,56 L100,58 L112,56 L114,48" fill="none" stroke="#cbd5e1" stroke-width="1.8" opacity="0.5"/>'
+    // Spine
+    +'<path d="M100,64 L100,238" stroke="#cbd5e1" stroke-width="2.5" fill="none" opacity="0.4" stroke-dasharray="5,3"/>'
+    // Clavicles
+    +'<path d="M100,72 Q84,70 68,76 M100,72 Q116,70 132,76" stroke="#cbd5e1" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.55"/>'
+    // Sternum
+    +'<rect x="98.5" y="72" width="3" height="80" rx="1.5" fill="#cbd5e1" opacity="0.45"/>'
+    // Rib pairs
+    +'<path d="M100,82 Q86,80 76,86 Q70,90 72,96 Q80,92 100,90 M100,82 Q114,80 124,86 Q130,90 128,96 Q120,92 100,90" fill="none" stroke="#cbd5e1" stroke-width="1.8" opacity="0.42"/>'
+    +'<path d="M100,97 Q84,95 73,102 Q67,107 70,114 Q78,109 100,107 M100,97 Q116,95 127,102 Q133,107 130,114 Q122,109 100,107" fill="none" stroke="#cbd5e1" stroke-width="1.7" opacity="0.37"/>'
+    +'<path d="M100,113 Q83,111 72,119 Q66,125 70,132 Q78,127 100,125 M100,113 Q117,111 128,119 Q134,125 130,132 Q122,127 100,125" fill="none" stroke="#cbd5e1" stroke-width="1.6" opacity="0.32"/>'
+    +'<path d="M100,128 Q84,126 73,134 M100,128 Q116,126 127,134" fill="none" stroke="#cbd5e1" stroke-width="1.4" opacity="0.27"/>'
+    +'<path d="M100,140 Q85,138 76,146 M100,140 Q115,138 124,146" fill="none" stroke="#cbd5e1" stroke-width="1.3" opacity="0.22"/>'
+    // Pelvis
+    +'<path d="M60,210 Q56,226 64,234 L136,234 Q144,226 140,210 Q120,222 100,222 Q80,222 60,210Z" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.42"/>'
+    // Humerus (upper arm bones)
+    +'<path d="M62,82 L30,154 M138,82 L170,154" stroke="#cbd5e1" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
+    // Radius/ulna
+    +'<path d="M30,157 L18,230 M170,157 L182,230" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.32"/>'
+    // Femur
+    +'<path d="M80,236 C76,272 72,302 72,332 M120,236 C124,272 128,302 128,332" stroke="#cbd5e1" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
+    // Tibia/fibula
+    +'<path d="M72,334 L68,424 M128,334 L132,424" stroke="#cbd5e1" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.3"/>'
+  },
+  muscular: { color:'#fb923c', svg:
+    // Head/neck muscle hint
+    '<ellipse cx="100" cy="30" rx="20" ry="24" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.3"/>'
+    // Trapezius (neck-to-shoulder)
+    +'<path d="M88,60 Q70,68 52,82 M112,60 Q130,68 148,82" stroke="#fb923c" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.42"/>'
+    // Pectorals (chest)
+    +'<path d="M60,86 Q76,80 100,82 Q124,80 140,86 L140,116 Q120,124 100,122 Q80,124 60,116 Z" fill="#fb923c" opacity="0.22"/>'
+    +'<path d="M60,86 Q76,80 100,82 Q124,80 140,86 L140,116 Q120,124 100,122 Q80,124 60,116 Z" fill="none" stroke="#fb923c" stroke-width="1.2" opacity="0.5"/>'
+    // Abs (6-pack lines)
+    +'<rect x="97" y="122" width="6" height="62" rx="3" fill="#fb923c" opacity="0.2"/>'
+    +'<path d="M82,134 L118,134 M82,148 L118,148 M82,162 L118,162" stroke="#fb923c" stroke-width="1" fill="none" opacity="0.35"/>'
+    // Obliques
+    +'<path d="M60,116 Q56,140 58,168 M140,116 Q144,140 142,168" stroke="#fb923c" stroke-width="2.5" fill="none" opacity="0.35"/>'
+    // Deltoids
+    +'<ellipse cx="48" cy="98" rx="14" ry="18" fill="#fb923c" opacity="0.28" transform="rotate(-10 48 98)"/>'
+    +'<ellipse cx="152" cy="98" rx="14" ry="18" fill="#fb923c" opacity="0.28" transform="rotate(10 152 98)"/>'
+    // Biceps/triceps
+    +'<path d="M24,156 Q18,178 16,202" stroke="#fb923c" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    +'<path d="M176,156 Q182,178 184,202" stroke="#fb923c" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    // Forearms
+    +'<path d="M16,204 Q10,234 12,256" stroke="#fb923c" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>'
+    +'<path d="M184,204 Q190,234 188,256" stroke="#fb923c" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>'
+    // Glutes
+    +'<path d="M52,202 Q56,220 62,232 Q80,244 100,242 Q120,244 138,232 Q144,220 148,202" fill="#fb923c" opacity="0.22"/>'
+    // Quads/hamstrings
+    +'<path d="M58,238 Q48,280 50,344" stroke="#fb923c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    +'<path d="M142,238 Q152,280 150,344" stroke="#fb923c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    // Calves
+    +'<path d="M50,354 Q46,386 48,424" stroke="#fb923c" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    +'<path d="M150,354 Q154,386 152,424" stroke="#fb923c" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.22"/>'
+  },
+  lymphatic: { color:'#4ade80', svg:
+    // Thymus (upper chest)
+    '<path d="M90,82 Q84,90 86,100 Q88,106 100,106 Q112,106 114,100 Q116,90 110,82 Q105,78 100,80 Q95,78 90,82Z" fill="#4ade80" opacity="0.32"/>'
+    // Spleen (left side under ribs)
+    +'<ellipse cx="74" cy="152" rx="12" ry="8" fill="#4ade80" opacity="0.58" transform="rotate(-20 74 152)"/>'
+    // Cervical nodes (neck)
+    +'<circle cx="90" cy="63" r="4.5" fill="#4ade80" opacity="0.72"/>'
+    +'<circle cx="110" cy="63" r="4.5" fill="#4ade80" opacity="0.72"/>'
+    // Axillary nodes (armpits)
+    +'<circle cx="50" cy="104" r="5.5" fill="#4ade80" opacity="0.68"/>'
+    +'<circle cx="150" cy="104" r="5.5" fill="#4ade80" opacity="0.68"/>'
+    // Mesenteric / abdominal nodes
+    +'<circle cx="88" cy="168" r="4" fill="#4ade80" opacity="0.52"/>'
+    +'<circle cx="112" cy="174" r="3.5" fill="#4ade80" opacity="0.52"/>'
+    +'<circle cx="100" cy="158" r="3" fill="#4ade80" opacity="0.45"/>'
+    // Inguinal nodes (groin)
+    +'<circle cx="76" cy="232" r="5" fill="#4ade80" opacity="0.65"/>'
+    +'<circle cx="124" cy="232" r="5" fill="#4ade80" opacity="0.65"/>'
+    // Thoracic duct (central vessel)
+    +'<path d="M100,68 L100,210" stroke="#4ade80" stroke-width="2" fill="none" opacity="0.35" stroke-dasharray="5,3"/>'
+    // Lymph vessels to arms
+    +'<path d="M50,106 C40,124 32,152 28,180" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
+    +'<path d="M150,106 C160,124 168,152 172,180" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
+    // Lymph vessels to legs
+    +'<path d="M76,234 C74,270 72,330 70,380" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
+    +'<path d="M124,234 C126,270 128,330 130,380" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
+    // Bone marrow hint (long bones glow)
+    +'<path d="M66,82 L34,154" stroke="#4ade80" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>'
+    +'<path d="M134,82 L166,154" stroke="#4ade80" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>'
+  },
+  urinary: { color:'#fbbf24', svg:
+    // Left kidney (bean shape)
+    '<path d="M68,152 C62,155 58,164 60,174 C62,184 70,192 80,190 C88,188 92,180 90,170 C88,160 82,152 74,152 C72,151 70,151 68,152Z" fill="#fbbf24" opacity="0.72"/>'
+    // Renal pelvis hint left
+    +'<ellipse cx="82" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
+    // Right kidney (bean shape — flipped)
+    +'<path d="M132,152 C138,155 142,164 140,174 C138,184 130,192 120,190 C112,188 108,180 110,170 C112,160 118,152 126,152 C128,151 130,151 132,152Z" fill="#fbbf24" opacity="0.72"/>'
+    // Renal pelvis hint right
+    +'<ellipse cx="118" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
+    // Left ureter
+    +'<path d="M82,190 C82,204 82,216 84,226" stroke="#fbbf24" stroke-width="2.2" fill="none" opacity="0.6"/>'
+    // Right ureter
+    +'<path d="M118,190 C118,204 118,216 116,226" stroke="#fbbf24" stroke-width="2.2" fill="none" opacity="0.6"/>'
+    // Bladder
+    +'<ellipse cx="100" cy="234" rx="18" ry="13" fill="#fbbf24" opacity="0.5"/>'
+    +'<ellipse cx="100" cy="234" rx="18" ry="13" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.7"/>'
+    // Urethra
+    +'<path d="M100,247 L100,256" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.55" stroke-linecap="round"/>'
+    // Adrenal gland caps (yellow triangles)
+    +'<path d="M68,152 Q64,148 68,146 Q74,144 78,148 Q80,152 74,154Z" fill="#fbbf24" opacity="0.7"/>'
+    +'<path d="M132,152 Q136,148 132,146 Q126,144 122,148 Q120,152 126,154Z" fill="#fbbf24" opacity="0.7"/>'
+  },
+  integumentary: { color:'#f9a8d4', svg:
+    // Body surface glow — trace major contours
+    '<ellipse cx="100" cy="30" rx="26" ry="29" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.3"/>'
+    // Torso outline glow
+    +'<path d="M40,80 Q48,58 100,56 Q152,58 160,80 L158,118 Q154,148 146,170 Q148,186 150,196 Q130,216 100,218 Q70,216 50,196 Q52,186 54,170 Q46,148 42,118 Z" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.25"/>'
+    // Arm surface glow
+    +'<path d="M24,115 Q14,154 12,204 Q8,236 10,258" stroke="#f9a8d4" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.15"/>'
+    +'<path d="M176,115 Q186,154 188,204 Q192,236 190,258" stroke="#f9a8d4" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.15"/>'
+    // Leg surface glow
+    +'<path d="M58,238 Q48,280 50,344 Q46,388 48,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
+    +'<path d="M142,238 Q152,280 150,344 Q154,388 152,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
+    // Skin receptor dots — scattered
+    +'<circle cx="72" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
+    +'<circle cx="128" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
+    +'<circle cx="60" cy="140" r="2" fill="#f9a8d4" opacity="0.45"/>'
+    +'<circle cx="140" cy="140" r="2" fill="#f9a8d4" opacity="0.45"/>'
+    +'<circle cx="68" cy="180" r="2" fill="#f9a8d4" opacity="0.4"/>'
+    +'<circle cx="132" cy="180" r="2" fill="#f9a8d4" opacity="0.4"/>'
+    +'<circle cx="100" cy="64" r="2" fill="#f9a8d4" opacity="0.45"/>'
+    +'<circle cx="100" cy="220" r="2" fill="#f9a8d4" opacity="0.4"/>'
+    // Sweat gland lines (arm surface)
+    +'<path d="M34,170 Q30,172 34,175 M178,170 Q182,172 178,175" stroke="#f9a8d4" stroke-width="1.2" fill="none" opacity="0.45"/>'
+    // Nail hints (fingertip)
+    +'<path d="M8,260 Q10,256 14,257 M192,260 Q190,256 186,257" stroke="#f9a8d4" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.4"/>'
+  },
+};
+
+// ── BODY SYSTEMS METADATA ────────────────────────────────────────────────────
+var BODY_SYSTEMS = [
+  { key:'skeletal',       name:'Skeletal',       fn:'Provides structural framework, protects vital organs, and produces blood cells.',                          overlay:'skeletal',          color:'#cbd5e1' },
+  { key:'muscular',       name:'Muscular',        fn:'Enables voluntary and involuntary movement, generates heat, and maintains posture.',                       overlay:'muscular',           color:'#fb923c' },
+  { key:'nervous',        name:'Nervous',         fn:'Coordinates body activities and perceives the environment using electrical signals.',                      overlay:'nervous',            color:'#a78bfa' },
+  { key:'endocrine',      name:'Endocrine',       fn:'Regulates metabolic processes, growth, and development by secreting hormones.',                           overlay:'endocrine',          color:'#eab308' },
+  { key:'cardiovascular', name:'Cardiovascular',  fn:'Transports oxygen, nutrients, hormones, and waste throughout the body.',                                  overlay:'cardiovascular',     color:'#ef4444' },
+  { key:'lymphatic',      name:'Lymphatic',       fn:'Defends against pathogens, absorbs fats, and returns fluid to the bloodstream.',                          overlay:'lymphatic',          color:'#4ade80' },
+  { key:'respiratory',    name:'Respiratory',     fn:'Facilitates gas exchange by taking in oxygen and expelling carbon dioxide.',                              overlay:'pulmonary',          color:'#3b82f6' },
+  { key:'digestive',      name:'Digestive',       fn:'Breaks down food, absorbs nutrients, and eliminates solid waste.',                                        overlay:'gastrointestinal',   color:'#10b981' },
+  { key:'urinary',        name:'Urinary',         fn:'Filters blood, eliminates metabolic waste, and regulates fluid and electrolyte balance.',                 overlay:'urinary',            color:'#fbbf24' },
+  { key:'integumentary',  name:'Integumentary',   fn:'Protects internal tissues from external damage, regulates temperature, and prevents water loss.',         overlay:'integumentary',      color:'#f9a8d4' },
+  { key:'reproductive',   name:'Reproductive',    fn:'Produces sex cells, facilitates reproduction, and influences secondary sexual characteristics.',          overlay:'reproductive',       color:'#06b6d4' },
+];
+
+// ── RING × SYSTEM FACTS ─────────────────────────────────────────────────────
+// Each ring key maps to { defaultFacts:[...3 facts], systems:{ sysKey:[...1-3 facts] } }
+var RING_BODY_DATA = {
+  'HRV Trend': {
+    defaultFacts: [
+      'HRV is directly regulated by the autonomic nervous system — high HRV reflects parasympathetic dominance and genuine recovery.',
+      'Chronic low HRV is an early warning sign of overtraining, metabolic dysfunction, and elevated cardiovascular risk.',
+      'Every breath mechanically drives HRV through respiratory sinus arrhythmia — slow deep breathing is the fastest way to raise it.'
+    ],
+    systems: {
+      skeletal: ['Bone healing depends on parasympathetic recovery signals. Low HRV is associated with slower bone repair rates and blunted osteoblast activity.'],
+      muscular: ['High HRV signals your muscles are receiving recovery input from the nervous system. Low HRV means the body is still in a catabolic, stress-dominant state — muscle repair stalls.', 'Training when HRV is suppressed accelerates overreaching, not adaptation. HRV is the most accurate readiness signal before high-intensity work.'],
+      nervous: ['HRV directly measures the balance between sympathetic (fight-or-flight) and parasympathetic (rest-and-digest) autonomic activity.', 'Higher HRV indicates stronger vagal tone — linked to better stress resilience, emotional regulation, and cognitive clarity.', 'Chronic low HRV reflects sympathetic overactivation: the same state that impairs sleep, digestion, and hormonal recovery.'],
+      endocrine: ['Cortisol chronically suppresses HRV. People with dysregulated HPA axis rhythms consistently show blunted overnight HRV recovery.', 'Blood glucose spikes measurably drop HRV within 1–2 hours. Stable glycemic control is one of the fastest routes to HRV improvement.'],
+      cardiovascular: ['HRV reflects the heart's adaptive responsiveness to autonomic input. Higher HRV means the heart adjusts fluidly to changing demands.', 'Low HRV is an independent predictor of cardiovascular mortality, even after controlling for age, fitness, and traditional risk factors.'],
+      lymphatic: ['Parasympathetic tone — reflected in HRV — directly suppresses systemic inflammation. Higher HRV correlates with lower CRP, IL-6, and TNF-α.', 'Chronic sympathetic dominance (low HRV) impairs immune surveillance and reduces natural killer cell activity.'],
+      respiratory: ['Breathing directly drives HRV via respiratory sinus arrhythmia. The inhale accelerates HR, exhale slows it — this oscillation IS HRV.', 'Box breathing and 4-7-8 breathing protocols measurably raise HRV within minutes by maximizing vagal nerve activation.'],
+      digestive: ['The vagus nerve — the primary driver of parasympathetic tone — also controls gut motility. Low HRV consistently correlates with IBS, bloating, and slow transit.', 'Gut microbiome diversity and HRV are bidirectionally linked: a healthy gut produces short-chain fatty acids that enhance vagal signaling.'],
+      urinary: ['Autonomic dysfunction reduces renal blood flow regulation. Long-term low HRV is associated with higher rates of kidney disease progression.'],
+      integumentary: ['Chronic stress (reflected in low HRV) elevates cortisol, which degrades collagen and delays wound healing. High HRV correlates with better skin barrier integrity.'],
+      reproductive: ['Low HRV in men correlates with lower testosterone — both are markers of hypothalamic-pituitary axis suppression under chronic stress.', 'In women, HRV varies predictably across the menstrual cycle — luteal phase HRV dip is normal; a pronounced drop signals under-recovery.']
+    }
+  },
+  'Sleep': {
+    defaultFacts: [
+      'Deep sleep triggers GH release — 95% of daily growth hormone is secreted during the first half of the night, driving repair throughout the body.',
+      'Even one night of 6-hour sleep reduces insulin sensitivity by 25% — comparable to eating an ultra-processed diet for weeks.',
+      'Chronic short sleep triggers measurable inflammation within 24 hours, raising CRP and IL-6 across every body system.'
+    ],
+    systems: {
+      skeletal: ['Growth hormone surges during deep sleep drive osteoblast activity — the cells that build and repair bone. Chronic poor sleep accelerates bone density loss.', 'Sleep is when the skeletal system\'s repair processes dominate. Collagen synthesis in cartilage and bone peaks during overnight rest.'],
+      muscular: ['Muscle protein synthesis is almost entirely a sleep-dependent process. GH release during slow-wave sleep activates mTOR — the molecular switch for muscle growth.', 'Sleep deprivation reduces power output by up to 11% and increases perceived exertion. The training stimulus was there; the adaptation window wasn\'t.'],
+      nervous: ['During sleep, the glymphatic system clears amyloid-beta and tau — the proteins linked to Alzheimer\'s. It operates at 10× daytime speed during deep sleep.', 'Memory consolidation — the transfer of learning from hippocampus to cortex — happens almost exclusively during REM sleep.', 'REM sleep regulates emotional reactivity. Losing REM significantly increases amygdala reactivity and reduces prefrontal inhibition the next day.'],
+      endocrine: ['Sleep is the master clock for hormone secretion. Cortisol peaks at wake, GH peaks in first deep sleep, testosterone peaks in REM — disrupting sleep desynchronizes all three.', 'Two nights of 6-hour sleep drops testosterone by 10–15% in healthy young men. This is not a long-term trend — it is an acute measurable drop.'],
+      cardiovascular: ['Heart rate and blood pressure drop 10–20% during sleep (nocturnal dipping). Non-dippers — those who don\'t show this pattern — have 2× the cardiovascular event risk.', 'Sleep apnea causes repeated surges in blood pressure throughout the night, making it one of the strongest independent risk factors for hypertension and heart disease.'],
+      lymphatic: ['Immune function is most active during deep sleep — cytokine production and T-cell activity peak between midnight and 4am.', 'Sleeping under 6 hours makes you 4× more susceptible to the common cold compared to sleeping 7+ hours. The immune cost is measurable within one bad week.'],
+      respiratory: ['Sleep is the only period where respiratory muscles get true rest. Sleep apnea disrupts this by causing repeated obstructions, leading to chronic oxygen desaturation and CO₂ retention.'],
+      digestive: ['Gut motility slows during sleep to allow mucosal repair and microbiome restoration. Eating within 2 hours of bed disrupts this window and is linked to worse sleep quality.', 'The gut-brain axis operates bidirectionally during sleep — poor gut health fragments sleep architecture, and fragmented sleep degrades the microbiome over time.'],
+      urinary: ['ADH (antidiuretic hormone) peaks at night to concentrate urine and reduce the need to wake. Sleep disruption dysregulates this rhythm — a common cause of nocturia.'],
+      integumentary: ['Skin cell regeneration and collagen synthesis peak between 11pm and 4am. Chronic sleep deprivation measurably increases transepidermal water loss and accelerates UV damage accumulation.'],
+      reproductive: ['In men, 70% of daily testosterone is manufactured during sleep — specifically during REM cycles. Disrupted REM directly suppresses morning testosterone levels.', 'In women, sleep regulates FSH, LH, and progesterone rhythms. Chronic poor sleep is a leading cause of menstrual irregularity and reduced fertility.']
+    }
+  },
+  'Zone 2': {
+    defaultFacts: [
+      'Zone 2 training doubles mitochondrial density in skeletal muscle over 8–12 weeks — the cellular foundation of metabolic health and fat burning.',
+      'Zone 2 is the most effective single intensity for increasing stroke volume — the amount of blood your heart ejects per beat.',
+      'AMPK, the cellular master switch for fat burning and mitochondrial growth, is most powerfully activated in Zone 2 — not higher intensities.'
+    ],
+    systems: {
+      skeletal: ['Weight-bearing Zone 2 (running, walking) provides the mechanical loading stimulus that maintains bone mineral density. Cycling is cardiovascular but not osteogenic.', 'The cortisol rise during high-intensity exercise is absent in Zone 2 — making it bone-protective rather than bone-degrading over time.'],
+      muscular: ['Zone 2 selectively trains Type I slow-twitch fibers and their mitochondria — the engines of fat oxidation and sustained energy output.', 'Mitochondrial biogenesis peaks in the 12–48 hours following a Zone 2 session. This is when the cellular adaptation actually occurs — rest matters.', 'The crossover point — where fat burning gives way to carbohydrate burning — shifts to higher intensities with consistent Zone 2 training.'],
+      nervous: ['Sustained Zone 2 exercise raises parasympathetic tone over time, progressively improving baseline HRV.', 'Zone 2 stimulates BDNF (brain-derived neurotrophic factor) — the primary growth signal for neurons — more consistently than higher intensities.'],
+      endocrine: ['Zone 2 is the strongest known intervention for improving insulin sensitivity. A single 30-minute session can lower post-meal glucose for up to 24 hours.', 'Unlike HIIT, Zone 2 does not significantly raise cortisol — making it the ideal recovery-compatible training mode.'],
+      cardiovascular: ['Zone 2 produces the greatest increase in stroke volume (heart pumps more per beat) — the primary mechanism behind resting HR reduction.', 'After 8–12 weeks of Zone 2 training, resting heart rate drops 5–15 bpm — each beat saved is cardiac muscle effort spared.', 'Zone 2 training grows the left ventricular cavity — the endurance athlete\'s heart — increasing cardiac output capacity.'],
+      lymphatic: ['Moderate sustained exercise is the most powerful anti-inflammatory lifestyle intervention. Zone 2 significantly reduces CRP, IL-6, and TNF-α within weeks.', 'Physical movement is the primary driver of lymphatic flow — the lymphatic system has no pump. Zone 2 massively accelerates lymphatic circulation.'],
+      respiratory: ['Zone 2 improves pulmonary capillary recruitment and ventilatory efficiency — you extract more O₂ from each breath over time.', 'The ventilatory threshold (where breathing becomes labored) rises with Zone 2 training — the hallmark that you are operating aerobically.'],
+      digestive: ['Zone 2 training increases gut microbiome diversity. Athletes have measurably more Lactobacillus and Akkermansia than sedentary individuals.', 'Regular aerobic exercise accelerates GI transit time, reducing the risk of constipation and colorectal inflammation.'],
+      urinary: ['Cardiovascular fitness from Zone 2 improves renal perfusion and blood pressure regulation — reducing long-term chronic kidney disease risk by up to 30%.'],
+      integumentary: ['Improved circulation from Zone 2 enhances oxygen and nutrient delivery to skin. Aerobically fit individuals show measurably better wound healing rates.'],
+      reproductive: ['Zone 2 training increases testosterone in sedentary to moderately active men and improves estrogen metabolism in women.', 'Regular aerobic exercise reduces the risk of hormone-sensitive cancers (breast, prostate) by improving sex hormone clearance.']
+    }
+  },
+  'Steps': {
+    defaultFacts: [
+      '7,000+ daily steps reduces all-cause mortality by 50–70% compared to fewer than 2,000 steps — independent of structured exercise.',
+      'Walking activates the calf muscle pump — the primary mechanism for returning venous blood to the heart from the lower body.',
+      'Walking after meals blunts post-prandial glucose spikes more effectively than medication in pre-diabetics.'
+    ],
+    systems: {
+      skeletal: ['Weight-bearing steps provide the mechanical stress required to maintain bone mineral density. Non-weight-bearing exercise (cycling, swimming) does not substitute.', 'Walking 8,000+ steps/day is associated with 45% lower risk of developing osteoporosis — the effect is dose-dependent and starts within weeks.'],
+      muscular: ['Chronic daily walking prevents the slow-twitch fiber atrophy that drives metabolic disease and frailty in sedentary individuals.', 'The calf muscle pump — activated by every step — is the most important driver of venous return from the legs to the heart.'],
+      nervous: ['Walking stimulates BDNF production more consistently than any other daily behavior. BDNF is the primary growth signal for neurons and is protective against cognitive decline.', 'Even a 10-minute walk measurably reduces anxiety and improves executive function for 2+ hours afterward — the effect is dose-responsive.'],
+      endocrine: ['Post-meal walking (10–15 minutes) reduces glucose and insulin spikes more effectively than a pre-meal walk.', '7,000+ daily steps improves insulin sensitivity independently of weight change — movement volume is the key variable, not intensity.'],
+      cardiovascular: ['7,000+ daily steps significantly reduces blood pressure, LDL cholesterol, and cardiovascular event risk.', 'Physical activity volume (not just exercise) keeps the calf venous pump active throughout the day, reducing DVT risk from prolonged sitting.'],
+      lymphatic: ['Walking is the primary driver of lymphatic flow. The lymphatic system relies entirely on muscular contraction and body movement — it has no heart.', 'Regular walking reduces CRP and IL-6 significantly compared to sedentary baselines — the anti-inflammatory effect is measurable within 4 weeks.'],
+      respiratory: ['Walking maintains diaphragmatic strength and lung expansion. Sedentary individuals breathe shallowly most of the day, reducing diaphragm tone.'],
+      digestive: ['Walking accelerates colonic transit time. Sedentary individuals have 2–3× higher rates of chronic constipation.', 'Physical activity post-meal stimulates gastric motility and improves the microbiome\'s diversity and composition over time.'],
+      urinary: ['Adequate daily steps maintain kidney perfusion and help prevent the metabolic conditions — insulin resistance, hypertension — that accelerate chronic kidney disease.'],
+      integumentary: ['Walking improves peripheral circulation, delivering oxygen and nutrients to skin cells and accelerating wound healing.', 'Regular physical activity is associated with reduced severity of inflammatory skin conditions including eczema and psoriasis.'],
+      reproductive: ['Regular walking is associated with improved fertility outcomes and hormonal balance in both men and women.', 'Daily step counts above 7,000 correlate with better sexual function scores — mediated through cardiovascular fitness and testosterone maintenance.']
+    }
+  },
+  'Macros': {
+    defaultFacts: [
+      'Protein is the only macronutrient that cannot be stored. Daily intake must meet daily demand or the body catabolizes muscle to supply amino acids.',
+      'Dietary fat provides the cholesterol backbone for all steroid hormones — ultra-low-fat diets measurably suppress testosterone and estrogen.',
+      'Fiber feeds gut bacteria that produce short-chain fatty acids critical for colon health, immune function, and insulin sensitivity.'
+    ],
+    systems: {
+      skeletal: ['Protein provides the collagen matrix that bone minerals crystallize into. Dietary protein is as important as calcium for bone strength, not just mineral content.', 'Calcium and phosphorus from food mineralize bone, but the collagen scaffold quality — which requires adequate dietary protein — determines bone fracture resistance.'],
+      muscular: ['Muscle protein synthesis requires all essential amino acids to be present simultaneously. Incomplete daily protein causes net muscle loss even when you are training.', '1g per lb of bodyweight protein is the threshold above which MPS is maximized in trained individuals. Below this, gains are left on the table.', 'Leucine specifically triggers the mTOR pathway — the molecular switch for muscle building. Red meat, eggs, and dairy have the highest leucine content per gram.'],
+      nervous: ['DHA (omega-3) comprises 60% of the brain\'s fatty acids. Dietary fat quality directly affects cognitive function, mood, and neuroinflammation.', 'B12 and folate — found primarily in animal protein — are required for myelin synthesis and neurotransmitter production.'],
+      endocrine: ['Dietary fat is the raw material for all steroid hormones. Eating less than 15% of calories as fat chronically suppresses testosterone and estrogen.', 'Carbohydrate intake directly regulates insulin. High glycemic load with low fiber drives progressive insulin resistance — the most common hormonal disorder.'],
+      cardiovascular: ['Omega-3 fatty acids reduce triglycerides and systemic inflammation — the two primary drivers of cardiovascular risk beyond LDL.', 'Excess refined carbohydrates raise triglycerides and small-dense LDL particles (the dangerous kind) more than dietary fat does.'],
+      lymphatic: ['Dietary fat is absorbed through the lymphatic system (lacteals in intestinal villi) before entering the bloodstream. Fat intake directly drives lymphatic activity after every meal.', 'Adequate zinc, vitamin A, and protein from diet are required for immune cell production and lymphocyte function.'],
+      respiratory: ['Adequate protein maintains respiratory muscle mass. Diaphragm sarcopenia — driven by protein insufficiency — is a significant driver of respiratory decline with aging.'],
+      digestive: ['Fiber feeds Bifidobacterium and Lactobacillus — keystone gut bacteria that regulate immune function, inflammation, and metabolic signaling.', 'Protein requires 4–6 hours of gastric residence for full digestion. Meal timing and protein distribution across the day matters as much as total daily protein.'],
+      urinary: ['Excessive protein intake (3g+/lb bodyweight) increases uric acid and kidney filtration load. 1–1.5g/lb is optimal without adding renal stress.', 'Dietary sodium is the primary driver of urinary electrolyte balance and fluid retention.'],
+      integumentary: ['Collagen synthesis requires protein, vitamin C, and zinc simultaneously. Protein deficiency is the primary cause of impaired wound healing and skin thinning.'],
+      reproductive: ['Adequate fat and cholesterol intake is required for sex hormone production. Dietary fat restriction is a leading cause of hormonal deficiency in both athletes and dieters.', 'Zinc from red meat, shellfish, and seeds is a direct precursor to testosterone synthesis. Low zinc consistently predicts low testosterone.']
+    }
+  },
+  'Water': {
+    defaultFacts: [
+      'Blood is 90% water — even 1% dehydration meaningfully thickens blood, raises resting heart rate, and impairs oxygen delivery.',
+      'The kidneys filter 200L of blood per day and require constant hydration to maintain the concentration gradients needed to clear waste.',
+      'The brain is 80% water — even mild dehydration measurably reduces concentration, reaction time, and short-term memory.'
+    ],
+    systems: {
+      skeletal: ['Synovial fluid (joint lubrication) is primarily water. Chronic dehydration increases joint friction, accelerates cartilage wear, and contributes to joint pain.', 'Intervertebral disc height is maintained by water absorption overnight. Chronic dehydration degrades disc height and increases compression injury risk.'],
+      muscular: ['Muscle cells are 75% water. Dehydration reduces peak force production, increases cramp susceptibility, and impairs the protein synthesis process.', 'Glycogen storage requires water — each gram of muscle glycogen is bound with 3g of water. Dehydration directly limits energy reserves.'],
+      nervous: ['Cerebrospinal fluid (which cushions and nourishes the brain) requires continuous water intake. Even mild dehydration reduces CSF volume and impairs glymphatic clearance.', 'Dehydration impairs working memory, attention, and psychomotor speed within 1–2 hours of a 1–2% body mass water deficit.'],
+      endocrine: ['Dehydration triggers the stress response — cortisol rises and testosterone falls within hours of significant fluid deficit.', 'ADH (antidiuretic hormone) is released by the hypothalamus when blood osmolality rises — dehydration creates chronic hormonal stress responses.'],
+      cardiovascular: ['Blood is 90% water — dehydration reduces plasma volume, thickens blood viscosity, raises heart rate, and drops stroke volume at every exercise intensity.', 'A 2% body weight water loss reduces cardiac output by up to 10% — meaning your heart works harder for the same result.'],
+      lymphatic: ['Lymph is 95% water. Dehydration impairs lymphatic flow, reducing the body\'s ability to clear metabolic waste and fight infection.', 'Adequate hydration is required for lymphocyte production and transport — immune function is directly compromised by dehydration.'],
+      respiratory: ['The airway epithelium must remain hydrated for effective mucociliary clearance — the lungs\' first defense against inhaled pathogens.', 'Mild dehydration thickens mucus in the airways, impairing the cilia\'s ability to move debris upward and out of the respiratory tract.'],
+      digestive: ['Water is required at every stage of digestion: saliva, gastric acid secretion, bile production, and intestinal absorption are all water-dependent.', 'Inadequate water intake is the single most common cause of chronic constipation — more than fiber deficiency.'],
+      urinary: ['Kidneys filter 200L of blood daily. Water intake is the primary determinant of whether they can maintain the concentration gradients needed to excrete waste.', 'Chronic under-hydration concentrates urine — massively increasing kidney stone risk (especially calcium oxalate) and long-term renal damage.'],
+      integumentary: ['Skin turgor is the clinical test for hydration. Chronic under-hydration reduces skin elasticity, increases transepidermal water loss, and accelerates visible aging.'],
+      reproductive: ['Dehydration reduces semen volume and sperm motility in men. In women, cervical mucus quality and ovarian blood flow are both impaired by significant fluid deficit.']
+    }
+  },
+  'Resting HR': {
+    defaultFacts: [
+      'RHR reflects stroke volume — a lower RHR means your heart pumps more blood per beat, requiring fewer beats to meet the body\'s demand.',
+      'Every 10 bpm above 60 is associated with ~16% higher all-cause mortality, independent of other risk factors.',
+      'Elite endurance athletes routinely sustain RHRs of 36–44 bpm — the result of years of cardiac remodeling through aerobic training.'
+    ],
+    systems: {
+      skeletal: ['Low RHR reflects overall aerobic fitness. The same training adaptations that reduce resting heart rate also stimulate bone density through mechanical loading.'],
+      muscular: ['High RHR at rest means muscles are operating under relative oxygen debt even at baseline. Low RHR reflects the cardiovascular efficiency that keeps muscles well-supplied.', 'Each 10 bpm reduction in RHR from training saves roughly 14,400 heartbeats per day — cardiac muscle fatigue accumulates.'],
+      nervous: ['RHR is set by the balance of sympathetic (accelerator) and parasympathetic (brake) tone. Training the vagus nerve through aerobic exercise is the primary driver of RHR reduction.', 'Elevated RHR during rest indicates sympathetic nervous system dominance — the same state that impairs sleep, digestion, and recovery.'],
+      endocrine: ['Elevated RHR often reflects high cortisol or thyroid dysfunction. Subclinical hyperthyroidism is one of the leading overlooked causes of persistently elevated RHR.', 'Insulin resistance and metabolic syndrome are strongly associated with elevated resting heart rate — RHR above 80 is an independent metabolic risk marker.'],
+      cardiovascular: ['RHR is the clearest single metric of cardiovascular efficiency. Low RHR means more blood per beat, less cardiac work per day, and greater reserve capacity.', 'A 10 bpm RHR reduction from aerobic training equates to ~5.2 million fewer heartbeats per year — meaningful long-term cardiac sparing.'],
+      lymphatic: ['Chronic high RHR is bidirectionally linked with systemic inflammation. Lower RHR from fitness improvement simultaneously reduces inflammatory markers.'],
+      respiratory: ['Lower RHR means the cardiovascular system distributes oxygen more efficiently, reducing the ventilatory demand for any given workload.'],
+      digestive: ['Parasympathetic dominance — associated with low RHR — is required for optimal digestion. High resting HR suppresses the vagal tone needed for gastric motility and enzyme secretion.'],
+      urinary: ['Cardiovascular fitness (reflected in low RHR) improves renal blood flow regulation and reduces long-term chronic kidney disease risk.'],
+      integumentary: ['Better cardiovascular efficiency from low RHR means more consistent peripheral oxygen delivery — athletes show faster wound healing and better skin recovery.'],
+      reproductive: ['RHR above 80 is associated with lower testosterone in men and menstrual irregularity in women — both are secondary effects of the underlying sympathetic activation.']
+    }
+  },
+  'VO₂ Max': {
+    defaultFacts: [
+      'VO₂ Max is the single strongest predictor of all-cause mortality — more predictive than smoking history, diabetes, or hypertension.',
+      'Every 1-MET increase in aerobic capacity reduces all-cause mortality by 13% and cardiovascular mortality by 15%.',
+      'VO₂ Max is trainable at any age — studies show 10–15% improvements in adults over 60 after just 12 weeks of structured aerobic training.'
+    ],
+    systems: {
+      skeletal: ['High VO₂ Max is associated with greater bone mineral density — the same training loads that build aerobic capacity provide the mechanical stimulus for osteogenesis.', 'Aerobic fitness reduces fracture risk in older adults through both direct (bone density) and indirect (fall prevention, muscle strength) mechanisms.'],
+      muscular: ['VO₂ Max is limited at the muscular level by mitochondrial density and capillary recruitment. High VO₂ Max reflects dense, metabolically active muscle tissue.', 'The a-vO₂ difference (how much O₂ muscles extract from each unit of blood) is the muscular component of VO₂ Max — trainable through Zone 2 and strength work.', 'High VO₂ Max athletes sustain a greater percentage of their max power aerobically, meaning they accumulate less fatigue for the same workload.'],
+      nervous: ['VO₂ Max training is the single most potent intervention for long-term brain health. It doubles cerebral blood flow and maximally stimulates BDNF production.', 'High VO₂ Max in midlife is the strongest lifestyle predictor of protection against cognitive decline and dementia — stronger than diet or sleep alone.'],
+      endocrine: ['VO₂ Max training maximizes insulin sensitivity — the mitochondria created by aerobic training consume glucose independently of insulin signaling.', 'High aerobic fitness is protective against metabolic syndrome, type 2 diabetes, and their hormonal downstream effects (low testosterone, low estrogen, high cortisol).'],
+      cardiovascular: ['VO₂ Max is determined by cardiac output (heart rate × stroke volume) × oxygen extraction. Both improve with training and decline with deconditioning.', 'Stroke volume — how much blood the heart ejects per beat — is the primary determinant of VO₂ Max and only increases meaningfully with sustained aerobic training.', 'VO₂ Max is the strongest known predictor of 10-year cardiovascular mortality — stronger than any blood biomarker currently in clinical use.'],
+      lymphatic: ['VO₂ Max training is the most powerful anti-inflammatory lifestyle intervention known. Trained individuals have dramatically lower levels of CRP, IL-6, and TNF-α.', 'High aerobic fitness enhances immune surveillance — NK cell activity and T-cell function are both elevated in endurance-trained individuals.'],
+      respiratory: ['VO₂ Max is limited in most people by cardiac output, not lung capacity. But pulmonary adaptations (increased capillary recruitment, diffusion capacity) contribute to the efficiency.', 'Respiratory muscle training (diaphragm, intercostals) becomes more efficient with VO₂ Max training — reducing the metabolic cost of breathing at high intensities.'],
+      digestive: ['Aerobic fitness improves gut microbiome diversity. Athletes have measurably higher populations of Akkermansia and Lactobacillus — bacteria associated with metabolic health and longevity.'],
+      urinary: ['High VO₂ Max reduces the risk of chronic kidney disease by 30–40% — through blood pressure reduction, insulin sensitivity improvement, and anti-inflammatory effects.'],
+      integumentary: ['High cardiovascular efficiency improves peripheral circulation and skin oxygenation. Athletes consistently show better wound healing and skin recovery compared to sedentary individuals.'],
+      reproductive: ['VO₂ Max is strongly correlated with erectile function in men (mediated by vascular health) and hormonal health in women.', 'Aerobic fitness is the strongest modifiable predictor of fertility outcomes in both sexes — VO₂ Max above the 75th percentile is associated with significantly better reproductive health markers.']
+    }
+  }
 };
 
 function setBodyDiagGender(g, btn) {
@@ -3157,83 +3466,118 @@ function setBodyDiagGender(g, btn) {
   var btns = document.querySelectorAll('.body-diag-gender-btn');
   for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i] === btn);
   if (bdCurrentIdx !== null) {
-    // re-render outline + overlays
     var svgCol = document.getElementById('bd-svg-col-' + bdCurrentIdx);
     if (svgCol) {
       var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
-      var overlayG = '<g id="bd-overlays-' + bdCurrentIdx + '"></g>';
-      svgCol.innerHTML = '<svg viewBox="0 0 200 445" xmlns="http://www.w3.org/2000/svg">' + outline + overlayG + '</svg>';
+      svgCol.innerHTML = '<svg viewBox="0 0 200 445" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
     }
     updateBodyDiagOverlays(bdCurrentIdx);
-    // re-render cards filtered by new gender
-    var cardsEl = document.getElementById('bd-cards-' + bdCurrentIdx);
-    if (cardsEl) {
-      var r2 = RINGS[bdCurrentIdx];
-      var gBody = r2.body.filter(function(b){ return !b[4] || b[4] === bdGender; });
-      cardsEl.innerHTML = gBody.map(function(b) {
-        var sysId2 = b[3];
-        var ov2 = BD_OVERLAYS[sysId2 === 'reproductive' ? (bdGender === 'f' ? 'reproductive-f' : 'reproductive-m') : sysId2];
-        var col2 = ov2 ? ov2.color : '#7a9480';
-        return '<div class="body-diag-card" style="border-left: 3px solid ' + col2 + '30;" onclick="toggleBodyDiagSys(' + bdCurrentIdx + ',\'' + sysId2 + '\',this)">'
-          + '<div class="b-ic">' + b[0] + '</div>'
-          + '<div class="b-tx"><strong>' + b[1] + '</strong><span>' + b[2] + '</span></div>'
-          + '</div>';
-      }).join('');
-    }
   }
 }
 
-function toggleBodyDiagSys(itemIdx, sysId, el) {
-  if (bdSelectedSys === sysId) {
+function selectBodySystem(idx, sysKey, btn) {
+  if (bdSelectedSys === sysKey) {
     bdSelectedSys = null;
+    btn.classList.remove('active');
   } else {
-    bdSelectedSys = sysId;
+    bdSelectedSys = sysKey;
+    var grid = document.getElementById('bd-sys-grid-' + idx);
+    if (grid) {
+      var allBtns = grid.querySelectorAll('.body-sys-btn');
+      for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+    // color the active button with its system color
+    var sys = null;
+    for (var j = 0; j < BODY_SYSTEMS.length; j++) {
+      if (BODY_SYSTEMS[j].key === sysKey) { sys = BODY_SYSTEMS[j]; break; }
+    }
+    if (sys) {
+      btn.style.color = sys.color;
+      btn.style.borderColor = sys.color;
+    }
   }
-  var cards = document.querySelectorAll('.body-diag-card');
-  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('highlighted');
-  if (bdSelectedSys && el) el.classList.add('highlighted');
-  updateBodyDiagOverlays(bdCurrentIdx);
+  updateBodyDiagOverlays(idx);
+  renderBodyInfoPanel(idx);
 }
 
 function updateBodyDiagOverlays(idx) {
   var g = document.getElementById('bd-overlays-' + idx);
   if (!g) return;
-  var r = RINGS[idx];
-  var toShow = bdSelectedSys ? [bdSelectedSys] : r.body.map(function(b){ return b[3]; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
   var html = '';
-  for (var i = 0; i < toShow.length; i++) {
-    var sysId = toShow[i];
-    if (sysId === 'reproductive') sysId = bdGender === 'f' ? 'reproductive-f' : 'reproductive-m';
-    var ov = BD_OVERLAYS[sysId];
-    if (ov) html += ov.svg;
+  if (bdSelectedSys) {
+    var sys = null;
+    for (var i = 0; i < BODY_SYSTEMS.length; i++) {
+      if (BODY_SYSTEMS[i].key === bdSelectedSys) { sys = BODY_SYSTEMS[i]; break; }
+    }
+    if (sys) {
+      var overlayKey = sys.overlay;
+      if (overlayKey === 'reproductive') overlayKey = bdGender === 'f' ? 'reproductive-f' : 'reproductive-m';
+      var ov = BD_OVERLAYS[overlayKey];
+      if (ov) html = ov.svg;
+    }
   }
   g.innerHTML = html;
+}
+
+function renderBodyInfoPanel(idx) {
+  var panel = document.getElementById('bd-info-' + idx);
+  if (!panel) return;
+  var ring = RINGS[idx];
+  var bodyData = RING_BODY_DATA[ring.name];
+
+  if (!bdSelectedSys || !bodyData) {
+    var defs = bodyData ? bodyData.defaultFacts : [];
+    var html = '<div class="body-info-title">Body Impact</div>';
+    html += '<div class="body-info-fn">Select a system to see how ' + ring.name + ' affects it specifically.</div>';
+    html += '<div class="body-info-facts">';
+    for (var d = 0; d < defs.length; d++) {
+      html += '<div class="body-info-fact"><span class="body-info-bullet">•</span>' + defs[d] + '</div>';
+    }
+    html += '</div>';
+    panel.innerHTML = html;
+    return;
+  }
+
+  var sys = null;
+  for (var i = 0; i < BODY_SYSTEMS.length; i++) {
+    if (BODY_SYSTEMS[i].key === bdSelectedSys) { sys = BODY_SYSTEMS[i]; break; }
+  }
+  if (!sys) return;
+
+  var facts = (bodyData.systems && bodyData.systems[bdSelectedSys]) ? bodyData.systems[bdSelectedSys] : [];
+  var html = '<div class="body-info-title" style="color:' + sys.color + '">' + sys.name + ' System</div>';
+  html += '<div class="body-info-fn">' + sys.fn + '</div>';
+  if (facts.length > 0) {
+    html += '<div class="body-info-facts">';
+    for (var f = 0; f < facts.length; f++) {
+      html += '<div class="body-info-fact"><span class="body-info-bullet" style="color:' + sys.color + '">•</span>' + facts[f] + '</div>';
+    }
+    html += '</div>';
+  } else {
+    html += '<div style="font-size:11px;color:var(--muted)">Indirect influence — this system is less directly affected by ' + ring.name + '.</div>';
+  }
+  panel.innerHTML = html;
 }
 
 function buildBodyDiagHtml(idx) {
   var r = RINGS[idx];
   bdCurrentIdx = idx;
   bdSelectedSys = null;
+  bdGender = 'm';
 
-  var uniqueSys = r.body.map(function(b){ return b[3]; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
-  var allOverlays = '';
-  for (var i = 0; i < uniqueSys.length; i++) {
-    var sysId = uniqueSys[i] === 'reproductive' ? (bdGender === 'f' ? 'reproductive-f' : 'reproductive-m') : uniqueSys[i];
-    var ov = BD_OVERLAYS[sysId];
-    if (ov) allOverlays += ov.svg;
-  }
+  var outline = BD_OUTLINE_M;
+  var bodyData = RING_BODY_DATA[r.name];
+  var defs = bodyData ? bodyData.defaultFacts : [];
 
-  var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
+  var defaultHtml = '<div class="body-info-title">Body Impact</div>'
+    + '<div class="body-info-fn">Select a system to see how ' + r.name + ' affects it specifically.</div>'
+    + '<div class="body-info-facts">'
+    + defs.map(function(f){ return '<div class="body-info-fact"><span class="body-info-bullet">•</span>' + f + '</div>'; }).join('')
+    + '</div>';
 
-  var genderBody = r.body.filter(function(b){ return !b[4] || b[4] === bdGender; });
-  var cardsHtml = genderBody.map(function(b, i) {
-    var sysId = b[3];
-    var ov = BD_OVERLAYS[sysId === 'reproductive' ? (bdGender === 'f' ? 'reproductive-f' : 'reproductive-m') : sysId];
-    var col = ov ? ov.color : '#7a9480';
-    return '<div class="body-diag-card" style="border-left: 3px solid ' + col + '30;" onclick="toggleBodyDiagSys(' + idx + ',\'' + sysId + '\',this)">'
-      + '<div class="b-ic">' + b[0] + '</div>'
-      + '<div class="b-tx"><strong>' + b[1] + '</strong><span>' + b[2] + '</span></div>'
-      + '</div>';
+  var sysBtns = BODY_SYSTEMS.map(function(sys) {
+    return '<button class="body-sys-btn" onclick="selectBodySystem(' + idx + ',\'' + sys.key + '\',this)">' + sys.name + '</button>';
   }).join('');
 
   return '<div class="body-diag-wrap">'
@@ -3245,10 +3589,13 @@ function buildBodyDiagHtml(idx) {
     + '<div class="body-diag-svg-col" id="bd-svg-col-' + idx + '">'
     + '<svg viewBox="0 0 200 445" xmlns="http://www.w3.org/2000/svg">'
     + outline
-    + '<g id="bd-overlays-' + idx + '">' + allOverlays + '</g>'
+    + '<g id="bd-overlays-' + idx + '"></g>'
     + '</svg>'
     + '</div>'
-    + '<div class="body-diag-cards" id="bd-cards-' + idx + '">' + cardsHtml + '</div>'
+    + '<div class="body-diag-right">'
+    + '<div class="body-sys-grid" id="bd-sys-grid-' + idx + '">' + sysBtns + '</div>'
+    + '<div class="body-info-panel" id="bd-info-' + idx + '">' + defaultHtml + '</div>'
+    + '</div>'
     + '</div>'
     + '</div>';
 }
