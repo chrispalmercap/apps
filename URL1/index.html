@@ -311,7 +311,6 @@
     .body-diag-svg-col { flex-shrink: 0; width: 100px; display: flex; flex-direction: column; }
     .body-diag-svg-wrap { flex: 1; overflow: hidden; min-height: 0; }
     .body-diag-svg-wrap svg { width: 100%; height: 100%; display: block; }
-    .body-diag-svg-wrap img { width: 100%; height: 100%; object-fit: contain; object-position: top center; display: block; }
     .body-diag-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; height: 300px; overflow: hidden; }
     .body-sys-btn {
       padding: 3px 8px; border-radius: 20px; border: 1px solid var(--border);
@@ -3483,29 +3482,18 @@ var RING_BODY_DATA = {
   }
 };
 
-// System images — add filename here as each image is uploaded
-var BD_SYSTEM_IMAGES = {
-  skeletal: 'Skeletal.png'
-};
-
-function updateBodyDiagFigure(idx) {
-  var svgCol = document.getElementById('bd-svg-col-' + idx);
-  if (!svgCol) return;
-  var imgSrc = bdSelectedSys ? BD_SYSTEM_IMAGES[bdSelectedSys] : null;
-  if (imgSrc) {
-    svgCol.innerHTML = '<img src="' + imgSrc + '" style="width:100%;height:100%;object-fit:contain;object-position:top center;display:block;">';
-  } else {
-    var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
-    svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + idx + '"></g></svg>';
-    updateBodyDiagOverlays(idx);
-  }
-}
-
 function setBodyDiagGender(g, btn) {
   bdGender = g;
   var btns = document.querySelectorAll('.body-diag-gender-btn');
   for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i] === btn);
-  if (bdCurrentIdx !== null) updateBodyDiagFigure(bdCurrentIdx);
+  if (bdCurrentIdx !== null) {
+    var svgCol = document.getElementById('bd-svg-col-' + bdCurrentIdx);
+    if (svgCol) {
+      var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
+      svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
+    }
+    updateBodyDiagOverlays(bdCurrentIdx);
+  }
 }
 
 function selectBodySystem(idx, sysKey, btn) {
@@ -3530,7 +3518,7 @@ function selectBodySystem(idx, sysKey, btn) {
     }
     if (sys) { btn.style.color = sys.color; btn.style.borderColor = sys.color; }
   }
-  updateBodyDiagFigure(idx);
+  updateBodyDiagOverlays(idx);
   renderBodyInfoPanel(idx);
 }
 
