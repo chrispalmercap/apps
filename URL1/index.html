@@ -145,7 +145,10 @@
     }
 
     /* shared section label */
-    .sec { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); margin: 18px 0 9px; }
+    .sec { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text2); margin: 14px 0 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 9px 13px; }
+    .sec::after { content: '▾'; font-size: 13px; letter-spacing: 0; text-transform: none; opacity: 0.6; transition: transform 0.2s; }
+    .sec.collapsed::after { transform: rotate(-90deg); }
+    .sec-body.collapsed { display: none; }
 
     /* card */
     .gc {
@@ -162,7 +165,7 @@
     .gc-row:last-child { border-bottom: none; }
     .gc-lbl { font-size: 13px; color: var(--text2); flex: 1; }
     .gc-val { font-size: 13px; font-weight: 700; text-align: right; max-width: 55%; color: var(--text); }
-    .gc-val-sm { font-size: 12px; font-weight: 500; color: var(--muted); text-align: right; max-width: 55%; }
+    .gc-val-sm { font-size: 12px; font-weight: 500; color: var(--text2); text-align: right; max-width: 55%; }
 
     /* why card */
     .why-gc {
@@ -192,7 +195,7 @@
     .tip-row-d:last-child { border-bottom: none; }
     .tip-head { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text); }
     .tip-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .tip-desc { font-size: 12px; color: var(--muted); line-height: 1.6; padding-left: 15px; }
+    .tip-desc { font-size: 12px; color: var(--text2); line-height: 1.55; padding-left: 15px; }
 
     /* ── LOG SECTION ── */
     .log-field { margin-bottom: 10px; }
@@ -294,20 +297,21 @@
 
     /* ── BODY DIAGRAM ── */
     .body-diag-wrap { margin-bottom: 4px; }
-    .body-diag-gender { display: flex; gap: 6px; margin-bottom: 10px; }
+    .body-diag-gender { display: flex; flex-wrap: nowrap; gap: 4px; margin-top: 6px; }
     .body-diag-gender-btn {
-      padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border);
+      flex: 1; padding: 3px 4px; border-radius: 20px; border: 1px solid var(--border);
       background: var(--surface2); color: var(--muted);
-      font-size: 11px; font-family: inherit; cursor: pointer;
+      font-size: 10px; font-family: inherit; cursor: pointer; text-align: center; white-space: nowrap;
     }
     .body-diag-gender-btn.active { background: var(--surface); color: var(--text); border-color: rgba(0,0,0,0.15); }
     .body-diag-gender-btn.male-btn.active { border-color: #06b6d4; color: #06b6d4; }
     .body-diag-gender-btn.female-btn.active { border-color: #ec4899; color: #ec4899; }
-    .body-diag-layout { display: flex; gap: 12px; align-items: flex-start; }
-    .body-diag-svg-col { flex-shrink: 0; width: 106px; }
-    .body-diag-svg-col svg { width: 100%; height: auto; display: block; }
-    .body-diag-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-    .body-sys-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+    .body-sys-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; justify-content: center; }
+    .body-diag-layout { display: flex; gap: 12px; align-items: stretch; }
+    .body-diag-svg-col { flex-shrink: 0; width: 100px; display: flex; flex-direction: column; }
+    .body-diag-svg-wrap { flex: 1; overflow: hidden; min-height: 0; }
+    .body-diag-svg-wrap svg { width: 100%; height: 100%; display: block; }
+    .body-diag-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; height: 300px; overflow: hidden; }
     .body-sys-btn {
       padding: 3px 8px; border-radius: 20px; border: 1px solid var(--border);
       background: var(--surface2); color: var(--muted);
@@ -318,13 +322,13 @@
     .body-sys-btn:hover { background: var(--surface); color: var(--text); }
     .body-sys-btn.active { color: var(--text); border-color: currentColor; background: var(--surface); }
     .body-info-panel { display: flex; flex-direction: column; gap: 5px; }
-    .body-info-title { font-size: 12px; font-weight: 700; color: var(--text); }
-    .body-info-fn { font-size: 11px; color: var(--muted); line-height: 1.45; }
+    .body-info-title { font-size: 13px; font-weight: 700; color: var(--text); }
+    .body-info-fn { font-size: 12px; color: var(--text2); line-height: 1.55; }
     .body-info-facts { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
     .b-ic { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
     .b-tx { flex: 1; min-width: 0; }
-    .b-tx strong { font-size: 12px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
-    .b-tx span { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .b-tx strong { font-size: 13px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
+    .b-tx span { font-size: 12px; color: var(--text2); line-height: 1.55; }
 
     .nutrition-item {
       display: flex; align-items: flex-start; gap: 11px;
@@ -627,7 +631,7 @@ var RINGS = [
   {
     name:'HRV Trend', icon:'💜', color:'#a78bfa',
     pct:.68, val:'52', unit:'ms', goal:'Goal: >55 ms', trend:'+3 ms this week', trendUp:true,
-    stats:[['Today','52 ms'],['7-Day Avg','49 ms'],['Baseline','58 ms'],['Optimal Range','55–90 ms'],['Trend','↑ Improving']],
+    stats:[['Today','52 ms'],['7-Day Avg','49 ms'],['Baseline','58 ms'],['Optimal Range','55-90 ms'],['Trend','↑ Improving']],
     dataSource:{manual:false,device:true,deviceLabel:'Garmin · Whoop · Apple Watch · Polar'},
     logConfig:{ label:'HRV Reading', placeholder:'e.g. 52', unit:'ms',
       entries:[['8:02 AM','52 ms'],['Yesterday','49 ms'],['Wednesday','55 ms']] },
@@ -635,16 +639,16 @@ var RINGS = [
     nutrition:{
       title:'Foods That Boost HRV',
       items:[
-        ['🐟','Fatty Fish (salmon, sardines)','Omega-3s directly improve cardiac vagal tone — the foundation of HRV. Aim for 2 servings/week.'],
+        ['🐟','Fatty Fish (salmon, sardines)','Omega-3s directly improve cardiac vagal tone, the foundation of HRV. Aim for 2 servings/week.'],
         ['🥬','Dark Leafy Greens','High magnesium supports nervous system regulation. Magnesium deficiency is common and suppresses HRV.'],
         ['🫐','Berries','Polyphenols reduce oxidative stress that chronically depresses HRV over time.'],
         ['🫒','Olive Oil','Oleocanthal has anti-inflammatory properties that reduce systemic inflammation linked to low HRV.'],
       ]
     },
-    why:'<strong>HRV</strong> measures variation between heartbeats — the most sensitive signal of how well your body is recovering from stress. Higher HRV means your nervous system is balanced and ready to perform. Lower means you\'re still under load, even if you feel fine.',
-    inputs:[['Sleep quality','#1 driver. Poor sleep tanks HRV by 10+ ms overnight.'],['Alcohol','Even 1–2 drinks drops HRV 10–15 ms the next day.'],['Training load','Hard workouts reduce HRV 24–48 hrs — normal adaptation.'],['Stress','Psychological stress degrades HRV just like physical load.']],
-    tips:[['Sleep first','Consistent 7–9 hrs moves HRV more than any supplement or protocol.'],['Cut alcohol 2 weeks','Most people see HRV jump 8–12 ms. Nothing else works this fast.'],['Zone 2 cardio 3×/week','Best long-term HRV builder — mitochondrial adaptation over 6–8 weeks.'],['Cold exposure','1–3 min cold shower acutely boosts HRV within 30 minutes.']],
-    body:[['🫀','Cardiovascular health','Higher HRV predicts lower risk of heart disease — it reflects vagal control of your heart.','cardiovascular'],['🧠','Stress resilience','Low HRV correlates with anxiety, poor decisions, and emotional reactivity.','nervous'],['💪','Recovery','Athletes with higher HRV recover faster and sustain bigger training loads.','musculoskeletal'],['🛡️','Immune function','Chronic low HRV correlates with elevated inflammation markers.','nervous'],['🔄','Menstrual cycle & HRV','Progesterone in the luteal phase drops HRV by 10–15ms — tracking this cycle helps predict low-recovery days and adjust training.','endocrine','f'],['🌡️','Menopause & HRV loss','Estrogen loss at menopause eliminates women\'s natural HRV advantage. Post-menopause, cardiac autonomic risk equalizes with men.','cardiovascular','f'],['💪','Men & HRV baseline','Men run 5–10ms lower baseline HRV than age-matched women — testosterone raises sympathetic tone. Your own trend matters far more than any absolute number.','nervous','m'],['🫀','Testosterone & cardiac recovery','Testosterone accelerates adrenergic recovery post-exercise, helping trained men rebound HRV faster than untrained peers despite their lower average baseline.','cardiovascular','m']],
+    why:'<strong>HRV</strong> measures variation between heartbeats, the most sensitive signal of how well your body is recovering from stress. Higher HRV means your nervous system is balanced and ready to perform. Lower means you\'re still under load, even if you feel fine.',
+    inputs:[['Sleep quality','#1 driver. Poor sleep tanks HRV by 10+ ms overnight.'],['Alcohol','Even 1-2 drinks drops HRV 10-15 ms the next day.'],['Training load','Hard workouts reduce HRV 24-48 hrs, a normal adaptation.'],['Stress','Psychological stress degrades HRV just like physical load.']],
+    tips:[['Sleep first','Consistent 7-9 hrs moves HRV more than any supplement or protocol.'],['Cut alcohol 2 weeks','Most people see HRV jump 8-12 ms. Nothing else works this fast.'],['Zone 2 cardio 3×/week','Best long-term HRV builder through mitochondrial adaptation over 6-8 weeks.'],['Cold exposure','1-3 min cold shower acutely boosts HRV within 30 minutes.']],
+    body:[['🫀','Cardiovascular health','Higher HRV predicts lower risk of heart disease by reflecting vagal control of your heart.','cardiovascular'],['🧠','Stress resilience','Low HRV correlates with anxiety, poor decisions, and emotional reactivity.','nervous'],['💪','Recovery','Athletes with higher HRV recover faster and sustain bigger training loads.','musculoskeletal'],['🛡️','Immune function','Chronic low HRV correlates with elevated inflammation markers.','nervous'],['🔄','Menstrual cycle & HRV','Progesterone in the luteal phase drops HRV by 10-15ms. Tracking this cycle helps predict low-recovery days and adjust training.','endocrine','f'],['🌡️','Menopause & HRV loss','Estrogen loss at menopause eliminates women\'s natural HRV advantage. Post-menopause, cardiac autonomic risk equalizes with men.','cardiovascular','f'],['💪','Men & HRV baseline','Men run 5-10ms lower baseline HRV than age-matched women due to testosterone raising sympathetic tone. Your own trend matters far more than any absolute number.','nervous','m'],['🫀','Testosterone & cardiac recovery','Testosterone accelerates adrenergic recovery post-exercise, helping trained men rebound HRV faster than untrained peers despite their lower average baseline.','cardiovascular','m']],
   },
   {
     name:'Sleep', icon:'🌙', color:'#60a5fa',
@@ -659,19 +663,19 @@ var RINGS = [
       items:[
         ['🥝','Kiwi','2 kiwis before bed increased sleep time 13% and sleep quality 42% in clinical trials.'],
         ['🍒','Tart Cherries','Natural melatonin source. Tart cherry juice raised melatonin significantly in studies.'],
-        ['🌰','Almonds & Walnuts','Magnesium + melatonin combo — both directly support sleep architecture.'],
+        ['🌰','Almonds & Walnuts','A magnesium and melatonin combo that directly supports sleep architecture.'],
         ['🥛','Warm Milk or Turkey','Tryptophan → serotonin → melatonin pathway. Small protein snack 1 hr before bed.'],
       ]
     },
-    why:'Sleep is the single most powerful recovery tool available. Your brain clears metabolic waste, muscles repair, hormones reset, and memories consolidate — all overnight. No supplement, habit, or training protocol fully compensates for chronic short sleep.',
-    inputs:[['Consistency','Same bed and wake time anchors your circadian rhythm.'],['Light exposure','Morning sunlight sets your clock. Blue light at night delays melatonin.'],['Room temp','Core temp must drop ~2°F to initiate deep sleep. 65–68°F is optimal.'],['Caffeine','Half-life 5–7 hrs. A 3pm coffee = 50% active caffeine at 9pm.']],
-    tips:[['Same wake time daily','More powerful than bedtime consistency — even on weekends.'],['No caffeine after 1pm','Most people see better deep sleep within 3 days.'],['Bedroom at 67°F','If you wake 2–4am, temperature is often the cause.'],['10-min walk after dinner','Lowers cortisol and blunts glucose — both improve sleep onset.']],
-    body:[['🧠','Brain clearance','Deep sleep flushes beta-amyloid and tau linked to Alzheimer\'s. Chronic short sleep accelerates accumulation.','nervous'],['💪','Muscle repair','80% of growth hormone releases during slow-wave sleep — when muscle fibers rebuild.','musculoskeletal'],['⚖️','Hunger hormones','One bad night raises ghrelin +24% and drops leptin. This is why you crave carbs after poor sleep.','endocrine'],['🛡️','Immunity','Sleep deprivation reduces natural killer cell activity by up to 70%.','nervous'],['🔄','Hormonal sleep disruption','Estrogen and progesterone fluctuations during menstruation, pregnancy, and menopause are the leading cause of insomnia in women — more impactful than in men.','endocrine','f'],['🧠','More REM, more vulnerability','Women average 20 extra minutes of REM sleep nightly but are 40% more likely to experience insomnia, linked to cortisol dysregulation and rumination.','nervous','f'],['😮‍💨','Sleep apnea risk','Men are 3–5× more likely to develop obstructive sleep apnea — it fragments sleep architecture, suppresses HRV, and elevates RHR. Loud snoring + daytime fatigue = consider a sleep study.','nervous','m'],['💤','Testosterone & slow-wave sleep','Testosterone drives deeper slow-wave sleep in younger men, but levels decline ~1%/year after 30, progressively eroding SWS quality and growth hormone output.','endocrine','m']],
+    why:'Sleep is the single most powerful recovery tool available. Your brain clears metabolic waste, muscles repair, hormones reset, and memories consolidate, all overnight. No supplement, habit, or training protocol fully compensates for chronic short sleep.',
+    inputs:[['Consistency','Same bed and wake time anchors your circadian rhythm.'],['Light exposure','Morning sunlight sets your clock. Blue light at night delays melatonin.'],['Room temp','Core temp must drop ~2°F to initiate deep sleep. 65-68°F is optimal.'],['Caffeine','Half-life 5-7 hrs. A 3pm coffee = 50% active caffeine at 9pm.']],
+    tips:[['Same wake time daily','Even more powerful than bedtime consistency, including on weekends.'],['No caffeine after 1pm','Most people see better deep sleep within 3 days.'],['Bedroom at 67°F','If you wake 2-4am, temperature is often the cause.'],['10-min walk after dinner','Lowers cortisol and blunts glucose, both of which improve sleep onset.']],
+    body:[['🧠','Brain clearance','Deep sleep flushes beta-amyloid and tau linked to Alzheimer\'s. Chronic short sleep accelerates accumulation.','nervous'],['💪','Muscle repair','80% of growth hormone releases during slow-wave sleep, when muscle fibers rebuild.','musculoskeletal'],['⚖️','Hunger hormones','One bad night raises ghrelin +24% and drops leptin. This is why you crave carbs after poor sleep.','endocrine'],['🛡️','Immunity','Sleep deprivation reduces natural killer cell activity by up to 70%.','nervous'],['🔄','Hormonal sleep disruption','Estrogen and progesterone fluctuations during menstruation, pregnancy, and menopause are the leading cause of insomnia in women, more so than in men.','endocrine','f'],['🧠','More REM, more vulnerability','Women average 20 extra minutes of REM sleep nightly but are 40% more likely to experience insomnia, linked to cortisol dysregulation and rumination.','nervous','f'],['😮‍💨','Sleep apnea risk','Men are 3-5× more likely to develop obstructive sleep apnea, which fragments sleep architecture, suppresses HRV, and elevates RHR. Loud snoring + daytime fatigue = consider a sleep study.','nervous','m'],['💤','Testosterone & slow-wave sleep','Testosterone drives deeper slow-wave sleep in younger men, but levels decline ~1%/year after 30, progressively eroding SWS quality and growth hormone output.','endocrine','m']],
   },
   {
     name:'Zone 2', icon:'🏃', color:'#fb923c',
     pct:.40, val:'24', unit:'min', goal:'Goal: 45+ min', trend:'Behind target', trendUp:false,
-    stats:[['Today','24 min'],['Weekly Total','68 min'],['Weekly Goal','150 min'],['Avg HR in Z2','128 bpm'],['Z2 HR Range','115–138 bpm']],
+    stats:[['Today','24 min'],['Weekly Total','68 min'],['Weekly Goal','150 min'],['Avg HR in Z2','128 bpm'],['Z2 HR Range','115-138 bpm']],
     dataSource:{manual:false,device:true,deviceLabel:'Heart rate monitor · Garmin · Polar'},
     logConfig:{ label:'Zone 2 Duration', placeholder:'e.g. 40', unit:'min',
       entries:[['6:30 AM today','24 min @ 126 bpm'],['Tuesday','35 min @ 128 bpm'],['Sunday','45 min @ 130 bpm']] },
@@ -679,16 +683,16 @@ var RINGS = [
     nutrition:{
       title:'Fuel for Zone 2 Training',
       items:[
-        ['🍌','Banana + Peanut Butter','30–60 min pre-session. Provides sustained glucose without insulin spike that shifts you out of fat-burning.'],
-        ['🫐','Beet Juice','Dietary nitrates improve mitochondrial efficiency by 5–10%. Drink 2–3 hrs before training.'],
-        ['☕','Caffeine (3–6 mg/kg)','Improves fat oxidation in Zone 2 and extends time-to-fatigue. Coffee 45 min before works well.'],
-        ['🥛','Protein + Carbs Post-Session','Within 45 min. Supports mitochondrial biogenesis — the actual adaptation you\'re training for.'],
+        ['🍌','Banana + Peanut Butter','30-60 min pre-session. Provides sustained glucose without insulin spike that shifts you out of fat-burning.'],
+        ['🫐','Beet Juice','Dietary nitrates improve mitochondrial efficiency by 5-10%. Drink 2-3 hrs before training.'],
+        ['☕','Caffeine (3-6 mg/kg)','Improves fat oxidation in Zone 2 and extends time-to-fatigue. Coffee 45 min before works well.'],
+        ['🥛','Protein + Carbs Post-Session','Within 45 min. Supports mitochondrial biogenesis, the actual adaptation you\'re training for.'],
       ]
     },
-    why:'Zone 2 is sustained low-intensity cardio — you can speak in full sentences but it takes effort. It trains your mitochondria, the cellular engines that burn fat and produce energy. The best-researched single predictor of longevity and metabolic health.',
-    inputs:[['Heart rate','60–70% of max HR. Talk test: full sentences with effort.'],['Duration','30–60 min sessions to get the mitochondrial training signal.'],['Weekly volume','150+ min/week is the evidence-based floor.'],['Consistency','Adaptations take 6–8 weeks — trust the process.']],
-    tips:[['Slow your runs down','If Zone 2 is low, you\'re likely in Zone 3–4. Slow until you can talk easily.'],['Incline treadmill walk','3.5 mph at 5% grade = Zone 2, no impact, easy to sustain 45–60 min.'],['3–4 sessions per week','150 min/wk split across sessions. Each one compounds.'],['Bike or row for variety','Same cardio benefit, less joint stress — easier long sessions.']],
-    body:[['⚡','Mitochondrial density','Zone 2 triggers mitochondrial biogenesis — more and better cellular engines for fat burning and energy production.','musculoskeletal'],['🩸','Metabolic flexibility','Trains fat oxidation at higher intensities — the mechanism behind sustained energy and body composition change.','endocrine'],['❤️','Cardiac output','Increases stroke volume over months, lowering resting HR — one of the best longevity markers.','cardiovascular'],['🧬','VO₂ max','Every 1-unit increase in VO₂ max = 9% lower mortality risk. Zone 2 is the primary driver.','pulmonary'],['🔥','Higher fat oxidation','Women burn 25–30% more fat than men at the same Zone 2 intensity — a hormonal advantage making Zone 2 especially effective for body composition.','endocrine','f'],['📅','Cycle-optimized training','Follicular phase (days 1–14): higher estrogen improves endurance capacity. Luteal phase: elevated progesterone increases core temp and perceived effort — reduce intensity accordingly.','endocrine','f'],['🔥','Carbohydrate-first metabolism','Men oxidize 25–30% more carbohydrate than women at the same Zone 2 intensity. Male endurance athletes need closer attention to intra-workout carb intake to sustain fat-burning adaptation.','endocrine','m'],['⚡','Testosterone-powered recovery','Testosterone activates satellite cells faster post-Zone 2, meaning men typically recover from sessions quicker and can sustain higher weekly training volume than women at equivalent fitness.','musculoskeletal','m']],
+    why:'Zone 2 is sustained low-intensity cardio where you can speak in full sentences but it takes effort. It trains your mitochondria, the cellular engines that burn fat and produce energy. The best-researched single predictor of longevity and metabolic health.',
+    inputs:[['Heart rate','60-70% of max HR. Talk test: full sentences with effort.'],['Duration','30-60 min sessions to get the mitochondrial training signal.'],['Weekly volume','150+ min/week is the evidence-based floor.'],['Consistency','Adaptations take 6-8 weeks. Trust the process.']],
+    tips:[['Slow your runs down','If Zone 2 is low, you\'re likely in Zone 3-4. Slow until you can talk easily.'],['Incline treadmill walk','3.5 mph at 5% grade = Zone 2, no impact, easy to sustain 45-60 min.'],['3-4 sessions per week','150 min/wk split across sessions. Each one compounds.'],['Bike or row for variety','Same cardio benefit with less joint stress for easier long sessions.']],
+    body:[['⚡','Mitochondrial density','Zone 2 triggers mitochondrial biogenesis, creating more and better cellular engines for fat burning and energy production.','musculoskeletal'],['🩸','Metabolic flexibility','Trains fat oxidation at higher intensities, the mechanism behind sustained energy and body composition change.','endocrine'],['❤️','Cardiac output','Increases stroke volume over months, lowering resting HR, one of the best longevity markers.','cardiovascular'],['🧬','VO₂ max','Every 1-unit increase in VO₂ max = 9% lower mortality risk. Zone 2 is the primary driver.','pulmonary'],['🔥','Higher fat oxidation','Women burn 25-30% more fat than men at the same Zone 2 intensity, a hormonal advantage making Zone 2 especially effective for body composition.','endocrine','f'],['📅','Cycle-optimized training','Follicular phase (days 1-14): higher estrogen improves endurance capacity. Luteal phase: elevated progesterone increases core temp and perceived effort, so reduce intensity accordingly.','endocrine','f'],['🔥','Carbohydrate-first metabolism','Men oxidize 25-30% more carbohydrate than women at the same Zone 2 intensity. Male endurance athletes need closer attention to intra-workout carb intake to sustain fat-burning adaptation.','endocrine','m'],['⚡','Testosterone-powered recovery','Testosterone activates satellite cells faster post-Zone 2, meaning men typically recover from sessions quicker and can sustain higher weekly training volume than women at equivalent fitness.','musculoskeletal','m']],
   },
   {
     name:'Steps', icon:'👟', color:'#4ade80',
@@ -703,14 +707,14 @@ var RINGS = [
       items:[
         ['🥑','Complex Carbs + Healthy Fat','Steady energy across the day prevents the afternoon crash that kills step counts. Oats, sweet potato, avocado.'],
         ['💧','Hydration drives steps','Even mild dehydration causes fatigue and reduces spontaneous movement. Drink before you feel thirsty.'],
-        ['☕','Moderate Caffeine','A midday coffee can boost NEAT (non-exercise activity thermogenesis) — you naturally move more.'],
+        ['☕','Moderate Caffeine','A midday coffee can boost NEAT (non-exercise activity thermogenesis), so you naturally move more.'],
         ['🥗','Lighter Lunch','Heavy midday meals cause energy dips. Smaller, protein-forward lunch keeps you moving in the afternoon.'],
       ]
     },
-    why:'7,000–10,000 daily steps is linked to significant reductions in all-cause mortality, metabolic disease, and depression. The biggest gains come from the bottom end — going from 2,000 to 7,000 steps matters far more than going from 10,000 to 15,000.',
-    inputs:[['Watch/phone','Accelerometer tracks all movement — errands, pacing, everything.'],['Active breaks','5-min walks every hour have metabolic benefits beyond the count.'],['Intentional walks','Dog walks, stairs, parking further all accumulate.']],
-    tips:[['Walk every phone call','Earbuds + walking adds 1,000–2,000 steps with zero schedule change.'],['Park far, always take stairs','1,000–1,500 extra steps/day with no dedicated time.'],['Post-meal walks','Even 10 min after eating blunts glucose spikes 20–30%.'],['Morning walk anchors the day','20 min after waking = light exposure + cortisol regulation + steps.']],
-    body:[['🩺','Metabolic health','Regular walking lowers fasting glucose and improves insulin sensitivity without dietary change.','endocrine'],['🧠','Mental health','30 min walking produces dopamine and serotonin effects comparable to low-dose antidepressants.','nervous'],['🦴','Bone & joint health','Load-bearing movement stimulates bone density and cartilage maintenance.','musculoskeletal'],['❤️','Cardiovascular risk','7,000+ steps/day = 50–70% lower cardiac event risk vs. sedentary (<3,000).','cardiovascular'],['🦴','Osteoporosis prevention','Women lose up to 20% of bone density in the 5–7 years after menopause. Daily weight-bearing steps are the most accessible tool to stimulate osteoblast activity and slow this loss.','musculoskeletal','f'],['🔵','PCOS & insulin resistance','For women with PCOS, 7,000+ daily steps reduces fasting insulin by ~18% and supports menstrual regularity — comparable to early-stage metformin in effect.','endocrine','f'],['🫀','PSA & prostate health','Regular walking (7,000+ steps/day) is associated with measurable reductions in PSA velocity — the marker of prostate cell growth. Effect is dose-dependent and starts within 8 weeks.','gastrointestinal','m'],['❤️','Higher cardiovascular stakes','Men\'s cardiac risk is ~4× higher than women\'s before age 55. Each additional 2,000 steps above a sedentary baseline reduces cardiac event risk by roughly 10% — the benefit is especially pronounced for men.','cardiovascular','m']],
+    why:'7,000-10,000 daily steps is linked to significant reductions in all-cause mortality, metabolic disease, and depression. The biggest gains come from the bottom end. Going from 2,000 to 7,000 steps matters far more than going from 10,000 to 15,000.',
+    inputs:[['Watch/phone','Accelerometer tracks all movement including errands, pacing, and everything in between.'],['Active breaks','5-min walks every hour have metabolic benefits beyond the count.'],['Intentional walks','Dog walks, stairs, parking further all accumulate.']],
+    tips:[['Walk every phone call','Earbuds + walking adds 1,000-2,000 steps with zero schedule change.'],['Park far, always take stairs','1,000-1,500 extra steps/day with no dedicated time.'],['Post-meal walks','Even 10 min after eating blunts glucose spikes 20-30%.'],['Morning walk anchors the day','20 min after waking = light exposure + cortisol regulation + steps.']],
+    body:[['🩺','Metabolic health','Regular walking lowers fasting glucose and improves insulin sensitivity without dietary change.','endocrine'],['🧠','Mental health','30 min walking produces dopamine and serotonin effects comparable to low-dose antidepressants.','nervous'],['🦴','Bone & joint health','Load-bearing movement stimulates bone density and cartilage maintenance.','musculoskeletal'],['❤️','Cardiovascular risk','7,000+ steps/day = 50-70% lower cardiac event risk vs. sedentary (<3,000).','cardiovascular'],['🦴','Osteoporosis prevention','Women lose up to 20% of bone density in the 5-7 years after menopause. Daily weight-bearing steps are the most accessible tool to stimulate osteoblast activity and slow this loss.','musculoskeletal','f'],['🔵','PCOS & insulin resistance','For women with PCOS, 7,000+ daily steps reduces fasting insulin by ~18% and supports menstrual regularity, comparable to early-stage metformin in effect.','endocrine','f'],['🫀','PSA & prostate health','Regular walking (7,000+ steps/day) is associated with measurable reductions in PSA velocity, the marker of prostate cell growth. Effect is dose-dependent and starts within 8 weeks.','gastrointestinal','m'],['❤️','Higher cardiovascular stakes','Men\'s cardiac risk is ~4× higher than women\'s before age 55. Each additional 2,000 steps above a sedentary baseline reduces cardiac event risk by roughly 10%, a benefit especially pronounced for men.','cardiovascular','m']],
   },
   {
     name:'Macros', icon:'🥩', color:'#2dd4bf',
@@ -718,13 +722,13 @@ var RINGS = [
     stats:[['Protein','148g / 190g (78%)'],['Carbs','210g / 300g (70%)'],['Fat','62g / 78g (79%)'],['Fiber','12g / 22g (54%)'],['Calories','1,840 / 2,350']],
     dataSource:{manual:true,device:false,deviceLabel:''},
     logConfig:{ label:'Log Food', placeholder:'Search food or enter meal...', unit:'',
-      entries:[['8:30 AM · Breakfast','Eggs + oatmeal — P:28g C:45g F:14g'],['1:00 PM · Lunch','Chicken rice bowl — P:52g C:68g F:18g']] },
+      entries:[['8:30 AM · Breakfast','Eggs + oatmeal (P:28g C:45g F:14g)'],['1:00 PM · Lunch','Chicken rice bowl (P:52g C:68g F:18g)']] },
     goalConfig:{ current:'78%', target:'100%', pct:.78, note:'42g protein + 90g carbs remaining' },
     macros:{ protein:[148,190], carbs:[210,300], fat:[62,78], fiber:[12,22] },
     why:'Macros determine body composition far more than total calories alone. Getting protein right is the single lever for losing fat and building muscle simultaneously. Rule: 1g protein per lb of bodyweight. Carbs ~300g (1/5 fiber, 1/5 sugar, 3/5 starch).',
-    inputs:[['Protein','Most important macro. Every meal: 30–50g.'],['Fiber','Proxy for gut health. Target 25–35g/day.'],['Total sugar','<60g/day from non-fruit sources.'],['Carb timing','Most effective front-loaded around workouts.']],
-    tips:[['Eat protein first','Protein → veg → carbs at every meal. Limits carb overconsumption automatically.'],['Close the 42g gap tonight','Chicken, cottage cheese, or Greek yogurt + whey each work.'],['Fiber at 54% — add a salad','Side salad or apple at dinner is the easiest fix.'],['Eat within 45 min post-workout','Carbs + protein before 6:45pm. Glycogen window is real.']],
-    body:[['💪','Muscle protein synthesis','Protein provides leucine → triggers mTOR → muscle building. Without it, training stimulus is partially wasted.','musculoskeletal'],['🔥','Thermic effect','Your body burns ~30 cal digesting 100 cal of protein — why high-protein aids fat loss beyond calorie math.','gastrointestinal'],['🧬','Hormones','Fat is required for testosterone and estrogen synthesis. Under 15% of calories suppresses hormonal function.','endocrine'],['⚡','Performance','Carb timing around workouts directly affects output and glycogen recovery speed.','musculoskeletal'],['🩸','Iron & oxygen delivery','Women need 18mg iron/day vs 8mg for men during reproductive years. Low iron impairs oxygen delivery, tanking HRV, endurance, and cognitive recovery.','gastrointestinal','f'],['⚠️','RED-S risk','Female athletes are 2–3× more likely to develop Relative Energy Deficiency in Sport. Under-fueling suppresses estrogen, destroys bone density, and halts muscle adaptation entirely.','endocrine','f'],['🩸','Lower iron needs','Men need only 8mg iron/day — less than half the 18mg women require. Excess iron supplementation raises oxidative stress and has been linked to higher cardiac risk in men.','gastrointestinal','m'],['💪','Higher protein synthesis ceiling','Testosterone significantly elevates the ceiling for muscle protein synthesis. Men sustain a stronger anabolic response to the same leucine-rich meal, particularly in the post-workout window.','musculoskeletal','m']],
+    inputs:[['Protein','Most important macro. Every meal: 30-50g.'],['Fiber','Proxy for gut health. Target 25-35g/day.'],['Total sugar','<60g/day from non-fruit sources.'],['Carb timing','Most effective front-loaded around workouts.']],
+    tips:[['Eat protein first','Protein → veg → carbs at every meal. Limits carb overconsumption automatically.'],['Close the 42g gap tonight','Chicken, cottage cheese, or Greek yogurt + whey each work.'],['Fiber at 54%, add a salad','Side salad or apple at dinner is the easiest fix.'],['Eat within 45 min post-workout','Carbs + protein before 6:45pm. Glycogen window is real.']],
+    body:[['💪','Muscle protein synthesis','Protein provides leucine → triggers mTOR → muscle building. Without it, training stimulus is partially wasted.','musculoskeletal'],['🔥','Thermic effect','Your body burns ~30 cal digesting 100 cal of protein, which is why high-protein aids fat loss beyond calorie math.','gastrointestinal'],['🧬','Hormones','Fat is required for testosterone and estrogen synthesis. Under 15% of calories suppresses hormonal function.','endocrine'],['⚡','Performance','Carb timing around workouts directly affects output and glycogen recovery speed.','musculoskeletal'],['🩸','Iron & oxygen delivery','Women need 18mg iron/day vs 8mg for men during reproductive years. Low iron impairs oxygen delivery, tanking HRV, endurance, and cognitive recovery.','gastrointestinal','f'],['⚠️','RED-S risk','Female athletes are 2-3× more likely to develop Relative Energy Deficiency in Sport. Under-fueling suppresses estrogen, destroys bone density, and halts muscle adaptation entirely.','endocrine','f'],['🩸','Lower iron needs','Men need only 8mg iron/day, less than half the 18mg women require. Excess iron supplementation raises oxidative stress and has been linked to higher cardiac risk in men.','gastrointestinal','m'],['💪','Higher protein synthesis ceiling','Testosterone significantly elevates the ceiling for muscle protein synthesis. Men sustain a stronger anabolic response to the same leucine-rich meal, particularly in the post-workout window.','musculoskeletal','m']],
   },
   {
     name:'Water', icon:'💧', color:'#38bdf8',
@@ -743,15 +747,15 @@ var RINGS = [
         ['🫐','Berries','Strawberries are 91% water. High in potassium which improves cellular hydration efficiency.'],
       ]
     },
-    why:'Even mild dehydration (1–2% of bodyweight) measurably impairs cognitive function, exercise performance, and HRV. Most people are chronically slightly dehydrated without knowing it. A simple rule: 1 oz per lb of bodyweight daily, more when sweating.',
-    inputs:[['Direct intake','Water, sparkling water, herbal tea. Coffee counts ~50%.'],['Food moisture','Fruits and vegetables contribute 15–25% of daily hydration.'],['Sweat loss','Add 16–24 oz per hour of intense exercise.']],
+    why:'Even mild dehydration (1-2% of bodyweight) measurably impairs cognitive function, exercise performance, and HRV. Most people are chronically slightly dehydrated without knowing it. A simple rule: 1 oz per lb of bodyweight daily, more when sweating.',
+    inputs:[['Direct intake','Water, sparkling water, herbal tea. Coffee counts ~50%.'],['Food moisture','Fruits and vegetables contribute 15-25% of daily hydration.'],['Sweat loss','Add 16-24 oz per hour of intense exercise.']],
     tips:[['16 oz after waking','You wake dehydrated every morning. Easiest habit to close the gap before 8am.'],['Full glass before every meal','Adds ~48 oz/day automatically. Reduces meal size ~13%.'],['Set an alarm every 2 hours','Thirst lags dehydration by 45 min. You\'re already impaired by the time you feel it.'],['Add electrolytes when sweating','Water + sodium + potassium rehydrates far more efficiently than water alone.']],
-    body:[['🧠','Cognitive performance','1% dehydration reduces working memory and reaction time. 2% causes measurable mood decline.','nervous'],['❤️','Cardiovascular','Dehydration thickens blood, raises resting HR, and suppresses HRV directly.','cardiovascular'],['🦵','Exercise output','2% dehydration = 5–8% strength loss and 10–20% aerobic capacity loss.','musculoskeletal'],['🫘','Kidney function','Adequate hydration required to filter metabolic waste. Primary cause of kidney stones.','gastrointestinal'],['🦠','UTI prevention','Women are 50× more likely to get UTIs due to shorter urethral anatomy. Drinking 64–80oz/day flushes bacteria and cuts UTI risk by up to 50%.','gastrointestinal','f'],['🌊','Progesterone & water retention','Luteal phase progesterone causes water retention — this is normal physiology, not fat gain. Counter-intuitively, increasing water intake reduces bloating by flushing retained sodium.','endocrine','f'],['💧','Higher daily fluid need','Men need ~3.7L total fluid/day vs. 2.7L for women — driven by greater lean mass, larger body surface area, and a higher resting metabolic rate.','gastrointestinal','m'],['🏃','Higher sweat rate','Men sweat 40–70% more than women during matched-intensity exercise, dramatically increasing sodium and electrolyte losses during endurance sessions.','musculoskeletal','m']],
+    body:[['🧠','Cognitive performance','1% dehydration reduces working memory and reaction time. 2% causes measurable mood decline.','nervous'],['❤️','Cardiovascular','Dehydration thickens blood, raises resting HR, and suppresses HRV directly.','cardiovascular'],['🦵','Exercise output','2% dehydration = 5-8% strength loss and 10-20% aerobic capacity loss.','musculoskeletal'],['🫘','Kidney function','Adequate hydration required to filter metabolic waste. Primary cause of kidney stones.','gastrointestinal'],['🦠','UTI prevention','Women are 50× more likely to get UTIs due to shorter urethral anatomy. Drinking 64-80oz/day flushes bacteria and cuts UTI risk by up to 50%.','gastrointestinal','f'],['🌊','Progesterone & water retention','Luteal phase progesterone causes water retention, which is normal physiology and not fat gain. Counter-intuitively, increasing water intake reduces bloating by flushing retained sodium.','endocrine','f'],['💧','Higher daily fluid need','Men need ~3.7L total fluid/day vs. 2.7L for women, driven by greater lean mass, larger body surface area, and a higher resting metabolic rate.','gastrointestinal','m'],['🏃','Higher sweat rate','Men sweat 40-70% more than women during matched-intensity exercise, dramatically increasing sodium and electrolyte losses during endurance sessions.','musculoskeletal','m']],
   },
   {
     name:'Resting HR', icon:'❤️', color:'#f87171',
     pct:.72, val:'62', unit:'bpm', goal:'Goal: <60 bpm', trend:'↓ improving', trendUp:true,
-    stats:[['Today','62 bpm'],['7-Day Avg','63 bpm'],['30-Day Avg','65 bpm'],['Personal Best','58 bpm'],['Optimal','40–60 bpm']],
+    stats:[['Today','62 bpm'],['7-Day Avg','63 bpm'],['30-Day Avg','65 bpm'],['Personal Best','58 bpm'],['Optimal','40-60 bpm']],
     dataSource:{manual:false,device:true,deviceLabel:'Apple Watch · Whoop · Garmin · Fitbit'},
     logConfig:{ label:'Manual RHR Entry', placeholder:'e.g. 62', unit:'bpm',
       entries:[['This morning','62 bpm'],['Yesterday','63 bpm'],['Tuesday','65 bpm']] },
@@ -765,10 +769,10 @@ var RINGS = [
         ['🫐','Nitrate-Rich Vegetables','Beets, arugula, spinach convert to nitric oxide, widening blood vessels and reducing heart rate.'],
       ]
     },
-    why:'Resting heart rate reflects how much blood your heart pumps per beat — your stroke volume. A lower RHR is a direct result of cardiovascular fitness and aerobic capacity. Every 10 bpm above 60 is associated with ~16% higher all-cause mortality risk.',
-    inputs:[['Morning measurement','Before getting out of bed — watch captures this during the sleep/wake transition.'],['Aerobic fitness','Primary driver. Zone 2 is the fastest lever over 6–8 weeks.'],['Hydration','Dehydration forces heart to beat faster to maintain output.'],['Alcohol','Elevates RHR 5–10 bpm for 24–48 hrs. Most reliable self-experiment available.']],
-    tips:[['Zone 2 three times/week','Only reliable way to permanently lower RHR. Takes 6–8 weeks to show.'],['Eliminate evening alcohol','Two alcohol-free weeks → 3–5 bpm drop for most people.'],['Protect sleep','RHR is lowest when sleep quality is highest.'],['Watch the 30-day trend','Day-to-day is noise. A 30-day downward trend is the real signal.']],
-    body:[['❤️','Heart efficiency','Lower RHR = higher stroke volume — more blood per beat. Direct measure of cardiac strength.','cardiovascular'],['🧬','Longevity','Studies of 3M+ people confirm RHR is an independent predictor of cardiovascular mortality.','cardiovascular'],['🧠','Nervous system','Chronically elevated RHR = stuck in fight-or-flight, cascading into poor sleep and recovery.','nervous'],['⚡','Recovery capacity','RHR elevated >5 bpm above baseline after training = still under stress. Scale back.','musculoskeletal'],['❤️‍🩹','Silent heart attacks','Women\'s heart attacks often present without chest pain — instead nausea, jaw pain, back pain, and extreme fatigue. A chronically elevated RHR is a key early warning signal specific to women.','cardiovascular','f'],['🧬','Post-menopause risk surge','Estrogen protects the cardiovascular system — before menopause, women\'s cardiac risk is 2–3× lower than men\'s. Within 10 years after menopause, that advantage disappears entirely.','endocrine','f'],['❤️','Naturally lower RHR','Men average 3–4 bpm lower RHR than women at equivalent fitness — driven by larger stroke volume and testosterone\'s effect on the myocardium.','cardiovascular','m'],['⚠️','Sudden cardiac arrest','Sudden cardiac death is 2–3× more common in men, often with no prior symptoms. An RHR chronically elevated above your personal baseline alongside low HRV is a key early warning pattern.','cardiovascular','m']],
+    why:'Resting heart rate reflects how much blood your heart pumps per beat, known as your stroke volume. A lower RHR is a direct result of cardiovascular fitness and aerobic capacity. Every 10 bpm above 60 is associated with ~16% higher all-cause mortality risk.',
+    inputs:[['Morning measurement','Best measured before getting out of bed, when your watch captures the sleep/wake transition.'],['Aerobic fitness','Primary driver. Zone 2 is the fastest lever over 6-8 weeks.'],['Hydration','Dehydration forces heart to beat faster to maintain output.'],['Alcohol','Elevates RHR 5-10 bpm for 24-48 hrs. Most reliable self-experiment available.']],
+    tips:[['Zone 2 three times/week','Only reliable way to permanently lower RHR. Takes 6-8 weeks to show.'],['Eliminate evening alcohol','Two alcohol-free weeks → 3-5 bpm drop for most people.'],['Protect sleep','RHR is lowest when sleep quality is highest.'],['Watch the 30-day trend','Day-to-day is noise. A 30-day downward trend is the real signal.']],
+    body:[['❤️','Heart efficiency','Lower RHR means higher stroke volume, more blood per beat and a direct measure of cardiac strength.','cardiovascular'],['🧬','Longevity','Studies of 3M+ people confirm RHR is an independent predictor of cardiovascular mortality.','cardiovascular'],['🧠','Nervous system','Chronically elevated RHR = stuck in fight-or-flight, cascading into poor sleep and recovery.','nervous'],['⚡','Recovery capacity','RHR elevated >5 bpm above baseline after training = still under stress. Scale back.','musculoskeletal'],['❤️‍🩹','Silent heart attacks','Women\'s heart attacks often present without chest pain, showing instead nausea, jaw pain, back pain, and extreme fatigue. A chronically elevated RHR is a key early warning signal specific to women.','cardiovascular','f'],['🧬','Post-menopause risk surge','Estrogen protects the cardiovascular system. Before menopause, women\'s cardiac risk is 2-3× lower than men\'s. Within 10 years after menopause, that advantage disappears entirely.','endocrine','f'],['❤️','Naturally lower RHR','Men average 3-4 bpm lower RHR than women at equivalent fitness, driven by larger stroke volume and testosterone\'s effect on the myocardium.','cardiovascular','m'],['⚠️','Sudden cardiac arrest','Sudden cardiac death is 2-3× more common in men, often with no prior symptoms. An RHR chronically elevated above your personal baseline alongside low HRV is a key early warning pattern.','cardiovascular','m']],
   },
   {
     name:'VO₂ Max', icon:'🫁', color:'#06b6d4',
@@ -782,15 +786,15 @@ var RINGS = [
       title:'Foods That Boost VO₂ Max',
       items:[
         ['🫐','Beet Juice','Dietary nitrates improve oxygen efficiency by 5-10%. 500ml, 2-3 hrs before training.'],
-        ['🐟','Omega-3s','Reduce systemic inflammation — faster recovery and higher training volume tolerance.'],
+        ['🐟','Omega-3s','Reduces systemic inflammation for faster recovery and higher training volume tolerance.'],
         ['☕','Caffeine','Improves oxygen extraction and time-to-exhaustion. 3-6 mg/kg bodyweight, 45 min before.'],
         ['🥦','Iron-Rich Foods','Iron = hemoglobin = oxygen-carrying capacity. Spinach, broccoli, red meat 3×/week.'],
       ]
     },
     why:'VO₂ Max is the single most powerful predictor of athletic performance and longevity. Every 1 unit increase reduces all-cause mortality risk by 9%. It reflects your mitochondrial density, cardiovascular efficiency, and capacity to sustain intense effort.',
-    inputs:[['Zone 2 cardio','Primary base builder. 150+ min/week over 6-8 weeks produces measurable gains.'],['HIIT intervals','4-6 × 4-min at 90-95% max HR. Pushes the ceiling of oxygen uptake.'],['Body composition','Reducing excess body fat improves VO₂ Max even without training changes.'],['Consistency','Adaptations take 4-6 weeks minimum — trust the process.']],
-    tips:[['HIIT 1-2×/week','4-min intervals at near-max effort with equal rest. Most efficient VO₂ Max builder.'],['Zone 2 as the base','80% of training should be Zone 2. HIIT adds the ceiling on top.'],['Test every 6-8 weeks','Cooper test (12-min run distance) or a fitness watch estimate. Retest to track gains.'],['Protect your Zone 2','If you\'re going too hard, you\'re in Zone 3–4. Slow down until you can hold a conversation.']],
-    body:[['❤️','Cardiovascular efficiency','VO₂ Max reflects stroke volume and cardiac output — higher values mean a stronger, more efficient heart.','cardiovascular'],['🫁','Lung capacity','Better oxygen extraction and CO₂ clearance at the alveolar level.','pulmonary'],['⚡','Mitochondrial density','VO₂ Max is a direct proxy for mitochondrial density — more engines, more energy.','musculoskeletal'],['🧬','Longevity signal','Every 1 unit increase = 9% lower all-cause mortality. Most powerful single predictor known.','nervous'],['📉','Structural difference','Women have 10–15% lower VO₂ Max than men due to smaller heart size and 9% less hemoglobin — but relative improvements carry equal or greater longevity benefit per unit gained.','pulmonary','f'],['📅','Test in follicular phase','For accurate baseline testing, measure VO₂ Max on days 1–14 of the cycle. Progesterone in the luteal phase elevates breathing rate and perceived exertion, artificially inflating effort scores.','endocrine','f'],['🩸','Hemoglobin advantage','Men carry ~9% more hemoglobin per liter of blood than women, giving meaningfully greater oxygen-carrying capacity. This is the primary physiological driver of the male–female VO₂ Max gap.','pulmonary','m'],['⚡','Faster training adaptations','Testosterone enables quicker VO₂ Max adaptations — men typically see measurable gains in 4–6 weeks of Zone 2 + intervals vs. 8–12 weeks for women at equivalent fitness.','musculoskeletal','m']],
+    inputs:[['Zone 2 cardio','Primary base builder. 150+ min/week over 6-8 weeks produces measurable gains.'],['HIIT intervals','4-6 × 4-min at 90-95% max HR. Pushes the ceiling of oxygen uptake.'],['Body composition','Reducing excess body fat improves VO₂ Max even without training changes.'],['Consistency','Adaptations take 4-6 weeks minimum. Trust the process.']],
+    tips:[['HIIT 1-2×/week','4-min intervals at near-max effort with equal rest. Most efficient VO₂ Max builder.'],['Zone 2 as the base','80% of training should be Zone 2. HIIT adds the ceiling on top.'],['Test every 6-8 weeks','Cooper test (12-min run distance) or a fitness watch estimate. Retest to track gains.'],['Protect your Zone 2','If you\'re going too hard, you\'re in Zone 3-4. Slow down until you can hold a conversation.']],
+    body:[['❤️','Cardiovascular efficiency','VO₂ Max reflects stroke volume and cardiac output, with higher values meaning a stronger, more efficient heart.','cardiovascular'],['🫁','Lung capacity','Better oxygen extraction and CO₂ clearance at the alveolar level.','pulmonary'],['⚡','Mitochondrial density','VO₂ Max is a direct proxy for mitochondrial density, meaning more engines and more energy.','musculoskeletal'],['🧬','Longevity signal','Every 1 unit increase = 9% lower all-cause mortality. Most powerful single predictor known.','nervous'],['📉','Structural difference','Women have 10-15% lower VO₂ Max than men due to smaller heart size and 9% less hemoglobin, though relative improvements carry equal or greater longevity benefit per unit gained.','pulmonary','f'],['📅','Test in follicular phase','For accurate baseline testing, measure VO₂ Max on days 1-14 of the cycle. Progesterone in the luteal phase elevates breathing rate and perceived exertion, artificially inflating effort scores.','endocrine','f'],['🩸','Hemoglobin advantage','Men carry ~9% more hemoglobin per liter of blood than women, giving meaningfully greater oxygen-carrying capacity. This is the primary physiological driver of the male-female VO₂ Max gap.','pulmonary','m'],['⚡','Faster training adaptations','Testosterone enables quicker VO₂ Max adaptations. Men typically see measurable gains in 4-6 weeks of Zone 2 plus intervals compared to 8-12 weeks for women at equivalent fitness.','musculoskeletal','m']],
   },
 ];
 
@@ -956,6 +960,27 @@ function wheelStep(dir) {
   setWheelActive(next);
 }
 
+function wireCollapsibles(container) {
+  var secs = container.querySelectorAll('.sec');
+  for (var i = 0; i < secs.length; i++) {
+    (function(sec) {
+      var body = sec.nextElementSibling;
+      while (body && !body.classList.contains('sec')) {
+        body.classList.add('sec-body');
+        body = body.nextElementSibling;
+      }
+      sec.addEventListener('click', function() {
+        sec.classList.toggle('collapsed');
+        var el = sec.nextElementSibling;
+        while (el && !el.classList.contains('sec')) {
+          el.classList.toggle('collapsed', sec.classList.contains('collapsed'));
+          el = el.nextElementSibling;
+        }
+      });
+    })(secs[i]);
+  }
+}
+
 function renderRingPreview(idx) {
   var wrap = document.getElementById('ring-preview');
   if (!wrap) return;
@@ -1050,7 +1075,7 @@ function renderRingPreview(idx) {
         syncRows += '<div class="device-entry"><span class="device-time">' + dTstr + '</span><span class="device-val" style="color:' + col + '">' + fmtVal(dayE[di].v, RING_SCALES[idx]) + ' ' + RING_SCALES[idx].unit + '</span></div>';
       }
     } else {
-      syncRows = '<div class="no-entries" style="padding:8px 0;font-size:12px;color:var(--muted)">No synced data today — connect your device</div>';
+      syncRows = '<div class="no-entries" style="padding:8px 0;font-size:12px;color:var(--muted)">No synced data today. Connect your device.</div>';
     }
     deviceSectionHtml = '<div class="gc gc-p">'
       + '<div class="device-badge-row"><span class="device-badge">📡 Device Sync</span><span class="device-source-lbl">' + ds.deviceLabel + '</span></div>'
@@ -1109,6 +1134,7 @@ function renderRingPreview(idx) {
   }
   renderGraphInner(idx);
   setTimeout(function() { initGraphHover(idx); }, 50);
+  wireCollapsibles(wrap);
 }
 
 // ── NAVIGATION ─────────────────────────────────
@@ -1249,7 +1275,7 @@ function openDetail(idx) {
         syncRows += '<div class="device-entry"><span class="device-time">' + dTstr + '</span><span class="device-val" style="color:' + col + '">' + fmtVal(dayE[di].v, RING_SCALES[idx]) + ' ' + RING_SCALES[idx].unit + '</span></div>';
       }
     } else {
-      syncRows = '<div class="no-entries" style="padding:8px 0;font-size:12px;color:var(--muted)">No synced data today — connect your device</div>';
+      syncRows = '<div class="no-entries" style="padding:8px 0;font-size:12px;color:var(--muted)">No synced data today. Connect your device.</div>';
     }
     deviceSectionHtml = '<div class="gc gc-p">'
       + '<div class="device-badge-row"><span class="device-badge">📡 Device Sync</span><span class="device-source-lbl">' + ds.deviceLabel + '</span></div>'
@@ -1454,7 +1480,7 @@ function getGoals(idx) {
 var GOAL_SUGGESTIONS = [
   [{t:'Reach 55ms HRV',k:'target'},{t:'Improve by 5ms from baseline',k:'training'},{t:'Build stress resilience to 60ms',k:'health'}],
   [{t:'Consistent 7.5hr sleep',k:'health'},{t:'Reach 8hr average',k:'target'},{t:'Optimize sleep for performance',k:'training'}],
-  [{t:'Hit 45min Zone 2 per session',k:'target'},{t:'Build aerobic base — 150min/wk',k:'training'},{t:'Improve fat-burning efficiency',k:'health'}],
+  [{t:'Hit 45min Zone 2 per session',k:'target'},{t:'Build aerobic base at 150min/wk',k:'training'},{t:'Improve fat-burning efficiency',k:'health'}],
   [{t:'10,000 steps daily',k:'target'},{t:'Increase daily movement by 2,000 steps',k:'training'},{t:'Reach 8,000 step baseline',k:'health'}],
   [{t:'Hit 85% macro targets',k:'target'},{t:'Optimize protein for muscle building',k:'training'},{t:'Balance macros for metabolic health',k:'health'}],
   [{t:'80oz daily hydration',k:'target'},{t:'Stay hydrated for performance',k:'training'},{t:'Improve cellular hydration',k:'health'}],
@@ -1488,7 +1514,7 @@ function renderGoalSection(idx) {
 
   // goal cards
   if (!visible.length) {
-    html += '<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px 0">'+( mode==='archive'?'No completed goals yet':'No active goals — add one below')+'</div>';
+    html += '<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px 0">'+( mode==='archive'?'No completed goals yet':'No active goals yet. Add one below.')+'</div>';
   } else {
     for (var gi = 0; gi < visible.length; gi++) {
       var g = visible[gi];
@@ -1686,30 +1712,30 @@ function getAggForDay(idx, dayEntries) {
 
 function seedSampleData() {
   var today = getDayKey(new Date());
-  // HRV (idx 0) — average — 3 readings today
+  // HRV (idx 0) - average - 3 readings today
   rawDayLogs[0] = {};
   rawDayLogs[0][today] = [
     {ts: makeTs(7,15), v: 44.2},
     {ts: makeTs(12,30), v: 47.8},
     {ts: makeTs(18,0),  v: 50.1}
   ];
-  // Sleep (idx 1) — sum — 1 reading (full night)
+  // Sleep (idx 1) - sum - 1 reading (full night)
   rawDayLogs[1] = {};
   rawDayLogs[1][today] = [{ts: makeTs(7,0), v: 6.8}];
-  // Zone 2 (idx 2) — sum — 2 sessions today
+  // Zone 2 (idx 2) - sum - 2 sessions today
   rawDayLogs[2] = {};
   rawDayLogs[2][today] = [
     {ts: makeTs(7,0), v: 28},
     {ts: makeTs(17,30), v: 20}
   ];
-  // Steps (idx 3) — sum — 3 sync points
+  // Steps (idx 3) - sum - 3 sync points
   rawDayLogs[3] = {};
   rawDayLogs[3][today] = [
     {ts: makeTs(9,0),  v: 2800},
     {ts: makeTs(13,0), v: 3400},
     {ts: makeTs(17,30), v: 2600}
   ];
-  // Water (idx 5) — sum — 4 drinks
+  // Water (idx 5) - sum - 4 drinks
   rawDayLogs[5] = {};
   rawDayLogs[5][today] = [
     {ts: makeTs(8,0),   v: 16},
@@ -1717,14 +1743,14 @@ function seedSampleData() {
     {ts: makeTs(14,0),  v: 24},
     {ts: makeTs(19,30), v: 16}
   ];
-  // RHR (idx 6) — average — 3 readings
+  // RHR (idx 6) - average - 3 readings
   rawDayLogs[6] = {};
   rawDayLogs[6][today] = [
     {ts: makeTs(6,45), v: 58},
     {ts: makeTs(12,30), v: 64},
     {ts: makeTs(21,0),  v: 61}
   ];
-  // VO2 Max (idx 7) — average — 2 readings
+  // VO2 Max (idx 7) - average - 2 readings
   rawDayLogs[7] = {};
   rawDayLogs[7][today] = [
     {ts: makeTs(8,0),  v: 42.5},
@@ -2074,7 +2100,7 @@ function renderLineGraph(data, idx) {
   var r = RINGS[idx];
   var sc = RING_SCALES[idx];
   var col = r.color;
-  // Full-width: no left/right padding — y-axis labels are HTML overlays
+  // Full-width: no left/right padding - y-axis labels are HTML overlays
   var W = 360, H = 130, padT = 6, padB = 22;
   var cH = H - padT - padB;
 
@@ -2106,7 +2132,7 @@ function renderLineGraph(data, idx) {
     yHtml += '<div class="gy-lbl" style="top:'+(ty/H*100).toFixed(1)+'%">'+tvLabel+'</div>';
   }
 
-  // target line (green, dashed) — only if target falls in visible range
+  // target line (green, dashed) - only if target falls in visible range
   var targetLine = '';
   if (sc.target !== undefined) {
     var ty2 = yp(sc.target);
@@ -2387,7 +2413,7 @@ function openBodyScore() {
     var col = pct >= 75 ? '#4ade80' : pct >= 50 ? '#facc15' : '#f87171';
     return '<div class="bs-ring-row">'
       + '<div class="bs-ring-icon">' + r.icon + '</div>'
-      + '<div class="bs-ring-name"><strong style="color:var(--text)">' + r.name + '</strong><br><span style="font-size:10px;color:#7a9480">Lowest priority — focus here first</span></div>'
+      + '<div class="bs-ring-name"><strong style="color:var(--text)">' + r.name + '</strong><br><span style="font-size:10px;color:#7a9480">Lowest priority, focus here first</span></div>'
       + '<div class="bs-ring-val" style="color:' + col + '">' + pct + '%</div>'
       + '</div>';
   }).join('');
@@ -2408,7 +2434,7 @@ function openBodyScore() {
     + '</div>'
 
     + '<div class="sec">Why This Score Matters</div>'
-    + '<div class="why-gc">Your <strong>Body Score</strong> integrates 8 biomarkers proven to predict healthspan and lifespan. <strong>The science:</strong> A 2022 JAMA study of 120,000+ people found that optimizing all 8 metrics independently predicts a <strong>50% reduction in all-cause mortality</strong> over 10 years. Critically, the interaction effect matters — scoring 80+ across all rings is dramatically more protective than scoring 100 on two and 50 on others. <strong>Your weakest ring is your bottleneck.</strong> Fix the lowest first for maximum ROI on your health investment.'
+    + '<div class="why-gc">Your <strong>Body Score</strong> integrates 8 biomarkers proven to predict healthspan and lifespan. <strong>The science:</strong> A 2022 JAMA study of 120,000+ people found that optimizing all 8 metrics independently predicts a <strong>50% reduction in all-cause mortality</strong> over 10 years. Critically, the interaction effect matters: scoring 80+ across all rings is dramatically more protective than scoring 100 on two and 50 on others. <strong>Your weakest ring is your bottleneck.</strong> Fix the lowest first for maximum ROI on your health investment.'
     + '<br><br>Each 5-point improvement in Body Score correlates with approximately <strong>1.8 additional healthy years</strong> based on longitudinal data. Your current trajectory: consistently hitting your targets for 90 days has been shown to produce permanent epigenetic changes that extend cellular lifespan.</div>'
 
     + '<div class="sec">Longevity Snapshot</div>'
@@ -2904,7 +2930,7 @@ var BD_OUTLINE_F = [
   '<path d="M110,78 Q126,74 138,80" stroke="rgba(155,172,200,0.68)" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
   '<circle cx="91" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.8"/>',
   '<circle cx="109" cy="78" r="2" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.8"/>',
-  // ── TORSO (female — hourglass) ──
+  // ── TORSO (female - hourglass) ──
   '<path d="M52,80 Q58,60 100,58 Q142,60 148,80 L145,120 Q158,148 138,164 Q146,184 148,200 Q128,224 100,226 Q72,224 52,200 Q54,184 62,164 Q42,148 55,120 Z" fill="rgba(7,11,21,0.95)" stroke="rgba(155,172,200,0.72)" stroke-width="1.4"/>',
   '<path d="M60,100 C56,116 60,130 Q68,142 80,138 Q90,130 91,118 L91,84" fill="none" stroke="rgba(155,172,200,0.35)" stroke-width="1.1"/>',
   '<path d="M140,100 C144,116 140,130 Q132,142 120,138 Q110,130 109,118 L109,84" fill="none" stroke="rgba(155,172,200,0.35)" stroke-width="1.1"/>',
@@ -3036,7 +3062,7 @@ var BD_OVERLAYS = {
     +'<path d="M74,224 C70,268 68,344 70,430 M126,224 C130,268 132,344 130,430" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3"/>'
   },
     musculoskeletal: { color:'#f97316', svg:
-    // Skull (circle, not filled — outline)
+    // Skull (circle, not filled - outline)
     '<circle cx="100" cy="26" r="23" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
     +'<path d="M84,48 L86,54 L100,56 L114,54 L116,48" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
     // Clavicles
@@ -3068,7 +3094,7 @@ var BD_OVERLAYS = {
     +'<text x="100" y="43" text-anchor="middle" font-size="5" fill="#eab308" opacity="0.7">pit</text>'
     // Pineal
     +'<ellipse cx="106" cy="34" rx="3" ry="2.5" fill="#eab308" opacity="0.75"/>'
-    // Thyroid — butterfly shape using two lobes
+    // Thyroid - butterfly shape using two lobes
     +'<path d="M90,67 Q86,70 86,74 Q87,79 93,79 Q99,79 100,77 Q101,79 107,79 Q113,79 114,74 Q114,70 110,67 Q106,64 100,65 Q94,64 90,67 Z" fill="#eab308" opacity="0.82"/>'
     // Thymus
     +'<path d="M88,82 Q84,88 86,98 Q88,104 100,104 Q112,104 114,98 Q116,88 112,82 Q106,78 100,80 Q94,78 88,82 Z" fill="#eab308" opacity="0.32"/>'
@@ -3086,13 +3112,13 @@ var BD_OVERLAYS = {
     '<rect x="98" y="58" width="4" height="38" rx="2" fill="#3b82f6" opacity="0.65"/>'
     // Carina + main bronchi
     +'<path d="M100,95 Q90,96 84,100 M100,95 Q110,96 116,100" stroke="#3b82f6" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.6"/>'
-    // Left lung — lung-shaped outline
+    // Left lung - lung-shaped outline
     +'<path d="M84,98 C74,102 66,112 64,124 C62,136 64,150 68,160 C72,170 80,176 88,176 C94,176 98,172 98,166 L98,100 C94,98 89,97 84,98 Z" fill="#3b82f6" opacity="0.42"/>'
     // Right lung
     +'<path d="M116,98 C126,102 134,112 136,124 C138,136 136,150 132,160 C128,170 120,176 112,176 C106,176 102,172 102,166 L102,100 C106,98 111,97 116,98 Z" fill="#3b82f6" opacity="0.42"/>'
     // Left lung fissure
     +'<path d="M84,112 C88,124 92,138 96,152" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.35"/>'
-    // Right lung fissures (2 — right has 3 lobes)
+    // Right lung fissures (2 - right has 3 lobes)
     +'<path d="M116,112 C112,124 108,138 104,152" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.35"/>'
     +'<path d="M120,130 C116,138 112,146 108,154" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.25"/>'
     // Bronchial tree details
@@ -3102,7 +3128,7 @@ var BD_OVERLAYS = {
   gastrointestinal: { color:'#10b981', svg:
     // Esophagus
     '<rect x="98" y="56" width="4" height="48" rx="2" fill="#10b981" opacity="0.5"/>'
-    // Liver — large irregular wedge shape (right side)
+    // Liver - large irregular wedge shape (right side)
     +'<path d="M102,106 C110,104 122,106 132,112 C140,118 140,132 136,142 C132,150 124,154 114,154 C108,154 104,150 102,144 L102,106 Z" fill="#10b981" opacity="0.52"/>'
     // Gallbladder (pear-shaped under liver)
     +'<path d="M118,152 C116,158 116,164 120,166 C124,168 128,164 128,158 C128,153 124,151 120,151 Z" fill="#10b981" opacity="0.72"/>'
@@ -3124,7 +3150,7 @@ var BD_OVERLAYS = {
     +'<path d="M87,238 C86,232 87,226 87,222 M113,238 C114,232 113,226 113,222" stroke="#06b6d4" stroke-width="2" fill="none" opacity="0.5"/>'
   },
   'reproductive-f': { color:'#ec4899', svg:
-    // Uterus — proper pear shape
+    // Uterus - proper pear shape
     '<path d="M88,230 C82,226 80,233 80,240 C80,250 88,258 100,258 C112,258 120,250 120,240 C120,233 118,226 112,230 C108,224 92,224 88,230 Z" fill="#ec4899" opacity="0.72"/>'
     // Cervix
     +'<ellipse cx="100" cy="258" rx="7" ry="5" fill="#ec4899" opacity="0.55"/>'
@@ -3232,7 +3258,7 @@ var BD_OVERLAYS = {
     '<path d="M68,152 C62,155 58,164 60,174 C62,184 70,192 80,190 C88,188 92,180 90,170 C88,160 82,152 74,152 C72,151 70,151 68,152Z" fill="#fbbf24" opacity="0.72"/>'
     // Renal pelvis hint left
     +'<ellipse cx="82" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
-    // Right kidney (bean shape — flipped)
+    // Right kidney (bean shape - flipped)
     +'<path d="M132,152 C138,155 142,164 140,174 C138,184 130,192 120,190 C112,188 108,180 110,170 C112,160 118,152 126,152 C128,151 130,151 132,152Z" fill="#fbbf24" opacity="0.72"/>'
     // Renal pelvis hint right
     +'<ellipse cx="118" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
@@ -3250,7 +3276,7 @@ var BD_OVERLAYS = {
     +'<path d="M132,152 Q136,148 132,146 Q126,144 122,148 Q120,152 126,154Z" fill="#fbbf24" opacity="0.7"/>'
   },
   integumentary: { color:'#f9a8d4', svg:
-    // Body surface glow — trace major contours
+    // Body surface glow - trace major contours
     '<ellipse cx="100" cy="30" rx="26" ry="29" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.3"/>'
     // Torso outline glow
     +'<path d="M40,80 Q48,58 100,56 Q152,58 160,80 L158,118 Q154,148 146,170 Q148,186 150,196 Q130,216 100,218 Q70,216 50,196 Q52,186 54,170 Q46,148 42,118 Z" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.25"/>'
@@ -3260,7 +3286,7 @@ var BD_OVERLAYS = {
     // Leg surface glow
     +'<path d="M58,238 Q48,280 50,344 Q46,388 48,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
     +'<path d="M142,238 Q152,280 150,344 Q154,388 152,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
-    // Skin receptor dots — scattered
+    // Skin receptor dots - scattered
     +'<circle cx="72" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
     +'<circle cx="128" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
     +'<circle cx="60" cy="140" r="2" fill="#f9a8d4" opacity="0.45"/>'
@@ -3278,17 +3304,17 @@ var BD_OVERLAYS = {
 
 // ── BODY SYSTEMS METADATA ────────────────────────────────────────────────────
 var BODY_SYSTEMS = [
-  { key:'skeletal',       name:'Skeletal',       fn:'Provides structural framework, protects vital organs, and produces blood cells.',                          overlay:'skeletal',          color:'#cbd5e1' },
-  { key:'muscular',       name:'Muscular',        fn:'Enables voluntary and involuntary movement, generates heat, and maintains posture.',                       overlay:'muscular',           color:'#fb923c' },
-  { key:'nervous',        name:'Nervous',         fn:'Coordinates body activities and perceives the environment using electrical signals.',                      overlay:'nervous',            color:'#a78bfa' },
-  { key:'endocrine',      name:'Endocrine',       fn:'Regulates metabolic processes, growth, and development by secreting hormones.',                           overlay:'endocrine',          color:'#eab308' },
-  { key:'cardiovascular', name:'Cardiovascular',  fn:'Transports oxygen, nutrients, hormones, and waste throughout the body.',                                  overlay:'cardiovascular',     color:'#ef4444' },
-  { key:'lymphatic',      name:'Lymphatic',       fn:'Defends against pathogens, absorbs fats, and returns fluid to the bloodstream.',                          overlay:'lymphatic',          color:'#4ade80' },
-  { key:'respiratory',    name:'Respiratory',     fn:'Facilitates gas exchange by taking in oxygen and expelling carbon dioxide.',                              overlay:'pulmonary',          color:'#3b82f6' },
-  { key:'digestive',      name:'Digestive',       fn:'Breaks down food, absorbs nutrients, and eliminates solid waste.',                                        overlay:'gastrointestinal',   color:'#10b981' },
-  { key:'urinary',        name:'Urinary',         fn:'Filters blood, eliminates metabolic waste, and regulates fluid and electrolyte balance.',                 overlay:'urinary',            color:'#fbbf24' },
-  { key:'integumentary',  name:'Integumentary',   fn:'Protects internal tissues from external damage, regulates temperature, and prevents water loss.',         overlay:'integumentary',      color:'#f9a8d4' },
-  { key:'reproductive',   name:'Reproductive',    fn:'Produces sex cells, facilitates reproduction, and influences secondary sexual characteristics.',          overlay:'reproductive',       color:'#06b6d4' },
+  { key:'skeletal',       name:'Skeletal',       emoji:'🦴', fn:'Provides structural framework, protects vital organs, and produces blood cells.',                overlay:'skeletal',          color:'#cbd5e1' },
+  { key:'muscular',       name:'Muscular',        emoji:'💪', fn:'Enables voluntary and involuntary movement, generates heat, and maintains posture.',            overlay:'muscular',           color:'#fb923c' },
+  { key:'nervous',        name:'Nervous',         emoji:'🧠', fn:'Coordinates body activities and perceives the environment using electrical signals.',           overlay:'nervous',            color:'#a78bfa' },
+  { key:'endocrine',      name:'Endocrine',       emoji:'⚗️', fn:'Regulates metabolic processes, growth, and development by secreting hormones.',                overlay:'endocrine',          color:'#eab308' },
+  { key:'cardiovascular', name:'Cardiovascular',  emoji:'❤️', fn:'Transports oxygen, nutrients, hormones, and waste throughout the body.',                      overlay:'cardiovascular',     color:'#ef4444' },
+  { key:'lymphatic',      name:'Lymphatic',       emoji:'🛡️', fn:'Defends against pathogens, absorbs fats, and returns fluid to the bloodstream.',              overlay:'lymphatic',          color:'#4ade80' },
+  { key:'respiratory',    name:'Respiratory',     emoji:'🫁', fn:'Facilitates gas exchange by taking in oxygen and expelling carbon dioxide.',                   overlay:'pulmonary',          color:'#3b82f6' },
+  { key:'digestive',      name:'Digestive',       emoji:'🌿', fn:'Breaks down food, absorbs nutrients, and eliminates solid waste.',                             overlay:'gastrointestinal',   color:'#10b981' },
+  { key:'urinary',        name:'Urinary',         emoji:'💧', fn:'Filters blood, eliminates metabolic waste, and regulates fluid and electrolyte balance.',      overlay:'urinary',            color:'#fbbf24' },
+  { key:'integumentary',  name:'Integumentary',   emoji:'✨', fn:'Protects internal tissues from external damage, regulates temperature, and prevents water loss.', overlay:'integumentary',   color:'#f9a8d4' },
+  { key:'reproductive',   name:'Reproductive',    emoji:'🧬', fn:'Produces sex cells, facilitates reproduction, and influences secondary sexual characteristics.', overlay:'reproductive',    color:'#06b6d4' },
 ];
 
 // ── RING × SYSTEM FACTS ─────────────────────────────────────────────────────
@@ -3296,162 +3322,162 @@ var BODY_SYSTEMS = [
 var RING_BODY_DATA = {
   'HRV Trend': {
     defaultFacts: [
-      'HRV is directly regulated by the autonomic nervous system — high HRV reflects parasympathetic dominance and genuine recovery.',
+      'HRV is directly regulated by the autonomic nervous system. High HRV reflects parasympathetic dominance and genuine recovery.',
       'Chronic low HRV is an early warning sign of overtraining, metabolic dysfunction, and elevated cardiovascular risk.',
-      'Every breath mechanically drives HRV through respiratory sinus arrhythmia — slow deep breathing is the fastest way to raise it.'
+      'Every breath mechanically drives HRV through respiratory sinus arrhythmia. Slow deep breathing is the fastest way to raise it.'
     ],
     systems: {
       skeletal: ['Bone healing depends on parasympathetic recovery signals. Low HRV is associated with slower bone repair rates and blunted osteoblast activity.'],
-      muscular: ['High HRV signals your muscles are receiving recovery input from the nervous system. Low HRV means the body is still in a catabolic, stress-dominant state — muscle repair stalls.', 'Training when HRV is suppressed accelerates overreaching, not adaptation. HRV is the most accurate readiness signal before high-intensity work.'],
-      nervous: ['HRV directly measures the balance between sympathetic (fight-or-flight) and parasympathetic (rest-and-digest) autonomic activity.', 'Higher HRV indicates stronger vagal tone — linked to better stress resilience, emotional regulation, and cognitive clarity.', 'Chronic low HRV reflects sympathetic overactivation: the same state that impairs sleep, digestion, and hormonal recovery.'],
-      endocrine: ['Cortisol chronically suppresses HRV. People with dysregulated HPA axis rhythms consistently show blunted overnight HRV recovery.', 'Blood glucose spikes measurably drop HRV within 1–2 hours. Stable glycemic control is one of the fastest routes to HRV improvement.'],
+      muscular: ['High HRV signals your muscles are receiving recovery input from the nervous system. Low HRV means the body is still in a catabolic, stress-dominant state where muscle repair stalls.', 'Training when HRV is suppressed accelerates overreaching, not adaptation. HRV is the most accurate readiness signal before high-intensity work.'],
+      nervous: ['HRV directly measures the balance between sympathetic (fight-or-flight) and parasympathetic (rest-and-digest) autonomic activity.', 'Higher HRV indicates stronger vagal tone, linked to better stress resilience, emotional regulation, and cognitive clarity.', 'Chronic low HRV reflects sympathetic overactivation: the same state that impairs sleep, digestion, and hormonal recovery.'],
+      endocrine: ['Cortisol chronically suppresses HRV. People with dysregulated HPA axis rhythms consistently show blunted overnight HRV recovery.', 'Blood glucose spikes measurably drop HRV within 1-2 hours. Stable glycemic control is one of the fastest routes to HRV improvement.'],
       cardiovascular: ['HRV reflects the heart\'s adaptive responsiveness to autonomic input. Higher HRV means the heart adjusts fluidly to changing demands.', 'Low HRV is an independent predictor of cardiovascular mortality, even after controlling for age, fitness, and traditional risk factors.'],
-      lymphatic: ['Parasympathetic tone — reflected in HRV — directly suppresses systemic inflammation. Higher HRV correlates with lower CRP, IL-6, and TNF-α.', 'Chronic sympathetic dominance (low HRV) impairs immune surveillance and reduces natural killer cell activity.'],
-      respiratory: ['Breathing directly drives HRV via respiratory sinus arrhythmia. The inhale accelerates HR, exhale slows it — this oscillation IS HRV.', 'Box breathing and 4-7-8 breathing protocols measurably raise HRV within minutes by maximizing vagal nerve activation.'],
-      digestive: ['The vagus nerve — the primary driver of parasympathetic tone — also controls gut motility. Low HRV consistently correlates with IBS, bloating, and slow transit.', 'Gut microbiome diversity and HRV are bidirectionally linked: a healthy gut produces short-chain fatty acids that enhance vagal signaling.'],
+      lymphatic: ['Parasympathetic tone, reflected in HRV, directly suppresses systemic inflammation. Higher HRV correlates with lower CRP, IL-6, and TNF-α.', 'Chronic sympathetic dominance (low HRV) impairs immune surveillance and reduces natural killer cell activity.'],
+      respiratory: ['Breathing directly drives HRV via respiratory sinus arrhythmia. The inhale accelerates HR and the exhale slows it. This oscillation IS HRV.', 'Box breathing and 4-7-8 breathing protocols measurably raise HRV within minutes by maximizing vagal nerve activation.'],
+      digestive: ['The vagus nerve, the primary driver of parasympathetic tone, also controls gut motility. Low HRV consistently correlates with IBS, bloating, and slow transit.', 'Gut microbiome diversity and HRV are bidirectionally linked: a healthy gut produces short-chain fatty acids that enhance vagal signaling.'],
       urinary: ['Autonomic dysfunction reduces renal blood flow regulation. Long-term low HRV is associated with higher rates of kidney disease progression.'],
       integumentary: ['Chronic stress (reflected in low HRV) elevates cortisol, which degrades collagen and delays wound healing. High HRV correlates with better skin barrier integrity.'],
-      reproductive: ['Low HRV in men correlates with lower testosterone — both are markers of hypothalamic-pituitary axis suppression under chronic stress.', 'In women, HRV varies predictably across the menstrual cycle — luteal phase HRV dip is normal; a pronounced drop signals under-recovery.']
+      reproductive: ['Low HRV in men correlates with lower testosterone, both markers of hypothalamic-pituitary axis suppression under chronic stress.', 'In women, HRV varies predictably across the menstrual cycle. A luteal phase dip is normal, but a pronounced drop signals under-recovery.']
     }
   },
   'Sleep': {
     defaultFacts: [
-      'Deep sleep triggers GH release — 95% of daily growth hormone is secreted during the first half of the night, driving repair throughout the body.',
-      'Even one night of 6-hour sleep reduces insulin sensitivity by 25% — comparable to eating an ultra-processed diet for weeks.',
+      'Deep sleep triggers GH release. 95% of daily growth hormone is secreted during the first half of the night, driving repair throughout the body.',
+      'Even one night of 6-hour sleep reduces insulin sensitivity by 25%, comparable to eating an ultra-processed diet for weeks.',
       'Chronic short sleep triggers measurable inflammation within 24 hours, raising CRP and IL-6 across every body system.'
     ],
     systems: {
-      skeletal: ['Growth hormone surges during deep sleep drive osteoblast activity — the cells that build and repair bone. Chronic poor sleep accelerates bone density loss.', 'Sleep is when the skeletal system\'s repair processes dominate. Collagen synthesis in cartilage and bone peaks during overnight rest.'],
-      muscular: ['Muscle protein synthesis is almost entirely a sleep-dependent process. GH release during slow-wave sleep activates mTOR — the molecular switch for muscle growth.', 'Sleep deprivation reduces power output by up to 11% and increases perceived exertion. The training stimulus was there; the adaptation window wasn\'t.'],
-      nervous: ['During sleep, the glymphatic system clears amyloid-beta and tau — the proteins linked to Alzheimer\'s. It operates at 10× daytime speed during deep sleep.', 'Memory consolidation — the transfer of learning from hippocampus to cortex — happens almost exclusively during REM sleep.', 'REM sleep regulates emotional reactivity. Losing REM significantly increases amygdala reactivity and reduces prefrontal inhibition the next day.'],
-      endocrine: ['Sleep is the master clock for hormone secretion. Cortisol peaks at wake, GH peaks in first deep sleep, testosterone peaks in REM — disrupting sleep desynchronizes all three.', 'Two nights of 6-hour sleep drops testosterone by 10–15% in healthy young men. This is not a long-term trend — it is an acute measurable drop.'],
-      cardiovascular: ['Heart rate and blood pressure drop 10–20% during sleep (nocturnal dipping). Non-dippers — those who don\'t show this pattern — have 2× the cardiovascular event risk.', 'Sleep apnea causes repeated surges in blood pressure throughout the night, making it one of the strongest independent risk factors for hypertension and heart disease.'],
-      lymphatic: ['Immune function is most active during deep sleep — cytokine production and T-cell activity peak between midnight and 4am.', 'Sleeping under 6 hours makes you 4× more susceptible to the common cold compared to sleeping 7+ hours. The immune cost is measurable within one bad week.'],
+      skeletal: ['Growth hormone surges during deep sleep drive osteoblast activity, the cells that build and repair bone. Chronic poor sleep accelerates bone density loss.', 'Sleep is when the skeletal system\'s repair processes dominate. Collagen synthesis in cartilage and bone peaks during overnight rest.'],
+      muscular: ['Muscle protein synthesis is almost entirely a sleep-dependent process. GH release during slow-wave sleep activates mTOR, the molecular switch for muscle growth.', 'Sleep deprivation reduces power output by up to 11% and increases perceived exertion. The training stimulus was there; the adaptation window wasn\'t.'],
+      nervous: ['During sleep, the glymphatic system clears amyloid-beta and tau, the proteins linked to Alzheimer\'s. It operates at 10× daytime speed during deep sleep.', 'Memory consolidation, the transfer of learning from hippocampus to cortex, happens almost exclusively during REM sleep.', 'REM sleep regulates emotional reactivity. Losing REM significantly increases amygdala reactivity and reduces prefrontal inhibition the next day.'],
+      endocrine: ['Sleep is the master clock for hormone secretion. Cortisol peaks at wake, GH peaks in first deep sleep, testosterone peaks in REM. Disrupting sleep desynchronizes all three.', 'Two nights of 6-hour sleep drops testosterone by 10-15% in healthy young men. This is not a long-term trend. It is an acute measurable drop.'],
+      cardiovascular: ['Heart rate and blood pressure drop 10-20% during sleep (nocturnal dipping). Non-dippers, those who don\'t show this pattern, have 2× the cardiovascular event risk.', 'Sleep apnea causes repeated surges in blood pressure throughout the night, making it one of the strongest independent risk factors for hypertension and heart disease.'],
+      lymphatic: ['Immune function is most active during deep sleep, with cytokine production and T-cell activity peaking between midnight and 4am.', 'Sleeping under 6 hours makes you 4× more susceptible to the common cold compared to sleeping 7+ hours. The immune cost is measurable within one bad week.'],
       respiratory: ['Sleep is the only period where respiratory muscles get true rest. Sleep apnea disrupts this by causing repeated obstructions, leading to chronic oxygen desaturation and CO₂ retention.'],
-      digestive: ['Gut motility slows during sleep to allow mucosal repair and microbiome restoration. Eating within 2 hours of bed disrupts this window and is linked to worse sleep quality.', 'The gut-brain axis operates bidirectionally during sleep — poor gut health fragments sleep architecture, and fragmented sleep degrades the microbiome over time.'],
-      urinary: ['ADH (antidiuretic hormone) peaks at night to concentrate urine and reduce the need to wake. Sleep disruption dysregulates this rhythm — a common cause of nocturia.'],
+      digestive: ['Gut motility slows during sleep to allow mucosal repair and microbiome restoration. Eating within 2 hours of bed disrupts this window and is linked to worse sleep quality.', 'The gut-brain axis operates bidirectionally during sleep. Poor gut health fragments sleep architecture, and fragmented sleep degrades the microbiome over time.'],
+      urinary: ['ADH (antidiuretic hormone) peaks at night to concentrate urine and reduce the need to wake. Sleep disruption dysregulates this rhythm, a common cause of nocturia.'],
       integumentary: ['Skin cell regeneration and collagen synthesis peak between 11pm and 4am. Chronic sleep deprivation measurably increases transepidermal water loss and accelerates UV damage accumulation.'],
-      reproductive: ['In men, 70% of daily testosterone is manufactured during sleep — specifically during REM cycles. Disrupted REM directly suppresses morning testosterone levels.', 'In women, sleep regulates FSH, LH, and progesterone rhythms. Chronic poor sleep is a leading cause of menstrual irregularity and reduced fertility.']
+      reproductive: ['In men, 70% of daily testosterone is manufactured during sleep - specifically during REM cycles. Disrupted REM directly suppresses morning testosterone levels.', 'In women, sleep regulates FSH, LH, and progesterone rhythms. Chronic poor sleep is a leading cause of menstrual irregularity and reduced fertility.']
     }
   },
   'Zone 2': {
     defaultFacts: [
-      'Zone 2 training doubles mitochondrial density in skeletal muscle over 8–12 weeks — the cellular foundation of metabolic health and fat burning.',
-      'Zone 2 is the most effective single intensity for increasing stroke volume — the amount of blood your heart ejects per beat.',
-      'AMPK, the cellular master switch for fat burning and mitochondrial growth, is most powerfully activated in Zone 2 — not higher intensities.'
+      'Zone 2 training doubles mitochondrial density in skeletal muscle over 8-12 weeks, the cellular foundation of metabolic health and fat burning.',
+      'Zone 2 is the most effective single intensity for increasing stroke volume, the amount of blood your heart ejects per beat.',
+      'AMPK, the cellular master switch for fat burning and mitochondrial growth, is most powerfully activated in Zone 2 and not at higher intensities.'
     ],
     systems: {
-      skeletal: ['Weight-bearing Zone 2 (running, walking) provides the mechanical loading stimulus that maintains bone mineral density. Cycling is cardiovascular but not osteogenic.', 'The cortisol rise during high-intensity exercise is absent in Zone 2 — making it bone-protective rather than bone-degrading over time.'],
-      muscular: ['Zone 2 selectively trains Type I slow-twitch fibers and their mitochondria — the engines of fat oxidation and sustained energy output.', 'Mitochondrial biogenesis peaks in the 12–48 hours following a Zone 2 session. This is when the cellular adaptation actually occurs — rest matters.', 'The crossover point — where fat burning gives way to carbohydrate burning — shifts to higher intensities with consistent Zone 2 training.'],
-      nervous: ['Sustained Zone 2 exercise raises parasympathetic tone over time, progressively improving baseline HRV.', 'Zone 2 stimulates BDNF (brain-derived neurotrophic factor) — the primary growth signal for neurons — more consistently than higher intensities.'],
-      endocrine: ['Zone 2 is the strongest known intervention for improving insulin sensitivity. A single 30-minute session can lower post-meal glucose for up to 24 hours.', 'Unlike HIIT, Zone 2 does not significantly raise cortisol — making it the ideal recovery-compatible training mode.'],
-      cardiovascular: ['Zone 2 produces the greatest increase in stroke volume (heart pumps more per beat) — the primary mechanism behind resting HR reduction.', 'After 8–12 weeks of Zone 2 training, resting heart rate drops 5–15 bpm — each beat saved is cardiac muscle effort spared.', 'Zone 2 training grows the left ventricular cavity — the endurance athlete\'s heart — increasing cardiac output capacity.'],
-      lymphatic: ['Moderate sustained exercise is the most powerful anti-inflammatory lifestyle intervention. Zone 2 significantly reduces CRP, IL-6, and TNF-α within weeks.', 'Physical movement is the primary driver of lymphatic flow — the lymphatic system has no pump. Zone 2 massively accelerates lymphatic circulation.'],
-      respiratory: ['Zone 2 improves pulmonary capillary recruitment and ventilatory efficiency — you extract more O₂ from each breath over time.', 'The ventilatory threshold (where breathing becomes labored) rises with Zone 2 training — the hallmark that you are operating aerobically.'],
+      skeletal: ['Weight-bearing Zone 2 (running, walking) provides the mechanical loading stimulus that maintains bone mineral density. Cycling is cardiovascular but not osteogenic.', 'The cortisol rise during high-intensity exercise is absent in Zone 2, making it bone-protective rather than bone-degrading over time.'],
+      muscular: ['Zone 2 selectively trains Type I slow-twitch fibers and their mitochondria, the engines of fat oxidation and sustained energy output.', 'Mitochondrial biogenesis peaks in the 12-48 hours following a Zone 2 session. This is when the cellular adaptation actually occurs. Rest matters.', 'The crossover point, where fat burning gives way to carbohydrate burning, shifts to higher intensities with consistent Zone 2 training.'],
+      nervous: ['Sustained Zone 2 exercise raises parasympathetic tone over time, progressively improving baseline HRV.', 'Zone 2 stimulates BDNF (brain-derived neurotrophic factor), the primary growth signal for neurons, more consistently than higher intensities.'],
+      endocrine: ['Zone 2 is the strongest known intervention for improving insulin sensitivity. A single 30-minute session can lower post-meal glucose for up to 24 hours.', 'Unlike HIIT, Zone 2 does not significantly raise cortisol, making it the ideal recovery-compatible training mode.'],
+      cardiovascular: ['Zone 2 produces the greatest increase in stroke volume (heart pumps more per beat), the primary mechanism behind resting HR reduction.', 'After 8-12 weeks of Zone 2 training, resting heart rate drops 5-15 bpm. Each beat saved is cardiac muscle effort spared.', 'Zone 2 training grows the left ventricular cavity, known as the endurance athlete\'s heart, increasing cardiac output capacity.'],
+      lymphatic: ['Moderate sustained exercise is the most powerful anti-inflammatory lifestyle intervention. Zone 2 significantly reduces CRP, IL-6, and TNF-α within weeks.', 'Physical movement is the primary driver of lymphatic flow since the lymphatic system has no pump. Zone 2 massively accelerates lymphatic circulation.'],
+      respiratory: ['Zone 2 improves pulmonary capillary recruitment and ventilatory efficiency, so you extract more O₂ from each breath over time.', 'The ventilatory threshold, where breathing becomes labored, rises with Zone 2 training, the hallmark of operating aerobically.'],
       digestive: ['Zone 2 training increases gut microbiome diversity. Athletes have measurably more Lactobacillus and Akkermansia than sedentary individuals.', 'Regular aerobic exercise accelerates GI transit time, reducing the risk of constipation and colorectal inflammation.'],
-      urinary: ['Cardiovascular fitness from Zone 2 improves renal perfusion and blood pressure regulation — reducing long-term chronic kidney disease risk by up to 30%.'],
+      urinary: ['Cardiovascular fitness from Zone 2 improves renal perfusion and blood pressure regulation, reducing long-term chronic kidney disease risk by up to 30%.'],
       integumentary: ['Improved circulation from Zone 2 enhances oxygen and nutrient delivery to skin. Aerobically fit individuals show measurably better wound healing rates.'],
       reproductive: ['Zone 2 training increases testosterone in sedentary to moderately active men and improves estrogen metabolism in women.', 'Regular aerobic exercise reduces the risk of hormone-sensitive cancers (breast, prostate) by improving sex hormone clearance.']
     }
   },
   'Steps': {
     defaultFacts: [
-      '7,000+ daily steps reduces all-cause mortality by 50–70% compared to fewer than 2,000 steps — independent of structured exercise.',
-      'Walking activates the calf muscle pump — the primary mechanism for returning venous blood to the heart from the lower body.',
+      '7,000+ daily steps reduces all-cause mortality by 50-70% compared to fewer than 2,000 steps, independent of structured exercise.',
+      'Walking activates the calf muscle pump, the primary mechanism for returning venous blood to the heart from the lower body.',
       'Walking after meals blunts post-prandial glucose spikes more effectively than medication in pre-diabetics.'
     ],
     systems: {
-      skeletal: ['Weight-bearing steps provide the mechanical stress required to maintain bone mineral density. Non-weight-bearing exercise (cycling, swimming) does not substitute.', 'Walking 8,000+ steps/day is associated with 45% lower risk of developing osteoporosis — the effect is dose-dependent and starts within weeks.'],
-      muscular: ['Chronic daily walking prevents the slow-twitch fiber atrophy that drives metabolic disease and frailty in sedentary individuals.', 'The calf muscle pump — activated by every step — is the most important driver of venous return from the legs to the heart.'],
-      nervous: ['Walking stimulates BDNF production more consistently than any other daily behavior. BDNF is the primary growth signal for neurons and is protective against cognitive decline.', 'Even a 10-minute walk measurably reduces anxiety and improves executive function for 2+ hours afterward — the effect is dose-responsive.'],
-      endocrine: ['Post-meal walking (10–15 minutes) reduces glucose and insulin spikes more effectively than a pre-meal walk.', '7,000+ daily steps improves insulin sensitivity independently of weight change — movement volume is the key variable, not intensity.'],
+      skeletal: ['Weight-bearing steps provide the mechanical stress required to maintain bone mineral density. Non-weight-bearing exercise (cycling, swimming) does not substitute.', 'Walking 8,000+ steps/day is associated with 45% lower risk of developing osteoporosis. The effect is dose-dependent and starts within weeks.'],
+      muscular: ['Chronic daily walking prevents the slow-twitch fiber atrophy that drives metabolic disease and frailty in sedentary individuals.', 'The calf muscle pump, activated by every step, is the most important driver of venous return from the legs to the heart.'],
+      nervous: ['Walking stimulates BDNF production more consistently than any other daily behavior. BDNF is the primary growth signal for neurons and is protective against cognitive decline.', 'Even a 10-minute walk measurably reduces anxiety and improves executive function for 2+ hours afterward, and the effect is dose-responsive.'],
+      endocrine: ['Post-meal walking (10-15 minutes) reduces glucose and insulin spikes more effectively than a pre-meal walk.', '7,000+ daily steps improves insulin sensitivity independently of weight change. Movement volume is the key variable, not intensity.'],
       cardiovascular: ['7,000+ daily steps significantly reduces blood pressure, LDL cholesterol, and cardiovascular event risk.', 'Physical activity volume (not just exercise) keeps the calf venous pump active throughout the day, reducing DVT risk from prolonged sitting.'],
-      lymphatic: ['Walking is the primary driver of lymphatic flow. The lymphatic system relies entirely on muscular contraction and body movement — it has no heart.', 'Regular walking reduces CRP and IL-6 significantly compared to sedentary baselines — the anti-inflammatory effect is measurable within 4 weeks.'],
+      lymphatic: ['Walking is the primary driver of lymphatic flow. The lymphatic system relies entirely on muscular contraction and body movement and has no pump of its own.', 'Regular walking reduces CRP and IL-6 significantly compared to sedentary baselines - the anti-inflammatory effect is measurable within 4 weeks.'],
       respiratory: ['Walking maintains diaphragmatic strength and lung expansion. Sedentary individuals breathe shallowly most of the day, reducing diaphragm tone.'],
-      digestive: ['Walking accelerates colonic transit time. Sedentary individuals have 2–3× higher rates of chronic constipation.', 'Physical activity post-meal stimulates gastric motility and improves the microbiome\'s diversity and composition over time.'],
-      urinary: ['Adequate daily steps maintain kidney perfusion and help prevent the metabolic conditions — insulin resistance, hypertension — that accelerate chronic kidney disease.'],
+      digestive: ['Walking accelerates colonic transit time. Sedentary individuals have 2-3× higher rates of chronic constipation.', 'Physical activity post-meal stimulates gastric motility and improves the microbiome\'s diversity and composition over time.'],
+      urinary: ['Adequate daily steps maintain kidney perfusion and help prevent the metabolic conditions, including insulin resistance and hypertension, that accelerate chronic kidney disease.'],
       integumentary: ['Walking improves peripheral circulation, delivering oxygen and nutrients to skin cells and accelerating wound healing.', 'Regular physical activity is associated with reduced severity of inflammatory skin conditions including eczema and psoriasis.'],
-      reproductive: ['Regular walking is associated with improved fertility outcomes and hormonal balance in both men and women.', 'Daily step counts above 7,000 correlate with better sexual function scores — mediated through cardiovascular fitness and testosterone maintenance.']
+      reproductive: ['Regular walking is associated with improved fertility outcomes and hormonal balance in both men and women.', 'Daily step counts above 7,000 correlate with better sexual function scores, mediated through cardiovascular fitness and testosterone maintenance.']
     }
   },
   'Macros': {
     defaultFacts: [
       'Protein is the only macronutrient that cannot be stored. Daily intake must meet daily demand or the body catabolizes muscle to supply amino acids.',
-      'Dietary fat provides the cholesterol backbone for all steroid hormones — ultra-low-fat diets measurably suppress testosterone and estrogen.',
+      'Dietary fat provides the cholesterol backbone for all steroid hormones. Ultra-low-fat diets measurably suppress testosterone and estrogen.',
       'Fiber feeds gut bacteria that produce short-chain fatty acids critical for colon health, immune function, and insulin sensitivity.'
     ],
     systems: {
-      skeletal: ['Protein provides the collagen matrix that bone minerals crystallize into. Dietary protein is as important as calcium for bone strength, not just mineral content.', 'Calcium and phosphorus from food mineralize bone, but the collagen scaffold quality — which requires adequate dietary protein — determines bone fracture resistance.'],
-      muscular: ['Muscle protein synthesis requires all essential amino acids to be present simultaneously. Incomplete daily protein causes net muscle loss even when you are training.', '1g per lb of bodyweight protein is the threshold above which MPS is maximized in trained individuals. Below this, gains are left on the table.', 'Leucine specifically triggers the mTOR pathway — the molecular switch for muscle building. Red meat, eggs, and dairy have the highest leucine content per gram.'],
-      nervous: ['DHA (omega-3) comprises 60% of the brain\'s fatty acids. Dietary fat quality directly affects cognitive function, mood, and neuroinflammation.', 'B12 and folate — found primarily in animal protein — are required for myelin synthesis and neurotransmitter production.'],
-      endocrine: ['Dietary fat is the raw material for all steroid hormones. Eating less than 15% of calories as fat chronically suppresses testosterone and estrogen.', 'Carbohydrate intake directly regulates insulin. High glycemic load with low fiber drives progressive insulin resistance — the most common hormonal disorder.'],
-      cardiovascular: ['Omega-3 fatty acids reduce triglycerides and systemic inflammation — the two primary drivers of cardiovascular risk beyond LDL.', 'Excess refined carbohydrates raise triglycerides and small-dense LDL particles (the dangerous kind) more than dietary fat does.'],
+      skeletal: ['Protein provides the collagen matrix that bone minerals crystallize into. Dietary protein is as important as calcium for bone strength, not just mineral content.', 'Calcium and phosphorus from food mineralize bone, but the collagen scaffold quality, which requires adequate dietary protein, determines bone fracture resistance.'],
+      muscular: ['Muscle protein synthesis requires all essential amino acids to be present simultaneously. Incomplete daily protein causes net muscle loss even when you are training.', '1g per lb of bodyweight protein is the threshold above which MPS is maximized in trained individuals. Below this, gains are left on the table.', 'Leucine specifically triggers the mTOR pathway, the molecular switch for muscle building. Red meat, eggs, and dairy have the highest leucine content per gram.'],
+      nervous: ['DHA (omega-3) comprises 60% of the brain\'s fatty acids. Dietary fat quality directly affects cognitive function, mood, and neuroinflammation.', 'B12 and folate, found primarily in animal protein, are required for myelin synthesis and neurotransmitter production.'],
+      endocrine: ['Dietary fat is the raw material for all steroid hormones. Eating less than 15% of calories as fat chronically suppresses testosterone and estrogen.', 'Carbohydrate intake directly regulates insulin. High glycemic load with low fiber drives progressive insulin resistance, the most common hormonal disorder.'],
+      cardiovascular: ['Omega-3 fatty acids reduce triglycerides and systemic inflammation, the two primary drivers of cardiovascular risk beyond LDL.', 'Excess refined carbohydrates raise triglycerides and small-dense LDL particles (the dangerous kind) more than dietary fat does.'],
       lymphatic: ['Dietary fat is absorbed through the lymphatic system (lacteals in intestinal villi) before entering the bloodstream. Fat intake directly drives lymphatic activity after every meal.', 'Adequate zinc, vitamin A, and protein from diet are required for immune cell production and lymphocyte function.'],
-      respiratory: ['Adequate protein maintains respiratory muscle mass. Diaphragm sarcopenia — driven by protein insufficiency — is a significant driver of respiratory decline with aging.'],
-      digestive: ['Fiber feeds Bifidobacterium and Lactobacillus — keystone gut bacteria that regulate immune function, inflammation, and metabolic signaling.', 'Protein requires 4–6 hours of gastric residence for full digestion. Meal timing and protein distribution across the day matters as much as total daily protein.'],
-      urinary: ['Excessive protein intake (3g+/lb bodyweight) increases uric acid and kidney filtration load. 1–1.5g/lb is optimal without adding renal stress.', 'Dietary sodium is the primary driver of urinary electrolyte balance and fluid retention.'],
+      respiratory: ['Adequate protein maintains respiratory muscle mass. Diaphragm sarcopenia, driven by protein insufficiency, is a significant driver of respiratory decline with aging.'],
+      digestive: ['Fiber feeds Bifidobacterium and Lactobacillus, keystone gut bacteria that regulate immune function, inflammation, and metabolic signaling.', 'Protein requires 4-6 hours of gastric residence for full digestion. Meal timing and protein distribution across the day matters as much as total daily protein.'],
+      urinary: ['Excessive protein intake (3g+/lb bodyweight) increases uric acid and kidney filtration load. 1-1.5g/lb is optimal without adding renal stress.', 'Dietary sodium is the primary driver of urinary electrolyte balance and fluid retention.'],
       integumentary: ['Collagen synthesis requires protein, vitamin C, and zinc simultaneously. Protein deficiency is the primary cause of impaired wound healing and skin thinning.'],
       reproductive: ['Adequate fat and cholesterol intake is required for sex hormone production. Dietary fat restriction is a leading cause of hormonal deficiency in both athletes and dieters.', 'Zinc from red meat, shellfish, and seeds is a direct precursor to testosterone synthesis. Low zinc consistently predicts low testosterone.']
     }
   },
   'Water': {
     defaultFacts: [
-      'Blood is 90% water — even 1% dehydration meaningfully thickens blood, raises resting heart rate, and impairs oxygen delivery.',
+      'Blood is 90% water. Even 1% dehydration meaningfully thickens blood, raises resting heart rate, and impairs oxygen delivery.',
       'The kidneys filter 200L of blood per day and require constant hydration to maintain the concentration gradients needed to clear waste.',
-      'The brain is 80% water — even mild dehydration measurably reduces concentration, reaction time, and short-term memory.'
+      'The brain is 80% water. Even mild dehydration measurably reduces concentration, reaction time, and short-term memory.'
     ],
     systems: {
       skeletal: ['Synovial fluid (joint lubrication) is primarily water. Chronic dehydration increases joint friction, accelerates cartilage wear, and contributes to joint pain.', 'Intervertebral disc height is maintained by water absorption overnight. Chronic dehydration degrades disc height and increases compression injury risk.'],
-      muscular: ['Muscle cells are 75% water. Dehydration reduces peak force production, increases cramp susceptibility, and impairs the protein synthesis process.', 'Glycogen storage requires water — each gram of muscle glycogen is bound with 3g of water. Dehydration directly limits energy reserves.'],
-      nervous: ['Cerebrospinal fluid (which cushions and nourishes the brain) requires continuous water intake. Even mild dehydration reduces CSF volume and impairs glymphatic clearance.', 'Dehydration impairs working memory, attention, and psychomotor speed within 1–2 hours of a 1–2% body mass water deficit.'],
-      endocrine: ['Dehydration triggers the stress response — cortisol rises and testosterone falls within hours of significant fluid deficit.', 'ADH (antidiuretic hormone) is released by the hypothalamus when blood osmolality rises — dehydration creates chronic hormonal stress responses.'],
-      cardiovascular: ['Blood is 90% water — dehydration reduces plasma volume, thickens blood viscosity, raises heart rate, and drops stroke volume at every exercise intensity.', 'A 2% body weight water loss reduces cardiac output by up to 10% — meaning your heart works harder for the same result.'],
-      lymphatic: ['Lymph is 95% water. Dehydration impairs lymphatic flow, reducing the body\'s ability to clear metabolic waste and fight infection.', 'Adequate hydration is required for lymphocyte production and transport — immune function is directly compromised by dehydration.'],
-      respiratory: ['The airway epithelium must remain hydrated for effective mucociliary clearance — the lungs\' first defense against inhaled pathogens.', 'Mild dehydration thickens mucus in the airways, impairing the cilia\'s ability to move debris upward and out of the respiratory tract.'],
-      digestive: ['Water is required at every stage of digestion: saliva, gastric acid secretion, bile production, and intestinal absorption are all water-dependent.', 'Inadequate water intake is the single most common cause of chronic constipation — more than fiber deficiency.'],
-      urinary: ['Kidneys filter 200L of blood daily. Water intake is the primary determinant of whether they can maintain the concentration gradients needed to excrete waste.', 'Chronic under-hydration concentrates urine — massively increasing kidney stone risk (especially calcium oxalate) and long-term renal damage.'],
+      muscular: ['Muscle cells are 75% water. Dehydration reduces peak force production, increases cramp susceptibility, and impairs the protein synthesis process.', 'Glycogen storage requires water - each gram of muscle glycogen is bound with 3g of water. Dehydration directly limits energy reserves.'],
+      nervous: ['Cerebrospinal fluid (which cushions and nourishes the brain) requires continuous water intake. Even mild dehydration reduces CSF volume and impairs glymphatic clearance.', 'Dehydration impairs working memory, attention, and psychomotor speed within 1-2 hours of a 1-2% body mass water deficit.'],
+      endocrine: ['Dehydration triggers the stress response - cortisol rises and testosterone falls within hours of significant fluid deficit.', 'ADH (antidiuretic hormone) is released by the hypothalamus when blood osmolality rises, and dehydration creates chronic hormonal stress responses.'],
+      cardiovascular: ['Blood is 90% water. Dehydration reduces plasma volume, thickens blood viscosity, raises heart rate, and drops stroke volume at every exercise intensity.', 'A 2% body weight water loss reduces cardiac output by up to 10%, meaning your heart works harder for the same result.'],
+      lymphatic: ['Lymph is 95% water. Dehydration impairs lymphatic flow, reducing the body\'s ability to clear metabolic waste and fight infection.', 'Adequate hydration is required for lymphocyte production and transport - immune function is directly compromised by dehydration.'],
+      respiratory: ['The airway epithelium must remain hydrated for effective mucociliary clearance - the lungs\' first defense against inhaled pathogens.', 'Mild dehydration thickens mucus in the airways, impairing the cilia\'s ability to move debris upward and out of the respiratory tract.'],
+      digestive: ['Water is required at every stage of digestion: saliva, gastric acid secretion, bile production, and intestinal absorption are all water-dependent.', 'Inadequate water intake is the single most common cause of chronic constipation - more than fiber deficiency.'],
+      urinary: ['Kidneys filter 200L of blood daily. Water intake is the primary determinant of whether they can maintain the concentration gradients needed to excrete waste.', 'Chronic under-hydration concentrates urine - massively increasing kidney stone risk (especially calcium oxalate) and long-term renal damage.'],
       integumentary: ['Skin turgor is the clinical test for hydration. Chronic under-hydration reduces skin elasticity, increases transepidermal water loss, and accelerates visible aging.'],
       reproductive: ['Dehydration reduces semen volume and sperm motility in men. In women, cervical mucus quality and ovarian blood flow are both impaired by significant fluid deficit.']
     }
   },
   'Resting HR': {
     defaultFacts: [
-      'RHR reflects stroke volume — a lower RHR means your heart pumps more blood per beat, requiring fewer beats to meet the body\'s demand.',
+      'RHR reflects stroke volume. A lower RHR means your heart pumps more blood per beat, requiring fewer beats to meet the body\'s demand.',
       'Every 10 bpm above 60 is associated with ~16% higher all-cause mortality, independent of other risk factors.',
-      'Elite endurance athletes routinely sustain RHRs of 36–44 bpm — the result of years of cardiac remodeling through aerobic training.'
+      'Elite endurance athletes routinely sustain RHRs of 36-44 bpm, the result of years of cardiac remodeling through aerobic training.'
     ],
     systems: {
       skeletal: ['Low RHR reflects overall aerobic fitness. The same training adaptations that reduce resting heart rate also stimulate bone density through mechanical loading.'],
-      muscular: ['High RHR at rest means muscles are operating under relative oxygen debt even at baseline. Low RHR reflects the cardiovascular efficiency that keeps muscles well-supplied.', 'Each 10 bpm reduction in RHR from training saves roughly 14,400 heartbeats per day — cardiac muscle fatigue accumulates.'],
-      nervous: ['RHR is set by the balance of sympathetic (accelerator) and parasympathetic (brake) tone. Training the vagus nerve through aerobic exercise is the primary driver of RHR reduction.', 'Elevated RHR during rest indicates sympathetic nervous system dominance — the same state that impairs sleep, digestion, and recovery.'],
-      endocrine: ['Elevated RHR often reflects high cortisol or thyroid dysfunction. Subclinical hyperthyroidism is one of the leading overlooked causes of persistently elevated RHR.', 'Insulin resistance and metabolic syndrome are strongly associated with elevated resting heart rate — RHR above 80 is an independent metabolic risk marker.'],
-      cardiovascular: ['RHR is the clearest single metric of cardiovascular efficiency. Low RHR means more blood per beat, less cardiac work per day, and greater reserve capacity.', 'A 10 bpm RHR reduction from aerobic training equates to ~5.2 million fewer heartbeats per year — meaningful long-term cardiac sparing.'],
+      muscular: ['High RHR at rest means muscles are operating under relative oxygen debt even at baseline. Low RHR reflects the cardiovascular efficiency that keeps muscles well-supplied.', 'Each 10 bpm reduction in RHR from training saves roughly 14,400 heartbeats per day. Cardiac muscle fatigue accumulates.'],
+      nervous: ['RHR is set by the balance of sympathetic (accelerator) and parasympathetic (brake) tone. Training the vagus nerve through aerobic exercise is the primary driver of RHR reduction.', 'Elevated RHR during rest indicates sympathetic nervous system dominance, the same state that impairs sleep, digestion, and recovery.'],
+      endocrine: ['Elevated RHR often reflects high cortisol or thyroid dysfunction. Subclinical hyperthyroidism is one of the leading overlooked causes of persistently elevated RHR.', 'Insulin resistance and metabolic syndrome are strongly associated with elevated resting heart rate - RHR above 80 is an independent metabolic risk marker.'],
+      cardiovascular: ['RHR is the clearest single metric of cardiovascular efficiency. Low RHR means more blood per beat, less cardiac work per day, and greater reserve capacity.', 'A 10 bpm RHR reduction from aerobic training equates to ~5.2 million fewer heartbeats per year - meaningful long-term cardiac sparing.'],
       lymphatic: ['Chronic high RHR is bidirectionally linked with systemic inflammation. Lower RHR from fitness improvement simultaneously reduces inflammatory markers.'],
       respiratory: ['Lower RHR means the cardiovascular system distributes oxygen more efficiently, reducing the ventilatory demand for any given workload.'],
-      digestive: ['Parasympathetic dominance — associated with low RHR — is required for optimal digestion. High resting HR suppresses the vagal tone needed for gastric motility and enzyme secretion.'],
+      digestive: ['Parasympathetic dominance, associated with low RHR, is required for optimal digestion. High resting HR suppresses the vagal tone needed for gastric motility and enzyme secretion.'],
       urinary: ['Cardiovascular fitness (reflected in low RHR) improves renal blood flow regulation and reduces long-term chronic kidney disease risk.'],
-      integumentary: ['Better cardiovascular efficiency from low RHR means more consistent peripheral oxygen delivery — athletes show faster wound healing and better skin recovery.'],
-      reproductive: ['RHR above 80 is associated with lower testosterone in men and menstrual irregularity in women — both are secondary effects of the underlying sympathetic activation.']
+      integumentary: ['Better cardiovascular efficiency from low RHR means more consistent peripheral oxygen delivery - athletes show faster wound healing and better skin recovery.'],
+      reproductive: ['RHR above 80 is associated with lower testosterone in men and menstrual irregularity in women, both secondary effects of the underlying sympathetic activation.']
     }
   },
   'VO₂ Max': {
     defaultFacts: [
-      'VO₂ Max is the single strongest predictor of all-cause mortality — more predictive than smoking history, diabetes, or hypertension.',
+      'VO₂ Max is the single strongest predictor of all-cause mortality, more predictive than smoking history, diabetes, or hypertension.',
       'Every 1-MET increase in aerobic capacity reduces all-cause mortality by 13% and cardiovascular mortality by 15%.',
-      'VO₂ Max is trainable at any age — studies show 10–15% improvements in adults over 60 after just 12 weeks of structured aerobic training.'
+      'VO₂ Max is trainable at any age. Studies show 10-15% improvements in adults over 60 after just 12 weeks of structured aerobic training.'
     ],
     systems: {
-      skeletal: ['High VO₂ Max is associated with greater bone mineral density — the same training loads that build aerobic capacity provide the mechanical stimulus for osteogenesis.', 'Aerobic fitness reduces fracture risk in older adults through both direct (bone density) and indirect (fall prevention, muscle strength) mechanisms.'],
-      muscular: ['VO₂ Max is limited at the muscular level by mitochondrial density and capillary recruitment. High VO₂ Max reflects dense, metabolically active muscle tissue.', 'The a-vO₂ difference (how much O₂ muscles extract from each unit of blood) is the muscular component of VO₂ Max — trainable through Zone 2 and strength work.', 'High VO₂ Max athletes sustain a greater percentage of their max power aerobically, meaning they accumulate less fatigue for the same workload.'],
-      nervous: ['VO₂ Max training is the single most potent intervention for long-term brain health. It doubles cerebral blood flow and maximally stimulates BDNF production.', 'High VO₂ Max in midlife is the strongest lifestyle predictor of protection against cognitive decline and dementia — stronger than diet or sleep alone.'],
-      endocrine: ['VO₂ Max training maximizes insulin sensitivity — the mitochondria created by aerobic training consume glucose independently of insulin signaling.', 'High aerobic fitness is protective against metabolic syndrome, type 2 diabetes, and their hormonal downstream effects (low testosterone, low estrogen, high cortisol).'],
-      cardiovascular: ['VO₂ Max is determined by cardiac output (heart rate × stroke volume) × oxygen extraction. Both improve with training and decline with deconditioning.', 'Stroke volume — how much blood the heart ejects per beat — is the primary determinant of VO₂ Max and only increases meaningfully with sustained aerobic training.', 'VO₂ Max is the strongest known predictor of 10-year cardiovascular mortality — stronger than any blood biomarker currently in clinical use.'],
-      lymphatic: ['VO₂ Max training is the most powerful anti-inflammatory lifestyle intervention known. Trained individuals have dramatically lower levels of CRP, IL-6, and TNF-α.', 'High aerobic fitness enhances immune surveillance — NK cell activity and T-cell function are both elevated in endurance-trained individuals.'],
-      respiratory: ['VO₂ Max is limited in most people by cardiac output, not lung capacity. But pulmonary adaptations (increased capillary recruitment, diffusion capacity) contribute to the efficiency.', 'Respiratory muscle training (diaphragm, intercostals) becomes more efficient with VO₂ Max training — reducing the metabolic cost of breathing at high intensities.'],
-      digestive: ['Aerobic fitness improves gut microbiome diversity. Athletes have measurably higher populations of Akkermansia and Lactobacillus — bacteria associated with metabolic health and longevity.'],
-      urinary: ['High VO₂ Max reduces the risk of chronic kidney disease by 30–40% — through blood pressure reduction, insulin sensitivity improvement, and anti-inflammatory effects.'],
+      skeletal: ['High VO₂ Max is associated with greater bone mineral density - the same training loads that build aerobic capacity provide the mechanical stimulus for osteogenesis.', 'Aerobic fitness reduces fracture risk in older adults through both direct (bone density) and indirect (fall prevention, muscle strength) mechanisms.'],
+      muscular: ['VO₂ Max is limited at the muscular level by mitochondrial density and capillary recruitment. High VO₂ Max reflects dense, metabolically active muscle tissue.', 'The a-vO₂ difference (how much O₂ muscles extract from each unit of blood) is the muscular component of VO₂ Max, trainable through Zone 2 and strength work.', 'High VO₂ Max athletes sustain a greater percentage of their max power aerobically, meaning they accumulate less fatigue for the same workload.'],
+      nervous: ['VO₂ Max training is the single most potent intervention for long-term brain health. It doubles cerebral blood flow and maximally stimulates BDNF production.', 'High VO₂ Max in midlife is the strongest lifestyle predictor of protection against cognitive decline and dementia - stronger than diet or sleep alone.'],
+      endocrine: ['VO₂ Max training maximizes insulin sensitivity - the mitochondria created by aerobic training consume glucose independently of insulin signaling.', 'High aerobic fitness is protective against metabolic syndrome, type 2 diabetes, and their hormonal downstream effects (low testosterone, low estrogen, high cortisol).'],
+      cardiovascular: ['VO₂ Max is determined by cardiac output (heart rate × stroke volume) × oxygen extraction. Both improve with training and decline with deconditioning.', 'Stroke volume, how much blood the heart ejects per beat, is the primary determinant of VO₂ Max and only increases meaningfully with sustained aerobic training.', 'VO₂ Max is the strongest known predictor of 10-year cardiovascular mortality - stronger than any blood biomarker currently in clinical use.'],
+      lymphatic: ['VO₂ Max training is the most powerful anti-inflammatory lifestyle intervention known. Trained individuals have dramatically lower levels of CRP, IL-6, and TNF-α.', 'High aerobic fitness enhances immune surveillance - NK cell activity and T-cell function are both elevated in endurance-trained individuals.'],
+      respiratory: ['VO₂ Max is limited in most people by cardiac output, not lung capacity. But pulmonary adaptations (increased capillary recruitment, diffusion capacity) contribute to the efficiency.', 'Respiratory muscle training (diaphragm, intercostals) becomes more efficient with VO₂ Max training - reducing the metabolic cost of breathing at high intensities.'],
+      digestive: ['Aerobic fitness improves gut microbiome diversity. Athletes have measurably higher populations of Akkermansia and Lactobacillus - bacteria associated with metabolic health and longevity.'],
+      urinary: ['High VO₂ Max reduces the risk of chronic kidney disease by 30-40% through blood pressure reduction, insulin sensitivity improvement, and anti-inflammatory effects.'],
       integumentary: ['High cardiovascular efficiency improves peripheral circulation and skin oxygenation. Athletes consistently show better wound healing and skin recovery compared to sedentary individuals.'],
-      reproductive: ['VO₂ Max is strongly correlated with erectile function in men (mediated by vascular health) and hormonal health in women.', 'Aerobic fitness is the strongest modifiable predictor of fertility outcomes in both sexes — VO₂ Max above the 75th percentile is associated with significantly better reproductive health markers.']
+      reproductive: ['VO₂ Max is strongly correlated with erectile function in men (mediated by vascular health) and hormonal health in women.', 'Aerobic fitness is the strongest modifiable predictor of fertility outcomes in both sexes - VO₂ Max above the 75th percentile is associated with significantly better reproductive health markers.']
     }
   }
 };
@@ -3464,7 +3490,7 @@ function setBodyDiagGender(g, btn) {
     var svgCol = document.getElementById('bd-svg-col-' + bdCurrentIdx);
     if (svgCol) {
       var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
-      svgCol.innerHTML = '<svg viewBox="0 0 200 445" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
+      svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
     }
     updateBodyDiagOverlays(bdCurrentIdx);
   }
@@ -3515,28 +3541,9 @@ function updateBodyDiagOverlays(idx) {
   g.innerHTML = html;
 }
 
-function bdFactCard(text, borderColor) {
-  // Split on em-dash for title / description, fallback to first sentence
-  var sep = text.indexOf(' — ');
-  var title, desc;
-  if (sep > 0 && sep < 80) {
-    title = text.slice(0, sep);
-    desc = text.slice(sep + 3);
-  } else {
-    var dot = text.indexOf('. ');
-    if (dot > 20 && dot < 90) {
-      title = text.slice(0, dot + 1);
-      desc = text.slice(dot + 2);
-    } else {
-      title = '';
-      desc = text;
-    }
-  }
-  return '<div class="body-diag-card" style="border-left:3px solid ' + borderColor + ';cursor:default;">'
-    + '<div class="b-tx">'
-    + (title ? '<strong>' + title + '</strong>' : '')
-    + '<span>' + desc + '</span>'
-    + '</div></div>';
+function bdFactItem(emoji, text) {
+  return '<div class="nutrition-item"><div class="ni-icon">' + emoji + '</div>'
+    + '<div class="ni-text">' + text + '</div></div>';
 }
 
 function renderBodyInfoPanel(idx) {
@@ -3546,12 +3553,11 @@ function renderBodyInfoPanel(idx) {
   var bodyData = RING_BODY_DATA[ring.name];
 
   if (!bdSelectedSys || !bodyData) {
-    var defs = bodyData ? bodyData.defaultFacts : [];
-    var neutralColor = 'rgba(155,172,200,0.4)';
+    var defs = (bodyData ? bodyData.defaultFacts : []).slice(0, 2);
     var html = '<div class="body-info-title">Body Impact</div>';
     html += '<div class="body-info-fn">Select a system to see how ' + ring.name + ' affects it specifically.</div>';
-    html += '<div class="body-info-facts">';
-    for (var d = 0; d < defs.length; d++) html += bdFactCard(defs[d], neutralColor);
+    html += '<div class="gc" style="margin-bottom:0">';
+    for (var d = 0; d < defs.length; d++) html += bdFactItem(ring.icon, defs[d]);
     html += '</div>';
     panel.innerHTML = html;
     return;
@@ -3563,15 +3569,16 @@ function renderBodyInfoPanel(idx) {
   }
   if (!sys) return;
 
-  var facts = (bodyData.systems && bodyData.systems[bdSelectedSys]) ? bodyData.systems[bdSelectedSys] : [];
+  var allFacts = (bodyData.systems && bodyData.systems[bdSelectedSys]) ? bodyData.systems[bdSelectedSys] : [];
+  var facts = allFacts.slice(0, 2);
   var html = '<div class="body-info-title" style="color:' + sys.color + '">' + sys.name + ' System</div>';
   html += '<div class="body-info-fn">' + sys.fn + '</div>';
   if (facts.length > 0) {
-    html += '<div class="body-info-facts">';
-    for (var f = 0; f < facts.length; f++) html += bdFactCard(facts[f], sys.color + '55');
+    html += '<div class="gc" style="margin-bottom:0">';
+    for (var f = 0; f < facts.length; f++) html += bdFactItem(sys.emoji, facts[f]);
     html += '</div>';
   } else {
-    html += '<div class="body-info-facts"><div class="body-diag-card" style="border-left:3px solid rgba(155,172,200,0.3);cursor:default;"><div class="b-tx"><span>Indirect influence — this system is less directly affected by ' + ring.name + '.</span></div></div></div>';
+    html += '<div class="gc" style="margin-bottom:0">' + bdFactItem('💡', 'Indirect influence. This system is less directly affected by ' + ring.name + '.') + '</div>';
   }
   panel.innerHTML = html;
 }
@@ -3584,13 +3591,12 @@ function buildBodyDiagHtml(idx) {
 
   var outline = BD_OUTLINE_M;
   var bodyData = RING_BODY_DATA[r.name];
-  var defs = bodyData ? bodyData.defaultFacts : [];
+  var defs = (bodyData ? bodyData.defaultFacts : []).slice(0, 2);
 
-  var neutralColor = 'rgba(155,172,200,0.4)';
   var defaultHtml = '<div class="body-info-title">Body Impact</div>'
     + '<div class="body-info-fn">Select a system to see how ' + r.name + ' affects it specifically.</div>'
-    + '<div class="body-info-facts">'
-    + defs.map(function(f){ return bdFactCard(f, neutralColor); }).join('')
+    + '<div class="gc" style="margin-bottom:0">'
+    + defs.map(function(f){ return bdFactItem(r.icon, f); }).join('')
     + '</div>';
 
   var sysBtns = BODY_SYSTEMS.map(function(sys) {
@@ -3598,19 +3604,21 @@ function buildBodyDiagHtml(idx) {
   }).join('');
 
   return '<div class="body-diag-wrap">'
-    + '<div class="body-diag-gender">'
-    + '<button class="body-diag-gender-btn male-btn active" onclick="setBodyDiagGender(\'m\',this)">&#9794; Male</button>'
-    + '<button class="body-diag-gender-btn female-btn" onclick="setBodyDiagGender(\'f\',this)">&#9792; Female</button>'
-    + '</div>'
+    + '<div class="body-sys-grid" id="bd-sys-grid-' + idx + '">' + sysBtns + '</div>'
     + '<div class="body-diag-layout">'
-    + '<div class="body-diag-svg-col" id="bd-svg-col-' + idx + '">'
-    + '<svg viewBox="0 0 200 445" xmlns="http://www.w3.org/2000/svg">'
+    + '<div class="body-diag-svg-col">'
+    + '<div class="body-diag-svg-wrap" id="bd-svg-col-' + idx + '">'
+    + '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">'
     + outline
     + '<g id="bd-overlays-' + idx + '"></g>'
     + '</svg>'
     + '</div>'
+    + '<div class="body-diag-gender">'
+    + '<button class="body-diag-gender-btn male-btn active" onclick="setBodyDiagGender(\'m\',this)">&#9794; Male</button>'
+    + '<button class="body-diag-gender-btn female-btn" onclick="setBodyDiagGender(\'f\',this)">&#9792; Female</button>'
+    + '</div>'
+    + '</div>'
     + '<div class="body-diag-right">'
-    + '<div class="body-sys-grid" id="bd-sys-grid-' + idx + '">' + sysBtns + '</div>'
     + '<div class="body-info-panel" id="bd-info-' + idx + '">' + defaultHtml + '</div>'
     + '</div>'
     + '</div>'
@@ -3647,9 +3655,9 @@ var CONDITION_GUIDES = {
   'Hypertension': {
     rings: [
       [5, '💧 Water', 'Consistent 100+ oz/day reduces BP 4-8 mmHg. Dehydration forces heart to work harder.'],
-      [3, '👟 Steps', '7,000+ daily steps reduces systolic BP 3-5 mmHg — as effective as mild medication.'],
+      [3, '👟 Steps', '7,000+ daily steps reduces systolic BP 3-5 mmHg, as effective as mild medication.'],
       [2, '🏃 Zone 2', '30-45 min Zone 2 cardio daily reduces BP 5-10 mmHg over 12 weeks.'],
-      [0, '💜 HRV', 'Improving HRV indicates better autonomic regulation — directly linked to BP control.']
+      [0, '💜 HRV', 'Improving HRV indicates better autonomic regulation, directly linked to BP control.']
     ],
     food: ['DASH diet: leafy greens, berries, beets','Reduce sodium below 1,500 mg/day','Potassium-rich: avocado, banana, sweet potato','Dark chocolate (70%+): lowers BP 2-3 mmHg','Beet juice: nitrates relax blood vessels within 3 hours'],
     exercise: ['Zone 2 cardio 30+ min daily','Avoid prolonged isometric holds (straining)','Resistance training 2-3×/week at moderate loads','Yoga/breathing: 10 min daily reduces BP 5-7 mmHg'],
@@ -3657,14 +3665,14 @@ var CONDITION_GUIDES = {
   },
   'Type 2 Diabetes': {
     rings: [
-      [2, '🏃 Zone 2', 'Zone 2 improves insulin sensitivity 40-60% — more effective than metformin in early stages.'],
+      [2, '🏃 Zone 2', 'Zone 2 improves insulin sensitivity 40-60%, more effective than metformin in early stages.'],
       [3, '👟 Steps', 'Post-meal 10-min walks reduce glucose spikes 20-30%. Every meal matters.'],
       [4, '🥩 Macros', 'High-protein, low-glycemic ratio is the primary dietary lever for HbA1c control.'],
       [1, '🌙 Sleep', 'One poor night raises fasting glucose 15-20%. Sleep debt is a major hidden driver.']
     ],
     food: ['Low-GI carbs only (below 55)','Apple cider vinegar before meals: blunts glucose spikes','Legumes over refined grains','Berries over high-sugar fruits','Reduce refined carbs/sugar to below 50g/day','Cinnamon: modest HbA1c reduction in studies'],
     exercise: ['Zone 2 cardio 5×/week minimum','Resistance training 3×/week (improves glucose disposal)','Post-meal 10-15 min walk after every meal','Aim for zero sedentary periods longer than 90 min'],
-    goals: [[2,'45+ min daily'],[3,'10,000 steps'],[4,'High protein — 40% of calories']]
+    goals: [[2,'45+ min daily'],[3,'10,000 steps'],[4,'High protein at 40% of calories']]
   },
   'Sleep Apnea': {
     rings: [
@@ -3685,7 +3693,7 @@ var CONDITION_GUIDES = {
       [4, '🥩 Macros', 'Fat intake below 15% of calories significantly suppresses testosterone. Dietary fat is essential for steroid synthesis.']
     ],
     food: ['Zinc-rich: oysters, red meat, pumpkin seeds','Vitamin D: 2000-5000 IU/day (critical cofactor for testosterone)','Healthy fats: avocado, olive oil, whole eggs','Ashwagandha: 600 mg/day shown to raise testosterone 15-17% in RCTs','Avoid alcohol: reduces testosterone 20-25% the next day'],
-    exercise: ['Heavy resistance training (compound movements) 3×/week','Sprints: 6-8 × 30 sec at max effort proven to spike testosterone','Zone 2 as base: prevents cortisol elevation that suppresses testosterone','Avoid chronic overtraining — elevates cortisol and suppresses T'],
+    exercise: ['Heavy resistance training (compound movements) 3×/week','Sprints: 6-8 × 30 sec at max effort proven to spike testosterone','Zone 2 as base: prevents cortisol elevation that suppresses testosterone','Avoid chronic overtraining as it elevates cortisol and suppresses T'],
     goals: [[1,'8 hrs deep sleep'],[2,'150 min/week Zone 2'],[4,'30%+ fat calories']]
   },
   'Hypothyroidism': {
@@ -3719,7 +3727,7 @@ var CONDITION_GUIDES = {
     ],
     food: ['Fatty fish: salmon, mackerel, sardines (3×/week)','Fortified foods: milk, OJ, cereals','Egg yolks','Mushrooms exposed to UV light: significant D2 source','Supplement: 2000-5000 IU/day with K2 for best absorption'],
     exercise: ['Morning outdoor exercise: 20 min sun exposure synthesizes 10,000+ IU','Resistance training improves Vitamin D receptor sensitivity'],
-    goals: [[1,'Improve sleep score — D supplementation shows results in 4-6 weeks'],[0,'HRV improvement expected 6-8 weeks after repletion']]
+    goals: [[1,'Improve sleep score since D supplementation shows results in 4-6 weeks'],[0,'HRV improvement expected 6-8 weeks after repletion']]
   },
   'High Cholesterol': {
     rings: [
@@ -3801,9 +3809,9 @@ function renderTestResultsPanel() {
   } else if (pfAddMethod === 'paste') {
     addSection = '<div class="pf-section">'
       + '<div class="pf-section-title">Paste Bulk Data</div>'
-      + '<div style="font-size:11px;color:#7a9480;margin-bottom:8px">Paste results from LabCorp, Quest, or any lab — one result per line. Formats accepted:<br>'
+      + '<div style="font-size:11px;color:#7a9480;margin-bottom:8px">Paste results from LabCorp, Quest, or any lab, one result per line. Formats accepted:<br>'
       + '<code style="font-size:10px;color:#7a9480">Date, TestName, Value &nbsp;|&nbsp; TestName: Value &nbsp;|&nbsp; TestName Value Unit</code></div>'
-      + '<textarea class="pf-bulk-area" id="pf-paste-area" placeholder="e.g.&#10;2024-03-15, HbA1c, 5.4&#10;2024-03-15, LDL, 98&#10;2024-03-15, Vitamin D, 32&#10;&#10;Or paste lab report text — the app will extract known tests."></textarea>'
+      + '<textarea class="pf-bulk-area" id="pf-paste-area" placeholder="e.g.&#10;2024-03-15, HbA1c, 5.4&#10;2024-03-15, LDL, 98&#10;2024-03-15, Vitamin D, 32&#10;&#10;Or paste lab report text - the app will extract known tests."></textarea>'
       + '<button class="pf-parse-btn" onclick="pfParsePaste()">Parse & Import</button>'
       + '<div id="pf-parse-msg" style="font-size:11px;color:#4ade80;margin-top:6px"></div>'
       + '</div>';
@@ -3813,7 +3821,7 @@ function renderTestResultsPanel() {
       + '<div class="pf-upload-area" onclick="document.getElementById(\'pf-file-input\').click()">'
       + '<div style="font-size:24px;margin-bottom:8px">📁</div>'
       + '<div style="font-size:13px;font-weight:700;margin-bottom:4px">Tap to upload file</div>'
-      + '<div style="font-size:11px;color:#7a9480">Supports .txt, .csv — paste from PDF using Paste tab</div>'
+      + '<div style="font-size:11px;color:#7a9480">Supports .txt and .csv files. Paste from PDF using the Paste tab.</div>'
       + '</div>'
       + '<input type="file" id="pf-file-input" accept=".txt,.csv,.tsv" style="display:none" onchange="pfHandleFile(this)">'
       + '<div id="pf-file-msg" style="font-size:11px;color:#4ade80;margin-top:4px"></div>'
@@ -4029,7 +4037,7 @@ function renderTestGraph() {
     + '<path d="'+lp+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round"/>'
     + dots + xlbls + '</svg>';
   var unit = def ? def.unit : '';
-  return tabs + '<div style="font-size:10px;color:#7a9480;margin-bottom:6px">'+pfSelectedTest+' ('+unit+') — dashed lines = reference range</div>' + svg;
+  return tabs + '<div style="font-size:10px;color:#7a9480;margin-bottom:6px">'+pfSelectedTest+' ('+unit+'). Dashed lines show the reference range.</div>' + svg;
 }
 
 function pfSelectTestGraph(name) {
@@ -4107,7 +4115,7 @@ function buildAiGoalsHtml() {
     if (RINGS[ri].pct < 0.6) {
       var exists2 = false;
       for (var si2 = 0; si2 < suggestions.length; si2++) { if (suggestions[si2].idx === ri) { exists2 = true; break; } }
-      if (!exists2) suggestions.push({ idx: ri, newGoal: RINGS[ri].goal.replace('Goal: ',''), reason: 'Below 60% — priority improvement' });
+      if (!exists2) suggestions.push({ idx: ri, newGoal: RINGS[ri].goal.replace('Goal: ',''), reason: 'Below 60%, priority improvement' });
     }
   }
   if (!suggestions.length) {
