@@ -3011,296 +3011,687 @@ var BD_OUTLINE_F = [
   '<circle cx="156" cy="430" r="2.5" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9"/>',
 ].join('');
 
+
+var BD_SVG_DEFS = '<defs>'
+  + '<radialGradient id="hgr" cx="38%" cy="32%" r="62%"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="60%" stop-color="#dc2626"/><stop offset="100%" stop-color="#7f1d1d"/></radialGradient>'
+  + '<radialGradient id="vgr" cx="38%" cy="32%" r="62%"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#2e1065"/></radialGradient>'
+  + '<radialGradient id="brngr" cx="42%" cy="32%" r="58%"><stop offset="0%" stop-color="#ddd6fe"/><stop offset="50%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#2e1065"/></radialGradient>'
+  + '<radialGradient id="cbgr" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#c4b5fd"/><stop offset="100%" stop-color="#4c1d95"/></radialGradient>'
+  + '<linearGradient id="bonegr" x1="10%" y1="0%" x2="90%" y2="100%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="40%" stop-color="#e2e8f0"/><stop offset="100%" stop-color="#94a3b8"/></linearGradient>'
+  + '<radialGradient id="skullgr" cx="42%" cy="36%" r="58%"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#94a3b8"/></radialGradient>'
+  + '<radialGradient id="muscgr" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#fdba74"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#7c2d12"/></radialGradient>'
+  + '<radialGradient id="lnggr" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="50%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient>'
+  + '<radialGradient id="livgr" cx="35%" cy="32%" r="60%"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#431407"/></radialGradient>'
+  + '<radialGradient id="stomgr" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#7c2d12"/></radialGradient>'
+  + '<radialGradient id="intgr" cx="50%" cy="30%" r="55%"><stop offset="0%" stop-color="#6ee7b7"/><stop offset="100%" stop-color="#065f46"/></radialGradient>'
+  + '<radialGradient id="kidgr" cx="40%" cy="32%" r="60%"><stop offset="0%" stop-color="#fde68a"/><stop offset="50%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#78350f"/></radialGradient>'
+  + '<radialGradient id="endgr" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#fef08a"/><stop offset="50%" stop-color="#eab308"/><stop offset="100%" stop-color="#713f12"/></radialGradient>'
+  + '<radialGradient id="lymgr" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#bbf7d0"/><stop offset="50%" stop-color="#22c55e"/><stop offset="100%" stop-color="#14532d"/></radialGradient>'
+  + '<radialGradient id="repfgr" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#f9a8d4"/><stop offset="100%" stop-color="#9d174d"/></radialGradient>'
+  + '<radialGradient id="repmgr" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#a5f3fc"/><stop offset="100%" stop-color="#0e7490"/></radialGradient>'
+  + '<radialGradient id="skingr" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#fce7f3"/><stop offset="100%" stop-color="#be185d"/></radialGradient>'
+  + '</defs>';
+
 var BD_OVERLAYS = {
+
   cardiovascular: { color:'#ef4444', svg:
-    // Proper heart shape (cardiac silhouette)
-    '<path d="M100,140 C72,122 60,108 60,96 C60,84 70,76 82,76 C90,76 97,80 100,86 C103,80 110,76 118,76 C130,76 140,84 140,96 C140,108 128,122 100,140 Z" fill="#ef4444" opacity="0.82"/>'
-    // Aortic arch
-    +'<path d="M100,80 C100,72 100,65 100,58 C100,52 106,50 110,54 C114,58 118,52 120,48" stroke="#ef4444" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>'
-    // Superior vena cava
-    +'<path d="M96,80 C94,70 92,62 92,56" stroke="#ef4444" stroke-width="3" fill="none" opacity="0.5"/>'
-    // Carotid arteries
-    +'<path d="M95,52 C93,44 91,36 90,28 M105,52 C107,44 109,36 110,28" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>'
-    // Pulmonary arteries (to lungs)
-    +'<path d="M88,100 C82,98 76,98 72,102 M112,100 C118,98 124,98 128,102" stroke="#ef4444" stroke-width="3" fill="none" opacity="0.48"/>'
-    // Descending aorta + bifurcation
-    +'<path d="M100,138 L100,210 M100,210 C96,220 88,240 82,330 M100,210 C104,220 112,240 118,330" stroke="#ef4444" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.5"/>'
-    // Arm vessels
-    +'<path d="M70,84 C56,96 38,118 26,168 M130,84 C144,96 162,118 174,168" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    // Leg vessels
-    +'<path d="M82,332 C80,370 78,400 76,430 M118,332 C120,370 122,400 124,430" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
+    /* Heart */
+    '<path d="M94,118 C94,118 76,104 76,118 C76,132 88,142 94,150 C100,142 112,132 112,118 C112,104 94,118 94,118 Z" fill="url(#hgr)" opacity="0.82"/>'
+    /* Heart wider base shape */
+    +'<path d="M80,100 C72,96 68,106 72,118 C76,130 88,142 94,150 C100,142 112,130 116,118 C120,106 116,96 108,100 C104,96 100,92 94,92 C88,92 84,96 80,100 Z" fill="url(#hgr)" opacity="0.88"/>'
+    /* Aortic arch */
+    +'<path d="M100,95 L100,80 C100,72 108,66 116,66 C124,66 130,60 130,52 C130,44 124,38 116,38" fill="none" stroke="#ef4444" stroke-width="3.5" opacity="0.9"/>'
+    /* Descending aorta */
+    +'<path d="M116,38 C108,38 106,44 106,52 L106,160 L104,220 L102,240" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.8"/>'
+    /* Pulmonary trunk */
+    +'<path d="M94,100 C92,88 86,82 80,78 C74,74 66,76 62,80" fill="none" stroke="#6d28d9" stroke-width="2.5" opacity="0.8"/>'
+    /* SVC */
+    +'<path d="M100,92 L100,78 C100,68 104,58 108,48 C112,38 112,28 108,18" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.75"/>'
+    /* IVC */
+    +'<path d="M102,148 L102,162 L100,220" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.75"/>'
+    /* Left carotid */
+    +'<path d="M100,78 C96,68 94,56 94,44 C94,32 96,20 96,12" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.8"/>'
+    /* Right carotid */
+    +'<path d="M108,74 C112,64 114,52 114,40 C114,28 112,16 110,8" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.78"/>'
+    /* Left subclavian/brachial */
+    +'<path d="M96,80 C84,80 72,82 60,86 C52,90 44,96 38,108 C32,120 30,140 30,160 C30,180 32,200 32,220 C32,240 30,260 28,280" fill="none" stroke="#ef4444" stroke-width="1.8" opacity="0.75"/>'
+    /* Right subclavian/brachial */
+    +'<path d="M108,80 C120,80 132,82 144,88 C154,94 162,104 166,118 C170,132 170,154 170,174 C170,194 168,214 168,234 C168,254 170,272 172,290" fill="none" stroke="#ef4444" stroke-width="1.8" opacity="0.75"/>'
+    /* Left femoral */
+    +'<path d="M96,240 C88,246 80,258 76,278 C72,298 72,320 72,342 C72,362 74,382 74,400 C74,416 72,424 70,432" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.78"/>'
+    /* Right femoral */
+    +'<path d="M104,240 C112,246 120,258 124,278 C128,298 128,320 128,342 C128,362 126,382 126,400 C126,416 128,424 130,432" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.78"/>'
+    /* Venous return left leg */
+    +'<path d="M68,432 C70,420 70,400 72,376 C74,352 74,328 76,306 C78,284 80,262 82,244" fill="none" stroke="#6d28d9" stroke-width="1.5" opacity="0.65"/>'
+    /* Venous return right leg */
+    +'<path d="M132,432 C130,420 130,400 128,376 C126,352 126,328 124,306 C122,284 120,262 118,244" fill="none" stroke="#6d28d9" stroke-width="1.5" opacity="0.65"/>'
+    /* Heart highlight */
+    +'<ellipse cx="90" cy="108" rx="8" ry="6" fill="white" opacity="0.15"/>'
+    /* Right atrium append */
+    +'<path d="M112,110 C118,108 122,112 120,118 C118,122 114,122 112,120 Z" fill="#ef4444" opacity="0.6"/>'
+    /* Left atrium append */
+    +'<path d="M76,108 C70,106 66,110 68,116 C70,120 74,120 76,118 Z" fill="#ef4444" opacity="0.6"/>'
   },
+
   nervous: { color:'#a78bfa', svg:
-    '<path d="M100,7 C86,7 78,13 76,21 C72,27 72,35 76,41 C78,47 84,51 92,53 L100,55 L108,53 C116,51 122,47 124,41 C128,35 128,27 124,21 C122,13 114,7 100,7Z" fill="#a78bfa" opacity="0.18"/>'
-    +'<line x1="100" y1="8" x2="100" y2="48" stroke="#a78bfa" stroke-width="1.2" opacity="0.85"/>'
-    +'<path d="M100,10 C95,8 88,8 82,12" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.72" stroke-linecap="round"/>'
-    +'<path d="M78,13 C76,18 76,25 78,31 C80,37 82,42 84,46" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.68" stroke-linecap="round"/>'
-    +'<path d="M82,11 C80,17 80,24 82,31 C84,37 86,42 88,47" fill="none" stroke="#a78bfa" stroke-width="1.3" opacity="0.62" stroke-linecap="round"/>'
-    +'<path d="M87,11 C85,18 85,26 87,34 C89,40 91,45 93,50" fill="none" stroke="#a78bfa" stroke-width="1.6" opacity="0.82" stroke-linecap="round"/>'
-    +'<path d="M92,10 C90,17 90,26 92,34 C94,40 96,46 97,51" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
-    +'<path d="M78,32 C82,30 88,30 94,32 C97,33 99,35 99,39" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.78" stroke-linecap="round"/>'
-    +'<path d="M78,37 C80,41 82,45 86,49" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
-    +'<path d="M80,42 C84,46 88,49 92,51" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.52" stroke-linecap="round"/>'
-    +'<path d="M100,10 C105,8 112,8 118,12" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.72" stroke-linecap="round"/>'
-    +'<path d="M122,13 C124,18 124,25 122,31 C120,37 118,42 116,46" fill="none" stroke="#a78bfa" stroke-width="1.4" opacity="0.68" stroke-linecap="round"/>'
-    +'<path d="M118,11 C120,17 120,24 118,31 C116,37 114,42 112,47" fill="none" stroke="#a78bfa" stroke-width="1.3" opacity="0.62" stroke-linecap="round"/>'
-    +'<path d="M113,11 C115,18 115,26 113,34 C111,40 109,45 107,50" fill="none" stroke="#a78bfa" stroke-width="1.6" opacity="0.82" stroke-linecap="round"/>'
-    +'<path d="M108,10 C110,17 110,26 108,34 C106,40 104,46 103,51" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
-    +'<path d="M122,32 C118,30 112,30 106,32 C103,33 101,35 101,39" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.78" stroke-linecap="round"/>'
-    +'<path d="M122,37 C120,41 118,45 114,49" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>'
-    +'<path d="M120,42 C116,46 112,49 108,51" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.52" stroke-linecap="round"/>'
-    +'<path d="M88,51 C84,53 82,57 84,61 L100,63 L116,61 C118,57 116,53 112,51" fill="#a78bfa" opacity="0.18"/>'
-    +'<path d="M84,53 Q92,51 100,53 Q108,51 116,53" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.68"/>'
-    +'<path d="M83,56 Q92,54 100,56 Q108,54 117,56" fill="none" stroke="#a78bfa" stroke-width="1.1" opacity="0.58"/>'
-    +'<path d="M84,59 Q92,57 100,59 Q108,57 116,59" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.48"/>'
-    +'<rect x="97" y="62" width="6" height="14" rx="3" fill="#a78bfa" opacity="0.68"/>'
-    +'<rect x="98.5" y="74" width="3" height="142" rx="1.5" fill="#a78bfa" opacity="0.45"/>'
-    +'<path d="M98,80 L85,78 M102,80 L115,78 M98,87 L84,86 M102,87 L116,86" stroke="#a78bfa" stroke-width="1.5" fill="none" opacity="0.4"/>'
-    +'<path d="M98,92 C86,94 68,98 46,112 M102,92 C114,94 132,98 154,112" stroke="#a78bfa" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    +'<path d="M98,104 L82,108 M102,104 L118,108 M98,118 L80,122 M102,118 L120,122 M98,132 L80,136 M102,132 L120,136 M98,146 L82,150 M102,146 L118,150 M98,160 L83,164 M102,160 L117,164" stroke="#a78bfa" stroke-width="1.2" fill="none" opacity="0.3"/>'
-    +'<path d="M98,168 C88,174 74,184 64,204 M102,168 C112,174 126,184 136,204" stroke="#a78bfa" stroke-width="2" fill="none" opacity="0.35"/>'
-    +'<path d="M74,224 C70,268 68,344 70,430 M126,224 C130,268 132,344 130,430" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3"/>'
+    /* Cerebral hemispheres */
+    '<ellipse cx="100" cy="22" rx="28" ry="18" fill="url(#brngr)" opacity="0.85"/>'
+    /* Left hemisphere */
+    +'<path d="M72,22 C72,10 80,4 100,4 C100,4 100,40 100,40 C86,40 72,34 72,22 Z" fill="url(#brngr)" opacity="0.7"/>'
+    /* Right hemisphere */
+    +'<path d="M128,22 C128,10 120,4 100,4 C100,4 100,40 100,40 C114,40 128,34 128,22 Z" fill="url(#brngr)" opacity="0.7"/>'
+    /* Gyri lines left */
+    +'<path d="M76,16 C80,14 84,16 86,14 M76,22 C80,20 84,22 88,20 M76,28 C80,26 86,28 88,26" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>'
+    /* Gyri lines right */
+    +'<path d="M114,14 C118,16 122,14 124,16 M114,20 C118,22 122,20 124,22 M114,26 C118,28 122,26 124,28" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>'
+    /* Corpus callosum hint */
+    +'<path d="M88,22 C92,20 108,20 112,22" fill="none" stroke="#c4b5fd" stroke-width="1.5" opacity="0.5"/>'
+    /* Cerebellum */
+    +'<ellipse cx="100" cy="46" rx="16" ry="10" fill="url(#cbgr)" opacity="0.82"/>'
+    +'<path d="M86,44 C90,42 94,44 98,42 M102,42 C106,44 110,42 114,44" fill="none" stroke="#7c3aed" stroke-width="0.8" opacity="0.6"/>'
+    /* Brainstem */
+    +'<rect x="96" y="54" width="8" height="20" rx="4" fill="#7c3aed" opacity="0.75"/>'
+    /* Spinal cord */
+    +'<path d="M98,74 L98,82 L98,160 C98,168 100,200 100,230 C100,260 100,290 100,320 C100,340 100,360 100,380" fill="none" stroke="#a78bfa" stroke-width="3" opacity="0.8"/>'
+    /* Cervical enlargement */
+    +'<ellipse cx="100" cy="86" rx="4" ry="8" fill="#a78bfa" opacity="0.6"/>'
+    /* Lumbar enlargement */
+    +'<ellipse cx="100" cy="198" rx="4" ry="9" fill="#a78bfa" opacity="0.6"/>'
+    /* Cervical nerve roots left */
+    +'<path d="M97,82 L86,78 M97,86 L84,84 M97,90 L84,90 M97,94 L84,96" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.65"/>'
+    /* Cervical nerve roots right */
+    +'<path d="M103,82 L114,78 M103,86 L116,84 M103,90 L116,90 M103,94 L116,96" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.65"/>'
+    /* Brachial plexus left */
+    +'<path d="M96,90 C88,94 78,98 68,106 C60,112 52,122 44,134" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.7"/>'
+    +'<path d="M96,94 C86,98 76,104 68,112 C60,120 54,132 48,144" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6"/>'
+    /* Brachial plexus right */
+    +'<path d="M104,90 C112,94 122,98 132,106 C140,112 148,122 156,134" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.7"/>'
+    +'<path d="M104,94 C114,98 124,104 132,112 C140,120 146,132 152,144" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity="0.6"/>'
+    /* Thoracic nerve roots */
+    +'<path d="M98,110 L82,110 M98,118 L82,118 M98,126 L82,126 M98,134 L82,134 M98,142 L82,142" fill="none" stroke="#c4b5fd" stroke-width="0.8" opacity="0.5"/>'
+    +'<path d="M102,110 L118,110 M102,118 L118,118 M102,126 L118,126 M102,134 L118,134 M102,142 L118,142" fill="none" stroke="#c4b5fd" stroke-width="0.8" opacity="0.5"/>'
+    /* Sciatic nerves */
+    +'<path d="M98,210 C90,220 78,236 72,258 C66,278 66,308 66,334 C66,356 68,376 68,400 C68,416 68,428 66,438" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.75"/>'
+    +'<path d="M102,210 C110,220 122,236 128,258 C134,278 134,308 134,334 C134,356 132,376 132,400 C132,416 132,428 134,438" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.75"/>'
+    /* Peroneal branch left */
+    +'<path d="M68,344 C62,352 58,364 58,378 C58,392 60,408 60,422 C60,430 58,436 56,442" fill="none" stroke="#c4b5fd" stroke-width="1.2" opacity="0.6"/>'
+    /* Peroneal branch right */
+    +'<path d="M132,344 C138,352 142,364 142,378 C142,392 140,408 140,422 C140,430 142,436 144,442" fill="none" stroke="#c4b5fd" stroke-width="1.2" opacity="0.6"/>'
+    /* Brain highlight */
+    +'<ellipse cx="92" cy="16" rx="10" ry="7" fill="white" opacity="0.12"/>'
   },
-    musculoskeletal: { color:'#f97316', svg:
-    // Skull (circle, not filled - outline)
-    '<circle cx="100" cy="26" r="23" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
-    +'<path d="M84,48 L86,54 L100,56 L114,54 L116,48" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>'
-    // Clavicles
-    +'<path d="M100,72 Q84,70 68,76 M100,72 Q116,70 132,76" stroke="#f97316" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.55"/>'
-    // Sternum
-    +'<rect x="98" y="72" width="4" height="80" rx="2" fill="#f97316" opacity="0.45"/>'
-    // 7 rib pairs
-    +'<path d="M100,82 Q86,80 76,86 Q70,90 72,96 Q80,92 100,90 M100,82 Q114,80 124,86 Q130,90 128,96 Q120,92 100,90" fill="none" stroke="#f97316" stroke-width="1.8" opacity="0.42"/>'
-    +'<path d="M100,97 Q84,95 73,102 Q67,107 70,114 Q78,109 100,107 M100,97 Q116,95 127,102 Q133,107 130,114 Q122,109 100,107" fill="none" stroke="#f97316" stroke-width="1.7" opacity="0.38"/>'
-    +'<path d="M100,113 Q83,111 72,119 Q66,125 70,132 Q78,127 100,125 M100,113 Q117,111 128,119 Q134,125 130,132 Q122,127 100,125" fill="none" stroke="#f97316" stroke-width="1.6" opacity="0.34"/>'
-    +'<path d="M100,128 Q84,126 73,134 M100,128 Q116,126 127,134" fill="none" stroke="#f97316" stroke-width="1.5" opacity="0.28"/>'
-    +'<path d="M100,140 Q85,138 75,146 M100,140 Q115,138 125,146" fill="none" stroke="#f97316" stroke-width="1.4" opacity="0.24"/>'
-    // Spine column
-    +'<path d="M99,66 L101,66 L101,215 L99,215 Z" fill="#f97316" opacity="0.22"/>'
-    // Pelvis bowl shape
-    +'<path d="M62,210 Q58,224 66,232 L134,232 Q142,224 138,210 Q120,222 100,222 Q80,222 62,210 Z" fill="none" stroke="#f97316" stroke-width="2" opacity="0.42"/>'
-    // Humerus bones
-    +'<path d="M64,82 L34,152 M136,82 L166,152" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.35"/>'
-    // Radius/ulna
-    +'<path d="M34,155 L22,228 M166,155 L178,228" stroke="#f97316" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.3"/>'
-    // Femur
-    +'<path d="M82,234 C78,270 74,300 74,330 M118,234 C122,270 126,300 126,330" stroke="#f97316" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.35"/>'
-    // Tibia
-    +'<path d="M74,332 L70,422 M126,332 L130,422" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.28"/>'
+
+  musculoskeletal: { color:'#cbd5e1', svg:
+    /* Skull dome */
+    '<path d="M72,30 C72,10 82,4 100,4 C118,4 128,10 128,30 C128,42 122,50 116,54 L84,54 C78,50 72,42 72,30 Z" fill="url(#skullgr)" opacity="0.82"/>'
+    /* Skull highlight */
+    +'<ellipse cx="96" cy="18" rx="12" ry="8" fill="white" opacity="0.18"/>'
+    /* Orbital ridges */
+    +'<path d="M80,38 C84,36 90,36 94,38 M106,38 C110,36 116,36 120,38" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.7"/>'
+    /* Orbits */
+    +'<ellipse cx="88" cy="42" rx="7" ry="5" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.8"/>'
+    +'<ellipse cx="112" cy="42" rx="7" ry="5" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.8"/>'
+    /* Zygomatic arch */
+    +'<path d="M80,44 C76,46 74,50 76,54" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.7"/>'
+    +'<path d="M120,44 C124,46 126,50 124,54" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.7"/>'
+    /* Mandible */
+    +'<path d="M82,54 C80,58 80,64 84,68 C88,72 96,74 100,74 C104,74 112,72 116,68 C120,64 120,58 118,54" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.8"/>'
+    /* Coronal suture */
+    +'<path d="M72,28 C76,26 80,28 84,26 C88,24 92,26 96,24 C100,22 104,24 108,26 C112,28 116,26 120,28 C124,30 128,28 128,30" fill="none" stroke="#64748b" stroke-width="0.8" opacity="0.5"/>'
+    /* Clavicles */
+    +'<path d="M100,74 C94,72 82,72 72,76 C64,80 60,82 58,82" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.85"/>'
+    +'<path d="M100,74 C106,72 118,72 128,76 C136,80 140,82 142,82" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.85"/>'
+    /* Sternum */
+    +'<rect x="97" y="74" width="6" height="78" rx="2" fill="url(#bonegr)" opacity="0.8"/>'
+    /* Sternal angle */
+    +'<path d="M95,100 L105,100" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.7"/>'
+    /* Ribs left (7 pairs, arcing) */
+    +'<path d="M98,82 C90,82 80,86 74,92 C68,98 66,106 68,112" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M98,90 C88,90 76,94 70,102 C64,110 62,120 64,128" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M98,98 C88,98 74,104 68,114 C62,124 60,136 62,144" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.75"/>'
+    +'<path d="M98,106 C86,106 72,112 66,124 C60,136 58,148 60,156" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.72"/>'
+    +'<path d="M98,114 C86,114 72,120 66,132 C60,144 58,156 60,164" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.7"/>'
+    +'<path d="M98,122 C86,122 72,128 66,140 C60,152 60,164 62,170" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.65"/>'
+    +'<path d="M98,130 C86,130 74,136 68,146 C64,154 64,164 66,170" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.6"/>'
+    /* Ribs right */
+    +'<path d="M102,82 C110,82 120,86 126,92 C132,98 134,106 132,112" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M102,90 C112,90 124,94 130,102 C136,110 138,120 136,128" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M102,98 C112,98 126,104 132,114 C138,124 140,136 138,144" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.75"/>'
+    +'<path d="M102,106 C114,106 128,112 134,124 C140,136 142,148 140,156" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.72"/>'
+    +'<path d="M102,114 C114,114 128,120 134,132 C140,144 142,156 140,164" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.7"/>'
+    +'<path d="M102,122 C114,122 128,128 134,140 C140,152 140,164 138,170" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.65"/>'
+    +'<path d="M102,130 C114,130 126,136 132,146 C136,154 136,164 134,170" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.6"/>'
+    /* Spine vertebrae T-L */
+    +'<path d="M98,78 L98,210" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.7"/>'
+    +'<path d="M95,86 L105,86 M95,94 L105,94 M95,102 L105,102 M95,110 L105,110 M95,118 L105,118 M95,126 L105,126 M95,134 L105,134 M95,142 L105,142 M95,150 L105,150 M95,158 L105,158 M95,166 L105,166 M95,174 L105,174 M95,182 L105,182 M95,190 L105,190 M95,198 L105,198 M95,206 L105,206" fill="none" stroke="#94a3b8" stroke-width="0.8" opacity="0.55"/>'
+    /* Pelvis */
+    +'<path d="M78,210 C70,214 64,222 62,230 C60,238 62,244 70,248 C78,252 90,254 100,254 C110,254 122,252 130,248 C138,244 140,238 138,230 C136,222 130,214 122,210 L100,208 Z" fill="none" stroke="url(#bonegr)" stroke-width="2" opacity="0.8"/>'
+    /* Pubic symphysis */
+    +'<path d="M92,252 C96,256 104,256 108,252" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.7"/>'
+    /* Acetabulum hints */
+    +'<circle cx="66" cy="236" r="6" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.75"/>'
+    +'<circle cx="134" cy="236" r="6" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.75"/>'
+    /* Humerus left */
+    +'<circle cx="60" cy="82" r="5" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M60,86 L54,160 L52,190 L50,220 L48,260 L46,290" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    /* Radius+Ulna left */
+    +'<path d="M48,260 L42,320 L38,360 L36,400" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.75"/>'
+    +'<path d="M50,262 L46,322 L42,362 L40,402" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    /* Humerus right */
+    +'<circle cx="140" cy="82" r="5" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M140,86 L146,160 L148,190 L150,220 L152,260 L154,290" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    /* Radius+Ulna right */
+    +'<path d="M152,260 L158,320 L162,360 L164,400" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.75"/>'
+    +'<path d="M150,262 L154,322 L158,362 L160,402" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    /* Femur left */
+    +'<circle cx="66" cy="242" r="7" fill="url(#bonegr)" opacity="0.82"/>'
+    +'<path d="M68,248 L72,290 L74,330 L74,348" fill="none" stroke="url(#bonegr)" stroke-width="5" opacity="0.8"/>'
+    /* Greater trochanter left */
+    +'<circle cx="62" cy="252" r="4" fill="url(#bonegr)" opacity="0.7"/>'
+    /* Patella left */
+    +'<ellipse cx="74" cy="348" rx="5" ry="4" fill="url(#bonegr)" opacity="0.8"/>'
+    /* Tibia+Fibula left */
+    +'<path d="M72,352 L70,400 L68,430" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M76,354 L78,400 L78,430" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    /* Femur right */
+    +'<circle cx="134" cy="242" r="7" fill="url(#bonegr)" opacity="0.82"/>'
+    +'<path d="M132,248 L128,290 L126,330 L126,348" fill="none" stroke="url(#bonegr)" stroke-width="5" opacity="0.8"/>'
+    /* Greater trochanter right */
+    +'<circle cx="138" cy="252" r="4" fill="url(#bonegr)" opacity="0.7"/>'
+    /* Patella right */
+    +'<ellipse cx="126" cy="348" rx="5" ry="4" fill="url(#bonegr)" opacity="0.8"/>'
+    /* Tibia+Fibula right */
+    +'<path d="M128,352 L130,400 L132,430" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M124,354 L122,400 L122,430" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    /* Ankle mortise left */
+    +'<path d="M64,430 L72,434 L80,432" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.75"/>'
+    /* Ankle mortise right */
+    +'<path d="M136,430 L128,434 L120,432" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.75"/>'
   },
+
   endocrine: { color:'#eab308', svg:
-    // Pituitary (hypothalamus area)
-    '<ellipse cx="100" cy="46" rx="6" ry="5" fill="#eab308" opacity="0.88"/>'
-    +'<text x="100" y="43" text-anchor="middle" font-size="5" fill="#eab308" opacity="0.7">pit</text>'
-    // Pineal
-    +'<ellipse cx="106" cy="34" rx="3" ry="2.5" fill="#eab308" opacity="0.75"/>'
-    // Thyroid - butterfly shape using two lobes
-    +'<path d="M90,67 Q86,70 86,74 Q87,79 93,79 Q99,79 100,77 Q101,79 107,79 Q113,79 114,74 Q114,70 110,67 Q106,64 100,65 Q94,64 90,67 Z" fill="#eab308" opacity="0.82"/>'
-    // Thymus
-    +'<path d="M88,82 Q84,88 86,98 Q88,104 100,104 Q112,104 114,98 Q116,88 112,82 Q106,78 100,80 Q94,78 88,82 Z" fill="#eab308" opacity="0.32"/>'
-    // Adrenal glands (triangular caps on kidneys)
-    +'<path d="M74,158 Q70,154 74,152 Q80,150 84,154 Q86,158 80,160 Z" fill="#eab308" opacity="0.8"/>'
-    +'<path d="M126,158 Q130,154 126,152 Q120,150 116,154 Q114,158 120,160 Z" fill="#eab308" opacity="0.8"/>'
-    // Pancreas (elongated horizontal, behind stomach)
-    +'<path d="M76,172 Q88,168 104,170 Q118,172 122,176 Q118,180 104,178 Q88,178 76,180 Q72,176 76,172 Z" fill="#eab308" opacity="0.55"/>'
-    // Gonads (small, pelvic)
-    +'<circle cx="84" cy="220" r="5" fill="#eab308" opacity="0.6"/>'
-    +'<circle cx="116" cy="220" r="5" fill="#eab308" opacity="0.6"/>'
+    /* Pituitary gland */
+    '<ellipse cx="100" cy="38" rx="4" ry="3" fill="url(#endgr)" opacity="0.9"/>'
+    +'<circle cx="100" cy="38" r="4" fill="none" stroke="#eab308" stroke-width="1" opacity="0.7"/>'
+    /* Pineal gland */
+    +'<ellipse cx="103" cy="28" rx="3" ry="2" fill="url(#endgr)" opacity="0.85"/>'
+    /* Thyroid left lobe */
+    +'<ellipse cx="94" cy="66" rx="7" ry="10" fill="url(#endgr)" opacity="0.82"/>'
+    /* Thyroid right lobe */
+    +'<ellipse cx="106" cy="66" rx="7" ry="10" fill="url(#endgr)" opacity="0.82"/>'
+    /* Thyroid isthmus */
+    +'<rect x="94" y="68" width="12" height="4" rx="2" fill="url(#endgr)" opacity="0.8"/>'
+    /* Thyroid highlight */
+    +'<ellipse cx="92" cy="62" rx="3" ry="4" fill="white" opacity="0.2"/>'
+    +'<ellipse cx="104" cy="62" rx="3" ry="4" fill="white" opacity="0.2"/>'
+    /* Parathyroid dots (4) */
+    +'<circle cx="88" cy="62" r="2" fill="#fbbf24" opacity="0.9"/>'
+    +'<circle cx="88" cy="70" r="2" fill="#fbbf24" opacity="0.9"/>'
+    +'<circle cx="112" cy="62" r="2" fill="#fbbf24" opacity="0.9"/>'
+    +'<circle cx="112" cy="70" r="2" fill="#fbbf24" opacity="0.9"/>'
+    /* Thymus left lobe */
+    +'<ellipse cx="94" cy="98" rx="8" ry="14" fill="url(#endgr)" opacity="0.65"/>'
+    /* Thymus right lobe */
+    +'<ellipse cx="106" cy="98" rx="8" ry="14" fill="url(#endgr)" opacity="0.65"/>'
+    /* Pancreas body (elongated, left to right across upper abdomen) */
+    +'<path d="M74,148 C78,144 86,142 96,142 C106,142 118,144 130,148 C136,150 140,154 138,158 C136,162 128,162 118,160 C108,158 96,158 86,158 C78,158 72,156 72,152 C72,150 74,148 74,148 Z" fill="url(#endgr)" opacity="0.78"/>'
+    /* Pancreas highlight */
+    +'<path d="M80,146 C88,144 98,144 108,146" fill="none" stroke="white" stroke-width="1" opacity="0.2"/>'
+    /* Adrenal left (triangular cap on left kidney) */
+    +'<path d="M74,148 C76,142 80,138 84,140 C86,142 84,148 80,150 Z" fill="url(#endgr)" opacity="0.88"/>'
+    +'<path d="M75,146 C77,142 80,140 83,141" fill="none" stroke="#fbbf24" stroke-width="0.8" opacity="0.6"/>'
+    /* Adrenal right (triangular cap on right kidney) */
+    +'<path d="M126,148 C124,142 120,138 116,140 C114,142 116,148 120,150 Z" fill="url(#endgr)" opacity="0.88"/>'
+    +'<path d="M125,146 C123,142 120,140 117,141" fill="none" stroke="#fbbf24" stroke-width="0.8" opacity="0.6"/>'
+    /* Ovaries/testes dots (generic endocrine) */
+    +'<ellipse cx="88" cy="228" rx="5" ry="4" fill="url(#endgr)" opacity="0.75"/>'
+    +'<ellipse cx="112" cy="228" rx="5" ry="4" fill="url(#endgr)" opacity="0.75"/>'
+    /* Labels hint strokes */
+    +'<path d="M100,41 L100,54" fill="none" stroke="#eab308" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.5"/>'
   },
+
   pulmonary: { color:'#3b82f6', svg:
-    // Trachea (tube)
-    '<rect x="98" y="58" width="4" height="38" rx="2" fill="#3b82f6" opacity="0.65"/>'
-    // Carina + main bronchi
-    +'<path d="M100,95 Q90,96 84,100 M100,95 Q110,96 116,100" stroke="#3b82f6" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.6"/>'
-    // Left lung - lung-shaped outline
-    +'<path d="M84,98 C74,102 66,112 64,124 C62,136 64,150 68,160 C72,170 80,176 88,176 C94,176 98,172 98,166 L98,100 C94,98 89,97 84,98 Z" fill="#3b82f6" opacity="0.42"/>'
-    // Right lung
-    +'<path d="M116,98 C126,102 134,112 136,124 C138,136 136,150 132,160 C128,170 120,176 112,176 C106,176 102,172 102,166 L102,100 C106,98 111,97 116,98 Z" fill="#3b82f6" opacity="0.42"/>'
-    // Left lung fissure
-    +'<path d="M84,112 C88,124 92,138 96,152" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.35"/>'
-    // Right lung fissures (2 - right has 3 lobes)
-    +'<path d="M116,112 C112,124 108,138 104,152" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.35"/>'
-    +'<path d="M120,130 C116,138 112,146 108,154" stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.25"/>'
-    // Bronchial tree details
-    +'<path d="M84,100 C80,108 78,118 78,128 M78,128 C76,136 76,144 78,152" stroke="#3b82f6" stroke-width="1.5" fill="none" opacity="0.38"/>'
-    +'<path d="M116,100 C120,108 122,118 122,128 M122,128 C124,136 124,144 122,152" stroke="#3b82f6" stroke-width="1.5" fill="none" opacity="0.38"/>'
+    /* Trachea */
+    '<rect x="97" y="60" width="6" height="28" rx="3" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.85"/>'
+    /* Tracheal rings */
+    +'<path d="M97,64 L103,64 M97,68 L103,68 M97,72 L103,72 M97,76 L103,76 M97,80 L103,80 M97,84 L103,84" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.7"/>'
+    /* Main bronchi */
+    +'<path d="M100,88 C96,90 88,90 82,90" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.85"/>'
+    +'<path d="M100,88 C104,90 114,90 120,90" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.85"/>'
+    /* Left lung outer */
+    +'<path d="M64,90 C60,90 56,94 54,102 C52,110 52,120 52,132 C52,144 54,154 58,160 C62,166 68,166 76,162 C82,158 86,150 88,140 C90,130 90,118 90,106 C90,96 88,88 82,86 C78,84 74,86 70,88 Z" fill="url(#lnggr)" opacity="0.75"/>'
+    /* Left lung oblique fissure */
+    +'<path d="M66,96 C68,108 70,124 76,140 C80,152 84,160 86,164" fill="none" stroke="#93c5fd" stroke-width="1.2" opacity="0.65"/>'
+    /* Left lung bronchial branches */
+    +'<path d="M82,92 C78,96 74,100 70,108 M78,94 C74,100 72,110 70,120 M76,96 C74,108 72,120 72,134" fill="none" stroke="#60a5fa" stroke-width="0.8" opacity="0.5"/>'
+    /* Left lung highlight */
+    +'<path d="M60,96 C58,102 56,112 56,122" fill="none" stroke="white" stroke-width="3" opacity="0.1"/>'
+    /* Right lung outer */
+    +'<path d="M136,90 C140,90 144,94 146,102 C148,110 148,120 148,132 C148,144 146,154 142,160 C138,166 132,166 124,162 C118,158 114,150 112,140 C110,130 110,118 110,106 C110,96 112,88 118,86 C122,84 126,86 130,88 Z" fill="url(#lnggr)" opacity="0.75"/>'
+    /* Right lung oblique fissure */
+    +'<path d="M134,96 C132,108 130,124 124,140 C120,152 116,160 114,164" fill="none" stroke="#93c5fd" stroke-width="1.2" opacity="0.65"/>'
+    /* Right lung horizontal fissure */
+    +'<path d="M136,118 C130,118 124,120 118,122" fill="none" stroke="#93c5fd" stroke-width="1" opacity="0.55"/>'
+    /* Right lung bronchial branches */
+    +'<path d="M118,92 C122,96 126,100 130,108 M122,94 C126,100 128,110 130,120 M124,96 C126,108 128,120 128,134" fill="none" stroke="#60a5fa" stroke-width="0.8" opacity="0.5"/>'
+    /* Right lung highlight */
+    +'<path d="M140,96 C142,102 144,112 144,122" fill="none" stroke="white" stroke-width="3" opacity="0.1"/>'
+    /* Diaphragm dome */
+    +'<path d="M54,162 C60,168 72,172 86,172 C94,172 100,170 100,170 C100,170 106,172 114,172 C128,172 140,168 146,162" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.7"/>'
+    /* Secondary bronchi right */
+    +'<path d="M118,90 C116,96 114,104 114,114 M120,90 C120,98 122,108 124,120" fill="none" stroke="#93c5fd" stroke-width="0.8" opacity="0.45"/>'
   },
+
   gastrointestinal: { color:'#10b981', svg:
-    // Esophagus
-    '<rect x="98" y="56" width="4" height="48" rx="2" fill="#10b981" opacity="0.5"/>'
-    // Liver - large irregular wedge shape (right side)
-    +'<path d="M102,106 C110,104 122,106 132,112 C140,118 140,132 136,142 C132,150 124,154 114,154 C108,154 104,150 102,144 L102,106 Z" fill="#10b981" opacity="0.52"/>'
-    // Gallbladder (pear-shaped under liver)
-    +'<path d="M118,152 C116,158 116,164 120,166 C124,168 128,164 128,158 C128,153 124,151 120,151 Z" fill="#10b981" opacity="0.72"/>'
-    // Stomach (J-shape)
-    +'<path d="M98,104 C88,106 76,110 72,122 C68,134 72,148 80,156 C86,162 94,162 100,158 C106,154 108,146 108,136 L108,108 C104,104 100,103 98,104 Z" fill="#10b981" opacity="0.62"/>'
-    // Duodenum
-    +'<path d="M108,140 C116,140 122,145 122,153 C122,160 116,163 108,162" stroke="#10b981" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5"/>'
-    // Small intestine (coiled)
-    +'<path d="M88,164 C76,168 74,178 78,186 C82,193 93,195 103,193 C113,190 116,181 112,173 C108,165 96,162 88,166 C80,170 78,182 82,190 C86,198 100,202 110,198" stroke="#10b981" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    // Large intestine
-    +'<path d="M114,195 L116,210 L116,225 Q116,232 108,232 L92,232 Q84,232 84,225 L84,210 L86,195 Q82,178 82,163" stroke="#10b981" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.28"/>'
+    /* Esophagus */
+    '<rect x="98" y="60" width="5" height="46" rx="2" fill="url(#stomgr)" opacity="0.75"/>'
+    /* Liver (large right wedge) */
+    +'<path d="M100,106 C108,104 120,104 130,108 C138,112 142,118 140,128 C138,136 130,142 120,146 C112,150 104,150 100,148 C98,146 98,138 98,128 C98,118 98,108 100,106 Z" fill="url(#livgr)" opacity="0.82"/>'
+    /* Liver vascular detail */
+    +'<path d="M116,110 C120,116 124,124 124,132 C124,140 120,146 116,148" fill="none" stroke="#92400e" stroke-width="1" opacity="0.5"/>'
+    +'<path d="M108,108 C110,116 112,126 112,136" fill="none" stroke="#92400e" stroke-width="0.8" opacity="0.4"/>'
+    /* Liver highlight */
+    +'<ellipse cx="116" cy="114" rx="8" ry="5" fill="white" opacity="0.12"/>'
+    /* Gallbladder */
+    +'<ellipse cx="118" cy="152" rx="6" ry="8" fill="#d97706" opacity="0.75"/>'
+    +'<ellipse cx="116" cy="150" rx="3" ry="3" fill="white" opacity="0.15"/>'
+    /* Stomach (J-shape) */
+    +'<path d="M100,106 C96,104 88,104 82,108 C76,112 74,120 74,130 C74,140 76,150 80,156 C84,160 90,162 96,162 C100,162 104,158 106,152 C108,146 108,136 108,126 C108,116 106,108 100,106 Z" fill="url(#stomgr)" opacity="0.78"/>'
+    /* Stomach rugae */
+    +'<path d="M80,116 C82,118 82,122 80,124 M82,124 C84,126 84,130 82,132 M80,132 C82,134 82,138 80,140" fill="none" stroke="#f43f5e" stroke-width="0.8" opacity="0.4"/>'
+    /* Stomach highlight */
+    +'<ellipse cx="86" cy="118" rx="6" ry="8" fill="white" opacity="0.12"/>'
+    /* Duodenum C-loop */
+    +'<path d="M106,130 C114,128 122,130 126,136 C130,142 128,152 122,156 C118,158 114,156 112,152" fill="none" stroke="#10b981" stroke-width="2.5" opacity="0.8"/>'
+    /* Small intestine coiled loops */
+    +'<path d="M90,164 C86,168 82,174 82,182 C82,190 86,194 92,196 C98,198 104,196 108,192 C112,188 114,182 112,176 C110,170 106,166 100,164 C96,162 90,164 90,164 Z" fill="url(#intgr)" opacity="0.68"/>'
+    +'<path d="M84,186 C80,190 78,196 80,204 C82,210 88,214 96,216 C104,218 112,216 116,210 C120,204 118,196 114,190" fill="url(#intgr)" opacity="0.6"/>'
+    +'<path d="M88,208 C84,212 82,218 84,224 C86,228 92,230 100,230 C108,230 114,228 116,224 C118,220 116,214 112,210" fill="url(#intgr)" opacity="0.55"/>'
+    /* Intestine detail lines */
+    +'<path d="M86,170 C90,168 96,170 100,168 M84,178 C88,176 94,178 98,176 M88,186 C92,184 98,186 102,184" fill="none" stroke="#059669" stroke-width="0.7" opacity="0.5"/>'
+    /* Ascending colon */
+    +'<path d="M126,218 C128,206 130,192 130,176 C130,168 128,162 124,160" fill="none" stroke="#10b981" stroke-width="4" opacity="0.8"/>'
+    /* Transverse colon */
+    +'<path d="M124,160 C116,158 108,158 100,158 C92,158 80,158 74,160" fill="none" stroke="#10b981" stroke-width="4" opacity="0.8"/>'
+    /* Descending colon */
+    +'<path d="M74,160 C70,172 68,186 68,200 C68,212 70,220 72,226" fill="none" stroke="#10b981" stroke-width="4" opacity="0.8"/>'
+    /* Sigmoid */
+    +'<path d="M72,226 C76,234 84,238 94,238 C102,238 108,234 110,228 C112,222 108,218 104,222 C100,226 100,232 104,236" fill="none" stroke="#10b981" stroke-width="3" opacity="0.75"/>'
+    /* Rectum */
+    +'<path d="M104,236 L102,252 L100,264" fill="none" stroke="#10b981" stroke-width="3" opacity="0.7"/>'
+    /* Haustra on colon */
+    +'<path d="M128,168 L132,168 M128,176 L132,176 M128,184 L132,184 M128,192 L132,192 M128,200 L132,200 M128,208 L132,208" fill="none" stroke="#059669" stroke-width="0.8" opacity="0.5"/>'
+    /* Pancreas */
+    +'<path d="M76,146 C84,142 96,140 108,142 C116,144 124,148 128,152 C124,156 116,156 108,154 C96,152 86,152 80,154 C76,152 74,150 76,146 Z" fill="url(#intgr)" opacity="0.65"/>'
   },
+
   'reproductive-m': { color:'#06b6d4', svg:
-    '<ellipse cx="100" cy="224" rx="11" ry="8" fill="#06b6d4" opacity="0.7"/>'
-    +'<ellipse cx="86" cy="216" rx="6" ry="4" fill="#06b6d4" opacity="0.55" transform="rotate(-25 86 216)"/>'
-    +'<ellipse cx="114" cy="216" rx="6" ry="4" fill="#06b6d4" opacity="0.55" transform="rotate(25 114 216)"/>'
-    +'<ellipse cx="87" cy="248" rx="9" ry="10" fill="#06b6d4" opacity="0.65"/>'
-    +'<ellipse cx="113" cy="248" rx="9" ry="10" fill="#06b6d4" opacity="0.65"/>'
-    +'<path d="M87,238 C86,232 87,226 87,222 M113,238 C114,232 113,226 113,222" stroke="#06b6d4" stroke-width="2" fill="none" opacity="0.5"/>'
+    /* Seminal vesicles (behind bladder, upper) */
+    '<ellipse cx="90" cy="226" rx="8" ry="5" fill="url(#repmgr)" opacity="0.78"/>'
+    +'<ellipse cx="110" cy="226" rx="8" ry="5" fill="url(#repmgr)" opacity="0.78"/>'
+    /* Prostate */
+    +'<ellipse cx="100" cy="242" rx="10" ry="8" fill="url(#repmgr)" opacity="0.82"/>'
+    +'<ellipse cx="98" cy="240" rx="4" ry="3" fill="white" opacity="0.15"/>'
+    /* Urethra from prostate */
+    +'<path d="M100,250 L100,264" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.7"/>'
+    /* Vas deferens left loop */
+    +'<path d="M88,238 C82,236 76,232 72,226 C68,220 68,212 70,206 C72,200 76,196 80,196 C84,196 88,200 90,206 C92,212 90,220 88,226 C86,232 86,236 88,238" fill="none" stroke="#06b6d4" stroke-width="1.8" opacity="0.8"/>'
+    /* Vas deferens right loop */
+    +'<path d="M112,238 C118,236 124,232 128,226 C132,220 132,212 130,206 C128,200 124,196 120,196 C116,196 112,200 110,206 C108,212 110,220 112,226 C114,232 114,236 112,238" fill="none" stroke="#06b6d4" stroke-width="1.8" opacity="0.8"/>'
+    /* Scrotum outline */
+    +'<path d="M84,272 C80,272 76,276 76,284 C76,294 80,302 88,306 C92,308 96,308 100,308 C104,308 108,308 112,306 C120,302 124,294 124,284 C124,276 120,272 116,272 C110,272 106,276 100,276 C94,276 90,272 84,272 Z" fill="url(#repmgr)" opacity="0.6"/>'
+    /* Left testis */
+    +'<ellipse cx="90" cy="290" rx="10" ry="12" fill="url(#repmgr)" opacity="0.82"/>'
+    +'<ellipse cx="88" cy="286" rx="4" ry="5" fill="white" opacity="0.15"/>'
+    /* Right testis */
+    +'<ellipse cx="110" cy="292" rx="10" ry="12" fill="url(#repmgr)" opacity="0.82"/>'
+    +'<ellipse cx="108" cy="288" rx="4" ry="5" fill="white" opacity="0.15"/>'
+    /* Epididymis left */
+    +'<path d="M100,280 C100,282 100,286 100,290 C100,294 100,298 100,302" fill="none" stroke="#67e8f9" stroke-width="2" opacity="0.7"/>'
+    +'<path d="M100,280 C102,278 104,278 106,280 C108,282 108,286 106,288 C104,290 102,290 100,290" fill="none" stroke="#67e8f9" stroke-width="1.2" opacity="0.6"/>'
+    /* Spermatic cord strands */
+    +'<path d="M86,272 C84,264 82,256 82,248 C82,242 84,238 88,236" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.55"/>'
+    +'<path d="M114,272 C116,264 118,256 118,248 C118,242 116,238 112,236" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.55"/>'
+    /* Bladder outline */
+    +'<path d="M86,218 C84,214 84,208 88,204 C92,200 96,198 100,198 C104,198 108,200 112,204 C116,208 116,214 114,218 C110,222 104,224 100,224 C96,224 90,222 86,218 Z" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.6"/>'
   },
+
   'reproductive-f': { color:'#ec4899', svg:
-    // Uterus - proper pear shape
-    '<path d="M88,230 C82,226 80,233 80,240 C80,250 88,258 100,258 C112,258 120,250 120,240 C120,233 118,226 112,230 C108,224 92,224 88,230 Z" fill="#ec4899" opacity="0.72"/>'
-    // Cervix
-    +'<ellipse cx="100" cy="258" rx="7" ry="5" fill="#ec4899" opacity="0.55"/>'
-    // Fallopian tubes with fimbriae
-    +'<path d="M84,232 Q74,225 66,218 Q62,213 66,210" stroke="#ec4899" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>'
-    +'<path d="M116,232 Q126,225 134,218 Q138,213 134,210" stroke="#ec4899" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>'
-    // Fimbriae
-    +'<path d="M63,208 C60,205 63,202 66,205 M68,208 C66,204 70,202 72,206" stroke="#ec4899" stroke-width="1.5" fill="none" opacity="0.55"/>'
-    +'<path d="M137,208 C140,205 137,202 134,205 M132,208 C134,204 130,202 128,206" stroke="#ec4899" stroke-width="1.5" fill="none" opacity="0.55"/>'
-    // Ovaries
-    +'<ellipse cx="63" cy="212" rx="8" ry="6" fill="#ec4899" opacity="0.78"/>'
-    +'<ellipse cx="137" cy="212" rx="8" ry="6" fill="#ec4899" opacity="0.78"/>'
+    /* Uterus body/fundus */
+    '<path d="M88,224 C84,220 82,214 84,208 C86,202 92,198 100,198 C108,198 114,202 116,208 C118,214 116,220 112,224 C108,228 104,230 100,230 C96,230 92,228 88,224 Z" fill="url(#repfgr)" opacity="0.85"/>'
+    /* Uterine fundus bulge */
+    +'<ellipse cx="100" cy="204" rx="14" ry="10" fill="url(#repfgr)" opacity="0.78"/>'
+    /* Uterus cervix */
+    +'<path d="M94,228 L94,240 C94,244 96,248 100,248 C104,248 106,244 106,240 L106,228" fill="url(#repfgr)" opacity="0.7"/>'
+    /* Uterus highlight */
+    +'<ellipse cx="96" cy="208" rx="6" ry="8" fill="white" opacity="0.18"/>'
+    /* Fallopian tube left */
+    +'<path d="M86,210 C80,208 72,206 66,208 C62,210 60,214 60,218 C60,222 62,226 66,228 C70,230 76,230 80,226" fill="none" stroke="#f472b6" stroke-width="2" opacity="0.85"/>'
+    /* Fimbriae left */
+    +'<path d="M80,226 C78,228 76,232 78,234 M80,226 C80,230 82,234 84,234 M80,226 C82,228 84,230 82,234 M80,226 C76,226 74,230 76,234" fill="none" stroke="#f472b6" stroke-width="1" opacity="0.7"/>'
+    /* Fallopian tube right */
+    +'<path d="M114,210 C120,208 128,206 134,208 C138,210 140,214 140,218 C140,222 138,226 134,228 C130,230 124,230 120,226" fill="none" stroke="#f472b6" stroke-width="2" opacity="0.85"/>'
+    /* Fimbriae right */
+    +'<path d="M120,226 C122,228 124,232 122,234 M120,226 C120,230 118,234 116,234 M120,226 C118,228 116,230 118,234 M120,226 C124,226 126,230 124,234" fill="none" stroke="#f472b6" stroke-width="1" opacity="0.7"/>'
+    /* Left ovary */
+    +'<ellipse cx="68" cy="220" rx="9" ry="7" fill="url(#repfgr)" opacity="0.8"/>'
+    /* Left ovary follicles */
+    +'<circle cx="64" cy="218" r="2.5" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.7"/>'
+    +'<circle cx="70" cy="216" r="2" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.7"/>'
+    +'<circle cx="72" cy="222" r="1.5" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.6"/>'
+    /* Left ovary highlight */
+    +'<ellipse cx="65" cy="217" rx="3" ry="2" fill="white" opacity="0.15"/>'
+    /* Right ovary */
+    +'<ellipse cx="132" cy="220" rx="9" ry="7" fill="url(#repfgr)" opacity="0.8"/>'
+    /* Right ovary follicles */
+    +'<circle cx="136" cy="218" r="2.5" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.7"/>'
+    +'<circle cx="130" cy="216" r="2" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.7"/>'
+    +'<circle cx="128" cy="222" r="1.5" fill="none" stroke="#fda4af" stroke-width="1" opacity="0.6"/>'
+    /* Right ovary highlight */
+    +'<ellipse cx="129" cy="217" rx="3" ry="2" fill="white" opacity="0.15"/>'
+    /* Vaginal canal hint */
+    +'<path d="M97,248 L97,262 L100,270 L103,262 L103,248" fill="url(#repfgr)" opacity="0.5"/>'
+    /* Broad ligament hints */
+    +'<path d="M86,210 C80,212 74,214 68,218" fill="none" stroke="#fda4af" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>'
+    +'<path d="M114,210 C120,212 126,214 132,218" fill="none" stroke="#fda4af" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>'
+    /* Bladder outline */
+    +'<path d="M88,196 C84,192 84,186 88,182 C92,178 96,176 100,176 C104,176 108,178 112,182 C116,186 116,192 112,196" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.5"/>'
   },
-  // ── NEW SYSTEM OVERLAYS ──────────────────────────────────────────────────
+
   skeletal: { color:'#cbd5e1', svg:
-    // Skull
-    '<circle cx="100" cy="26" r="23" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.55"/>'
-    +'<path d="M86,48 L88,56 L100,58 L112,56 L114,48" fill="none" stroke="#cbd5e1" stroke-width="1.8" opacity="0.5"/>'
-    // Spine
-    +'<path d="M100,64 L100,238" stroke="#cbd5e1" stroke-width="2.5" fill="none" opacity="0.4" stroke-dasharray="5,3"/>'
-    // Clavicles
-    +'<path d="M100,72 Q84,70 68,76 M100,72 Q116,70 132,76" stroke="#cbd5e1" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.55"/>'
-    // Sternum
-    +'<rect x="98.5" y="72" width="3" height="80" rx="1.5" fill="#cbd5e1" opacity="0.45"/>'
-    // Rib pairs
-    +'<path d="M100,82 Q86,80 76,86 Q70,90 72,96 Q80,92 100,90 M100,82 Q114,80 124,86 Q130,90 128,96 Q120,92 100,90" fill="none" stroke="#cbd5e1" stroke-width="1.8" opacity="0.42"/>'
-    +'<path d="M100,97 Q84,95 73,102 Q67,107 70,114 Q78,109 100,107 M100,97 Q116,95 127,102 Q133,107 130,114 Q122,109 100,107" fill="none" stroke="#cbd5e1" stroke-width="1.7" opacity="0.37"/>'
-    +'<path d="M100,113 Q83,111 72,119 Q66,125 70,132 Q78,127 100,125 M100,113 Q117,111 128,119 Q134,125 130,132 Q122,127 100,125" fill="none" stroke="#cbd5e1" stroke-width="1.6" opacity="0.32"/>'
-    +'<path d="M100,128 Q84,126 73,134 M100,128 Q116,126 127,134" fill="none" stroke="#cbd5e1" stroke-width="1.4" opacity="0.27"/>'
-    +'<path d="M100,140 Q85,138 76,146 M100,140 Q115,138 124,146" fill="none" stroke="#cbd5e1" stroke-width="1.3" opacity="0.22"/>'
-    // Pelvis
-    +'<path d="M60,210 Q56,226 64,234 L136,234 Q144,226 140,210 Q120,222 100,222 Q80,222 60,210Z" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.42"/>'
-    // Humerus (upper arm bones)
-    +'<path d="M62,82 L30,154 M138,82 L170,154" stroke="#cbd5e1" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    // Radius/ulna
-    +'<path d="M30,157 L18,230 M170,157 L182,230" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.32"/>'
-    // Femur
-    +'<path d="M80,236 C76,272 72,302 72,332 M120,236 C124,272 128,302 128,332" stroke="#cbd5e1" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.38"/>'
-    // Tibia/fibula
-    +'<path d="M72,334 L68,424 M128,334 L132,424" stroke="#cbd5e1" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.3"/>'
+    /* Skull dome */
+    '<path d="M72,30 C72,10 82,4 100,4 C118,4 128,10 128,30 C128,42 122,50 116,54 L84,54 C78,50 72,42 72,30 Z" fill="url(#skullgr)" opacity="0.82"/>'
+    +'<ellipse cx="96" cy="18" rx="12" ry="8" fill="white" opacity="0.18"/>'
+    +'<path d="M80,38 C84,36 90,36 94,38 M106,38 C110,36 116,36 120,38" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.7"/>'
+    +'<ellipse cx="88" cy="42" rx="7" ry="5" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.8"/>'
+    +'<ellipse cx="112" cy="42" rx="7" ry="5" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.8"/>'
+    +'<path d="M80,44 C76,46 74,50 76,54" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.7"/>'
+    +'<path d="M120,44 C124,46 126,50 124,54" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.7"/>'
+    +'<path d="M82,54 C80,58 80,64 84,68 C88,72 96,74 100,74 C104,74 112,72 116,68 C120,64 120,58 118,54" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.8"/>'
+    +'<path d="M72,28 C78,26 84,28 88,26 C94,24 106,24 112,26 C116,28 122,26 128,30" fill="none" stroke="#64748b" stroke-width="0.8" opacity="0.5"/>'
+    /* Clavicles */
+    +'<path d="M100,74 C90,72 78,72 68,76 C62,80 58,82 56,82" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.85"/>'
+    +'<path d="M100,74 C110,72 122,72 132,76 C138,80 142,82 144,82" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.85"/>'
+    /* Sternum */
+    +'<rect x="97" y="74" width="6" height="78" rx="2" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M95,100 L105,100" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.7"/>'
+    /* Ribs left */
+    +'<path d="M98,82 C88,82 76,86 70,94 C64,102 64,112 66,120" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M98,90 C86,90 74,96 68,106 C62,116 62,128 64,136" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M98,98 C86,98 72,106 66,118 C60,130 60,144 62,150" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.75"/>'
+    +'<path d="M98,106 C86,106 70,114 64,128 C58,142 58,154 60,160" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.72"/>'
+    +'<path d="M98,114 C86,114 70,122 64,136 C58,148 58,160 60,166" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.7"/>'
+    +'<path d="M98,122 C86,122 72,130 66,142 C60,154 60,166 62,172" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.65"/>'
+    +'<path d="M98,130 C86,130 74,138 68,148 C64,156 64,166 66,172" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.6"/>'
+    /* Ribs right */
+    +'<path d="M102,82 C112,82 124,86 130,94 C136,102 136,112 134,120" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M102,90 C114,90 126,96 132,106 C138,116 138,128 136,136" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.78"/>'
+    +'<path d="M102,98 C114,98 128,106 134,118 C140,130 140,144 138,150" fill="none" stroke="url(#bonegr)" stroke-width="1.8" opacity="0.75"/>'
+    +'<path d="M102,106 C114,106 130,114 136,128 C142,142 142,154 140,160" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.72"/>'
+    +'<path d="M102,114 C114,114 130,122 136,136 C142,148 142,160 140,166" fill="none" stroke="url(#bonegr)" stroke-width="1.6" opacity="0.7"/>'
+    +'<path d="M102,122 C114,122 128,130 134,142 C140,154 140,166 138,172" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.65"/>'
+    +'<path d="M102,130 C114,130 126,138 132,148 C136,156 136,166 134,172" fill="none" stroke="url(#bonegr)" stroke-width="1.4" opacity="0.6"/>'
+    /* Spine */
+    +'<path d="M98,78 L98,210" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.7"/>'
+    +'<path d="M95,86 L105,86 M95,94 L105,94 M95,102 L105,102 M95,110 L105,110 M95,118 L105,118 M95,126 L105,126 M95,134 L105,134 M95,142 L105,142 M95,150 L105,150 M95,158 L105,158 M95,166 L105,166 M95,174 L105,174 M95,182 L105,182 M95,190 L105,190 M95,198 L105,198" fill="none" stroke="#94a3b8" stroke-width="0.8" opacity="0.55"/>'
+    /* Pelvis */
+    +'<path d="M78,210 C70,214 64,222 62,230 C60,238 62,244 70,248 C78,252 90,254 100,254 C110,254 122,252 130,248 C138,244 140,238 138,230 C136,222 130,214 122,210 L100,208 Z" fill="none" stroke="url(#bonegr)" stroke-width="2" opacity="0.8"/>'
+    +'<path d="M92,252 C96,256 104,256 108,252" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.7"/>'
+    +'<circle cx="66" cy="236" r="6" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.75"/>'
+    +'<circle cx="134" cy="236" r="6" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.75"/>'
+    /* Arms */
+    +'<circle cx="60" cy="82" r="5" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M60,86 L52,190 L48,260" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M48,260 L40,360 L36,400" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.75"/>'
+    +'<path d="M50,262 L44,362 L40,402" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    +'<circle cx="140" cy="82" r="5" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M140,86 L148,190 L152,260" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M152,260 L160,360 L164,400" fill="none" stroke="url(#bonegr)" stroke-width="3" opacity="0.75"/>'
+    +'<path d="M150,262 L156,362 L160,402" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    /* Legs */
+    +'<circle cx="66" cy="242" r="7" fill="url(#bonegr)" opacity="0.82"/>'
+    +'<path d="M68,248 L72,348" fill="none" stroke="url(#bonegr)" stroke-width="5" opacity="0.8"/>'
+    +'<circle cx="62" cy="252" r="4" fill="url(#bonegr)" opacity="0.7"/>'
+    +'<ellipse cx="72" cy="348" rx="5" ry="4" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M70,352 L68,430" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M74,354 L76,430" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    +'<circle cx="134" cy="242" r="7" fill="url(#bonegr)" opacity="0.82"/>'
+    +'<path d="M132,248 L128,348" fill="none" stroke="url(#bonegr)" stroke-width="5" opacity="0.8"/>'
+    +'<circle cx="138" cy="252" r="4" fill="url(#bonegr)" opacity="0.7"/>'
+    +'<ellipse cx="128" cy="348" rx="5" ry="4" fill="url(#bonegr)" opacity="0.8"/>'
+    +'<path d="M130,352 L132,430" fill="none" stroke="url(#bonegr)" stroke-width="4" opacity="0.78"/>'
+    +'<path d="M126,354 L124,430" fill="none" stroke="url(#bonegr)" stroke-width="2.5" opacity="0.7"/>'
+    +'<path d="M64,430 L72,434 L80,432" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.75"/>'
+    +'<path d="M136,430 L128,434 L120,432" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.75"/>'
   },
+
   muscular: { color:'#fb923c', svg:
-    // Head/neck muscle hint
-    '<ellipse cx="100" cy="30" rx="20" ry="24" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.3"/>'
-    // Trapezius (neck-to-shoulder)
-    +'<path d="M88,60 Q70,68 52,82 M112,60 Q130,68 148,82" stroke="#fb923c" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.42"/>'
-    // Pectorals (chest)
-    +'<path d="M60,86 Q76,80 100,82 Q124,80 140,86 L140,116 Q120,124 100,122 Q80,124 60,116 Z" fill="#fb923c" opacity="0.22"/>'
-    +'<path d="M60,86 Q76,80 100,82 Q124,80 140,86 L140,116 Q120,124 100,122 Q80,124 60,116 Z" fill="none" stroke="#fb923c" stroke-width="1.2" opacity="0.5"/>'
-    // Abs (6-pack lines)
-    +'<rect x="97" y="122" width="6" height="62" rx="3" fill="#fb923c" opacity="0.2"/>'
-    +'<path d="M82,134 L118,134 M82,148 L118,148 M82,162 L118,162" stroke="#fb923c" stroke-width="1" fill="none" opacity="0.35"/>'
-    // Obliques
-    +'<path d="M60,116 Q56,140 58,168 M140,116 Q144,140 142,168" stroke="#fb923c" stroke-width="2.5" fill="none" opacity="0.35"/>'
-    // Deltoids
-    +'<ellipse cx="48" cy="98" rx="14" ry="18" fill="#fb923c" opacity="0.28" transform="rotate(-10 48 98)"/>'
-    +'<ellipse cx="152" cy="98" rx="14" ry="18" fill="#fb923c" opacity="0.28" transform="rotate(10 152 98)"/>'
-    // Biceps/triceps
-    +'<path d="M24,156 Q18,178 16,202" stroke="#fb923c" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.22"/>'
-    +'<path d="M176,156 Q182,178 184,202" stroke="#fb923c" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.22"/>'
-    // Forearms
-    +'<path d="M16,204 Q10,234 12,256" stroke="#fb923c" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>'
-    +'<path d="M184,204 Q190,234 188,256" stroke="#fb923c" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>'
-    // Glutes
-    +'<path d="M52,202 Q56,220 62,232 Q80,244 100,242 Q120,244 138,232 Q144,220 148,202" fill="#fb923c" opacity="0.22"/>'
-    // Quads/hamstrings
-    +'<path d="M58,238 Q48,280 50,344" stroke="#fb923c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.22"/>'
-    +'<path d="M142,238 Q152,280 150,344" stroke="#fb923c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.22"/>'
-    // Calves
-    +'<path d="M50,354 Q46,386 48,424" stroke="#fb923c" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.22"/>'
-    +'<path d="M150,354 Q154,386 152,424" stroke="#fb923c" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.22"/>'
+    /* Sternocleidomastoid left */
+    '<path d="M96,56 C90,62 84,68 80,76 C78,80 78,84 80,86" fill="none" stroke="url(#muscgr)" stroke-width="4" opacity="0.78"/>'
+    /* Sternocleidomastoid right */
+    +'<path d="M104,56 C110,62 116,68 120,76 C122,80 122,84 120,86" fill="none" stroke="url(#muscgr)" stroke-width="4" opacity="0.78"/>'
+    /* Trapezius left */
+    +'<path d="M90,56 C80,62 68,72 60,84 C56,90 56,96 60,100 C64,102 70,100 74,96" fill="url(#muscgr)" opacity="0.65"/>'
+    /* Trapezius right */
+    +'<path d="M110,56 C120,62 132,72 140,84 C144,90 144,96 140,100 C136,102 130,100 126,96" fill="url(#muscgr)" opacity="0.65"/>'
+    /* Deltoid left */
+    +'<path d="M60,80 C52,86 48,96 50,108 C52,116 58,120 64,118 C68,116 70,110 70,104 C70,96 66,88 60,80 Z" fill="url(#muscgr)" opacity="0.75"/>'
+    +'<path d="M58,86 C56,92 56,100 58,108" fill="none" stroke="#fb923c" stroke-width="1" opacity="0.4"/>'
+    /* Deltoid right */
+    +'<path d="M140,80 C148,86 152,96 150,108 C148,116 142,120 136,118 C132,116 130,110 130,104 C130,96 134,88 140,80 Z" fill="url(#muscgr)" opacity="0.75"/>'
+    +'<path d="M142,86 C144,92 144,100 142,108" fill="none" stroke="#fb923c" stroke-width="1" opacity="0.4"/>'
+    /* Pectoralis major left */
+    +'<path d="M100,80 C92,78 80,82 72,90 C66,96 64,104 66,110 C68,114 74,116 80,114 C88,110 96,102 100,94 Z" fill="url(#muscgr)" opacity="0.72"/>'
+    +'<path d="M98,84 C90,86 82,90 76,96 M96,90 C88,92 82,98 78,104" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.4"/>'
+    /* Pectoralis major right */
+    +'<path d="M100,80 C108,78 120,82 128,90 C134,96 136,104 134,110 C132,114 126,116 120,114 C112,110 104,102 100,94 Z" fill="url(#muscgr)" opacity="0.72"/>'
+    +'<path d="M102,84 C110,86 118,90 124,96 M104,90 C112,92 118,98 122,104" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.4"/>'
+    /* Serratus anterior left */
+    +'<path d="M68,104 C62,110 60,118 62,126 C64,132 68,136 72,134" fill="none" stroke="#fb923c" stroke-width="2" opacity="0.6"/>'
+    +'<path d="M64,112 L60,116 M64,120 L60,124 M64,128 L60,132" fill="none" stroke="#fb923c" stroke-width="1" opacity="0.5"/>'
+    /* Serratus anterior right */
+    +'<path d="M132,104 C138,110 140,118 138,126 C136,132 132,136 128,134" fill="none" stroke="#fb923c" stroke-width="2" opacity="0.6"/>'
+    /* Rectus abdominis left column */
+    +'<rect x="90" y="114" width="8" height="80" rx="3" fill="url(#muscgr)" opacity="0.7"/>'
+    /* Rectus abdominis right column */
+    +'<rect x="102" y="114" width="8" height="80" rx="3" fill="url(#muscgr)" opacity="0.7"/>'
+    /* Tendinous intersections */
+    +'<path d="M89,130 L111,130 M89,148 L111,148 M89,166 L111,166 M89,184 L111,184" fill="none" stroke="#7c2d12" stroke-width="1" opacity="0.6"/>'
+    /* Linea alba */
+    +'<path d="M100,114 L100,194" fill="none" stroke="#7c2d12" stroke-width="1" opacity="0.5"/>'
+    /* External obliques */
+    +'<path d="M88,116 C78,122 70,132 68,144 C66,156 68,168 72,174" fill="none" stroke="#fb923c" stroke-width="2.5" opacity="0.6"/>'
+    +'<path d="M86,120 C78,128 72,138 70,150 M84,128 C76,136 72,148 72,160" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.4"/>'
+    +'<path d="M112,116 C122,122 130,132 132,144 C134,156 132,168 128,174" fill="none" stroke="#fb923c" stroke-width="2.5" opacity="0.6"/>'
+    /* Biceps left */
+    +'<path d="M54,120 C50,132 48,148 50,164 C52,174 56,180 60,180 C64,180 66,174 66,164 C66,150 62,134 58,122 Z" fill="url(#muscgr)" opacity="0.7"/>'
+    +'<path d="M56,128 C54,140 54,154 56,166" fill="none" stroke="#f97316" stroke-width="1" opacity="0.4"/>'
+    /* Biceps right */
+    +'<path d="M146,120 C150,132 152,148 150,164 C148,174 144,180 140,180 C136,180 134,174 134,164 C134,150 138,134 142,122 Z" fill="url(#muscgr)" opacity="0.7"/>'
+    /* Brachioradialis left */
+    +'<path d="M52,180 C48,196 44,220 42,248" fill="none" stroke="#fb923c" stroke-width="3" opacity="0.65"/>'
+    /* Brachioradialis right */
+    +'<path d="M148,180 C152,196 156,220 158,248" fill="none" stroke="#fb923c" stroke-width="3" opacity="0.65"/>'
+    /* Gluteus medius hints */
+    +'<path d="M72,208 C66,214 62,222 64,230 C66,236 72,238 78,234" fill="url(#muscgr)" opacity="0.6"/>'
+    +'<path d="M128,208 C134,214 138,222 136,230 C134,236 128,238 122,234" fill="url(#muscgr)" opacity="0.6"/>'
+    /* Quadriceps left */
+    +'<path d="M66,248 C62,262 60,282 60,300 C60,316 62,330 66,340 C70,344 74,344 78,340 C82,332 84,316 84,300 C84,280 80,258 76,248 Z" fill="url(#muscgr)" opacity="0.68"/>'
+    +'<path d="M66,258 C66,274 66,290 68,306 M72,250 C72,268 72,286 72,306 M78,252 C80,270 80,288 78,308" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.4"/>'
+    /* Quadriceps right */
+    +'<path d="M134,248 C138,262 140,282 140,300 C140,316 138,330 134,340 C130,344 126,344 122,340 C118,332 116,316 116,300 C116,280 120,258 124,248 Z" fill="url(#muscgr)" opacity="0.68"/>'
+    /* Gastrocnemius left diamond */
+    +'<path d="M68,354 C64,362 62,374 64,386 C66,394 70,398 74,396 C78,394 80,386 80,376 C80,364 76,356 72,352 Z" fill="url(#muscgr)" opacity="0.72"/>'
+    +'<path d="M66,360 C66,372 68,384 70,394" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.4"/>'
+    /* Gastrocnemius right diamond */
+    +'<path d="M132,354 C136,362 138,374 136,386 C134,394 130,398 126,396 C122,394 120,386 120,376 C120,364 124,356 128,352 Z" fill="url(#muscgr)" opacity="0.72"/>'
+    /* Facial muscle hints */
+    +'<ellipse cx="86" cy="46" rx="5" ry="4" fill="url(#muscgr)" opacity="0.4"/>'
+    +'<ellipse cx="114" cy="46" rx="5" ry="4" fill="url(#muscgr)" opacity="0.4"/>'
   },
+
   lymphatic: { color:'#4ade80', svg:
-    // Thymus (upper chest)
-    '<path d="M90,82 Q84,90 86,100 Q88,106 100,106 Q112,106 114,100 Q116,90 110,82 Q105,78 100,80 Q95,78 90,82Z" fill="#4ade80" opacity="0.32"/>'
-    // Spleen (left side under ribs)
-    +'<ellipse cx="74" cy="152" rx="12" ry="8" fill="#4ade80" opacity="0.58" transform="rotate(-20 74 152)"/>'
-    // Cervical nodes (neck)
-    +'<circle cx="90" cy="63" r="4.5" fill="#4ade80" opacity="0.72"/>'
-    +'<circle cx="110" cy="63" r="4.5" fill="#4ade80" opacity="0.72"/>'
-    // Axillary nodes (armpits)
-    +'<circle cx="50" cy="104" r="5.5" fill="#4ade80" opacity="0.68"/>'
-    +'<circle cx="150" cy="104" r="5.5" fill="#4ade80" opacity="0.68"/>'
-    // Mesenteric / abdominal nodes
-    +'<circle cx="88" cy="168" r="4" fill="#4ade80" opacity="0.52"/>'
-    +'<circle cx="112" cy="174" r="3.5" fill="#4ade80" opacity="0.52"/>'
-    +'<circle cx="100" cy="158" r="3" fill="#4ade80" opacity="0.45"/>'
-    // Inguinal nodes (groin)
-    +'<circle cx="76" cy="232" r="5" fill="#4ade80" opacity="0.65"/>'
-    +'<circle cx="124" cy="232" r="5" fill="#4ade80" opacity="0.65"/>'
-    // Thoracic duct (central vessel)
-    +'<path d="M100,68 L100,210" stroke="#4ade80" stroke-width="2" fill="none" opacity="0.35" stroke-dasharray="5,3"/>'
-    // Lymph vessels to arms
-    +'<path d="M50,106 C40,124 32,152 28,180" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
-    +'<path d="M150,106 C160,124 168,152 172,180" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
-    // Lymph vessels to legs
-    +'<path d="M76,234 C74,270 72,330 70,380" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
-    +'<path d="M124,234 C126,270 128,330 130,380" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.3"/>'
-    // Bone marrow hint (long bones glow)
-    +'<path d="M66,82 L34,154" stroke="#4ade80" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>'
-    +'<path d="M134,82 L166,154" stroke="#4ade80" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>'
+    /* Thymus */
+    '<ellipse cx="94" cy="98" rx="8" ry="14" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<ellipse cx="106" cy="98" rx="8" ry="14" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<ellipse cx="92" cy="94" rx="3" ry="5" fill="white" opacity="0.12"/>'
+    /* Spleen */
+    +'<path d="M62,128 C58,128 54,132 54,140 C54,148 58,156 64,158 C70,160 78,156 80,150 C82,144 80,136 76,130 C72,126 66,126 62,128 Z" fill="url(#lymgr)" opacity="0.8"/>'
+    +'<ellipse cx="64" cy="140" rx="5" ry="8" fill="white" opacity="0.12"/>'
+    /* Thoracic duct (central dashed line) */
+    +'<path d="M100,240 L100,180 L100,120 L100,74" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="4,3" opacity="0.7"/>'
+    /* Cisterna chyli */
+    +'<ellipse cx="100" cy="196" rx="4" ry="6" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Cervical lymph nodes left chain */
+    +'<circle cx="90" cy="60" r="4" fill="url(#lymgr)" opacity="0.82"/>'
+    +'<circle cx="86" cy="68" r="3.5" fill="url(#lymgr)" opacity="0.8"/>'
+    +'<circle cx="84" cy="76" r="3" fill="url(#lymgr)" opacity="0.78"/>'
+    +'<circle cx="83" cy="84" r="3" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Cervical lymph nodes right chain */
+    +'<circle cx="110" cy="60" r="4" fill="url(#lymgr)" opacity="0.82"/>'
+    +'<circle cx="114" cy="68" r="3.5" fill="url(#lymgr)" opacity="0.8"/>'
+    +'<circle cx="116" cy="76" r="3" fill="url(#lymgr)" opacity="0.78"/>'
+    +'<circle cx="117" cy="84" r="3" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Submandibular nodes */
+    +'<circle cx="88" cy="56" r="3" fill="url(#lymgr)" opacity="0.75"/>'
+    +'<circle cx="112" cy="56" r="3" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Axillary nodes left */
+    +'<circle cx="58" cy="90" r="4.5" fill="url(#lymgr)" opacity="0.82"/>'
+    +'<circle cx="54" cy="100" r="4" fill="url(#lymgr)" opacity="0.78"/>'
+    +'<circle cx="56" cy="110" r="3.5" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Axillary nodes right */
+    +'<circle cx="142" cy="90" r="4.5" fill="url(#lymgr)" opacity="0.82"/>'
+    +'<circle cx="146" cy="100" r="4" fill="url(#lymgr)" opacity="0.78"/>'
+    +'<circle cx="144" cy="110" r="3.5" fill="url(#lymgr)" opacity="0.75"/>'
+    /* Mesenteric nodes (abdomen cluster) */
+    +'<circle cx="96" cy="168" r="4" fill="url(#lymgr)" opacity="0.75"/>'
+    +'<circle cx="104" cy="172" r="3.5" fill="url(#lymgr)" opacity="0.72"/>'
+    +'<circle cx="92" cy="178" r="3.5" fill="url(#lymgr)" opacity="0.7"/>'
+    +'<circle cx="108" cy="180" r="3" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<circle cx="98" cy="186" r="3" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<circle cx="106" cy="190" r="3" fill="url(#lymgr)" opacity="0.65"/>'
+    +'<circle cx="94" cy="194" r="3" fill="url(#lymgr)" opacity="0.65"/>'
+    +'<circle cx="102" cy="200" r="3" fill="url(#lymgr)" opacity="0.62"/>'
+    /* Inguinal nodes left */
+    +'<circle cx="80" cy="240" r="4.5" fill="url(#lymgr)" opacity="0.8"/>'
+    +'<circle cx="76" cy="250" r="4" fill="url(#lymgr)" opacity="0.75"/>'
+    +'<circle cx="78" cy="260" r="3.5" fill="url(#lymgr)" opacity="0.72"/>'
+    /* Inguinal nodes right */
+    +'<circle cx="120" cy="240" r="4.5" fill="url(#lymgr)" opacity="0.8"/>'
+    +'<circle cx="124" cy="250" r="4" fill="url(#lymgr)" opacity="0.75"/>'
+    +'<circle cx="122" cy="260" r="3.5" fill="url(#lymgr)" opacity="0.72"/>'
+    /* Lymphatic vessels left side */
+    +'<path d="M80,260 C78,248 76,236 78,224 C80,212 82,200 84,188 C86,174 86,160 86,146 C86,130 84,116 82,102 C80,92 60,110 58,100" fill="none" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.55"/>'
+    /* Lymphatic vessels right side */
+    +'<path d="M120,260 C122,248 124,236 122,224 C120,212 118,200 116,188 C114,174 114,160 114,146 C114,130 116,116 118,102 C120,92 140,110 142,100" fill="none" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.55"/>'
+    /* Popliteal nodes */
+    +'<circle cx="74" cy="348" r="3.5" fill="url(#lymgr)" opacity="0.7"/>'
+    +'<circle cx="126" cy="348" r="3.5" fill="url(#lymgr)" opacity="0.7"/>'
+    /* Para-aortic nodes */
+    +'<circle cx="94" cy="158" r="3" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<circle cx="106" cy="158" r="3" fill="url(#lymgr)" opacity="0.68"/>'
+    +'<circle cx="94" cy="166" r="3" fill="url(#lymgr)" opacity="0.65"/>'
+    +'<circle cx="106" cy="166" r="3" fill="url(#lymgr)" opacity="0.65"/>'
   },
+
   urinary: { color:'#fbbf24', svg:
-    // Left kidney (bean shape)
-    '<path d="M68,152 C62,155 58,164 60,174 C62,184 70,192 80,190 C88,188 92,180 90,170 C88,160 82,152 74,152 C72,151 70,151 68,152Z" fill="#fbbf24" opacity="0.72"/>'
-    // Renal pelvis hint left
-    +'<ellipse cx="82" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
-    // Right kidney (bean shape - flipped)
-    +'<path d="M132,152 C138,155 142,164 140,174 C138,184 130,192 120,190 C112,188 108,180 110,170 C112,160 118,152 126,152 C128,151 130,151 132,152Z" fill="#fbbf24" opacity="0.72"/>'
-    // Renal pelvis hint right
-    +'<ellipse cx="118" cy="170" rx="5" ry="7" fill="#fbbf24" opacity="0.4"/>'
-    // Left ureter
-    +'<path d="M82,190 C82,204 82,216 84,226" stroke="#fbbf24" stroke-width="2.2" fill="none" opacity="0.6"/>'
-    // Right ureter
-    +'<path d="M118,190 C118,204 118,216 116,226" stroke="#fbbf24" stroke-width="2.2" fill="none" opacity="0.6"/>'
-    // Bladder
-    +'<ellipse cx="100" cy="234" rx="18" ry="13" fill="#fbbf24" opacity="0.5"/>'
-    +'<ellipse cx="100" cy="234" rx="18" ry="13" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.7"/>'
-    // Urethra
-    +'<path d="M100,247 L100,256" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.55" stroke-linecap="round"/>'
-    // Adrenal gland caps (yellow triangles)
-    +'<path d="M68,152 Q64,148 68,146 Q74,144 78,148 Q80,152 74,154Z" fill="#fbbf24" opacity="0.7"/>'
-    +'<path d="M132,152 Q136,148 132,146 Q126,144 122,148 Q120,152 126,154Z" fill="#fbbf24" opacity="0.7"/>'
+    /* Left kidney outer */
+    '<path d="M68,150 C62,150 56,156 56,164 C56,172 58,178 62,182 C66,186 72,186 78,184 C84,180 88,174 88,166 C88,158 84,152 78,150 Z" fill="url(#kidgr)" opacity="0.85"/>'
+    /* Left kidney hilum */
+    +'<path d="M78,160 C80,162 80,166 80,170 C80,174 78,176 76,176" fill="none" stroke="#92400e" stroke-width="2" opacity="0.7"/>'
+    /* Left kidney cortex layer */
+    +'<path d="M60,158 C58,162 58,168 60,174 C62,178 66,180 68,180" fill="none" stroke="#fcd34d" stroke-width="1.5" opacity="0.5"/>'
+    /* Left kidney highlight */
+    +'<ellipse cx="66" cy="160" rx="5" ry="7" fill="white" opacity="0.15"/>'
+    /* Left renal pelvis */
+    +'<ellipse cx="78" cy="167" rx="4" ry="6" fill="#d97706" opacity="0.7"/>'
+    /* Right kidney outer */
+    +'<path d="M132,150 C138,150 144,156 144,164 C144,172 142,178 138,182 C134,186 128,186 122,184 C116,180 112,174 112,166 C112,158 116,152 122,150 Z" fill="url(#kidgr)" opacity="0.85"/>'
+    /* Right kidney hilum */
+    +'<path d="M122,160 C120,162 120,166 120,170 C120,174 122,176 124,176" fill="none" stroke="#92400e" stroke-width="2" opacity="0.7"/>'
+    /* Right kidney cortex */
+    +'<path d="M140,158 C142,162 142,168 140,174 C138,178 134,180 132,180" fill="none" stroke="#fcd34d" stroke-width="1.5" opacity="0.5"/>'
+    /* Right kidney highlight */
+    +'<ellipse cx="134" cy="160" rx="5" ry="7" fill="white" opacity="0.15"/>'
+    /* Right renal pelvis */
+    +'<ellipse cx="122" cy="167" rx="4" ry="6" fill="#d97706" opacity="0.7"/>'
+    /* Adrenal left */
+    +'<path d="M64,150 C66,144 70,140 74,142 C76,144 74,150 70,152 Z" fill="#fbbf24" opacity="0.8"/>'
+    /* Adrenal right */
+    +'<path d="M136,150 C134,144 130,140 126,142 C124,144 126,150 130,152 Z" fill="#fbbf24" opacity="0.8"/>'
+    /* Left ureter */
+    +'<path d="M78,186 C76,194 74,204 74,216 C74,228 76,236 82,240" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.8"/>'
+    /* Right ureter */
+    +'<path d="M122,186 C124,194 126,204 126,216 C126,228 124,236 118,240" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.8"/>'
+    /* Bladder wall */
+    +'<path d="M82,240 C80,236 80,230 82,226 C84,222 90,218 100,218 C110,218 116,222 118,226 C120,230 120,236 118,240 C114,246 108,248 100,248 C92,248 86,246 82,240 Z" fill="url(#kidgr)" opacity="0.75"/>'
+    /* Bladder detrusor wall lines */
+    +'<path d="M84,228 C88,224 96,222 104,224 M84,234 C88,232 96,230 112,232" fill="none" stroke="#fcd34d" stroke-width="0.8" opacity="0.5"/>'
+    /* Bladder highlight */
+    +'<ellipse cx="94" cy="228" rx="8" ry="5" fill="white" opacity="0.14"/>'
+    /* Trigone */
+    +'<path d="M88,238 L112,238 L100,246 Z" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.6"/>'
+    /* Urethra */
+    +'<path d="M100,248 L100,264" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.72"/>'
+    /* Kidney medulla hints */
+    +'<path d="M60,162 C62,164 62,168 62,172 M64,158 C64,162 64,168 64,174" fill="none" stroke="#fcd34d" stroke-width="0.6" opacity="0.35"/>'
+    +'<path d="M140,162 C138,164 138,168 138,172 M136,158 C136,162 136,168 136,174" fill="none" stroke="#fcd34d" stroke-width="0.6" opacity="0.35"/>'
   },
+
   integumentary: { color:'#f9a8d4', svg:
-    // Body surface glow - trace major contours
-    '<ellipse cx="100" cy="30" rx="26" ry="29" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.3"/>'
-    // Torso outline glow
-    +'<path d="M40,80 Q48,58 100,56 Q152,58 160,80 L158,118 Q154,148 146,170 Q148,186 150,196 Q130,216 100,218 Q70,216 50,196 Q52,186 54,170 Q46,148 42,118 Z" fill="none" stroke="#f9a8d4" stroke-width="3" opacity="0.25"/>'
-    // Arm surface glow
-    +'<path d="M24,115 Q14,154 12,204 Q8,236 10,258" stroke="#f9a8d4" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.15"/>'
-    +'<path d="M176,115 Q186,154 188,204 Q192,236 190,258" stroke="#f9a8d4" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.15"/>'
-    // Leg surface glow
-    +'<path d="M58,238 Q48,280 50,344 Q46,388 48,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
-    +'<path d="M142,238 Q152,280 150,344 Q154,388 152,432" stroke="#f9a8d4" stroke-width="22" fill="none" stroke-linecap="round" opacity="0.15"/>'
-    // Skin receptor dots - scattered
-    +'<circle cx="72" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
-    +'<circle cx="128" cy="96" r="2.5" fill="#f9a8d4" opacity="0.5"/>'
-    +'<circle cx="60" cy="140" r="2" fill="#f9a8d4" opacity="0.45"/>'
-    +'<circle cx="140" cy="140" r="2" fill="#f9a8d4" opacity="0.45"/>'
-    +'<circle cx="68" cy="180" r="2" fill="#f9a8d4" opacity="0.4"/>'
-    +'<circle cx="132" cy="180" r="2" fill="#f9a8d4" opacity="0.4"/>'
-    +'<circle cx="100" cy="64" r="2" fill="#f9a8d4" opacity="0.45"/>'
-    +'<circle cx="100" cy="220" r="2" fill="#f9a8d4" opacity="0.4"/>'
-    // Sweat gland lines (arm surface)
-    +'<path d="M34,170 Q30,172 34,175 M178,170 Q182,172 178,175" stroke="#f9a8d4" stroke-width="1.2" fill="none" opacity="0.45"/>'
-    // Nail hints (fingertip)
-    +'<path d="M8,260 Q10,256 14,257 M192,260 Q190,256 186,257" stroke="#f9a8d4" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.4"/>'
+    /* Whole-body skin glow outline — head */
+    '<ellipse cx="100" cy="28" rx="30" ry="26" fill="url(#skingr)" opacity="0.22"/>'
+    +'<ellipse cx="100" cy="28" rx="30" ry="26" fill="none" stroke="#f9a8d4" stroke-width="1.5" opacity="0.55"/>'
+    /* Neck */
+    +'<rect x="93" y="56" width="14" height="18" rx="4" fill="url(#skingr)" opacity="0.2"/>'
+    +'<rect x="93" y="56" width="14" height="18" rx="4" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.45"/>'
+    /* Torso */
+    +'<path d="M60,80 C56,90 54,110 54,130 C54,150 56,170 58,186 C60,200 62,210 64,220 C72,230 86,236 100,236 C114,236 128,230 136,220 C138,210 140,200 142,186 C144,170 146,150 146,130 C146,110 144,90 140,80 C130,76 118,74 100,74 C82,74 70,76 60,80 Z" fill="url(#skingr)" opacity="0.18"/>'
+    +'<path d="M60,80 C56,90 54,110 54,130 C54,150 56,170 58,186 C60,200 62,210 64,220 C72,230 86,236 100,236 C114,236 128,230 136,220 C138,210 140,200 142,186 C144,170 146,150 146,130 C146,110 144,90 140,80" fill="none" stroke="#f9a8d4" stroke-width="1.2" opacity="0.5"/>'
+    /* Arms skin */
+    +'<path d="M58,82 C50,100 44,130 38,160 C34,180 32,210 30,240 C28,260 26,280 26,298" fill="none" stroke="#f9a8d4" stroke-width="5" opacity="0.18"/>'
+    +'<path d="M142,82 C150,100 156,130 162,160 C166,180 168,210 170,240 C172,260 174,280 174,298" fill="none" stroke="#f9a8d4" stroke-width="5" opacity="0.18"/>'
+    /* Legs skin */
+    +'<path d="M64,236 C60,260 58,290 58,316 C58,340 60,360 62,382 C64,400 66,418 66,432" fill="none" stroke="#f9a8d4" stroke-width="8" opacity="0.18"/>'
+    +'<path d="M136,236 C140,260 142,290 142,316 C142,340 140,360 138,382 C136,400 134,418 134,432" fill="none" stroke="#f9a8d4" stroke-width="8" opacity="0.18"/>'
+    /* Sensory receptor dots scattered */
+    +'<circle cx="80" cy="20" r="2" fill="#f9a8d4" opacity="0.7"/>'
+    +'<circle cx="120" cy="24" r="2" fill="#f9a8d4" opacity="0.7"/>'
+    +'<circle cx="68" cy="100" r="2" fill="#f9a8d4" opacity="0.65"/>'
+    +'<circle cx="132" cy="112" r="2" fill="#f9a8d4" opacity="0.65"/>'
+    +'<circle cx="60" cy="150" r="2" fill="#f9a8d4" opacity="0.6"/>'
+    +'<circle cx="140" cy="144" r="2" fill="#f9a8d4" opacity="0.6"/>'
+    +'<circle cx="70" cy="300" r="2" fill="#f9a8d4" opacity="0.6"/>'
+    +'<circle cx="130" cy="310" r="2" fill="#f9a8d4" opacity="0.6"/>'
+    +'<circle cx="72" cy="400" r="2" fill="#f9a8d4" opacity="0.55"/>'
+    +'<circle cx="128" cy="402" r="2" fill="#f9a8d4" opacity="0.55"/>'
+    /* Hair follicle symbols (small loops) */
+    +'<path d="M84,10 C84,8 86,6 88,8 C88,10 86,12 84,10" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.6"/>'
+    +'<path d="M100,6 C100,4 102,2 104,4 C104,6 102,8 100,6" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.6"/>'
+    +'<path d="M112,10 C112,8 114,6 116,8 C116,10 114,12 112,10" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.6"/>'
+    /* Sweat gland dots */
+    +'<circle cx="76" cy="100" r="1.5" fill="#fda4af" opacity="0.55"/>'
+    +'<circle cx="124" cy="106" r="1.5" fill="#fda4af" opacity="0.55"/>'
+    +'<circle cx="74" cy="200" r="1.5" fill="#fda4af" opacity="0.5"/>'
+    +'<circle cx="126" cy="198" r="1.5" fill="#fda4af" opacity="0.5"/>'
+    +'<circle cx="68" cy="370" r="1.5" fill="#fda4af" opacity="0.5"/>'
+    +'<circle cx="132" cy="372" r="1.5" fill="#fda4af" opacity="0.5"/>'
+    /* Skin texture lines on torso */
+    +'<path d="M64,120 C68,118 72,120 76,118 M62,134 C66,132 70,134 74,132 M62,148 C66,146 70,148 74,146" fill="none" stroke="#fda4af" stroke-width="0.7" opacity="0.3"/>'
+    +'<path d="M136,120 C132,118 128,120 124,118 M138,134 C134,132 130,134 126,132 M138,148 C134,146 130,148 126,146" fill="none" stroke="#fda4af" stroke-width="0.7" opacity="0.3"/>'
+    /* Fingernail hints left */
+    +'<ellipse cx="30" cy="294" rx="4" ry="3" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.5"/>'
+    /* Fingernail hints right */
+    +'<ellipse cx="170" cy="294" rx="4" ry="3" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.5"/>'
+    /* Toenail hints */
+    +'<ellipse cx="66" cy="436" rx="5" ry="3" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.45"/>'
+    +'<ellipse cx="134" cy="436" rx="5" ry="3" fill="none" stroke="#f9a8d4" stroke-width="1" opacity="0.45"/>'
+    /* Skin glow aura */
+    +'<ellipse cx="100" cy="200" rx="52" ry="160" fill="#f9a8d4" opacity="0.04"/>'
   },
+
 };
+
 
 // ── BODY SYSTEMS METADATA ────────────────────────────────────────────────────
 var BODY_SYSTEMS = [
@@ -3490,7 +3881,7 @@ function setBodyDiagGender(g, btn) {
     var svgCol = document.getElementById('bd-svg-col-' + bdCurrentIdx);
     if (svgCol) {
       var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
-      svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
+      svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + BD_SVG_DEFS + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
     }
     updateBodyDiagOverlays(bdCurrentIdx);
   }
@@ -3609,6 +4000,7 @@ function buildBodyDiagHtml(idx) {
     + '<div class="body-diag-svg-col">'
     + '<div class="body-diag-svg-wrap" id="bd-svg-col-' + idx + '">'
     + '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">'
+    + BD_SVG_DEFS
     + outline
     + '<g id="bd-overlays-' + idx + '"></g>'
     + '</svg>'
