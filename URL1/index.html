@@ -306,12 +306,11 @@
     .body-diag-gender-btn.active { background: var(--surface); color: var(--text); border-color: rgba(0,0,0,0.15); }
     .body-diag-gender-btn.male-btn.active { border-color: #06b6d4; color: #06b6d4; }
     .body-diag-gender-btn.female-btn.active { border-color: #ec4899; color: #ec4899; }
-    .body-sys-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 20px; justify-content: center; }
+    .body-sys-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; justify-content: center; }
     .body-diag-layout { display: flex; gap: 12px; align-items: stretch; }
     .body-diag-svg-col { flex-shrink: 0; width: 100px; display: flex; flex-direction: column; }
-    .body-diag-svg-wrap { flex: 1; overflow: hidden; min-height: 0; margin-top: -25px; }
+    .body-diag-svg-wrap { flex: 1; overflow: hidden; min-height: 0; }
     .body-diag-svg-wrap svg { width: 100%; height: 100%; display: block; }
-    .body-diag-svg-wrap img { width: 100%; height: 100%; object-fit: contain; object-position: top center; display: block; }
     .body-diag-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; height: 300px; overflow: hidden; }
     .body-sys-btn {
       padding: 3px 8px; border-radius: 20px; border: 1px solid var(--border);
@@ -961,34 +960,21 @@ function wheelStep(dir) {
   setWheelActive(next);
 }
 
-var collapsedSections = {};
-
-function wireCollapsibles(container, ringIdx) {
+function wireCollapsibles(container) {
   var secs = container.querySelectorAll('.sec');
   for (var i = 0; i < secs.length; i++) {
     (function(sec) {
-      var key = ringIdx + ':' + sec.textContent.trim();
-      var el = sec.nextElementSibling;
-      while (el && !el.classList.contains('sec')) {
-        el.classList.add('sec-body');
-        el = el.nextElementSibling;
-      }
-      if (collapsedSections[key]) {
-        sec.classList.add('collapsed');
-        var el2 = sec.nextElementSibling;
-        while (el2 && !el2.classList.contains('sec')) {
-          el2.classList.add('collapsed');
-          el2 = el2.nextElementSibling;
-        }
+      var body = sec.nextElementSibling;
+      while (body && !body.classList.contains('sec')) {
+        body.classList.add('sec-body');
+        body = body.nextElementSibling;
       }
       sec.addEventListener('click', function() {
         sec.classList.toggle('collapsed');
-        var isNowCollapsed = sec.classList.contains('collapsed');
-        collapsedSections[key] = isNowCollapsed;
-        var el3 = sec.nextElementSibling;
-        while (el3 && !el3.classList.contains('sec')) {
-          el3.classList.toggle('collapsed', isNowCollapsed);
-          el3 = el3.nextElementSibling;
+        var el = sec.nextElementSibling;
+        while (el && !el.classList.contains('sec')) {
+          el.classList.toggle('collapsed', sec.classList.contains('collapsed'));
+          el = el.nextElementSibling;
         }
       });
     })(secs[i]);
@@ -1098,11 +1084,11 @@ function renderRingPreview(idx) {
   var sectionLabel = ds.device && !ds.manual ? 'Device Data' : (ds.device ? 'Sync & Log' : 'Log Today');
 
   wrap.innerHTML =
-    '<div class="sec">Today\'s Progress</div>'
-    + '<div class="gc gc-p" id="tracker-wrap-' + idx + '"></div>'
-
-    + '<div class="sec">Why It Matters</div>'
+    '<div class="sec">Why It Matters</div>'
     + '<div class="why-gc">' + r.why + '</div>'
+
+    + '<div class="sec">Today\'s Progress</div>'
+    + '<div class="gc gc-p" id="tracker-wrap-' + idx + '"></div>'
 
     + '<div class="sec">My Goals</div>'
     + goalHtml
@@ -1148,7 +1134,7 @@ function renderRingPreview(idx) {
   }
   renderGraphInner(idx);
   setTimeout(function() { initGraphHover(idx); }, 50);
-  wireCollapsibles(wrap, idx);
+  wireCollapsibles(wrap);
 }
 
 // ── NAVIGATION ─────────────────────────────────
@@ -3498,6 +3484,16 @@ var RING_BODY_DATA = {
 
 function setBodyDiagGender(g, btn) {
   bdGender = g;
+  var btns = document.querySelectorAll('.body-diag-gender-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i] === btn);
+  if (bdCurrentIdx !== null) {
+    var svgCol = document.getElementById('bd-svg-col-' + bdCurrentIdx);
+    if (svgCol) {
+      var outline = bdGender === 'f' ? BD_OUTLINE_F : BD_OUTLINE_M;
+      svgCol.innerHTML = '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + outline + '<g id="bd-overlays-' + bdCurrentIdx + '"></g></svg>';
+    }
+    updateBodyDiagOverlays(bdCurrentIdx);
+  }
 }
 
 function selectBodySystem(idx, sysKey, btn) {
@@ -3593,6 +3589,7 @@ function buildBodyDiagHtml(idx) {
   bdSelectedSys = null;
   bdGender = 'm';
 
+  var outline = BD_OUTLINE_M;
   var bodyData = RING_BODY_DATA[r.name];
   var defs = (bodyData ? bodyData.defaultFacts : []).slice(0, 2);
 
@@ -3610,8 +3607,15 @@ function buildBodyDiagHtml(idx) {
     + '<div class="body-sys-grid" id="bd-sys-grid-' + idx + '">' + sysBtns + '</div>'
     + '<div class="body-diag-layout">'
     + '<div class="body-diag-svg-col">'
-    + '<div class="body-diag-svg-wrap">'
-    + '<img src="body-systems.svg" alt="Body systems illustration">'
+    + '<div class="body-diag-svg-wrap" id="bd-svg-col-' + idx + '">'
+    + '<svg viewBox="0 0 200 445" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">'
+    + outline
+    + '<g id="bd-overlays-' + idx + '"></g>'
+    + '</svg>'
+    + '</div>'
+    + '<div class="body-diag-gender">'
+    + '<button class="body-diag-gender-btn male-btn active" onclick="setBodyDiagGender(\'m\',this)">&#9794; Male</button>'
+    + '<button class="body-diag-gender-btn female-btn" onclick="setBodyDiagGender(\'f\',this)">&#9792; Female</button>'
     + '</div>'
     + '</div>'
     + '<div class="body-diag-right">'
