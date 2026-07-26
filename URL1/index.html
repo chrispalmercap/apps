@@ -2809,9 +2809,9 @@ var bdSelectedSys = null;
 var bdCurrentIdx  = null;
 
 var BD_OUTLINE_M = [
-  '<path d="M 86,78 Q 64,78 44,84 Q 28,90 24,112 Q 20,132 22,154 Q 24,172 28,188 Q 36,208 46,222 Q 52,232 60,240 Q 70,250 84,254 Q 92,256 100,256 Q 108,256 116,254 Q 130,250 140,240 Q 148,232 154,222 Q 164,208 172,188 Q 176,172 178,154 Q 180,132 176,112 Q 172,90 156,84 Q 136,78 114,78 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
-  '<path d="M 44,84 Q 30,94 24,116 Q 18,136 20,158 L 34,156 Q 40,132 50,110 Q 56,96 62,88 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
-  '<path d="M 156,84 Q 170,94 176,116 Q 182,136 180,158 L 166,156 Q 160,132 150,110 Q 144,96 138,88 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 86,78 Q 66,72 46,82 Q 28,92 20,112 Q 16,132 18,154 Q 22,170 30,184 Q 36,200 38,214 Q 32,228 44,242 Q 56,252 78,256 Q 88,258 100,258 Q 112,258 122,256 Q 144,252 156,242 Q 168,228 162,214 Q 164,200 170,184 Q 178,170 182,154 Q 184,132 180,112 Q 172,92 154,82 Q 134,72 114,78 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 46,82 Q 22,96 14,118 Q 8,138 10,158 L 26,156 Q 30,134 40,112 Q 48,96 60,86 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 154,82 Q 178,96 186,118 Q 192,138 190,158 L 174,156 Q 170,134 160,112 Q 152,96 140,86 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
   '<path d="M 26,158 Q 18,180 16,204" stroke="rgba(7,11,21,0.96)" stroke-width="24" stroke-linecap="round" fill="none"/><path d="M 26,158 Q 18,180 16,204" stroke="rgba(155,172,200,0.78)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
   '<path d="M 30,162 Q 22,182 22,204" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.9" stroke-linecap="round" />',
   '<path d="M 16,206 Q 10,232 12,254" stroke="rgba(7,11,21,0.96)" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M 16,206 Q 10,232 12,254" stroke="rgba(155,172,200,0.78)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
@@ -2868,14 +2868,14 @@ var BD_OUTLINE_M = [
 ].join('');
 
 var BD_OUTLINE_F = [
-  '<path d="M 88,78 Q 68,78 50,86 Q 36,92 32,114 Q 28,132 30,154 Q 32,172 36,188 Q 42,206 50,220 Q 56,230 62,240 Q 74,252 88,256 Q 94,258 100,258 Q 106,258 112,256 Q 126,252 138,240 Q 144,230 150,220 Q 158,206 164,188 Q 168,172 170,154 Q 172,132 168,114 Q 164,92 150,86 Q 132,78 112,78 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
-  '<path d="M 66,114 Q 60,126 62,140 Q 66,152 76,158 Q 86,162 96,160 Q 100,160 100,158 Q 94,154 86,148 Q 74,138 72,124 Q 70,118 66,114 Z" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.55)" stroke-width="1.0" />',
-  '<path d="M 134,114 Q 140,126 138,140 Q 134,152 124,158 Q 114,162 104,160 Q 100,160 100,158 Q 106,154 114,148 Q 126,138 128,124 Q 130,118 134,114 Z" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.55)" stroke-width="1.0" />',
+  '<path d="M 88,78 Q 70,74 52,82 Q 36,90 28,110 Q 24,130 26,152 Q 30,168 42,182 Q 50,196 52,210 Q 48,224 22,238 Q 20,250 44,258 Q 66,264 100,264 Q 134,264 156,258 Q 180,250 178,238 Q 152,224 148,210 Q 150,196 158,182 Q 170,168 174,152 Q 176,130 172,110 Q 164,90 148,82 Q 130,74 112,78 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 68,114 Q 62,128 64,142 Q 68,154 78,160 Q 88,164 98,162 Q 100,162 100,160 Q 94,156 86,150 Q 74,140 72,126 Q 70,118 68,114 Z" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.55)" stroke-width="1.0" />',
+  '<path d="M 132,114 Q 138,128 136,142 Q 132,154 122,160 Q 112,164 102,162 Q 100,162 100,160 Q 106,156 114,150 Q 126,140 128,126 Q 130,118 132,114 Z" fill="rgba(7,11,21,0.94)" stroke="rgba(155,172,200,0.55)" stroke-width="1.0" />',
   '<path d="M 70,158 Q 82,166 100,168 Q 118,166 130,158" fill="none" stroke="rgba(155,172,200,0.55)" stroke-width="1.0" stroke-linecap="round" />',
   '<path d="M 32,154 Q 30,170 34,186" fill="none" stroke="rgba(155,172,200,0.55)" stroke-width="0.9" stroke-linecap="round" />',
   '<path d="M 168,154 Q 170,170 166,186" fill="none" stroke="rgba(155,172,200,0.55)" stroke-width="0.9" stroke-linecap="round" />',
-  '<path d="M 50,86 Q 36,96 30,118 Q 26,138 28,158 L 42,156 Q 46,132 56,112 Q 62,98 68,90 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
-  '<path d="M 150,86 Q 164,96 170,118 Q 174,138 172,158 L 158,156 Q 154,132 144,112 Q 138,98 132,90 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 52,82 Q 30,92 22,112 Q 16,130 18,152 L 28,150 Q 34,130 44,110 Q 52,96 64,86 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
+  '<path d="M 148,82 Q 170,92 178,112 Q 184,130 182,152 L 172,150 Q 166,130 156,110 Q 148,96 136,86 Z" fill="rgba(7,11,21,0.96)" stroke="rgba(155,172,200,0.78)" stroke-width="1.3" />',
   '<path d="M 28,160 Q 20,182 18,206" stroke="rgba(7,11,21,0.96)" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M 28,160 Q 20,182 18,206" stroke="rgba(155,172,200,0.78)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
   '<path d="M 32,164 Q 24,184 24,206" fill="none" stroke="rgba(155,172,200,0.28)" stroke-width="0.8" stroke-linecap="round" />',
   '<path d="M 18,208 Q 12,232 14,254" stroke="rgba(7,11,21,0.96)" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M 18,208 Q 12,232 14,254" stroke="rgba(155,172,200,0.78)" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
