@@ -88,7 +88,7 @@
     #vy-star circle { animation: vy-twinkle 3.6s ease-in-out infinite; }
     @keyframes vy-twinkle { 0%,100% { opacity:0.25; } 50% { opacity:1; } }
     #vy-moon-g, #vy-sun-g { transition: opacity 1.6s ease; }
-    #vy-horizon-glow, #vy-clouds, #vy-far-ridge, #vy-mid-ridge { transition: opacity 1.6s ease; }
+    #vy-horizon-glow, #vy-clouds, .vy-far0-ridge, .vy-far-ridge, .vy-dark-ridge, .vy-mid-ridge, .vy-near-ridge { transition: opacity 1.6s ease; }
 
     .rings-lbl {
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -582,30 +582,36 @@
               <circle id="vy-sun" r="20" fill="#ffd35c"/>
             </g>
 
-            <!-- Valley composition: near ridge sets the tallest walls; every layer behind it follows the
-                 same slope-down-to-a-saddle shape at a smaller, fully-nested scale so nothing pokes above it -->
-            <!-- Far ridge: smallest, most distant, visible only through the gap -->
-            <path id="vy-mtn-far" d="M0,215 L100,225 L170,200 L200,168 L230,200 L300,225 L400,212 L400,340 L0,340 Z" fill="#7f92ab"/>
-            <path class="vy-far-lit" d="M100,225 L170,200 L170,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-lit" d="M170,200 L200,168 L200,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-lit" d="M300,225 L400,212 L400,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-ridge" d="M0,215 L100,225 L170,200 L200,168 L230,200 L300,225 L400,212" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" opacity="0.22"/>
+            <!-- Valley composition: 5 layers, back to front. Near ridge sets the tallest walls; every
+                 layer behind it is a fuller range at a smaller, fully-nested scale so nothing pokes above it -->
+            <!-- Layer 1: farthest, palest - a thin hazy ridgeline just under the near cap, glimpsed above every other layer -->
+            <path id="vy-mtn-far0" d="M0,150 L60,143 L130,149 L200,144 L270,149 L340,143 L400,150 L400,340 L0,340 Z" fill="#a8b6c8"/>
+            <path class="vy-far0-ridge" d="M0,150 L60,143 L130,149 L200,144 L270,149 L340,143 L400,150" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.16"/>
 
-            <!-- Dark silhouette peaks tucked behind the sun/moon, nested in the gap, never above the near walls -->
-            <path id="vy-mtn-dark" d="M150,205 L178,150 L205,180 L232,148 L260,200 L260,340 L150,340 Z" fill="#2c2c33"/>
+            <!-- Layer 2: far ridge - peaks sit in the crossover gaps between mid's and dark's peaks -->
+            <path id="vy-mtn-far" d="M0,225 L75,165 L125,222 L178,165 L230,222 L280,165 L330,222 L400,225 L400,340 L0,340 Z" fill="#7f92ab"/>
+            <path class="vy-far-lit" d="M0,225 L75,165 L75,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-lit" d="M125,222 L178,165 L178,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-lit" d="M230,222 L280,165 L280,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-ridge" d="M0,225 L75,165 L125,222 L178,165 L230,222 L280,165 L330,222 L400,225" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round" opacity="0.2"/>
 
-            <!-- Mid ridge: smaller range nested inside the near walls -->
-            <path id="vy-mtn-mid" d="M0,175 L75,205 L140,225 L170,232 L230,232 L260,225 L325,205 L400,172 L400,340 L0,340 Z" fill="#7f9468"/>
-            <path class="vy-mid-lit" d="M230,232 L260,225 L260,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-lit" d="M260,225 L325,205 L325,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-lit" d="M325,205 L400,172 L400,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-ridge" d="M0,175 L75,205 L140,225 L170,232 L230,232 L260,225 L325,205 L400,172" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.18"/>
+            <!-- Layer 3: charcoal range tucked behind the sun/moon (was two isolated peaks, now a full ridge) -->
+            <path id="vy-mtn-dark" d="M0,230 L50,195 L100,165 L150,195 L205,168 L255,195 L305,165 L355,195 L400,230 L400,340 L0,340 Z" fill="#33333a"/>
+            <path class="vy-dark-ridge" d="M0,230 L50,195 L100,165 L150,195 L205,168 L255,195 L305,165 L355,195 L400,230" fill="none" stroke="#fff" stroke-width="1" stroke-linejoin="round" opacity="0.12"/>
+
+            <!-- Layer 4: mid ridge, sage green, nested inside the near walls -->
+            <path id="vy-mtn-mid" d="M0,210 L50,150 L100,210 L150,150 L205,210 L255,150 L305,210 L355,150 L400,210 L400,340 L0,340 Z" fill="#7f9468"/>
+            <path class="vy-mid-lit" d="M0,210 L50,150 L50,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-lit" d="M100,210 L150,150 L150,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-lit" d="M205,210 L255,150 L255,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-lit" d="M305,210 L355,150 L355,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-ridge" d="M0,210 L50,150 L100,210 L150,150 L205,210 L255,150 L305,210 L355,150 L400,210" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.18"/>
             <g class="vy-rock-detail" stroke="rgba(20,20,15,0.25)" stroke-width="1.6" stroke-linecap="round">
-              <line x1="55" y1="210" x2="63" y2="226"/>
-              <line x1="340" y1="196" x2="348" y2="212"/>
+              <line x1="30" y1="158" x2="38" y2="174"/>
+              <line x1="330" y1="158" x2="338" y2="174"/>
             </g>
 
-            <!-- Near ridge: tallest, closest walls on the left and right, sloping down to a valley saddle -->
+            <!-- Layer 5 (near): tallest, closest walls on the left and right, sloping down to a valley saddle -->
             <path id="vy-mtn-near" d="M0,140 L55,180 L105,225 L145,262 L255,262 L295,222 L345,178 L400,138 L400,340 L0,340 Z" fill="#b07a4e"/>
             <path class="vy-near-lit" d="M255,262 L295,222 L295,340 Z" fill="#c99569"/>
             <path class="vy-near-lit" d="M295,222 L345,178 L345,340 Z" fill="#c99569"/>
@@ -948,9 +954,9 @@ function getScoreColor(score) {
    100% = sun at the zenith, full daylight
 */
 var VY_KEYFRAMES = {
-  night: { sky1:[4,7,17],    sky2:[12,18,38],   sky3:[20,20,36],    mtnFar:[36,48,72],  mtnMid:[16,40,26],  mtnNear:[46,30,20],  mtnFoot:[40,34,24],  valley:[12,24,15] },
-  dawn:  { sky1:[26,30,72],  sky2:[104,78,102], sky3:[214,122,80],  mtnFar:[70,84,120],  mtnMid:[80,98,68],  mtnNear:[132,80,48],  mtnFoot:[158,126,88], valley:[32,54,28] },
-  day:   { sky1:[58,128,196],sky2:[128,160,190],sky3:[226,168,120], mtnFar:[92,120,154], mtnMid:[92,116,84], mtnNear:[152,96,58],  mtnFoot:[201,168,118],valley:[54,102,42] }
+  night: { sky1:[4,7,17],    sky2:[12,18,38],   sky3:[20,20,36],    mtnFar0:[26,34,54], mtnFar:[36,48,72],  mtnMid:[16,40,26],  mtnNear:[46,30,20],  mtnFoot:[40,34,24],  valley:[12,24,15] },
+  dawn:  { sky1:[26,30,72],  sky2:[104,78,102], sky3:[214,122,80],  mtnFar0:[100,104,136],mtnFar:[70,84,120], mtnMid:[80,98,68],  mtnNear:[132,80,48],  mtnFoot:[158,126,88], valley:[32,54,28] },
+  day:   { sky1:[58,128,196],sky2:[128,160,190],sky3:[226,168,120], mtnFar0:[168,180,200],mtnFar:[92,120,154],mtnMid:[92,116,84], mtnNear:[152,96,58],  mtnFoot:[201,168,118],valley:[54,102,42] }
 };
 
 function vyLerp(a, b, t) {
@@ -1065,9 +1071,10 @@ function applyValleyScene(p) {
   if (s2) s2.setAttribute('stop-color', vyRgb(c.sky2));
   if (s3) s3.setAttribute('stop-color', vyRgb(c.sky3));
 
-  var mf = document.getElementById('vy-mtn-far'), mm = document.getElementById('vy-mtn-mid'),
+  var mf0 = document.getElementById('vy-mtn-far0'), mf = document.getElementById('vy-mtn-far'), mm = document.getElementById('vy-mtn-mid'),
       mn = document.getElementById('vy-mtn-near'), vf = document.getElementById('vy-valley'),
       mft = document.getElementById('vy-mtn-foot');
+  if (mf0) mf0.setAttribute('fill', vyRgb(c.mtnFar0));
   if (mf) mf.setAttribute('fill', vyRgb(c.mtnFar));
   if (mm) mm.setAttribute('fill', vyRgb(c.mtnMid));
   if (mn) mn.setAttribute('fill', vyRgb(c.mtnNear));
@@ -1081,8 +1088,11 @@ function applyValleyScene(p) {
 
   var cloudOpEarly = p <= 40 ? 0 : (p <= 72 ? (p-40)/32 : 1);
   var ridgeOp = 0.14 + cloudOpEarly * 0.22;
-  var farR = document.querySelector('.vy-far-ridge'), midR = document.querySelector('.vy-mid-ridge'), nearR = document.querySelector('.vy-near-ridge');
+  var far0R = document.querySelector('.vy-far0-ridge'), farR = document.querySelector('.vy-far-ridge'),
+      darkR = document.querySelector('.vy-dark-ridge'), midR = document.querySelector('.vy-mid-ridge'), nearR = document.querySelector('.vy-near-ridge');
+  if (far0R) far0R.style.opacity = (ridgeOp * 0.9).toFixed(2);
   if (farR)  farR.style.opacity  = ridgeOp.toFixed(2);
+  if (darkR) darkR.style.opacity = (ridgeOp * 0.6).toFixed(2);
   if (midR)  midR.style.opacity  = (ridgeOp * 0.85).toFixed(2);
   if (nearR) nearR.style.opacity = (ridgeOp * 0.7).toFixed(2);
 
