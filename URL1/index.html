@@ -75,15 +75,15 @@
     /* Valley sky-progression scene (replaces the circular score ring) - full-bleed, no card frame */
     .valley-card {
       position: relative; width: calc(100% + 32px); margin-left: -16px;
-      height: 280px; flex-shrink: 0; overflow: hidden;
+      height: clamp(340px, 50vh, 520px); flex-shrink: 0; overflow: hidden;
     }
     .valley-card svg { display: block; width: 100%; height: 100%; }
     #vy-star { transition: opacity 1.4s ease; }
     #vy-star circle { animation: vy-twinkle 3.6s ease-in-out infinite; }
     @keyframes vy-twinkle { 0%,100% { opacity:0.25; } 50% { opacity:1; } }
     #vy-moon-g, #vy-sun-g { transition: opacity 1.6s ease; }
-    #vy-horizon-glow { transition: opacity 1.6s ease; }
-    #vy-moon-num, #vy-sun-num { font-family: system-ui, -apple-system, sans-serif; paint-order: stroke; }
+    #vy-horizon-glow, #vy-clouds { transition: opacity 1.6s ease; }
+    #vy-score-num { font-family: system-ui, -apple-system, sans-serif; paint-order: stroke fill; }
 
     .rings-lbl {
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -532,7 +532,7 @@
     <div class="home-scene">
       <div class="home-score-area">
         <div class="valley-card" style="cursor:pointer" onclick="openBodyScore()">
-          <svg id="valley-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMax slice">
+          <svg id="valley-svg" viewBox="0 0 400 340" preserveAspectRatio="xMidYMax slice">
             <defs>
               <linearGradient id="vy-sky-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop id="vy-stop-1" offset="0%"  stop-color="#050a16"/>
@@ -551,32 +551,62 @@
                 <stop offset="0%" stop-color="#ff9d5c" stop-opacity="0.55"/>
                 <stop offset="100%" stop-color="#ff9d5c" stop-opacity="0"/>
               </radialGradient>
+              <linearGradient id="vy-far-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-far-1" offset="0%" stop-color="#2a3350"/>
+                <stop id="vy-far-2" offset="100%" stop-color="#141c33"/>
+              </linearGradient>
+              <linearGradient id="vy-mid-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-mid-1" offset="0%" stop-color="#1c2440"/>
+                <stop id="vy-mid-2" offset="100%" stop-color="#0e1830"/>
+              </linearGradient>
+              <linearGradient id="vy-near-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-near-1" offset="0%" stop-color="#141f38"/>
+                <stop id="vy-near-2" offset="100%" stop-color="#0a1224"/>
+              </linearGradient>
+              <linearGradient id="vy-meadow-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-meadow-1" offset="0%" stop-color="#12241c"/>
+                <stop id="vy-meadow-2" offset="100%" stop-color="#0a1610"/>
+              </linearGradient>
+              <linearGradient id="vy-river-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-river-1" offset="0%" stop-color="#2c3a52"/>
+                <stop id="vy-river-2" offset="100%" stop-color="#131c2c"/>
+              </linearGradient>
             </defs>
 
-            <rect x="0" y="0" width="400" height="220" fill="url(#vy-sky-grad)"/>
+            <rect x="0" y="0" width="400" height="340" fill="url(#vy-sky-grad)"/>
 
             <g id="vy-star"></g>
 
-            <ellipse id="vy-horizon-glow" cx="200" cy="165" rx="220" ry="70" fill="url(#vy-horizon-glow-grad)" opacity="0"/>
+            <ellipse id="vy-horizon-glow" cx="200" cy="255" rx="260" ry="95" fill="url(#vy-horizon-glow-grad)" opacity="0"/>
 
-            <polygon id="vy-mtn-far" points="0,150 40,118 90,142 140,110 190,138 235,116 280,140 330,120 400,146 400,220 0,220" fill="#141c33"/>
-            <polygon id="vy-mtn-near" points="0,175 55,148 110,170 175,140 230,168 300,150 400,172 400,220 0,220" fill="#0b1224"/>
-            <rect id="vy-valley" x="0" y="175" width="400" height="45" fill="#0a1420"/>
-
-            <g id="vy-moon-g" transform="translate(200,25)">
-              <circle id="vy-moon-glow" r="46" fill="url(#vy-moon-glow-grad)"/>
-              <circle id="vy-moon" r="22" fill="#eef3ff"/>
-              <circle cx="-13" cy="-9" r="3.2" fill="#c9d6ef"/>
-              <circle cx="12" cy="10" r="4" fill="#c9d6ef"/>
-              <circle cx="6" cy="-14" r="2.2" fill="#c9d6ef"/>
-              <circle cx="-9" cy="13" r="2.6" fill="#c9d6ef"/>
-              <text id="vy-moon-num" x="0" y="0" dy="0.35em" text-anchor="middle" font-size="16" font-weight="900" fill="#1a2333">0</text>
+            <g id="vy-clouds" opacity="0" fill="#fff">
+              <g transform="translate(84,66)"><ellipse rx="26" ry="10"/><ellipse cx="19" cy="-4" rx="16" ry="8"/><ellipse cx="-17" cy="-3" rx="14" ry="7"/></g>
+              <g transform="translate(298,46)"><ellipse rx="22" ry="8"/><ellipse cx="16" cy="-3" rx="13" ry="6"/></g>
+              <g transform="translate(205,92)"><ellipse rx="18" ry="7"/><ellipse cx="-13" cy="-2" rx="11" ry="5"/></g>
             </g>
 
-            <g id="vy-sun-g" transform="translate(200,25)">
-              <circle id="vy-sun-glow" r="58" fill="url(#vy-sun-glow-grad)"/>
-              <circle id="vy-sun" r="22" fill="#ffd35c"/>
-              <text id="vy-sun-num" x="0" y="0" dy="0.35em" text-anchor="middle" font-size="16" font-weight="900" fill="#5a3d0a">0</text>
+            <path id="vy-mtn-far" d="M0,190 C60,150 120,175 180,140 C240,170 300,130 360,160 C380,168 400,155 400,165 L400,340 L0,340 Z" fill="url(#vy-far-grad)"/>
+            <path id="vy-mtn-mid" d="M0,225 C70,185 130,215 200,175 C260,205 320,180 400,210 L400,340 L0,340 Z" fill="url(#vy-mid-grad)"/>
+
+            <text id="vy-score-num" x="200" y="160" dy="0.35em" text-anchor="middle" font-size="78" font-weight="900"
+              fill="#ffffff" stroke="rgba(4,8,16,0.5)" stroke-width="7" stroke-linejoin="round">0</text>
+
+            <path id="vy-mtn-near" d="M0,270 C80,235 150,260 220,230 C290,255 340,235 400,260 L400,340 L0,340 Z" fill="url(#vy-near-grad)"/>
+            <path id="vy-valley" d="M0,278 C100,262 180,288 260,268 C320,252 370,272 400,266 L400,340 L0,340 Z" fill="url(#vy-meadow-grad)"/>
+            <path id="vy-river" d="M195,276 C216,297 174,311 199,331 C207,337 191,339 197,340" fill="none" stroke="url(#vy-river-grad)" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+
+            <g id="vy-moon-g" transform="translate(200,90)">
+              <circle id="vy-moon-glow" r="42" fill="url(#vy-moon-glow-grad)"/>
+              <circle id="vy-moon" r="20" fill="#eef3ff"/>
+              <circle cx="-11" cy="-8" r="3" fill="#c9d6ef"/>
+              <circle cx="11" cy="9" r="3.6" fill="#c9d6ef"/>
+              <circle cx="5" cy="-13" r="2" fill="#c9d6ef"/>
+              <circle cx="-8" cy="12" r="2.3" fill="#c9d6ef"/>
+            </g>
+
+            <g id="vy-sun-g" transform="translate(200,90)">
+              <circle id="vy-sun-glow" r="54" fill="url(#vy-sun-glow-grad)"/>
+              <circle id="vy-sun" r="20" fill="#ffd35c"/>
             </g>
           </svg>
         </div>
@@ -837,8 +867,7 @@ function init() {
   document.getElementById('nav-date').textContent = d;
 
   var s = SCORE.val;
-  var moonNum = document.getElementById('vy-moon-num');
-  var sunNum  = document.getElementById('vy-sun-num');
+  var scoreNum = document.getElementById('vy-score-num');
 
   seedValleyStars();
   applyValleyScene(0);
@@ -847,9 +876,7 @@ function init() {
   var n = 0, step = s / 60;
   var t = setInterval(function() {
     n = Math.min(n + step, s);
-    var val = Math.round(n);
-    if (moonNum) moonNum.textContent = val;
-    if (sunNum)  sunNum.textContent  = val;
+    if (scoreNum) scoreNum.textContent = Math.round(n);
     if (n >= s) clearInterval(t);
   }, 16);
 
@@ -887,9 +914,9 @@ function getScoreColor(score) {
    100% = sun at the zenith, full daylight
 */
 var VY_KEYFRAMES = {
-  night: { sky1:[5,10,22],   sky2:[12,26,48],   sky3:[17,28,46],    mtnFar:[20,28,51], mtnNear:[11,18,36], valley:[10,20,32] },
-  dawn:  { sky1:[16,20,48],  sky2:[64,52,84],   sky3:[214,140,110], mtnFar:[46,42,66], mtnNear:[26,26,42], valley:[30,44,38] },
-  day:   { sky1:[70,150,224],sky2:[150,205,235],sky3:[214,236,248], mtnFar:[63,107,74],mtnNear:[44,79,55], valley:[58,125,68] }
+  night: { sky1:[5,10,22],   sky2:[12,26,48],   sky3:[17,28,46],    mtnFar:[20,28,51], mtnMid:[15,22,42], mtnNear:[11,18,36], valley:[10,20,32] },
+  dawn:  { sky1:[16,20,48],  sky2:[64,52,84],   sky3:[214,140,110], mtnFar:[46,42,66], mtnMid:[36,34,54], mtnNear:[26,26,42], valley:[30,44,38] },
+  day:   { sky1:[70,150,224],sky2:[150,205,235],sky3:[214,236,248], mtnFar:[63,107,74],mtnMid:[52,92,63], mtnNear:[44,79,55], valley:[58,125,68] }
 };
 
 function vyLerp(a, b, t) {
@@ -900,6 +927,18 @@ function vyLerp(a, b, t) {
   ];
 }
 function vyRgb(c) { return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')'; }
+function vyShade(c, amt) {
+  return [
+    Math.max(0, Math.min(255, c[0]+amt)),
+    Math.max(0, Math.min(255, c[1]+amt)),
+    Math.max(0, Math.min(255, c[2]+amt))
+  ];
+}
+function vySetGrad(id1, id2, base, upAmt, downAmt) {
+  var s1 = document.getElementById(id1), s2 = document.getElementById(id2);
+  if (s1) s1.setAttribute('stop-color', vyRgb(vyShade(base, upAmt)));
+  if (s2) s2.setAttribute('stop-color', vyRgb(vyShade(base, downAmt)));
+}
 
 function vySkyColors(p) {
   var A, B, t;
@@ -911,7 +950,7 @@ function vySkyColors(p) {
 }
 
 function vyCelestialPos(p) {
-  var cx = 200, cy = 165, R = 140;
+  var cx = 200, cy = 255, R = 195;
   var pm = Math.min(p, 50), ps = Math.max(p, 50);
   var angM = 90 * (1 - pm / 50);              // 90°(top) → 0°(right horizon)
   var angS = 180 - 90 * ((ps - 50) / 50);     // 180°(left horizon) → 90°(top)
@@ -923,9 +962,9 @@ function vyCelestialPos(p) {
 }
 
 function seedValleyStars() {
-  var pts = [[24,18],[70,10],[110,26],[150,14],[190,22],[230,10],[270,24],[310,14],[350,20],[380,30],
-             [16,44],[60,50],[100,38],[140,48],[180,40],[220,52],[260,42],[300,50],[340,38],[380,54],
-             [40,64],[130,60],[210,66],[290,58]];
+  var pts = [[24,20],[70,12],[110,32],[150,16],[190,26],[230,12],[270,30],[310,16],[350,24],[386,36],
+             [16,52],[60,60],[100,46],[140,58],[180,48],[220,62],[260,50],[300,60],[340,46],[380,64],
+             [40,78],[130,72],[210,80],[290,70],[8,96],[365,90]];
   var vy = document.getElementById('vy-star');
   if (vy) {
     var html = '';
@@ -955,10 +994,12 @@ function applyValleyScene(p) {
   if (s1) s1.setAttribute('stop-color', vyRgb(c.sky1));
   if (s2) s2.setAttribute('stop-color', vyRgb(c.sky2));
   if (s3) s3.setAttribute('stop-color', vyRgb(c.sky3));
-  var mf = document.getElementById('vy-mtn-far'), mn = document.getElementById('vy-mtn-near'), vf = document.getElementById('vy-valley');
-  if (mf) mf.setAttribute('fill', vyRgb(c.mtnFar));
-  if (mn) mn.setAttribute('fill', vyRgb(c.mtnNear));
-  if (vf) vf.setAttribute('fill', vyRgb(c.valley));
+
+  vySetGrad('vy-far-1',    'vy-far-2',    c.mtnFar,  30, -14);
+  vySetGrad('vy-mid-1',    'vy-mid-2',    c.mtnMid,  26, -14);
+  vySetGrad('vy-near-1',   'vy-near-2',   c.mtnNear, 22, -16);
+  vySetGrad('vy-meadow-1', 'vy-meadow-2', c.valley,  26, -12);
+  vySetGrad('vy-river-1',  'vy-river-2',  c.sky3,    16, -30);
 
   var moonOp = p <= 46 ? 1 : (p <= 54 ? Math.max(0, 1 - (p-46)/8) : 0);
   var sunOp  = p >= 54 ? 1 : (p >= 46 ? Math.max(0, (p-46)/8) : 0);
@@ -971,6 +1012,10 @@ function applyValleyScene(p) {
   if (starEl) starEl.style.opacity = starOp;
   var bgStars = document.getElementById('bg-stars');
   if (bgStars) bgStars.style.opacity = (starOp * 0.8).toFixed(2);
+
+  var cloudOp = p <= 40 ? 0 : (p <= 72 ? (p-40)/32 : 1);
+  var clouds = document.getElementById('vy-clouds');
+  if (clouds) clouds.style.opacity = (cloudOp * 0.6).toFixed(2);
 
   var g = 0;
   if (p > 36 && p < 70) g = p <= 52 ? (p-36)/16 : (70-p)/18;
