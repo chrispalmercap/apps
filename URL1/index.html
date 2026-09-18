@@ -72,16 +72,10 @@
       display: flex; flex-direction: column; align-items: center;
       padding: 22px 0 26px;
     }
-    .score-lbl {
-      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 16px;
-    }
-
-    /* Valley sky-progression card (replaces the circular score ring) */
+    /* Valley sky-progression scene (replaces the circular score ring) - full-bleed, no card frame */
     .valley-card {
-      position: relative; width: 100%; max-width: 400px; height: 220px;
-      border-radius: 20px; overflow: hidden; flex-shrink: 0;
-      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.06);
+      position: relative; width: calc(100% + 32px); margin-left: -16px;
+      height: 280px; flex-shrink: 0; overflow: hidden;
     }
     .valley-card svg { display: block; width: 100%; height: 100%; }
     #vy-star { transition: opacity 1.4s ease; }
@@ -92,11 +86,9 @@
     .score-center {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-      padding-bottom: 16px; pointer-events: none;
+      padding-bottom: 22px; pointer-events: none;
     }
-    .score-num   { font-size: 52px; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.35); }
-    .score-denom { font-size: 13px; color: rgba(255,255,255,0.75); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
-    .score-delta { font-size: 12px; font-weight: 700; margin-top: 8px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .score-num { font-size: 52px; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.35); }
 
     .rings-lbl {
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -469,8 +461,8 @@
     .pf-cond-option:hover { background: var(--surface2); }
 
     /* ── HOME LAYOUT ── */
-    .home-scene { display:flex; flex-direction:column; align-items:center; padding:16px 0 16px; }
-    .home-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; position:relative; isolation:isolate; }
+    .home-scene { display:flex; flex-direction:column; align-items:center; padding:0 0 16px; margin-top:-12px; }
+    .home-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:0; position:relative; isolation:isolate; }
     .score-glow-bg { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:100vw; height:120%; pointer-events:none; z-index:-1; }
     /* Ring row */
     .rings-scroll-outer { width:100%; padding:0 8px; }
@@ -544,7 +536,6 @@
   <div id="v-home">
     <div class="home-scene">
       <div class="home-score-area">
-        <div class="score-lbl">Today's Body Score</div>
         <div class="valley-card" style="cursor:pointer" onclick="openBodyScore()">
           <svg id="valley-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMax slice">
             <defs>
@@ -592,8 +583,6 @@
           </svg>
           <div class="score-center">
             <div class="score-num" id="score-num">0</div>
-            <div class="score-denom">/ 100</div>
-            <div class="score-delta" id="score-delta"></div>
           </div>
         </div>
       </div>
@@ -854,7 +843,6 @@ function init() {
 
   var s = SCORE.val;
   var num  = document.getElementById('score-num');
-  var delt = document.getElementById('score-delta');
 
   seedValleyStars();
   applyValleyScene(0);
@@ -865,8 +853,6 @@ function init() {
     n = Math.min(n + step, s); num.textContent = Math.round(n);
     if (n >= s) clearInterval(t);
   }, 16);
-  delt.textContent = (SCORE.delta >= 0 ? '↑ +' : '↓ ') + Math.abs(SCORE.delta) + ' from yesterday';
-  delt.style.color = SCORE.delta >= 0 ? '#a7f3d0' : '#fca5a5';
 
   renderRingRow();
 
