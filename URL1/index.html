@@ -582,54 +582,52 @@
               <circle id="vy-sun" r="20" fill="#ffd35c"/>
             </g>
 
-            <!-- Minimalist flat-color layered peaks, lowered for more open sky -->
-            <!-- Far ridge: base (shadow) fill + lit left-facing facets + sunlit ridge line -->
-            <path id="vy-mtn-far" d="M0,230 L75,155 L155,210 L235,145 L325,205 L400,170 L400,340 L0,340 Z" fill="#7f92ab"/>
-            <path class="vy-far-lit" d="M0,230 L75,155 L75,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-lit" d="M155,210 L235,145 L235,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-lit" d="M325,205 L400,170 L400,340 Z" fill="#9aacc4"/>
-            <path class="vy-far-ridge" d="M0,230 L75,155 L155,210 L235,145 L325,205 L400,170" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" opacity="0.22"/>
+            <!-- Valley composition: tallest walls at the outer edges, smaller ranges nested in the center gap -->
+            <!-- Far ridge: smallest, most distant, visible through the gap -->
+            <path id="vy-mtn-far" d="M0,210 L90,178 L175,202 L215,148 L255,200 L330,180 L400,208 L400,340 L0,340 Z" fill="#7f92ab"/>
+            <path class="vy-far-lit" d="M0,210 L90,178 L90,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-lit" d="M175,202 L215,148 L215,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-lit" d="M255,200 L330,180 L330,340 Z" fill="#9aacc4"/>
+            <path class="vy-far-ridge" d="M0,210 L90,178 L175,202 L215,148 L255,200 L330,180 L400,208" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" opacity="0.22"/>
 
-            <!-- Dark silhouette peaks tucked behind the sun/moon, in front of the far range -->
-            <path id="vy-mtn-dark" d="M118,215 L152,163 L182,196 L216,152 L252,198 L284,208 L284,340 L118,340 Z" fill="#2c2c33"/>
+            <!-- Dark silhouette peaks tucked behind the sun/moon, nested in the gap -->
+            <path id="vy-mtn-dark" d="M145,195 L178,138 L205,172 L238,132 L268,188 L268,340 L145,340 Z" fill="#2c2c33"/>
 
-            <!-- Mid ridge -->
-            <path id="vy-mtn-mid" d="M0,260 L95,190 L185,235 L265,175 L345,225 L400,195 L400,340 L0,340 Z" fill="#7f9468"/>
-            <path class="vy-mid-lit" d="M0,260 L95,190 L95,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-lit" d="M185,235 L265,175 L265,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-lit" d="M345,225 L400,195 L400,340 Z" fill="#9cb182"/>
-            <path class="vy-mid-ridge" d="M0,260 L95,190 L185,235 L265,175 L345,225 L400,195" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.18"/>
+            <!-- Mid ridge: smaller range nested inside the near walls -->
+            <path id="vy-mtn-mid" d="M0,195 L70,168 L145,198 L200,158 L255,198 L330,170 L400,198 L400,340 L0,340 Z" fill="#7f9468"/>
+            <path class="vy-mid-lit" d="M0,195 L70,168 L70,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-lit" d="M145,198 L200,158 L200,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-lit" d="M255,198 L330,170 L330,340 Z" fill="#9cb182"/>
+            <path class="vy-mid-ridge" d="M0,195 L70,168 L145,198 L200,158 L255,198 L330,170 L400,198" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.18"/>
             <g class="vy-rock-detail" stroke="rgba(20,20,15,0.25)" stroke-width="1.6" stroke-linecap="round">
-              <line x1="112" y1="212" x2="122" y2="230"/>
-              <line x1="126" y1="216" x2="134" y2="232"/>
-              <line x1="290" y1="200" x2="300" y2="218"/>
+              <line x1="82" y1="180" x2="90" y2="196"/>
+              <line x1="310" y1="182" x2="318" y2="198"/>
             </g>
 
-            <!-- Near ridge: closest, richest tone, with rock texture -->
-            <path id="vy-mtn-near" d="M0,285 L65,205 L155,250 L245,180 L320,240 L400,215 L400,340 L0,340 Z" fill="#b07a4e"/>
-            <path class="vy-near-lit" d="M0,285 L65,205 L65,340 Z" fill="#c99569"/>
-            <path class="vy-near-lit" d="M155,250 L245,180 L245,340 Z" fill="#c99569"/>
-            <path class="vy-near-lit" d="M320,240 L400,215 L400,340 Z" fill="#c99569"/>
-            <path class="vy-near-ridge" d="M0,285 L65,205 L155,250 L245,180 L320,240 L400,215" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.16"/>
+            <!-- Near ridge: tallest, closest walls on the left and right, sloping down to a valley saddle -->
+            <path id="vy-mtn-near" d="M0,140 L55,180 L105,225 L145,262 L255,262 L295,222 L345,178 L400,138 L400,340 L0,340 Z" fill="#b07a4e"/>
+            <path class="vy-near-lit" d="M255,262 L295,222 L295,340 Z" fill="#c99569"/>
+            <path class="vy-near-lit" d="M295,222 L345,178 L345,340 Z" fill="#c99569"/>
+            <path class="vy-near-lit" d="M345,178 L400,138 L400,340 Z" fill="#c99569"/>
+            <path class="vy-near-ridge" d="M0,140 L55,180 L105,225 L145,262 L255,262 L295,222 L345,178 L400,138" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round" opacity="0.16"/>
             <g class="vy-rock-detail" stroke="rgba(20,12,8,0.28)" stroke-width="1.8" stroke-linecap="round">
-              <line x1="80" y1="222" x2="92" y2="244"/>
-              <line x1="182" y1="204" x2="192" y2="224"/>
-              <line x1="196" y1="212" x2="204" y2="228"/>
-              <line x1="340" y1="226" x2="352" y2="246"/>
+              <line x1="30" y1="158" x2="42" y2="180"/>
+              <line x1="70" y1="198" x2="82" y2="220"/>
+              <line x1="312" y1="196" x2="324" y2="218"/>
+              <line x1="362" y1="156" x2="374" y2="178"/>
             </g>
 
             <!-- Golden foothills at the mountain base, above the lake -->
-            <path id="vy-mtn-foot" d="M0,272 Q80,248 160,266 Q240,286 320,258 Q365,246 400,262 L400,340 L0,340 Z" fill="#c9a876"/>
+            <path id="vy-mtn-foot" d="M0,258 Q80,232 160,248 Q240,266 320,238 Q365,224 400,244 L400,340 L0,340 Z" fill="#c9a876"/>
 
-            <path id="vy-valley" d="M0,300 L400,300 L400,340 L0,340 Z" fill="#436b3f"/>
+            <path id="vy-valley" d="M0,310 L400,310 L400,340 L0,340 Z" fill="#436b3f"/>
 
-            <path class="vy-lake-shadow" d="M64,282 C110,254 290,254 336,282 Z" fill="rgba(0,0,0,0.15)"/>
-            <path class="vy-lake" d="M58,300 C48,280 70,262 112,258 C150,254 178,266 200,258 C232,246 282,252 314,270 C344,286 342,308 312,322 C280,336 228,330 198,336 C156,344 106,340 76,326 C56,317 50,310 58,300 Z" fill="#6fa89c"/>
-            <path d="M58,300 C48,280 70,262 112,258 C150,254 178,266 200,258 C232,246 282,252 314,270 C344,286 342,308 312,322 C280,336 228,330 198,336 C156,344 106,340 76,326 C56,317 50,310 58,300 Z" fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="2"/>
-            <ellipse cx="200" cy="298" rx="5" ry="40" fill="rgba(255,232,190,0.4)"/>
-            <ellipse cx="150" cy="284" rx="34" ry="9" fill="rgba(255,255,255,0.18)"/>
-            <path d="M84,306 Q120,299 158,305" stroke="rgba(255,255,255,0.14)" stroke-width="1.2" fill="none"/>
-            <path d="M226,314 Q262,308 296,313" stroke="rgba(255,255,255,0.1)" stroke-width="1.1" fill="none"/>
+            <path class="vy-lake-shadow" d="M84,270 C130,252 270,252 316,270 Z" fill="rgba(0,0,0,0.14)"/>
+            <path class="vy-lake" d="M92,288 C82,276 102,266 140,264 C178,262 208,268 238,264 C266,260 298,270 305,282 C312,294 296,304 266,306 C228,309 190,305 158,308 C120,311 98,302 92,288 Z" fill="#6fa89c"/>
+            <path d="M92,288 C82,276 102,266 140,264 C178,262 208,268 238,264 C266,260 298,270 305,282 C312,294 296,304 266,306 C228,309 190,305 158,308 C120,311 98,302 92,288 Z" fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="2"/>
+            <ellipse id="vy-lake-reflection" cx="200" cy="283" rx="22" ry="7" fill="rgba(255,232,190,0.45)"/>
+            <path d="M110,296 Q140,291 172,295" stroke="rgba(255,255,255,0.12)" stroke-width="1.1" fill="none"/>
+            <path d="M225,300 Q255,296 284,299" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
 
             <g id="vy-lake-trees"></g>
 
@@ -1038,7 +1036,7 @@ function miniPineSVG(cx, baseY, scale, cls) {
 function seedBgTrees() {
   var wrap = document.getElementById('vy-bg-trees');
   if (wrap) {
-    var spots = [[28,264,0.85],[62,254,0.7],[345,252,0.68],[378,254,0.78]];
+    var spots = [[28,249,0.85],[62,238,0.7],[345,230,0.68],[378,231,0.78]];
     var html = '';
     for (var i = 0; i < spots.length; i++) {
       html += miniPineSVG(spots[i][0], spots[i][1], spots[i][2], 'vy-bg-tree');
@@ -1047,7 +1045,7 @@ function seedBgTrees() {
   }
   var lakeWrap = document.getElementById('vy-lake-trees');
   if (lakeWrap) {
-    var shore = [[90,256,0.55],[130,250,0.5],[272,250,0.5],[312,258,0.55],[56,296,0.65],[340,296,0.65]];
+    var shore = [[100,250,0.5],[150,246,0.48],[230,248,0.48],[280,253,0.5],[68,282,0.6],[322,284,0.6]];
     var html2 = '';
     for (var j = 0; j < shore.length; j++) {
       html2 += miniPineSVG(shore[j][0], shore[j][1], shore[j][2], 'vy-bg-tree');
@@ -1101,13 +1099,22 @@ function applyValleyScene(p) {
     Math.round(waterBase[2]*0.72 + c.sky3[2]*0.28)
   ]);
   vySetAll('.vy-lake', lakeColor);
-  vySetAll('.vy-lake-inlet', lakeColor);
 
   var moonOp = p <= 46 ? 1 : (p <= 54 ? Math.max(0, 1 - (p-46)/8) : 0);
   var sunOp  = p >= 54 ? 1 : (p >= 46 ? Math.max(0, (p-46)/8) : 0);
   var moonG = document.getElementById('vy-moon-g'), sunG = document.getElementById('vy-sun-g');
   if (moonG) { moonG.setAttribute('transform', 'translate(' + pos.moon.x.toFixed(1) + ',' + pos.moon.y.toFixed(1) + ')'); moonG.style.opacity = moonOp; }
   if (sunG)  { sunG.setAttribute('transform',  'translate(' + pos.sun.x.toFixed(1)  + ',' + pos.sun.y.toFixed(1)  + ')'); sunG.style.opacity = sunOp; }
+
+  var refl = document.getElementById('vy-lake-reflection');
+  if (refl) {
+    var reflWeight = moonOp + sunOp;
+    var reflX = reflWeight > 0.02 ? (pos.moon.x*moonOp + pos.sun.x*sunOp) / reflWeight : 200;
+    reflX = Math.max(120, Math.min(280, reflX));
+    refl.setAttribute('cx', reflX.toFixed(1));
+    refl.style.opacity = (Math.min(1, reflWeight) * 0.7).toFixed(2);
+    refl.setAttribute('fill', sunOp >= moonOp ? 'rgba(255,224,170,0.5)' : 'rgba(226,236,255,0.45)');
+  }
 
   var starOp = p <= 28 ? 1 : (p <= 42 ? Math.max(0, 1 - (p-28)/14) : 0);
   var starEl = document.getElementById('vy-star');
@@ -1211,17 +1218,11 @@ function renderRingRow() {
   var html = '<rect id="vy-hills-bg" x="0" y="0" width="400" height="210" fill="#5a7a52"/>'
     + '<path id="vy-hill-back" d="' + backD + '" fill="#385c3c"/>'
     + '<path id="vy-hill-front" d="' + frontD + '" fill="#20361f"/>'
-    + '<path class="vy-lake-inlet" d="M64,0 Q200,64 336,0 Z" fill="#5b84a3" opacity="0.9"/>'
-    + '<ellipse cx="150" cy="16" rx="30" ry="7" fill="rgba(255,255,255,0.16)"/>'
-    + '<path class="vy-path" d="M198,55 Q178,90 198,120 Q218,145 195,172 Q175,195 198,210 L212,210 Q225,192 208,172 Q228,145 208,120 Q222,90 212,55 Z" fill="#d8c39a" opacity="0.92"/>';
+    + '<path class="vy-path" d="M200,0 Q175,30 200,55 Q225,80 195,105 Q170,125 200,150 Q225,170 198,190 Q178,205 200,210 L214,210 Q230,205 212,190 Q236,170 214,150 Q186,125 208,105 Q234,80 212,55 Q234,30 214,0 Z" fill="#d8c39a" opacity="0.92"/>';
 
   var bgSpots = [48, 100, 300, 352];
   for (var bi = 0; bi < bgSpots.length; bi++) {
     html += miniPineSVG(bgSpots[bi], vyHillFrontY(bgSpots[bi]) + 2, 0.6, 'vy-bg-tree');
-  }
-  var shoreSpots = [78, 118, 282, 322];
-  for (var si = 0; si < shoreSpots.length; si++) {
-    html += miniPineSVG(shoreSpots[si], 8 + (si % 2) * 6, 0.5, 'vy-bg-tree');
   }
   var pathsideSpots = [[150,190,0.62],[168,200,0.5],[232,200,0.5],[250,192,0.62]];
   for (var pi = 0; pi < pathsideSpots.length; pi++) {
