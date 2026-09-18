@@ -81,14 +81,9 @@
     #vy-star { transition: opacity 1.4s ease; }
     #vy-star circle { animation: vy-twinkle 3.6s ease-in-out infinite; }
     @keyframes vy-twinkle { 0%,100% { opacity:0.25; } 50% { opacity:1; } }
-    #vy-moon, #vy-sun, #vy-moon-glow, #vy-sun-glow { transition: opacity 1.6s ease; }
+    #vy-moon-g, #vy-sun-g { transition: opacity 1.6s ease; }
     #vy-horizon-glow { transition: opacity 1.6s ease; }
-    .score-center {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-      padding-bottom: 22px; pointer-events: none;
-    }
-    .score-num { font-size: 52px; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.35); }
+    #vy-moon-num, #vy-sun-num { font-family: system-ui, -apple-system, sans-serif; paint-order: stroke; }
 
     .rings-lbl {
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -564,26 +559,26 @@
 
             <ellipse id="vy-horizon-glow" cx="200" cy="165" rx="220" ry="70" fill="url(#vy-horizon-glow-grad)" opacity="0"/>
 
-            <g id="vy-moon-g" transform="translate(200,25)">
-              <circle id="vy-moon-glow" r="34" fill="url(#vy-moon-glow-grad)"/>
-              <circle id="vy-moon" r="15" fill="#eef3ff"/>
-              <circle cx="-4" cy="-5" r="2.6" fill="#c9d6ef"/>
-              <circle cx="5" cy="3" r="3.4" fill="#c9d6ef"/>
-              <circle cx="2" cy="-7" r="1.6" fill="#c9d6ef"/>
-            </g>
-
-            <g id="vy-sun-g" transform="translate(200,25)">
-              <circle id="vy-sun-glow" r="46" fill="url(#vy-sun-glow-grad)"/>
-              <circle id="vy-sun" r="16" fill="#ffd35c"/>
-            </g>
-
             <polygon id="vy-mtn-far" points="0,150 40,118 90,142 140,110 190,138 235,116 280,140 330,120 400,146 400,220 0,220" fill="#141c33"/>
             <polygon id="vy-mtn-near" points="0,175 55,148 110,170 175,140 230,168 300,150 400,172 400,220 0,220" fill="#0b1224"/>
             <rect id="vy-valley" x="0" y="175" width="400" height="45" fill="#0a1420"/>
+
+            <g id="vy-moon-g" transform="translate(200,25)">
+              <circle id="vy-moon-glow" r="46" fill="url(#vy-moon-glow-grad)"/>
+              <circle id="vy-moon" r="22" fill="#eef3ff"/>
+              <circle cx="-13" cy="-9" r="3.2" fill="#c9d6ef"/>
+              <circle cx="12" cy="10" r="4" fill="#c9d6ef"/>
+              <circle cx="6" cy="-14" r="2.2" fill="#c9d6ef"/>
+              <circle cx="-9" cy="13" r="2.6" fill="#c9d6ef"/>
+              <text id="vy-moon-num" x="0" y="0" dy="0.35em" text-anchor="middle" font-size="16" font-weight="900" fill="#1a2333">0</text>
+            </g>
+
+            <g id="vy-sun-g" transform="translate(200,25)">
+              <circle id="vy-sun-glow" r="58" fill="url(#vy-sun-glow-grad)"/>
+              <circle id="vy-sun" r="22" fill="#ffd35c"/>
+              <text id="vy-sun-num" x="0" y="0" dy="0.35em" text-anchor="middle" font-size="16" font-weight="900" fill="#5a3d0a">0</text>
+            </g>
           </svg>
-          <div class="score-center">
-            <div class="score-num" id="score-num">0</div>
-          </div>
         </div>
       </div>
       <div class="rings-sticky">
@@ -842,7 +837,8 @@ function init() {
   document.getElementById('nav-date').textContent = d;
 
   var s = SCORE.val;
-  var num  = document.getElementById('score-num');
+  var moonNum = document.getElementById('vy-moon-num');
+  var sunNum  = document.getElementById('vy-sun-num');
 
   seedValleyStars();
   applyValleyScene(0);
@@ -850,7 +846,10 @@ function init() {
 
   var n = 0, step = s / 60;
   var t = setInterval(function() {
-    n = Math.min(n + step, s); num.textContent = Math.round(n);
+    n = Math.min(n + step, s);
+    var val = Math.round(n);
+    if (moonNum) moonNum.textContent = val;
+    if (sunNum)  sunNum.textContent  = val;
     if (n >= s) clearInterval(t);
   }, 16);
 
