@@ -24,15 +24,12 @@
 
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(ellipse 70% 45% at 15% -5%, rgba(99,102,241,0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 55% 35% at 90% 105%, rgba(14,165,233,0.14) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%),
-        linear-gradient(160deg, #070b15 0%, #0d1a2e 60%, #070f1e 100%);
+      background: linear-gradient(180deg, #060a16 0%, #0a1220 55%, #0a1512 100%);
       background-attachment: fixed;
       color: var(--text);
       min-height: 100vh;
       -webkit-tap-highlight-color: transparent;
+      transition: background 1.8s ease;
     }
 
 
@@ -79,21 +76,27 @@
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--muted); margin-bottom: 16px;
     }
-    .score-ring-wrap { position: relative; width: 160px; height: 160px; flex-shrink:0; }
-    .score-ring-wrap svg { display: block; }
-    .s-bg   { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 10; }
-    .s-fill {
-      fill: none; stroke-width: 10; stroke-linecap: round;
-      stroke-dasharray: 408; stroke-dashoffset: 408;
-      transition: stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1);
+
+    /* Valley sky-progression card (replaces the circular score ring) */
+    .valley-card {
+      position: relative; width: 100%; max-width: 400px; height: 220px;
+      border-radius: 20px; overflow: hidden; flex-shrink: 0;
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.06);
     }
+    .valley-card svg { display: block; width: 100%; height: 100%; }
+    #vy-star { transition: opacity 1.4s ease; }
+    #vy-star circle { animation: vy-twinkle 3.6s ease-in-out infinite; }
+    @keyframes vy-twinkle { 0%,100% { opacity:0.25; } 50% { opacity:1; } }
+    #vy-moon, #vy-sun, #vy-moon-glow, #vy-sun-glow { transition: opacity 1.6s ease; }
+    #vy-horizon-glow { transition: opacity 1.6s ease; }
     .score-center {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      padding-bottom: 16px; pointer-events: none;
     }
-    .score-num   { font-size: 52px; font-weight: 900; line-height: 1; }
-    .score-denom { font-size: 13px; color: var(--muted); }
-    .score-delta { font-size: 12px; font-weight: 700; margin-top: 14px; }
+    .score-num   { font-size: 52px; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.35); }
+    .score-denom { font-size: 13px; color: rgba(255,255,255,0.75); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .score-delta { font-size: 12px; font-weight: 700; margin-top: 8px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
     .rings-lbl {
       font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -474,14 +477,14 @@
     .rings-scroll-inner { display:flex; flex-wrap:nowrap; justify-content:center; gap:4px; padding:8px 0 12px; }
     .ring-tile-h { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 2px 6px; border-radius:16px; transition:opacity 0.3s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1); flex:1; min-width:0; -webkit-tap-highlight-color:transparent; }
     .ring-tile-h:active { transform:scale(0.88); }
-    .ring-tile-h .rmini { position:relative; width:48px; height:48px; }
-    .ring-tile-h .rmini svg { display:block; }
-    .ring-tile-h .r-bloom { fill:none; stroke-linecap:round; transition:stroke-dashoffset 1.4s ease; }
-    .ring-tile-h .r-icon { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:17px; text-shadow:0 0 8px rgba(0,0,0,0.6); }
+    .ring-tile-h .rmini { position:relative; width:48px; height:52px; }
+    .ring-tile-h .rmini svg { display:block; overflow:visible; }
+    .ring-tile-h .r-tree-foliage { transition: r 0.9s cubic-bezier(.34,1.2,.4,1), cx 0.9s cubic-bezier(.34,1.2,.4,1), cy 0.9s cubic-bezier(.34,1.2,.4,1), opacity 0.6s ease; }
+    .ring-tile-h .r-tree-trunk { transition: height 0.9s cubic-bezier(.34,1.2,.4,1), y 0.9s cubic-bezier(.34,1.2,.4,1), width 0.9s cubic-bezier(.34,1.2,.4,1), x 0.9s cubic-bezier(.34,1.2,.4,1); }
     .ring-tile-h .r-pct { font-size:11px; font-weight:900; letter-spacing:-0.3px; }
     .ring-tile-h .r-name { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:.2px; text-align:center; line-height:1.2; width:100%; }
-    /* Sticky ring row */
-    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; background: radial-gradient(ellipse 70% 45% at 15% -5%, rgba(99,102,241,0.18) 0%, transparent 65%), radial-gradient(ellipse 55% 35% at 90% 105%, rgba(14,165,233,0.14) 0%, transparent 65%), radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%), linear-gradient(160deg, #070b15 0%, #0d1a2e 60%, #070f1e 100%); background-attachment:fixed; }
+    /* Sticky ring row - meadow floor beneath the valley card, tone follows time-of-day */
+    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0 16px 0; background: linear-gradient(180deg, #0d1a17 0%, #0a1512 100%); background-attachment:fixed; transition: background 1.6s ease; }
     /* Preview panel */
     .ring-preview-wrap { width:100%; padding:0 0 48px; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
@@ -518,40 +521,10 @@
 </head>
 <body>
 
-<!-- Background decorations -->
+<!-- Background decorations: faint ambient stars + horizon glow, echoing the valley card's time of day -->
 <div id="deco-wrap" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden">
-  <!-- Corner glows -->
-  <div style="position:absolute;top:-120px;left:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(99,102,241,0.18) 0%,transparent 68%)"></div>
-  <div style="position:absolute;bottom:-100px;right:-100px;width:380px;height:380px;background:radial-gradient(circle,rgba(14,165,233,0.16) 0%,transparent 68%)"></div>
-  <div style="position:absolute;top:35%;right:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(139,92,246,0.11) 0%,transparent 70%)"></div>
-  <div style="position:absolute;bottom:20%;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%)"></div>
-  <!-- Dot grid -->
-  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.055" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-        <circle cx="1.5" cy="1.5" r="1.5" fill="#7090c8"/>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#dots)"/>
-  </svg>
-  <!-- Diagonal lines top-right -->
-  <svg style="position:absolute;top:0;right:0;width:220px;height:220px;opacity:0.04" xmlns="http://www.w3.org/2000/svg">
-    <defs><pattern id="diag" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="18" stroke="#a5b4fc" stroke-width="1"/>
-    </pattern></defs>
-    <rect width="220" height="220" fill="url(#diag)"/>
-  </svg>
-  <!-- Subtle arc lines bottom-left -->
-  <svg style="position:absolute;bottom:-20px;left:-20px;width:200px;height:200px;opacity:0.06" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="0" cy="200" r="80"  fill="none" stroke="#38bdf8" stroke-width="1"/>
-    <circle cx="0" cy="200" r="120" fill="none" stroke="#38bdf8" stroke-width="1"/>
-    <circle cx="0" cy="200" r="160" fill="none" stroke="#38bdf8" stroke-width="1"/>
-  </svg>
-  <!-- Hex ring top-center -->
-  <svg style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:160px;height:160px;opacity:0.05" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="none" stroke="#a5b4fc" stroke-width="2"/>
-    <polygon points="50,18 78,33 78,67 50,82 22,67 22,33" fill="none" stroke="#a5b4fc" stroke-width="1.5"/>
-    <polygon points="50,31 66,40 66,60 50,69 34,60 34,40" fill="none" stroke="#a5b4fc" stroke-width="1"/>
+  <div id="bg-glow" style="position:absolute;left:50%;bottom:-10%;transform:translateX(-50%);width:140vw;height:60vh;background:radial-gradient(ellipse 60% 60% at 50% 100%,rgba(255,180,90,0.08) 0%,transparent 70%);transition:background 1.8s ease"></div>
+  <svg id="bg-stars" viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:65%;opacity:1;transition:opacity 1.8s ease" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
   </svg>
 </div>
 
@@ -572,23 +545,57 @@
     <div class="home-scene">
       <div class="home-score-area">
         <div class="score-lbl">Today's Body Score</div>
-        <div class="score-ring-wrap" style="cursor:pointer" onclick="openBodyScore()">
-          <svg id="score-svg" width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 10px #22c55e88)">
-            <circle class="s-bg" cx="80" cy="80" r="65"/>
-            <circle id="score-bloom" cx="80" cy="80" r="65" fill="none" stroke="#22c55e"
-              stroke-width="20" stroke-linecap="round" opacity="0.13"
-              stroke-dasharray="408" stroke-dashoffset="408" transform="rotate(-90 80 80)"
-              style="transition:stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1)"/>
-            <circle class="s-fill" id="score-ring" cx="80" cy="80" r="65"
-              stroke="#22c55e" transform="rotate(-90 80 80)"/>
+        <div class="valley-card" style="cursor:pointer" onclick="openBodyScore()">
+          <svg id="valley-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMax slice">
+            <defs>
+              <linearGradient id="vy-sky-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-stop-1" offset="0%"  stop-color="#050a16"/>
+                <stop id="vy-stop-2" offset="60%" stop-color="#0c1a30"/>
+                <stop id="vy-stop-3" offset="100%" stop-color="#111c2e"/>
+              </linearGradient>
+              <radialGradient id="vy-moon-glow-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#dce8ff" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#dce8ff" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="vy-sun-glow-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffd27a" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#ffd27a" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="vy-horizon-glow-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff9d5c" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#ff9d5c" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <rect x="0" y="0" width="400" height="220" fill="url(#vy-sky-grad)"/>
+
+            <g id="vy-star"></g>
+
+            <ellipse id="vy-horizon-glow" cx="200" cy="165" rx="220" ry="70" fill="url(#vy-horizon-glow-grad)" opacity="0"/>
+
+            <g id="vy-moon-g" transform="translate(200,25)">
+              <circle id="vy-moon-glow" r="34" fill="url(#vy-moon-glow-grad)"/>
+              <circle id="vy-moon" r="15" fill="#eef3ff"/>
+              <circle cx="-4" cy="-5" r="2.6" fill="#c9d6ef"/>
+              <circle cx="5" cy="3" r="3.4" fill="#c9d6ef"/>
+              <circle cx="2" cy="-7" r="1.6" fill="#c9d6ef"/>
+            </g>
+
+            <g id="vy-sun-g" transform="translate(200,25)">
+              <circle id="vy-sun-glow" r="46" fill="url(#vy-sun-glow-grad)"/>
+              <circle id="vy-sun" r="16" fill="#ffd35c"/>
+            </g>
+
+            <polygon id="vy-mtn-far" points="0,150 40,118 90,142 140,110 190,138 235,116 280,140 330,120 400,146 400,220 0,220" fill="#141c33"/>
+            <polygon id="vy-mtn-near" points="0,175 55,148 110,170 175,140 230,168 300,150 400,172 400,220 0,220" fill="#0b1224"/>
+            <rect id="vy-valley" x="0" y="175" width="400" height="45" fill="#0a1420"/>
           </svg>
           <div class="score-center">
-            <div class="score-num" id="score-num" style="color:#22c55e">0</div>
+            <div class="score-num" id="score-num">0</div>
             <div class="score-denom">/ 100</div>
+            <div class="score-delta" id="score-delta"></div>
           </div>
         </div>
-        <div class="score-delta" id="score-delta" style="cursor:pointer" onclick="openBodyScore()"></div>
-        <div id="score-glow-bg" class="score-glow-bg" style="background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(34,197,94,0.22) 0%,transparent 70%)"></div>
       </div>
       <div class="rings-sticky">
         <div class="rings-scroll-outer">
@@ -845,30 +852,21 @@ function init() {
   var d = new Date().toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
   document.getElementById('nav-date').textContent = d;
 
-  var s = SCORE.val, circ = 408, off = circ - circ * s / 100;
-  var ring = document.getElementById('score-ring');
+  var s = SCORE.val;
   var num  = document.getElementById('score-num');
   var delt = document.getElementById('score-delta');
-  var col  = getScoreColor(s);
-  ring.style.stroke = col;
-  num.style.color = col;
-  var bloom = document.getElementById('score-bloom');
-  var svg   = document.getElementById('score-svg');
-  if (bloom) bloom.style.stroke = col;
-  if (svg)   svg.style.filter   = 'drop-shadow(0 0 12px ' + col + '90)';
-  var glowBg = document.getElementById('score-glow-bg');
-  if (glowBg) glowBg.style.background = 'radial-gradient(ellipse 70% 80% at 50% 50%,' + col + '38 0%,' + col + '08 45%,transparent 70%)';
-  setTimeout(function() {
-    ring.style.strokeDashoffset = off;
-    if (bloom) bloom.style.strokeDashoffset = off;
-  }, 80);
+
+  seedValleyStars();
+  applyValleyScene(0);
+  setTimeout(function() { applyValleyScene(s); }, 80);
+
   var n = 0, step = s / 60;
   var t = setInterval(function() {
     n = Math.min(n + step, s); num.textContent = Math.round(n);
     if (n >= s) clearInterval(t);
   }, 16);
   delt.textContent = (SCORE.delta >= 0 ? '↑ +' : '↓ ') + Math.abs(SCORE.delta) + ' from yesterday';
-  delt.style.color = SCORE.delta >= 0 ? '#22c55e' : '#f87171';
+  delt.style.color = SCORE.delta >= 0 ? '#a7f3d0' : '#fca5a5';
 
   renderRingRow();
 
@@ -898,6 +896,110 @@ function getScoreColor(score) {
   return 'hsl(' + hue.toFixed(1) + ',' + sat + '%,' + lit + '%)';
 }
 
+/* ── Valley sky progression ──
+   0%   = full moon at the zenith, night sky, stars out
+   50%  = moon has set on the right horizon; sun begins rising on the left horizon
+   100% = sun at the zenith, full daylight
+*/
+var VY_KEYFRAMES = {
+  night: { sky1:[5,10,22],   sky2:[12,26,48],   sky3:[17,28,46],    mtnFar:[20,28,51], mtnNear:[11,18,36], valley:[10,20,32] },
+  dawn:  { sky1:[16,20,48],  sky2:[64,52,84],   sky3:[214,140,110], mtnFar:[46,42,66], mtnNear:[26,26,42], valley:[30,44,38] },
+  day:   { sky1:[70,150,224],sky2:[150,205,235],sky3:[214,236,248], mtnFar:[63,107,74],mtnNear:[44,79,55], valley:[58,125,68] }
+};
+
+function vyLerp(a, b, t) {
+  return [
+    Math.round(a[0] + (b[0]-a[0])*t),
+    Math.round(a[1] + (b[1]-a[1])*t),
+    Math.round(a[2] + (b[2]-a[2])*t)
+  ];
+}
+function vyRgb(c) { return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')'; }
+
+function vySkyColors(p) {
+  var A, B, t;
+  if (p <= 50) { A = VY_KEYFRAMES.night; B = VY_KEYFRAMES.dawn; t = p / 50; }
+  else         { A = VY_KEYFRAMES.dawn;  B = VY_KEYFRAMES.day;  t = (p - 50) / 50; }
+  var out = {};
+  for (var k in A) out[k] = vyLerp(A[k], B[k], t);
+  return out;
+}
+
+function vyCelestialPos(p) {
+  var cx = 200, cy = 165, R = 140;
+  var pm = Math.min(p, 50), ps = Math.max(p, 50);
+  var angM = 90 * (1 - pm / 50);              // 90°(top) → 0°(right horizon)
+  var angS = 180 - 90 * ((ps - 50) / 50);     // 180°(left horizon) → 90°(top)
+  var radM = angM * Math.PI / 180, radS = angS * Math.PI / 180;
+  return {
+    moon: { x: cx + R * Math.cos(radM), y: cy - R * Math.sin(radM) },
+    sun:  { x: cx + R * Math.cos(radS), y: cy - R * Math.sin(radS) }
+  };
+}
+
+function seedValleyStars() {
+  var pts = [[24,18],[70,10],[110,26],[150,14],[190,22],[230,10],[270,24],[310,14],[350,20],[380,30],
+             [16,44],[60,50],[100,38],[140,48],[180,40],[220,52],[260,42],[300,50],[340,38],[380,54],
+             [40,64],[130,60],[210,66],[290,58]];
+  var vy = document.getElementById('vy-star');
+  if (vy) {
+    var html = '';
+    for (var i = 0; i < pts.length; i++) {
+      var r = (0.6 + Math.random() * 0.9).toFixed(2);
+      html += '<circle cx="' + pts[i][0] + '" cy="' + pts[i][1] + '" r="' + r + '" fill="#fff" style="animation-delay:' + (Math.random()*3.6).toFixed(2) + 's"/>';
+    }
+    vy.innerHTML = html;
+  }
+  var bg = document.getElementById('bg-stars');
+  if (bg) {
+    var html2 = '';
+    for (var j = 0; j < 55; j++) {
+      var x = (Math.random()*100).toFixed(1), y = (Math.random()*85).toFixed(1), rr = (0.15+Math.random()*0.35).toFixed(2);
+      html2 += '<circle cx="' + x + '" cy="' + y + '" r="' + rr + '" fill="#fff" opacity="' + (0.3+Math.random()*0.5).toFixed(2) + '"/>';
+    }
+    bg.innerHTML = html2;
+  }
+}
+
+function applyValleyScene(p) {
+  p = Math.max(0, Math.min(100, p));
+  var c = vySkyColors(p);
+  var pos = vyCelestialPos(p);
+
+  var s1 = document.getElementById('vy-stop-1'), s2 = document.getElementById('vy-stop-2'), s3 = document.getElementById('vy-stop-3');
+  if (s1) s1.setAttribute('stop-color', vyRgb(c.sky1));
+  if (s2) s2.setAttribute('stop-color', vyRgb(c.sky2));
+  if (s3) s3.setAttribute('stop-color', vyRgb(c.sky3));
+  var mf = document.getElementById('vy-mtn-far'), mn = document.getElementById('vy-mtn-near'), vf = document.getElementById('vy-valley');
+  if (mf) mf.setAttribute('fill', vyRgb(c.mtnFar));
+  if (mn) mn.setAttribute('fill', vyRgb(c.mtnNear));
+  if (vf) vf.setAttribute('fill', vyRgb(c.valley));
+
+  var moonOp = p <= 46 ? 1 : (p <= 54 ? Math.max(0, 1 - (p-46)/8) : 0);
+  var sunOp  = p >= 54 ? 1 : (p >= 46 ? Math.max(0, (p-46)/8) : 0);
+  var moonG = document.getElementById('vy-moon-g'), sunG = document.getElementById('vy-sun-g');
+  if (moonG) { moonG.setAttribute('transform', 'translate(' + pos.moon.x.toFixed(1) + ',' + pos.moon.y.toFixed(1) + ')'); moonG.style.opacity = moonOp; }
+  if (sunG)  { sunG.setAttribute('transform',  'translate(' + pos.sun.x.toFixed(1)  + ',' + pos.sun.y.toFixed(1)  + ')'); sunG.style.opacity = sunOp; }
+
+  var starOp = p <= 28 ? 1 : (p <= 42 ? Math.max(0, 1 - (p-28)/14) : 0);
+  var starEl = document.getElementById('vy-star');
+  if (starEl) starEl.style.opacity = starOp;
+  var bgStars = document.getElementById('bg-stars');
+  if (bgStars) bgStars.style.opacity = (starOp * 0.8).toFixed(2);
+
+  var g = 0;
+  if (p > 36 && p < 70) g = p <= 52 ? (p-36)/16 : (70-p)/18;
+  g = Math.max(0, Math.min(1, g));
+  var hg = document.getElementById('vy-horizon-glow');
+  if (hg) hg.style.opacity = (g * 0.9).toFixed(2);
+
+  document.body.style.background = 'linear-gradient(180deg,' + vyRgb(c.sky1) + ' 0%,' + vyRgb(c.sky3) + ' 55%,' + vyRgb(c.valley) + ' 100%)';
+  var bgGlow = document.getElementById('bg-glow');
+  if (bgGlow) bgGlow.style.background = 'radial-gradient(ellipse 60% 60% at 50% 100%, rgba(' + c.sky3.join(',') + ',' + (0.10 + g*0.14).toFixed(2) + ') 0%, transparent 70%)';
+  var sticky = document.querySelector('.rings-sticky');
+  if (sticky) sticky.style.background = 'linear-gradient(180deg,' + vyRgb(c.valley) + ' 0%, ' + vyRgb(c.mtnNear) + ' 100%)';
+}
+
 function updateRingDivider(color) {
   var el = document.getElementById('ring-divider-line');
   if (!el) return;
@@ -907,35 +1009,59 @@ function updateRingDivider(color) {
 
 var wheelActiveIdx = 0;
 
+/* Tree geometry: sapling at pct 0 growing to full canopy at pct 1 */
+function treeGeom(pct) {
+  pct = Math.max(0, Math.min(1, pct));
+  var trunkH = 6 + pct * 15, trunkW = 2 + pct * 2.2;
+  var topY = 48 - trunkH;
+  return { trunkH: trunkH, trunkW: trunkW, topY: topY, r1: 4 + pct*9.5, r2: 3 + pct*7, r3: 3 + pct*7 };
+}
+
+function treeSVG(pct, color) {
+  var cx = 24, g0 = treeGeom(0), gF = treeGeom(pct);
+  return '<svg width="48" height="52" viewBox="0 0 48 52" overflow="visible">'
+    + '<ellipse cx="' + cx + '" cy="49" rx="' + (5 + pct*7).toFixed(1) + '" ry="2" fill="rgba(0,0,0,0.28)"/>'
+    + '<rect class="r-tree-trunk" x="' + (cx-g0.trunkW/2).toFixed(1) + '" y="' + g0.topY.toFixed(1) + '" width="' + g0.trunkW.toFixed(1) + '" height="' + g0.trunkH.toFixed(1) + '" rx="1.2" fill="#6b4a2f"'
+      + ' data-x="' + (cx-gF.trunkW/2).toFixed(1) + '" data-y="' + gF.topY.toFixed(1) + '" data-w="' + gF.trunkW.toFixed(1) + '" data-h="' + gF.trunkH.toFixed(1) + '"/>'
+    + '<circle class="r-tree-foliage" cx="' + (cx-g0.r2*0.75).toFixed(1) + '" cy="' + (g0.topY-g0.r2*0.5).toFixed(1) + '" r="' + g0.r2.toFixed(1) + '" fill="' + color + '" opacity="0.88"'
+      + ' data-cx="' + (cx-gF.r2*0.75).toFixed(1) + '" data-cy="' + (gF.topY-gF.r2*0.5).toFixed(1) + '" data-r="' + gF.r2.toFixed(1) + '"/>'
+    + '<circle class="r-tree-foliage" cx="' + (cx+g0.r3*0.75).toFixed(1) + '" cy="' + (g0.topY-g0.r3*0.5).toFixed(1) + '" r="' + g0.r3.toFixed(1) + '" fill="' + color + '" opacity="0.88"'
+      + ' data-cx="' + (cx+gF.r3*0.75).toFixed(1) + '" data-cy="' + (gF.topY-gF.r3*0.5).toFixed(1) + '" data-r="' + gF.r3.toFixed(1) + '"/>'
+    + '<circle class="r-tree-foliage" cx="' + cx + '" cy="' + (g0.topY-g0.r1*0.65).toFixed(1) + '" r="' + g0.r1.toFixed(1) + '" fill="' + color + '"'
+      + ' data-cx="' + cx + '" data-cy="' + (gF.topY-gF.r1*0.65).toFixed(1) + '" data-r="' + gF.r1.toFixed(1) + '"/>'
+    + '</svg>';
+}
+
 function renderRingRow() {
   var row = document.getElementById('ring-row');
   if (!row) return;
   var html = '';
   for (var i = 0; i < RINGS.length; i++) {
     var ring = RINGS[i];
-    var Rv = 18, circ = +(2 * Math.PI * Rv).toFixed(2);
-    var off = +(circ - circ * ring.pct).toFixed(2);
     var isActive = i === wheelActiveIdx;
     var pct = Math.round(ring.pct * 100) + '%';
     html += '<div class="ring-tile-h' + (isActive ? ' active' : '') + '" onclick="setWheelActive(' + i + ')">'
-      + '<div class="rmini"><svg width="48" height="48" viewBox="0 0 48 48">'
-      + '<circle cx="24" cy="24" r="' + Rv + '" fill="none" stroke="' + ring.color + '" stroke-width="6" opacity="0.15" stroke-linecap="round"/>'
-      + '<circle class="r-bloom" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
-      + ' stroke-width="10" stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
-      + ' data-off="' + off + '" transform="rotate(-90 24 24)" opacity="0.14"/>'
-      + '<circle class="r-fill" cx="24" cy="24" r="' + Rv + '" stroke="' + ring.color + '"'
-      + ' stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '"'
-      + ' data-off="' + off + '" transform="rotate(-90 24 24)"/>'
-      + '</svg><div class="r-icon">' + ring.icon + '</div></div>'
+      + '<div class="rmini">' + treeSVG(ring.pct, ring.color) + '</div>'
       + '<div class="r-pct" style="color:' + ring.color + '">' + pct + '</div>'
       + '<div class="r-name">' + ring.name + '</div>'
       + '</div>';
   }
   row.innerHTML = html;
   setTimeout(function() {
-    var fills = row.querySelectorAll('.r-fill, .r-bloom');
-    for (var i = 0; i < fills.length; i++) {
-      fills[i].style.strokeDashoffset = fills[i].getAttribute('data-off');
+    var trunks = row.querySelectorAll('.r-tree-trunk');
+    for (var i = 0; i < trunks.length; i++) {
+      var el = trunks[i];
+      el.setAttribute('x', el.getAttribute('data-x'));
+      el.setAttribute('y', el.getAttribute('data-y'));
+      el.setAttribute('width', el.getAttribute('data-w'));
+      el.setAttribute('height', el.getAttribute('data-h'));
+    }
+    var fol = row.querySelectorAll('.r-tree-foliage');
+    for (var j = 0; j < fol.length; j++) {
+      var f = fol[j];
+      f.setAttribute('cx', f.getAttribute('data-cx'));
+      f.setAttribute('cy', f.getAttribute('data-cy'));
+      f.setAttribute('r', f.getAttribute('data-r'));
     }
   }, 200);
   updateRingDivider(RINGS[wheelActiveIdx].color);
