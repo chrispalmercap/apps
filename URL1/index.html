@@ -1024,9 +1024,9 @@ function vyTriPoly(tri, colorFn, seed) {
    concentrically, plus a hazy background strata structure spanning behind everything. */
 var VY_STRATA_PTS = [[20,180],[90,158],[160,138],[200,108],[240,138],[310,158],[380,180]];
 var VY_SAGE_PTS   = [[205,225],[240,180],[265,200],[290,152],[318,172],[345,143],[368,183],[400,222]];
-var VY_PALE_PTS   = [[148,230],[172,188],[194,204],[216,148],[236,132],[256,150],[276,200],[298,226]];
-var VY_BLUE_PTS   = [[0,232],[28,188],[54,205],[80,143],[102,118],[126,150],[147,108],[168,140],[192,176],[216,202],[232,226]];
-var VY_BROWN_PTS  = [[232,228],[262,190],[284,205],[308,150],[334,108],[358,140],[382,98],[400,122]];
+var VY_PALE_PTS   = [[148,230],[172,188],[194,204],[216,148],[236,96],[256,148],[276,200],[298,226]];
+var VY_BLUE_PTS   = [[0,232],[28,188],[54,205],[80,143],[102,118],[126,150],[147,108],[168,140],[192,176],[224,200],[260,224]];
+var VY_BROWN_PTS  = [[200,224],[228,192],[252,206],[280,150],[308,108],[334,140],[360,98],[384,122],[400,135]];
 var VY_RUST_PTS   = [[0,292],[34,250],[64,266],[94,234],[126,270]];
 
 function vyLerpColor(a, b, t) {
@@ -1047,11 +1047,18 @@ function buildMountains(c) {
     var base = t < 0.45 ? vyLerpColor(c.strataTop, c.strataMid, t/0.45) : vyLerpColor(c.strataMid, c.strataBase, (t-0.45)/0.55);
     return vyShade(base, (vySeeded(seed) - 0.5) * 16);
   }, 25);
-  if (sageG)  sageG.innerHTML  = lowPolyMesh(VY_SAGE_PTS,  320, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ4, (vySeeded(seed)-0.5)*24); }, 155);
-  if (paleG)  paleG.innerHTML  = lowPolyMesh(VY_PALE_PTS,  300, 8,  3, function(cx,cy,seed){ return vyShade(c.mtnZ3, (vySeeded(seed)-0.5)*22); }, 255);
-  if (blueG)  blueG.innerHTML  = lowPolyMesh(VY_BLUE_PTS,  340, 11, 3, function(cx,cy,seed){ return vyShade(c.mtnZ2, (vySeeded(seed)-0.5)*24); }, 355);
-  if (brownG) brownG.innerHTML = lowPolyMesh(VY_BROWN_PTS, 340, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ5, (vySeeded(seed)-0.5)*24); }, 455);
-  if (rustG)  rustG.innerHTML  = lowPolyMesh(VY_RUST_PTS,  340, 5,  2, function(cx,cy,seed){ return vyShade(c.mtnZ1, (vySeeded(seed)-0.5)*22); }, 555);
+  /* Atmospheric haze: each range sits at its own depth, so blend it toward the sky color by how far
+     back it is (furthest first: sage, then pale, then the near blue/brown pair, then rust in front) */
+  var sageBase  = vyLerpColor(c.mtnZ4, c.sky3, 0.24);
+  var paleBase  = vyLerpColor(c.mtnZ3, c.sky3, 0.15);
+  var blueBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.06);
+  var brownBase = vyLerpColor(c.mtnZ5, c.sky3, 0.06);
+  var rustBase  = c.mtnZ1;
+  if (sageG)  sageG.innerHTML  = lowPolyMesh(VY_SAGE_PTS,  320, 9,  3, function(cx,cy,seed){ return vyShade(sageBase,  (vySeeded(seed)-0.5)*22); }, 155);
+  if (paleG)  paleG.innerHTML  = lowPolyMesh(VY_PALE_PTS,  300, 8,  3, function(cx,cy,seed){ return vyShade(paleBase,  (vySeeded(seed)-0.5)*20); }, 255);
+  if (blueG)  blueG.innerHTML  = lowPolyMesh(VY_BLUE_PTS,  340, 11, 3, function(cx,cy,seed){ return vyShade(blueBase,  (vySeeded(seed)-0.5)*24); }, 355);
+  if (brownG) brownG.innerHTML = lowPolyMesh(VY_BROWN_PTS, 340, 9,  3, function(cx,cy,seed){ return vyShade(brownBase, (vySeeded(seed)-0.5)*24); }, 455);
+  if (rustG)  rustG.innerHTML  = lowPolyMesh(VY_RUST_PTS,  340, 5,  2, function(cx,cy,seed){ return vyShade(rustBase,  (vySeeded(seed)-0.5)*22); }, 555);
 
   var footG = document.getElementById('vy-foot-g');
   if (footG) {
