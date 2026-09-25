@@ -555,6 +555,9 @@
                 <stop offset="0%" stop-color="#ffb787" stop-opacity="0.6"/>
                 <stop offset="100%" stop-color="#ffb787" stop-opacity="0"/>
               </radialGradient>
+              <filter id="vy-soft-blur" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="6"/>
+              </filter>
             </defs>
 
             <rect x="0" y="0" width="400" height="340" fill="url(#vy-sky-grad)"/>
@@ -578,17 +581,16 @@
             </g>
 
             <g id="vy-sun-g" transform="translate(200,90)">
-              <circle id="vy-sun-glow" r="54" fill="url(#vy-sun-glow-grad)"/>
-              <circle id="vy-sun" r="20" fill="#f6c295"/>
+              <circle id="vy-sun-glow" r="46" fill="url(#vy-sun-glow-grad)" opacity="0.6"/>
+              <circle id="vy-sun" r="17" fill="#f9d9b8" opacity="0.9"/>
             </g>
 
-            <!-- Low-poly faceted valley: 4 jagged interlocking ranges (slate blue, grey, brown, terracotta)
-                 built from triangle facets at init/score-time by buildMountains(). Each nests inside the
-                 saddle of the range in front, cascading back into the distance. -->
-            <g id="vy-far-g"></g>
-            <g id="vy-dark-g"></g>
-            <g id="vy-mid-g"></g>
-            <g id="vy-near-g"></g>
+            <!-- Low-poly faceted valley: one continuous triangulated back range (blue-grey blending to
+                 sage) with two large terracotta/brown peaks overlapping in front at the corners. Built by
+                 buildMountains() using a jittered, seeded triangle mesh for a genuine low-poly look. -->
+            <g id="vy-mtn-back-g"></g>
+            <g id="vy-mtn-left-g"></g>
+            <g id="vy-mtn-right-g"></g>
 
             <!-- Tan foothills at the mountain base, above the lake -->
             <path id="vy-mtn-foot" d="M0,258 Q80,232 160,248 Q240,266 320,238 Q365,224 400,244 L400,340 L0,340 Z" fill="#c9a876"/>
@@ -914,12 +916,13 @@ function getScoreColor(score) {
    50%  = moon has set on the right horizon; sun begins rising on the left horizon
    100% = sun at the zenith, full daylight
 */
-/* Palette per spec: slate blue / grey / brown / terracotta mountains, tan meadow+foothills,
-   olive-green + dark-grey foreground hills, teal lake - sky runs blue (night/day) through pink (dawn/sunset) */
+/* Palette matching the reference: back mesh blends slate-blue (left) into sage-grey (right); front
+   corner peaks are terracotta (left) and brown (right); tan meadow+foothills; olive-green + dark-navy
+   foreground hills; teal lake - sky runs blue (night/day) through pink (dawn/sunset) */
 var VY_KEYFRAMES = {
-  night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],   mtnFar:[34,44,66],  mtnDark:[38,40,46],  mtnMid:[52,40,32],  mtnNear:[52,32,24],  mtnFoot:[42,36,28],  valley:[26,24,20],  hillBack:[34,40,24], hillFront:[24,26,30] },
-  dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],mtnFar:[86,104,148],mtnDark:[104,102,112],mtnMid:[128,96,76], mtnNear:[168,102,68],mtnFoot:[176,146,108],valley:[164,138,102],hillBack:[100,110,60],hillFront:[74,76,84] },
-  day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],mtnFar:[108,128,168],mtnDark:[132,132,140],mtnMid:[150,112,84],mtnNear:[196,118,76],mtnFoot:[212,184,144],valley:[199,170,128],hillBack:[124,136,74],hillFront:[92,96,104] }
+  night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],   mtnFar:[34,44,66],  mtnMid:[38,46,42],  mtnNear:[52,32,24],  mtnDark:[46,34,26],  mtnFoot:[42,36,28],  valley:[26,24,20],  hillBack:[34,40,24], hillFront:[20,24,34] },
+  dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],mtnFar:[86,104,148],mtnMid:[142,150,138],mtnNear:[168,102,68],mtnDark:[142,100,66],mtnFoot:[176,146,108],valley:[164,138,102],hillBack:[100,110,60],hillFront:[56,62,84] },
+  day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],mtnFar:[108,128,168],mtnMid:[168,178,162],mtnNear:[196,118,76],mtnDark:[164,116,74],mtnFoot:[212,184,144],valley:[199,170,128],hillBack:[124,136,74],hillFront:[70,78,104] }
 };
 
 function vyLerp(a, b, t) {
@@ -948,66 +951,119 @@ function vySetAll(selector, fill) {
   for (var i = 0; i < els.length; i++) els[i].setAttribute('fill', fill);
 }
 
-/* ── Low-poly faceted mountains ──
-   Each range is a silhouette polyline; buildMountains() slices every segment of it into small
-   triangle pairs down to the baseline, alternating light/dark shades of the range's base color -
-   the classic low-poly "gem cut" look, generated fresh whenever the palette changes. */
-var VY_FAR_PTS  = [[0,195],[110,192],[150,172],[190,186],[230,170],[270,190],[400,195]];
-var VY_DARK_PTS = [[0,162],[60,188],[95,168],[150,202],[190,208],[235,208],[270,188],[310,168],[350,192],[400,160]];
-var VY_MID_PTS  = [[0,148],[55,182],[85,162],[125,198],[150,212],[190,212],[230,190],[270,165],[310,195],[400,146]];
-var VY_NEAR_PTS = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
-
-function facetedRibbon(points, colorRgb, steps, baseline) {
-  baseline = baseline || 340;
-  var pts = [];
-  for (var i = 0; i < points.length - 1; i++) {
-    var a = points[i], b = points[i+1];
-    for (var s = 0; s < steps; s++) {
-      var t = s / steps;
-      pts.push([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
+/* ── True low-poly mountain mesh ──
+   A deterministic (seeded) jittered grid triangulation: each mountain silhouette becomes a mesh of
+   irregular triangles down to a baseline, every triangle independently shaded, giving the genuine
+   faceted-gem look instead of a repeating striped ribbon. Geometry is fixed per layer (same seed every
+   render); only the color passed to colorFn shifts with the time-of-day palette. */
+function vySeeded(seed) {
+  var x = Math.sin(seed * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+}
+function vyInterpY(pts, x) {
+  for (var i = 0; i < pts.length - 1; i++) {
+    var a = pts[i], b = pts[i+1];
+    if (x >= a[0] && x <= b[0]) {
+      var t = (b[0] === a[0]) ? 0 : (x - a[0]) / (b[0] - a[0]);
+      return a[1] + (b[1]-a[1]) * t;
     }
   }
-  pts.push(points[points.length-1]);
+  return pts[pts.length-1][1];
+}
+function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase) {
+  var minX = topPts[0][0], maxX = topPts[topPts.length-1][0];
+  var grid = [];
+  for (var r = 0; r <= rows; r++) {
+    var row = [];
+    for (var col = 0; col <= cols; col++) {
+      var x = minX + (maxX - minX) * (col / cols);
+      var topY = vyInterpY(topPts, x);
+      var y = topY + (baseY - topY) * (r / rows);
+      var jseed = seedBase + r*97 + col*31;
+      if (col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
+      if (r > 0 && r < rows)     y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
+      row.push([x, y]);
+    }
+    grid.push(row);
+  }
   var html = '';
-  for (var j = 0; j < pts.length - 1; j++) {
-    var x0 = pts[j][0], y0 = pts[j][1], x1 = pts[j+1][0], y1 = pts[j+1][1];
-    var shadeA = (j % 2 === 0) ? 14 : -12;
-    var shadeB = (j % 2 === 0) ? -7  : 18;
-    html += '<polygon points="' + x0.toFixed(1) + ',' + y0.toFixed(1) + ' ' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' ' + x0.toFixed(1) + ',' + baseline + '" fill="' + vyRgb(vyShade(colorRgb, shadeA)) + '"/>';
-    html += '<polygon points="' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' ' + x1.toFixed(1) + ',' + baseline + ' ' + x0.toFixed(1) + ',' + baseline + '" fill="' + vyRgb(vyShade(colorRgb, shadeB)) + '"/>';
+  for (var r = 0; r < rows; r++) {
+    for (var col = 0; col < cols; col++) {
+      var p00 = grid[r][col], p10 = grid[r][col+1], p01 = grid[r+1][col], p11 = grid[r+1][col+1];
+      var cellSeed = seedBase + r*53 + col*17;
+      var triA, triB;
+      if (vySeeded(cellSeed + 500) < 0.5) { triA = [p00,p10,p11]; triB = [p00,p11,p01]; }
+      else                                { triA = [p00,p10,p01]; triB = [p10,p11,p01]; }
+      html += vyTriPoly(triA, colorFn, cellSeed + 1);
+      html += vyTriPoly(triB, colorFn, cellSeed + 2);
+    }
   }
   return html;
 }
-
-function buildMountains(c) {
-  var farG = document.getElementById('vy-far-g'), darkG = document.getElementById('vy-dark-g'),
-      midG = document.getElementById('vy-mid-g'), nearG = document.getElementById('vy-near-g');
-  if (farG)  farG.innerHTML  = facetedRibbon(VY_FAR_PTS,  c.mtnFar,  2);
-  if (darkG) darkG.innerHTML = facetedRibbon(VY_DARK_PTS, c.mtnDark, 2);
-  if (midG)  midG.innerHTML  = facetedRibbon(VY_MID_PTS,  c.mtnMid,  3);
-  if (nearG) nearG.innerHTML = facetedRibbon(VY_NEAR_PTS, c.mtnNear, 3);
+function vyTriPoly(tri, colorFn, seed) {
+  var cx = (tri[0][0]+tri[1][0]+tri[2][0]) / 3, cy = (tri[0][1]+tri[1][1]+tri[2][1]) / 3;
+  var col = colorFn(cx, cy, seed);
+  var pts = tri.map(function(p){ return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+  return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* Low-poly teal lake with a triangular pink sunset reflection that tracks the sun/moon */
+/* Back range: one continuous mesh blending slate-blue (left) into sage-grey (right), with a darker
+   accent cluster near the center peaks where the sun/moon sits. Two large peaks (terracotta left,
+   brown right) overlap in front at the corners, matching the reference composition. */
+var VY_BACK_PTS  = [[0,225],[55,185],[110,155],[160,140],[200,150],[240,138],[290,165],[340,195],[400,220]];
+/* Inset well past x=0/400 - the card's aspect ratio crops roughly the outer 40-45 units of the
+   viewBox on each side via preserveAspectRatio="slice", so anchoring peaks at the true edges hides them */
+var VY_LEFT_PTS  = [[15,178],[70,148],[130,198],[180,248],[222,286]];
+var VY_RIGHT_PTS = [[178,286],[222,244],[272,192],[330,148],[385,175]];
+
+function buildMountains(c) {
+  var backG = document.getElementById('vy-mtn-back-g'),
+      leftG = document.getElementById('vy-mtn-left-g'),
+      rightG = document.getElementById('vy-mtn-right-g');
+  if (backG) {
+    backG.innerHTML = lowPolyMesh(VY_BACK_PTS, 270, 9, 3, function(cx, cy, seed) {
+      var fx = Math.max(0, Math.min(1, cx / 400));
+      var blend = [
+        c.mtnFar[0] + (c.mtnMid[0]-c.mtnFar[0]) * fx,
+        c.mtnFar[1] + (c.mtnMid[1]-c.mtnFar[1]) * fx,
+        c.mtnFar[2] + (c.mtnMid[2]-c.mtnFar[2]) * fx
+      ];
+      var accent = (cx > 140 && cx < 270 && cy < 195) ? -20 : 0;
+      return vyShade(blend, (vySeeded(seed) - 0.5) * 26 + accent);
+    }, 11);
+  }
+  if (leftG) {
+    leftG.innerHTML = lowPolyMesh(VY_LEFT_PTS, 320, 5, 3, function(cx, cy, seed) {
+      return vyShade(c.mtnNear, (vySeeded(seed) - 0.5) * 24);
+    }, 211);
+  }
+  if (rightG) {
+    rightG.innerHTML = lowPolyMesh(VY_RIGHT_PTS, 320, 5, 3, function(cx, cy, seed) {
+      return vyShade(c.mtnDark, (vySeeded(seed) - 0.5) * 24);
+    }, 411);
+  }
+}
+
+/* Low-poly teal lake with a soft warm glow reflection that tracks the sun/moon */
 var VY_LAKE_PTS = [[75,266],[140,258],[220,258],[285,266],[310,284],[295,304],[230,311],[160,310],[100,303],[62,285]];
 
-function buildLake(c, reflX, reflWeight) {
+function buildLake(c, reflX, reflWeight, isSun) {
   var lakeG = document.getElementById('vy-lake-g');
   if (!lakeG) return;
   var ptsStr = VY_LAKE_PTS.map(function(pt){ return pt[0] + ',' + pt[1]; }).join(' ');
-  var waterBase = [66, 166, 156];
+  var waterBase = [150, 170, 178];
   var lakeColor = [
-    Math.round(waterBase[0]*0.75 + c.sky3[0]*0.25),
-    Math.round(waterBase[1]*0.75 + c.sky3[1]*0.25),
-    Math.round(waterBase[2]*0.75 + c.sky3[2]*0.25)
+    Math.round(waterBase[0]*0.6 + c.sky3[0]*0.4),
+    Math.round(waterBase[1]*0.6 + c.sky3[1]*0.4),
+    Math.round(waterBase[2]*0.6 + c.sky3[2]*0.4)
   ];
-  var html = '<path d="M64,270 C130,252 270,252 316,270 Z" fill="rgba(0,0,0,0.14)"/>';
+  var html = '<path d="M64,270 C130,252 270,252 316,270 Z" fill="rgba(0,0,0,0.1)"/>';
   html += '<polygon points="' + ptsStr + '" fill="' + vyRgb(lakeColor) + '"/>';
-  html += '<polygon points="75,266 140,258 100,303 62,285" fill="' + vyRgb(vyShade(lakeColor, 12)) + '" opacity="0.55"/>';
-  html += '<polygon points="220,258 285,266 310,284 230,311 160,310" fill="' + vyRgb(vyShade(lakeColor, -9)) + '" opacity="0.4"/>';
-  html += '<polygon points="' + ptsStr + '" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>';
-  var apexY = 262, baseY = 300, halfW = 11 + reflWeight*5;
-  html += '<polygon points="' + reflX.toFixed(1) + ',' + apexY + ' ' + (reflX-halfW).toFixed(1) + ',' + baseY + ' ' + (reflX+halfW).toFixed(1) + ',' + baseY + '" fill="rgba(255,172,186,' + (0.6*reflWeight).toFixed(2) + ')"/>';
+  html += '<polygon points="75,266 140,258 100,303 62,285" fill="' + vyRgb(vyShade(lakeColor, 10)) + '" opacity="0.5"/>';
+  html += '<polygon points="220,258 285,266 310,284 230,311 160,310" fill="' + vyRgb(vyShade(lakeColor, -8)) + '" opacity="0.35"/>';
+  html += '<polygon points="' + ptsStr + '" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>';
+  var reflRgb = isSun ? [255,214,186] : [214,224,240];
+  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="279" rx="' + (30 + reflWeight*10).toFixed(1) + '" ry="' + (11 + reflWeight*5).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
 }
 
@@ -1121,7 +1177,7 @@ function applyValleyScene(p) {
   var reflWeight = moonOp + sunOp;
   var reflX = reflWeight > 0.02 ? (pos.moon.x*moonOp + pos.sun.x*sunOp) / reflWeight : 200;
   reflX = Math.max(130, Math.min(270, reflX));
-  buildLake(c, reflX, Math.min(1, reflWeight));
+  buildLake(c, reflX, Math.min(1, reflWeight), sunOp >= moonOp);
 
   var starOp = p <= 28 ? 1 : (p <= 42 ? Math.max(0, 1 - (p-28)/14) : 0);
   var starEl = document.getElementById('vy-star');
@@ -1216,7 +1272,7 @@ function renderRingRow() {
 
   var backPts = [], frontPts = [];
   for (var x = 0; x <= 400; x += 50) backPts.push([x, vyHillBackY(x)]);
-  for (var x = 0; x <= 400; x += 33) frontPts.push([x, vyHillFrontY(x)]);
+  for (var x = 0; x <= 400; x += 66) frontPts.push([x, vyHillFrontY(x)]);
   var backD  = 'M' + backPts.map(function(pt){ return pt[0] + ',' + pt[1].toFixed(1); }).join(' L')  + ' L400,210 L0,210 Z';
   var frontD = 'M' + frontPts.map(function(pt){ return pt[0] + ',' + pt[1].toFixed(1); }).join(' L') + ' L400,210 L0,210 Z';
 
@@ -1224,12 +1280,17 @@ function renderRingRow() {
     + '<path id="vy-hill-back" d="' + backD + '" fill="#385c3c"/>'
     + '<path id="vy-hill-front" d="' + frontD + '" fill="#20361f"/>';
 
-  /* low-poly facet overlay on the front hill - semi-transparent so it reads over any base color */
+  /* low-poly facet overlay on the front hill - a few large flat planes, semi-transparent so they
+     read over any base color */
   for (var fi = 0; fi < frontPts.length - 1; fi++) {
     var fa = frontPts[fi], fb = frontPts[fi+1];
-    var fshade = (fi % 2 === 0) ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.09)';
+    var fshade = (fi % 2 === 0) ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.1)';
     html += '<polygon points="' + fa[0]+','+fa[1].toFixed(1) + ' ' + fb[0]+','+fb[1].toFixed(1) + ' ' + fb[0]+',210" fill="' + fshade + '"/>';
   }
+
+  /* dark navy geometric wedges anchoring the bottom corners, like the reference */
+  html += '<polygon id="vy-hill-navy-l" points="0,210 0,142 95,178 62,210" fill="#232a3a"/>'
+    + '<polygon id="vy-hill-navy-r" points="400,210 400,150 305,182 336,210" fill="#232a3a"/>';
 
   html += '<path class="vy-path" d="M200,0 Q175,30 200,55 Q225,80 195,105 Q170,125 200,150 Q225,170 198,190 Q178,205 200,210 L214,210 Q230,205 212,190 Q236,170 214,150 Q186,125 208,105 Q234,80 212,55 Q234,30 214,0 Z" fill="#d8c39a" opacity="0.92"/>';
 
