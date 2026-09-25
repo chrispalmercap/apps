@@ -1019,10 +1019,10 @@ function vyTriPoly(tri, colorFn, seed) {
    range behind it is smaller with a saddle sitting higher, so it peeks through the gap in front of it.
    Each is still rendered as a genuine jittered low-poly mesh, just single-toned instead of x-blended. */
 var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
-var VY_MID_PTS   = [[0,175],[70,205],[130,225],[200,225],[270,205],[400,173]];
-var VY_DARK_PTS  = [[0,195],[100,165],[160,150],[240,150],[300,165],[400,193]];
-var VY_FAR_PTS   = [[0,215],[110,185],[170,120],[230,120],[290,185],[400,213]];
-var VY_BACK0_PTS = [[0,230],[130,195],[180,90],[220,90],[270,195],[400,228]];
+var VY_MID_PTS   = [[0,175],[45,198],[70,183],[100,203],[130,208],[270,208],[300,203],[330,183],[355,198],[400,173]];
+var VY_DARK_PTS  = [[0,245],[85,225],[115,235],[150,192],[160,150],[240,150],[250,192],[285,235],[315,225],[400,243]];
+var VY_FAR_PTS   = [[0,215],[70,195],[100,205],[135,155],[170,120],[230,120],[265,155],[300,205],[330,195],[400,213]];
+var VY_BACK0_PTS = [[0,230],[90,205],[115,215],[150,130],[180,90],[220,90],[250,130],[285,215],[310,205],[400,228]];
 
 /* Small angular foothills right at the lake's edge, distinct olive/tan low-poly shapes */
 var VY_FOOT1_PTS = [[6,278],[55,248],[115,258],[172,274]];
@@ -1033,10 +1033,10 @@ function buildMountains(c) {
   var back0G = document.getElementById('vy-mtn-back0-g'), farG = document.getElementById('vy-mtn-far-g'),
       darkG  = document.getElementById('vy-mtn-dark-g'),  midG = document.getElementById('vy-mtn-mid-g'),
       nearG  = document.getElementById('vy-mtn-near-g');
-  if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 6,  2, function(cx,cy,seed){ return vyShade(c.mtnZ2, (vySeeded(seed)-0.5)*20); }, 55);
-  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 7,  2, function(cx,cy,seed){ return vyShade(c.mtnZ4, (vySeeded(seed)-0.5)*22); }, 155);
-  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ3, (vySeeded(seed)-0.5)*22); }, 255);
-  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ5, (vySeeded(seed)-0.5)*24); }, 355);
+  if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ2, (vySeeded(seed)-0.5)*24); }, 55);
+  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ4, (vySeeded(seed)-0.5)*24); }, 155);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ3, (vySeeded(seed)-0.5)*24); }, 255);
+  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ5, (vySeeded(seed)-0.5)*24); }, 355);
   if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ1, (vySeeded(seed)-0.5)*24); }, 455);
 
   var footG = document.getElementById('vy-foot-g');
