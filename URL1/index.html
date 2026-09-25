@@ -585,10 +585,13 @@
               <circle id="vy-sun" r="17" fill="#f9d9b8" opacity="0.9"/>
             </g>
 
-            <!-- Low-poly faceted valley: one tall, sharp-peaked ridge line spanning the full width,
-                 its color sweeping rust -> slate-blue -> navy (behind the sun) -> sage -> brown left to
-                 right, built by buildMountains() as a jittered, seeded triangle mesh. -->
-            <g id="vy-mtn-g"></g>
+            <!-- Five separate cascading low-poly ranges, back to front, each its own color and each
+                 built as a genuinely jittered triangle mesh by buildMountains(). -->
+            <g id="vy-mtn-back0-g"></g>
+            <g id="vy-mtn-far-g"></g>
+            <g id="vy-mtn-dark-g"></g>
+            <g id="vy-mtn-mid-g"></g>
+            <g id="vy-mtn-near-g"></g>
 
             <!-- Small angular foothills right at the lake's edge, olive/tan, distinct from the peaks -->
             <g id="vy-foot-g"></g>
@@ -1011,21 +1014,15 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* One tall, sharp-peaked ridge line spanning the full width - color sweeps through 5 zones
-   (rust -> slate-blue -> navy behind the sun -> sage -> brown) as it crosses. */
-var VY_MTN_PTS = [[0,200],[35,145],[75,180],[115,110],[155,155],[195,90],[235,140],[270,100],[310,155],[350,115],[400,185]];
-
-function vyZoneBlend(fx, zones) {
-  for (var i = 0; i < zones.length - 1; i++) {
-    var t0 = zones[i][0], t1 = zones[i+1][0];
-    if (fx <= t1 || i === zones.length - 2) {
-      var lt = t1 > t0 ? Math.max(0, Math.min(1, (fx - t0) / (t1 - t0))) : 0;
-      var a = zones[i][1], b = zones[i+1][1];
-      return [a[0]+(b[0]-a[0])*lt, a[1]+(b[1]-a[1])*lt, a[2]+(b[2]-a[2])*lt];
-    }
-  }
-  return zones[zones.length-1][1];
-}
+/* Five separate cascading ranges (not one continuous ridge), each its own color from the palette,
+   nested like the earlier valley system: near is tallest with the lowest/widest saddle, and each
+   range behind it is smaller with a saddle sitting higher, so it peeks through the gap in front of it.
+   Each is still rendered as a genuine jittered low-poly mesh, just single-toned instead of x-blended. */
+var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
+var VY_MID_PTS   = [[0,175],[70,205],[130,225],[200,225],[270,205],[400,173]];
+var VY_DARK_PTS  = [[0,195],[100,165],[160,150],[240,150],[300,165],[400,193]];
+var VY_FAR_PTS   = [[0,215],[110,185],[170,120],[230,120],[290,185],[400,213]];
+var VY_BACK0_PTS = [[0,230],[130,195],[180,90],[220,90],[270,195],[400,228]];
 
 /* Small angular foothills right at the lake's edge, distinct olive/tan low-poly shapes */
 var VY_FOOT1_PTS = [[6,278],[55,248],[115,258],[172,274]];
@@ -1033,15 +1030,15 @@ var VY_FOOT2_PTS = [[150,274],[205,246],[262,256],[300,270]];
 var VY_FOOT3_PTS = [[278,272],[325,250],[385,264]];
 
 function buildMountains(c) {
-  var mtnG = document.getElementById('vy-mtn-g');
-  if (mtnG) {
-    var zones = [[0, c.mtnZ1], [0.28, c.mtnZ2], [0.5, c.mtnZ3], [0.7, c.mtnZ4], [1, c.mtnZ5]];
-    mtnG.innerHTML = lowPolyMesh(VY_MTN_PTS, 300, 13, 4, function(cx, cy, seed) {
-      var fx = Math.max(0, Math.min(1, cx / 400));
-      var base = vyZoneBlend(fx, zones);
-      return vyShade(base, (vySeeded(seed) - 0.5) * 24);
-    }, 77);
-  }
+  var back0G = document.getElementById('vy-mtn-back0-g'), farG = document.getElementById('vy-mtn-far-g'),
+      darkG  = document.getElementById('vy-mtn-dark-g'),  midG = document.getElementById('vy-mtn-mid-g'),
+      nearG  = document.getElementById('vy-mtn-near-g');
+  if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 6,  2, function(cx,cy,seed){ return vyShade(c.mtnZ2, (vySeeded(seed)-0.5)*20); }, 55);
+  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 7,  2, function(cx,cy,seed){ return vyShade(c.mtnZ4, (vySeeded(seed)-0.5)*22); }, 155);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ3, (vySeeded(seed)-0.5)*22); }, 255);
+  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 9,  3, function(cx,cy,seed){ return vyShade(c.mtnZ5, (vySeeded(seed)-0.5)*24); }, 355);
+  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(c.mtnZ1, (vySeeded(seed)-0.5)*24); }, 455);
+
   var footG = document.getElementById('vy-foot-g');
   if (footG) {
     var html = lowPolyMesh(VY_FOOT1_PTS, 296, 3, 2, function(cx, cy, seed) { return vyShade(c.footOlive, (vySeeded(seed)-0.5)*20); }, 501);
