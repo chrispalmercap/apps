@@ -585,17 +585,15 @@
               <circle id="vy-sun" r="17" fill="#f9d9b8" opacity="0.9"/>
             </g>
 
-            <!-- Low-poly faceted valley: one continuous triangulated back range (blue-grey blending to
-                 sage) with two large terracotta/brown peaks overlapping in front at the corners. Built by
-                 buildMountains() using a jittered, seeded triangle mesh for a genuine low-poly look. -->
-            <g id="vy-mtn-back-g"></g>
-            <g id="vy-mtn-left-g"></g>
-            <g id="vy-mtn-right-g"></g>
+            <!-- Low-poly faceted valley: one tall, sharp-peaked ridge line spanning the full width,
+                 its color sweeping rust -> slate-blue -> navy (behind the sun) -> sage -> brown left to
+                 right, built by buildMountains() as a jittered, seeded triangle mesh. -->
+            <g id="vy-mtn-g"></g>
 
-            <!-- Tan foothills at the mountain base, above the lake -->
-            <path id="vy-mtn-foot" d="M0,258 Q80,232 160,248 Q240,266 320,238 Q365,224 400,244 L400,340 L0,340 Z" fill="#c9a876"/>
+            <!-- Small angular foothills right at the lake's edge, olive/tan, distinct from the peaks -->
+            <g id="vy-foot-g"></g>
 
-            <path id="vy-valley" d="M0,310 L400,310 L400,340 L0,340 Z" fill="#436b3f"/>
+            <path id="vy-valley" d="M0,298 L400,298 L400,340 L0,340 Z" fill="#436b3f"/>
 
             <g id="vy-lake-g"></g>
 
@@ -916,13 +914,19 @@ function getScoreColor(score) {
    50%  = moon has set on the right horizon; sun begins rising on the left horizon
    100% = sun at the zenith, full daylight
 */
-/* Palette matching the reference: back mesh blends slate-blue (left) into sage-grey (right); front
-   corner peaks are terracotta (left) and brown (right); tan meadow+foothills; olive-green + dark-navy
-   foreground hills; teal lake - sky runs blue (night/day) through pink (dawn/sunset) */
+/* Palette matching the reference: one ridge line sweeping rust -> slate-blue -> navy (behind the sun)
+   -> sage -> brown left to right; olive/tan foothills right at the lake edge; tan meadow; olive-green
+   + dark-navy foreground hills; pale lake - sky runs blue (night/day) through pink (dawn/sunset) */
 var VY_KEYFRAMES = {
-  night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],   mtnFar:[34,44,66],  mtnMid:[38,46,42],  mtnNear:[52,32,24],  mtnDark:[46,34,26],  mtnFoot:[42,36,28],  valley:[26,24,20],  hillBack:[34,40,24], hillFront:[20,24,34] },
-  dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],mtnFar:[86,104,148],mtnMid:[142,150,138],mtnNear:[168,102,68],mtnDark:[142,100,66],mtnFoot:[176,146,108],valley:[164,138,102],hillBack:[100,110,60],hillFront:[56,62,84] },
-  day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],mtnFar:[108,128,168],mtnMid:[168,178,162],mtnNear:[196,118,76],mtnDark:[164,116,74],mtnFoot:[212,184,144],valley:[199,170,128],hillBack:[124,136,74],hillFront:[70,78,104] }
+  night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],
+           mtnZ1:[42,28,24], mtnZ2:[30,38,56], mtnZ3:[16,18,30], mtnZ4:[26,34,26], mtnZ5:[38,28,22],
+           footOlive:[28,36,22], footTan:[46,38,28], valley:[26,24,20], hillBack:[34,40,24], hillFront:[20,24,34] },
+  dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],
+           mtnZ1:[140,76,54], mtnZ2:[90,104,140], mtnZ3:[52,56,82], mtnZ4:[112,124,100], mtnZ5:[124,88,62],
+           footOlive:[86,96,54], footTan:[168,140,104], valley:[164,138,102], hillBack:[100,110,60], hillFront:[56,62,84] },
+  day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],
+           mtnZ1:[176,92,62], mtnZ2:[126,144,174], mtnZ3:[68,72,94], mtnZ4:[148,168,138], mtnZ5:[156,110,72],
+           footOlive:[110,124,68], footTan:[206,178,136], valley:[199,170,128], hillBack:[124,136,74], hillFront:[70,78,104] }
 };
 
 function vyLerp(a, b, t) {
@@ -1007,63 +1011,66 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* Back range: one continuous mesh blending slate-blue (left) into sage-grey (right), with a darker
-   accent cluster near the center peaks where the sun/moon sits. Two large peaks (terracotta left,
-   brown right) overlap in front at the corners, matching the reference composition. */
-var VY_BACK_PTS  = [[0,225],[55,185],[110,155],[160,140],[200,150],[240,138],[290,165],[340,195],[400,220]];
-/* Inset well past x=0/400 - the card's aspect ratio crops roughly the outer 40-45 units of the
-   viewBox on each side via preserveAspectRatio="slice", so anchoring peaks at the true edges hides them */
-var VY_LEFT_PTS  = [[15,178],[70,148],[130,198],[180,248],[222,286]];
-var VY_RIGHT_PTS = [[178,286],[222,244],[272,192],[330,148],[385,175]];
+/* One tall, sharp-peaked ridge line spanning the full width - color sweeps through 5 zones
+   (rust -> slate-blue -> navy behind the sun -> sage -> brown) as it crosses. */
+var VY_MTN_PTS = [[0,200],[35,145],[75,180],[115,110],[155,155],[195,90],[235,140],[270,100],[310,155],[350,115],[400,185]];
+
+function vyZoneBlend(fx, zones) {
+  for (var i = 0; i < zones.length - 1; i++) {
+    var t0 = zones[i][0], t1 = zones[i+1][0];
+    if (fx <= t1 || i === zones.length - 2) {
+      var lt = t1 > t0 ? Math.max(0, Math.min(1, (fx - t0) / (t1 - t0))) : 0;
+      var a = zones[i][1], b = zones[i+1][1];
+      return [a[0]+(b[0]-a[0])*lt, a[1]+(b[1]-a[1])*lt, a[2]+(b[2]-a[2])*lt];
+    }
+  }
+  return zones[zones.length-1][1];
+}
+
+/* Small angular foothills right at the lake's edge, distinct olive/tan low-poly shapes */
+var VY_FOOT1_PTS = [[6,278],[55,248],[115,258],[172,274]];
+var VY_FOOT2_PTS = [[150,274],[205,246],[262,256],[300,270]];
+var VY_FOOT3_PTS = [[278,272],[325,250],[385,264]];
 
 function buildMountains(c) {
-  var backG = document.getElementById('vy-mtn-back-g'),
-      leftG = document.getElementById('vy-mtn-left-g'),
-      rightG = document.getElementById('vy-mtn-right-g');
-  if (backG) {
-    backG.innerHTML = lowPolyMesh(VY_BACK_PTS, 270, 9, 3, function(cx, cy, seed) {
+  var mtnG = document.getElementById('vy-mtn-g');
+  if (mtnG) {
+    var zones = [[0, c.mtnZ1], [0.28, c.mtnZ2], [0.5, c.mtnZ3], [0.7, c.mtnZ4], [1, c.mtnZ5]];
+    mtnG.innerHTML = lowPolyMesh(VY_MTN_PTS, 300, 13, 4, function(cx, cy, seed) {
       var fx = Math.max(0, Math.min(1, cx / 400));
-      var blend = [
-        c.mtnFar[0] + (c.mtnMid[0]-c.mtnFar[0]) * fx,
-        c.mtnFar[1] + (c.mtnMid[1]-c.mtnFar[1]) * fx,
-        c.mtnFar[2] + (c.mtnMid[2]-c.mtnFar[2]) * fx
-      ];
-      var accent = (cx > 140 && cx < 270 && cy < 195) ? -20 : 0;
-      return vyShade(blend, (vySeeded(seed) - 0.5) * 26 + accent);
-    }, 11);
+      var base = vyZoneBlend(fx, zones);
+      return vyShade(base, (vySeeded(seed) - 0.5) * 24);
+    }, 77);
   }
-  if (leftG) {
-    leftG.innerHTML = lowPolyMesh(VY_LEFT_PTS, 320, 5, 3, function(cx, cy, seed) {
-      return vyShade(c.mtnNear, (vySeeded(seed) - 0.5) * 24);
-    }, 211);
-  }
-  if (rightG) {
-    rightG.innerHTML = lowPolyMesh(VY_RIGHT_PTS, 320, 5, 3, function(cx, cy, seed) {
-      return vyShade(c.mtnDark, (vySeeded(seed) - 0.5) * 24);
-    }, 411);
+  var footG = document.getElementById('vy-foot-g');
+  if (footG) {
+    var html = lowPolyMesh(VY_FOOT1_PTS, 296, 3, 2, function(cx, cy, seed) { return vyShade(c.footOlive, (vySeeded(seed)-0.5)*20); }, 501);
+    html += lowPolyMesh(VY_FOOT2_PTS, 298, 3, 2, function(cx, cy, seed) { return vyShade(c.footTan, (vySeeded(seed)-0.5)*20); }, 601);
+    html += lowPolyMesh(VY_FOOT3_PTS, 296, 2, 2, function(cx, cy, seed) { return vyShade(c.footOlive, (vySeeded(seed)-0.5)*20); }, 701);
+    footG.innerHTML = html;
   }
 }
 
-/* Low-poly teal lake with a soft warm glow reflection that tracks the sun/moon */
-var VY_LAKE_PTS = [[75,266],[140,258],[220,258],[285,266],[310,284],[295,304],[230,311],[160,310],[100,303],[62,285]];
+/* Low-poly lake: faceted mesh (real dimension/shape) with a soft warm glow reflection that tracks the sun/moon */
+var VY_LAKE_TOP_PTS = [[16,272],[80,258],[160,255],[240,255],[320,260],[384,272]];
 
 function buildLake(c, reflX, reflWeight, isSun) {
   var lakeG = document.getElementById('vy-lake-g');
   if (!lakeG) return;
-  var ptsStr = VY_LAKE_PTS.map(function(pt){ return pt[0] + ',' + pt[1]; }).join(' ');
   var waterBase = [150, 170, 178];
   var lakeColor = [
-    Math.round(waterBase[0]*0.6 + c.sky3[0]*0.4),
-    Math.round(waterBase[1]*0.6 + c.sky3[1]*0.4),
-    Math.round(waterBase[2]*0.6 + c.sky3[2]*0.4)
+    Math.round(waterBase[0]*0.55 + c.sky3[0]*0.45),
+    Math.round(waterBase[1]*0.55 + c.sky3[1]*0.45),
+    Math.round(waterBase[2]*0.55 + c.sky3[2]*0.45)
   ];
-  var html = '<path d="M64,270 C130,252 270,252 316,270 Z" fill="rgba(0,0,0,0.1)"/>';
-  html += '<polygon points="' + ptsStr + '" fill="' + vyRgb(lakeColor) + '"/>';
-  html += '<polygon points="75,266 140,258 100,303 62,285" fill="' + vyRgb(vyShade(lakeColor, 10)) + '" opacity="0.5"/>';
-  html += '<polygon points="220,258 285,266 310,284 230,311 160,310" fill="' + vyRgb(vyShade(lakeColor, -8)) + '" opacity="0.35"/>';
-  html += '<polygon points="' + ptsStr + '" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>';
+  var html = '<path d="M16,272 C120,248 280,248 384,272 Z" fill="rgba(0,0,0,0.09)"/>';
+  html += lowPolyMesh(VY_LAKE_TOP_PTS, 304, 9, 3, function(cx, cy, seed) {
+    return vyShade(lakeColor, (vySeeded(seed) - 0.5) * 18);
+  }, 911);
+  var outline = VY_LAKE_TOP_PTS.map(function(p){ return p[0]+','+p[1]; }).join(' ');
+  html += '<path d="M' + outline + ' L384,304 L16,304 Z" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.3"/>';
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
-  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="279" rx="' + (30 + reflWeight*10).toFixed(1) + '" ry="' + (11 + reflWeight*5).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
+  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="282" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (13 + reflWeight*5).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
 }
 
@@ -1154,19 +1161,18 @@ function applyValleyScene(p) {
   if (s3) s3.setAttribute('stop-color', vyRgb(c.sky3));
 
   buildMountains(c);
-  var vf = document.getElementById('vy-valley'), mft = document.getElementById('vy-mtn-foot');
+  var vf = document.getElementById('vy-valley');
   if (vf) vf.setAttribute('fill', vyRgb(c.valley));
-  if (mft) mft.setAttribute('fill', vyRgb(c.mtnFoot));
 
   vySetAll('.vy-bg-tree', vyRgb(vyShade(c.valley, -55)));
 
   window.VY_MEADOW_COLOR = c.valley;
   var hillsBg = document.getElementById('vy-hills-bg');
-  var hillBack = document.getElementById('vy-hill-back'), hillFront = document.getElementById('vy-hill-front');
-  if (hillsBg)   hillsBg.setAttribute('fill',   vyRgb(c.hillBack));
-  if (hillBack)  hillBack.setAttribute('fill',  vyRgb(c.hillBack));
-  if (hillFront) hillFront.setAttribute('fill', vyRgb(c.hillFront));
-  vySetAll('.vy-path', vyRgb(vyShade(c.mtnFoot, p < 30 ? -30 : 12)));
+  var hillOlive = document.getElementById('vy-hill-olive');
+  if (hillsBg)   hillsBg.setAttribute('fill', vyRgb(c.footTan));
+  if (hillOlive) hillOlive.setAttribute('fill', vyRgb(c.hillBack));
+  vySetAll('.vy-hill-navy', vyRgb(c.hillFront));
+  vySetAll('.vy-path', vyRgb(vyShade(c.footTan, p < 30 ? -30 : 12)));
 
   var moonOp = p <= 46 ? 1 : (p <= 54 ? Math.max(0, 1 - (p-46)/8) : 0);
   var sunOp  = p >= 54 ? 1 : (p >= 46 ? Math.max(0, (p-46)/8) : 0);
@@ -1199,7 +1205,7 @@ function applyValleyScene(p) {
   var bgGlow = document.getElementById('bg-glow');
   if (bgGlow) bgGlow.style.background = 'radial-gradient(ellipse 60% 60% at 50% 100%, rgba(' + c.sky3.join(',') + ',' + (0.10 + g*0.14).toFixed(2) + ') 0%, transparent 70%)';
   var sticky = document.querySelector('.rings-sticky');
-  if (sticky) sticky.style.background = 'linear-gradient(180deg,' + vyRgb(c.valley) + ' 0%, ' + vyRgb(c.mtnNear) + ' 100%)';
+  if (sticky) sticky.style.background = 'linear-gradient(180deg,' + vyRgb(c.valley) + ' 0%, ' + vyRgb(c.hillFront) + ' 100%)';
 }
 
 function updateRingDivider(color) {
@@ -1270,37 +1276,33 @@ function renderRingRow() {
   if (!svg) return;
   var slotW = 400 / RINGS.length;
 
-  var backPts = [], frontPts = [];
-  for (var x = 0; x <= 400; x += 50) backPts.push([x, vyHillBackY(x)]);
-  for (var x = 0; x <= 400; x += 66) frontPts.push([x, vyHillFrontY(x)]);
-  var backD  = 'M' + backPts.map(function(pt){ return pt[0] + ',' + pt[1].toFixed(1); }).join(' L')  + ' L400,210 L0,210 Z';
-  var frontD = 'M' + frontPts.map(function(pt){ return pt[0] + ',' + pt[1].toFixed(1); }).join(' L') + ' L400,210 L0,210 Z';
+  var oliveHillPts = [[0,115],[70,88],[150,108],[230,92],[300,122],[400,138]];
+  var oliveD = 'M' + oliveHillPts.map(function(pt){ return pt[0] + ',' + pt[1]; }).join(' L') + ' L400,210 L0,210 Z';
 
-  var html = '<rect id="vy-hills-bg" x="0" y="0" width="400" height="210" fill="#5a7a52"/>'
-    + '<path id="vy-hill-back" d="' + backD + '" fill="#385c3c"/>'
-    + '<path id="vy-hill-front" d="' + frontD + '" fill="#20361f"/>';
+  var html = '<rect id="vy-hills-bg" x="0" y="0" width="400" height="210" fill="#c9a876"/>'
+    + '<path id="vy-hill-olive" d="' + oliveD + '" fill="#7a8f52"/>';
 
-  /* low-poly facet overlay on the front hill - a few large flat planes, semi-transparent so they
+  /* low-poly facet overlay on the olive hill - a few large flat planes, semi-transparent so they
      read over any base color */
-  for (var fi = 0; fi < frontPts.length - 1; fi++) {
-    var fa = frontPts[fi], fb = frontPts[fi+1];
-    var fshade = (fi % 2 === 0) ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.1)';
-    html += '<polygon points="' + fa[0]+','+fa[1].toFixed(1) + ' ' + fb[0]+','+fb[1].toFixed(1) + ' ' + fb[0]+',210" fill="' + fshade + '"/>';
+  for (var fi = 0; fi < oliveHillPts.length - 1; fi++) {
+    var fa = oliveHillPts[fi], fb = oliveHillPts[fi+1];
+    var fshade = (fi % 2 === 0) ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.11)';
+    html += '<polygon points="' + fa[0]+','+fa[1] + ' ' + fb[0]+','+fb[1] + ' ' + fb[0]+',210" fill="' + fshade + '"/>';
   }
 
   /* dark navy geometric wedges anchoring the bottom corners, like the reference */
-  html += '<polygon id="vy-hill-navy-l" points="0,210 0,142 95,178 62,210" fill="#232a3a"/>'
-    + '<polygon id="vy-hill-navy-r" points="400,210 400,150 305,182 336,210" fill="#232a3a"/>';
+  html += '<polygon class="vy-hill-navy" points="0,210 0,130 105,172 68,210" fill="#232a3a"/>'
+    + '<polygon class="vy-hill-navy" points="400,210 400,138 300,176 335,210" fill="#232a3a"/>';
 
-  html += '<path class="vy-path" d="M200,0 Q175,30 200,55 Q225,80 195,105 Q170,125 200,150 Q225,170 198,190 Q178,205 200,210 L214,210 Q230,205 212,190 Q236,170 214,150 Q186,125 208,105 Q234,80 212,55 Q234,30 214,0 Z" fill="#d8c39a" opacity="0.92"/>';
+  /* winding beige path with a fork, cut through the tan meadow */
+  html += '<path class="vy-path" d="M200,0 Q182,38 200,72 Q220,102 197,132 M197,132 Q172,158 152,210 M197,132 Q222,162 246,210" fill="none" stroke="#e6d3ac" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>';
 
-  var bgSpots = [48, 100, 300, 352];
-  for (var bi = 0; bi < bgSpots.length; bi++) {
-    html += miniPineSVG(bgSpots[bi], vyHillFrontY(bgSpots[bi]) + 2, 0.6, 'vy-bg-tree');
-  }
-  var pathsideSpots = [[150,190,0.62],[168,200,0.5],[232,200,0.5],[250,192,0.62]];
-  for (var pi = 0; pi < pathsideSpots.length; pi++) {
-    html += miniPineSVG(pathsideSpots[pi][0], pathsideSpots[pi][1], pathsideSpots[pi][2], 'vy-bg-tree');
+  var leftCluster  = [[18,160,0.5],[34,178,0.62],[50,168,0.46],[66,190,0.58],[26,196,0.4]];
+  var rightCluster = [[336,150,0.55],[352,172,0.68],[368,160,0.48],[380,184,0.6],[344,196,0.42],[364,200,0.36]];
+  var pathsideSpots = [[168,182,0.5],[228,182,0.5],[178,204,0.4],[220,204,0.4]];
+  var treeClusters = leftCluster.concat(rightCluster, pathsideSpots);
+  for (var ti = 0; ti < treeClusters.length; ti++) {
+    html += miniPineSVG(treeClusters[ti][0], treeClusters[ti][1], treeClusters[ti][2], 'vy-bg-tree');
   }
 
   for (var i = 0; i < RINGS.length; i++) {
@@ -1318,11 +1320,8 @@ function renderRingRow() {
 
   svg.innerHTML = html;
 
-  if (window.VY_MEADOW_COLOR) {
-    var hb = document.getElementById('vy-hill-back'), hf = document.getElementById('vy-hill-front');
-    if (hb) hb.setAttribute('fill', vyRgb(vyShade(window.VY_MEADOW_COLOR, 20)));
-    if (hf) hf.setAttribute('fill', vyRgb(vyShade(window.VY_MEADOW_COLOR, -12)));
-  }
+  var hillOliveNow = document.getElementById('vy-hill-olive');
+  if (hillOliveNow && window.VY_MEADOW_COLOR) hillOliveNow.setAttribute('fill', vyRgb(vyShade(window.VY_MEADOW_COLOR, 10)));
 
   var groups = svg.querySelectorAll('.tree-group');
   var gi;
