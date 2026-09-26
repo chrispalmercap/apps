@@ -585,14 +585,13 @@
               <circle id="vy-sun" r="17" fill="#f9d9b8" opacity="0.9"/>
             </g>
 
-            <!-- Distinct peak masses positioned left-to-right (not nested), each its own low-poly mesh,
-                 plus a hazy background strata structure behind everything - built by buildMountains(). -->
-            <g id="vy-mtn-strata-g"></g>
-            <g id="vy-mtn-sage-g"></g>
-            <g id="vy-mtn-pale-g"></g>
-            <g id="vy-mtn-blue-g"></g>
-            <g id="vy-mtn-brown-g"></g>
-            <g id="vy-mtn-rust-g"></g>
+            <!-- 5 symmetric valley tiers cascading toward the center - each tier is one shape spanning
+                 both walls, so left and right sides always match in color, nested back to front. -->
+            <g id="vy-mtn-back0-g"></g>
+            <g id="vy-mtn-far-g"></g>
+            <g id="vy-mtn-dark-g"></g>
+            <g id="vy-mtn-mid-g"></g>
+            <g id="vy-mtn-near-g"></g>
 
             <!-- Small angular foothills right at the lake's edge, olive/tan, distinct from the peaks -->
             <g id="vy-foot-g"></g>
@@ -1020,14 +1019,14 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* Layout matching the reference: distinct peak masses positioned left-to-right rather than nested
-   concentrically, plus a hazy background strata structure spanning behind everything. */
-var VY_STRATA_PTS = [[20,180],[90,158],[160,138],[200,108],[240,138],[310,158],[380,180]];
-var VY_SAGE_PTS   = [[205,225],[240,180],[265,200],[290,152],[318,172],[345,143],[368,183],[400,222]];
-var VY_PALE_PTS   = [[148,230],[172,188],[194,204],[216,148],[236,96],[256,148],[276,200],[298,226]];
-var VY_BLUE_PTS   = [[0,232],[28,188],[54,205],[80,143],[102,118],[126,150],[147,108],[168,140],[192,176],[224,200],[260,224]];
-var VY_BROWN_PTS  = [[200,224],[228,192],[252,206],[280,150],[308,108],[334,140],[360,98],[384,122],[400,135]];
-var VY_RUST_PTS   = [[0,292],[34,250],[64,266],[94,234],[126,270]];
+/* 5 symmetric valley tiers: each is ONE jagged shape spanning both walls (so left and right always
+   match in color), nested so every tier behind the front one has a smaller/higher saddle and pokes
+   through the gap - cascading toward the center instead of being spread left-to-right. */
+var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
+var VY_MID_PTS   = [[0,175],[45,198],[70,183],[100,203],[130,208],[270,208],[300,203],[330,183],[355,198],[400,173]];
+var VY_DARK_PTS  = [[0,245],[85,225],[115,235],[150,192],[160,150],[240,150],[250,192],[285,235],[315,225],[400,243]];
+var VY_FAR_PTS   = [[0,215],[70,195],[100,205],[135,155],[170,120],[230,120],[265,155],[300,205],[330,195],[400,213]];
+var VY_BACK0_PTS = [[0,230],[90,205],[115,215],[150,130],[180,90],[220,90],[250,130],[285,215],[310,205],[400,228]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
@@ -1039,26 +1038,21 @@ var VY_FOOT2_PTS = [[150,274],[205,246],[262,256],[300,270]];
 var VY_FOOT3_PTS = [[278,272],[325,250],[385,264]];
 
 function buildMountains(c) {
-  var strataG = document.getElementById('vy-mtn-strata-g'), sageG = document.getElementById('vy-mtn-sage-g'),
-      paleG   = document.getElementById('vy-mtn-pale-g'),   blueG = document.getElementById('vy-mtn-blue-g'),
-      brownG  = document.getElementById('vy-mtn-brown-g'),  rustG = document.getElementById('vy-mtn-rust-g');
-  if (strataG) strataG.innerHTML = lowPolyMesh(VY_STRATA_PTS, 292, 10, 4, function(cx, cy, seed) {
-    var t = Math.max(0, Math.min(1, (cy - 108) / (292 - 108)));
-    var base = t < 0.45 ? vyLerpColor(c.strataTop, c.strataMid, t/0.45) : vyLerpColor(c.strataMid, c.strataBase, (t-0.45)/0.55);
-    return vyShade(base, (vySeeded(seed) - 0.5) * 16);
-  }, 25);
-  /* Atmospheric haze: each range sits at its own depth, so blend it toward the sky color by how far
-     back it is (furthest first: sage, then pale, then the near blue/brown pair, then rust in front) */
-  var sageBase  = vyLerpColor(c.mtnZ4, c.sky3, 0.24);
-  var paleBase  = vyLerpColor(c.mtnZ3, c.sky3, 0.15);
-  var blueBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.06);
-  var brownBase = vyLerpColor(c.mtnZ5, c.sky3, 0.06);
-  var rustBase  = c.mtnZ1;
-  if (sageG)  sageG.innerHTML  = lowPolyMesh(VY_SAGE_PTS,  320, 9,  3, function(cx,cy,seed){ return vyShade(sageBase,  (vySeeded(seed)-0.5)*22); }, 155);
-  if (paleG)  paleG.innerHTML  = lowPolyMesh(VY_PALE_PTS,  300, 8,  3, function(cx,cy,seed){ return vyShade(paleBase,  (vySeeded(seed)-0.5)*20); }, 255);
-  if (blueG)  blueG.innerHTML  = lowPolyMesh(VY_BLUE_PTS,  340, 11, 3, function(cx,cy,seed){ return vyShade(blueBase,  (vySeeded(seed)-0.5)*24); }, 355);
-  if (brownG) brownG.innerHTML = lowPolyMesh(VY_BROWN_PTS, 340, 9,  3, function(cx,cy,seed){ return vyShade(brownBase, (vySeeded(seed)-0.5)*24); }, 455);
-  if (rustG)  rustG.innerHTML  = lowPolyMesh(VY_RUST_PTS,  340, 5,  2, function(cx,cy,seed){ return vyShade(rustBase,  (vySeeded(seed)-0.5)*22); }, 555);
+  var back0G = document.getElementById('vy-mtn-back0-g'), farG = document.getElementById('vy-mtn-far-g'),
+      darkG  = document.getElementById('vy-mtn-dark-g'),  midG = document.getElementById('vy-mtn-mid-g'),
+      nearG  = document.getElementById('vy-mtn-near-g');
+  /* Atmospheric haze: each tier sits at its own depth, so blend it toward the sky color by how far
+     back it is (front = rust, near-saturated; furthest/central = pale, most washed out) */
+  var nearBase  = c.mtnZ1;
+  var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.06);
+  var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.12);
+  var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.18);
+  var back0Base = vyLerpColor(c.mtnZ3, c.sky3, 0.26);
+  if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 10, 3, function(cx,cy,seed){ return vyShade(back0Base, (vySeeded(seed)-0.5)*20); }, 55);
+  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 3, function(cx,cy,seed){ return vyShade(farBase,   (vySeeded(seed)-0.5)*22); }, 155);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(darkBase,  (vySeeded(seed)-0.5)*22); }, 255);
+  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 10, 3, function(cx,cy,seed){ return vyShade(midBase,   (vySeeded(seed)-0.5)*24); }, 355);
+  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(nearBase,  (vySeeded(seed)-0.5)*24); }, 455);
 
   var footG = document.getElementById('vy-foot-g');
   if (footG) {
