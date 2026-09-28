@@ -1019,16 +1019,16 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* Front tier is one wide valley (wall-dip-subpeak-dip-flatsaddle) so the lake opening reads clearly.
-   The other 4 tiers are real jagged multi-peak ranges (irregular summits, not a mirrored valley), each
-   sitting a bit higher/further back than the last. They're allowed to overlap one another and the
-   front tier's walls a little - that overlap is what makes the range read as jagged peaks instead of
-   flat stacked bands. */
+/* Each tier tapers like a valley - tall walls at the edges (hidden behind the range in front) dipping
+   open toward the center - with jagged peaks riding on top of that taper, so what you see through the
+   gap is a sequence of real cascading peaks receding into the distance, not flat horizontal bands. Each
+   successive tier's center sits higher (smaller y) than the last, so its peaks crest above the one in
+   front, and they're allowed to overlap - that's what reads as depth rather than stacking. */
 var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
-var VY_MID_PTS   = [[0,188],[40,152],[75,178],[110,146],[150,183],[190,158],[230,156],[270,186],[310,148],[350,174],[400,190]];
-var VY_DARK_PTS  = [[0,172],[35,138],[70,163],[105,130],[145,168],[185,136],[225,143],[265,170],[305,133],[345,158],[400,176]];
-var VY_FAR_PTS   = [[0,158],[35,123],[68,148],[100,116],[140,153],[180,120],[220,126],[260,156],[300,118],[340,143],[400,163]];
-var VY_BACK0_PTS = [[0,143],[35,108],[65,133],[95,101],[135,138],[175,106],[215,111],[255,141],[295,103],[335,128],[400,148]];
+var VY_MID_PTS   = [[0,160],[40,185],[80,189],[120,221],[160,249],[200,217],[240,215],[280,236],[320,204],[360,175],[400,160]];
+var VY_DARK_PTS  = [[0,150],[40,160],[80,184],[120,200],[160,185],[200,195],[240,211],[280,188],[320,172],[360,168],[400,150]];
+var VY_FAR_PTS   = [[0,144],[40,152],[80,162],[120,167],[160,167],[200,172],[240,175],[280,165],[320,158],[360,154],[400,144]];
+var VY_BACK0_PTS = [[0,140],[40,145],[80,150],[120,144],[160,149],[200,160],[240,149],[280,144],[320,151],[360,145],[400,140]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
