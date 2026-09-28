@@ -1023,11 +1023,11 @@ function vyTriPoly(tri, colorFn, seed) {
    one shape at different scales: mid is bold with a few big widely-spaced peaks, dark is busy with many
    small tight peaks, far is a gentle low-amplitude rolling ridge, and back0 is sparse - a few tall thin
    spikes with long flat stretches between. They're free to overlap each other and the front range. */
-var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
-var VY_MID_PTS   = [[0,150],[40,138],[80,168],[120,178],[160,205],[200,215],[240,205],[280,178],[320,168],[360,136],[400,150]];
-var VY_DARK_PTS  = [[0,148],[40,128],[80,152],[120,132],[160,175],[200,185],[240,172],[280,130],[320,150],[360,126],[400,148]];
-var VY_FAR_PTS   = [[0,145],[40,150],[80,155],[120,148],[160,168],[200,178],[240,165],[280,150],[320,155],[360,146],[400,144]];
-var VY_BACK0_PTS = [[0,140],[40,110],[80,145],[120,142],[160,155],[200,160],[240,150],[280,140],[320,145],[360,108],[400,140]];
+var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
+var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
+var VY_DARK_PTS  = [[0,172],[40,154],[80,175],[120,157],[160,196],[200,205],[240,193],[280,155],[320,173],[360,152],[400,172]];
+var VY_FAR_PTS   = [[0,169],[40,173],[80,178],[120,172],[160,189],[200,198],[240,187],[280,173],[320,178],[360,170],[400,168]];
+var VY_BACK0_PTS = [[0,165],[40,138],[80,168],[120,166],[160,177],[200,181],[240,173],[280,165],[320,168],[360,136],[400,165]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
@@ -1292,8 +1292,7 @@ function renderRingRow() {
   var oliveHillPts = [[0,115],[70,88],[150,108],[230,92],[300,122],[400,138]];
   var oliveD = 'M' + oliveHillPts.map(function(pt){ return pt[0] + ',' + pt[1]; }).join(' L') + ' L400,210 L0,210 Z';
 
-  var html = '<rect id="vy-hills-bg" x="0" y="0" width="400" height="210" fill="#c9a876"/>'
-    + '<path id="vy-hill-olive" d="' + oliveD + '" fill="#7a8f52"/>';
+  var html = '<path id="vy-hill-olive" d="' + oliveD + '" fill="#7a8f52"/>';
 
   /* low-poly facet overlay on the olive hill - a few large flat planes, semi-transparent so they
      read over any base color */
