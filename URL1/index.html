@@ -1019,14 +1019,16 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* 5 symmetric valley tiers: each is ONE jagged shape spanning both walls (so left and right always
-   match in color), nested so every tier behind the front one has a smaller/higher saddle and pokes
-   through the gap - cascading toward the center instead of being spread left-to-right. */
+/* Front tier is one wide valley (wall-dip-subpeak-dip-flatsaddle) so the lake opening reads clearly.
+   The other 4 tiers are real jagged multi-peak ranges (irregular summits, not a mirrored valley), each
+   sitting a bit higher/further back than the last. They're allowed to overlap one another and the
+   front tier's walls a little - that overlap is what makes the range read as jagged peaks instead of
+   flat stacked bands. */
 var VY_NEAR_PTS  = [[0,140],[50,175],[80,155],[120,210],[165,262],[235,262],[280,210],[320,155],[350,175],[400,138]];
-var VY_MID_PTS   = [[0,152],[45,174],[70,161],[100,195],[130,228],[270,228],[300,195],[330,161],[355,174],[400,150]];
-var VY_DARK_PTS  = [[0,146],[45,161],[70,152],[100,175],[130,196],[270,196],[300,175],[330,152],[355,161],[400,144]];
-var VY_FAR_PTS   = [[0,143],[45,150],[70,146],[100,157],[130,168],[270,168],[300,157],[330,146],[355,150],[400,141]];
-var VY_BACK0_PTS = [[0,143],[45,145],[70,144],[100,147],[130,150],[270,150],[300,147],[330,144],[355,145],[400,141]];
+var VY_MID_PTS   = [[0,188],[40,152],[75,178],[110,146],[150,183],[190,158],[230,156],[270,186],[310,148],[350,174],[400,190]];
+var VY_DARK_PTS  = [[0,172],[35,138],[70,163],[105,130],[145,168],[185,136],[225,143],[265,170],[305,133],[345,158],[400,176]];
+var VY_FAR_PTS   = [[0,158],[35,123],[68,148],[100,116],[140,153],[180,120],[220,126],[260,156],[300,118],[340,143],[400,163]];
+var VY_BACK0_PTS = [[0,143],[35,108],[65,133],[95,101],[135,138],[175,106],[215,111],[255,141],[295,103],[335,128],[400,148]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
