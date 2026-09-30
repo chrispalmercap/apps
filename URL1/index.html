@@ -1021,19 +1021,18 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* The front tier is one wide valley (wall-dip-subpeak-dip-flatsaddle). Dark/far/far2/back follow that
-   same valley pattern but each carries one dramatically taller peak that dominates just one side -
-   alternating left, right, left, right as the tiers go back, so the skyline zigzags instead of stacking
-   symmetrically. Dark and far also get a few smaller jagged peaks on their *other* side (instead of
-   flat), so they read as a real multi-peak range, not a single spike over a flat line. Mid stays its own
-   bold, widely-spaced-peaks shape for contrast. They're all free to overlap each other and the front
-   range. */
+/* All 6 point arrays for dark/far/far2/back use x = 0,40,80,...,400 - the exact columns the 10-col
+   mesh grid samples. A peak placed off-grid gets interpolated away by its neighbors and barely
+   renders, which is why the last pass here looked like nothing changed. Each of the 4 back tiers now
+   has real jagged peaks on BOTH sides of its saddle, with the taller/more dramatic side alternating
+   left, right, left, right as the tiers go back, so the skyline reads as an actual receding range
+   instead of one faint spike. Mid stays its own bold, widely-spaced-peaks shape for contrast. */
 var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
 var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
-var VY_DARK_PTS  = [[0,182],[50,193],[65,148],[120,205],[165,218],[235,218],[260,178],[285,202],[310,168],[335,196],[360,180],[400,182]];
-var VY_FAR_PTS   = [[0,196],[30,175],[55,199],[80,170],[105,201],[130,192],[165,208],[235,208],[280,201],[335,144],[350,197],[400,194]];
-var VY_FAR2_PTS  = [[0,200],[50,205],[110,138],[130,208],[165,212],[235,212],[280,206],[320,202],[350,203],[400,198]];
-var VY_BACK_PTS  = [[0,206],[50,210],[80,207],[120,211],[165,216],[235,216],[265,132],[300,209],[350,208],[400,204]];
+var VY_DARK_PTS  = [[0,185],[40,140],[80,195],[120,160],[160,215],[200,215],[240,215],[280,185],[320,205],[360,175],[400,185]];
+var VY_FAR_PTS   = [[0,195],[40,170],[80,205],[120,180],[160,210],[200,210],[240,210],[280,175],[320,200],[360,135],[400,195]];
+var VY_FAR2_PTS  = [[0,200],[40,115],[80,200],[120,205],[160,206],[200,206],[240,206],[280,203],[320,198],[360,160],[400,200]];
+var VY_BACK_PTS  = [[0,205],[40,170],[80,203],[120,200],[160,204],[200,204],[240,204],[280,201],[320,198],[360,105],[400,205]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
@@ -1061,10 +1060,10 @@ function buildMountains(c) {
      back it is (front = rust, near-saturated; furthest/central = pale, most washed out) */
   var nearBase  = c.mtnZ1;
   var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.08);
-  var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.16);
-  var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.24);
-  var far2Base  = vyLerpColor(c.mtnZ3, c.sky3, 0.30);
-  var backBase  = vyLerpColor(c.mtnZ6, c.sky3, 0.36);
+  var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.10);
+  var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.15);
+  var far2Base  = vyLerpColor(c.mtnZ3, c.sky3, 0.18);
+  var backBase  = vyLerpColor(c.mtnZ6, c.sky3, 0.22);
   /* The main valley (near) gets the strongest left/right tint so its two walls read as distinctly
      shaded sides, not a mirrored single color; the rest carry a lighter version of the same drift. */
   if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75);
