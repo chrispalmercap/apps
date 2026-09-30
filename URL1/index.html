@@ -924,15 +924,15 @@ function getScoreColor(score) {
    hills; pale lake - sky runs blue (night/day) through pink (dawn/sunset) */
 var VY_KEYFRAMES = {
   night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],
-           mtnZ1:[40,26,22], mtnZ2:[28,36,52], mtnZ3:[38,40,50], mtnZ4:[24,34,26], mtnZ5:[36,26,20],
+           mtnZ1:[40,26,22], mtnZ2:[28,36,52], mtnZ3:[40,42,46], mtnZ4:[24,34,26], mtnZ5:[36,26,20],
            strataTop:[34,38,50], strataMid:[26,32,26], strataBase:[14,16,24],
            footOlive:[28,36,22], footTan:[46,38,28], valley:[26,24,20], hillBack:[34,40,24], hillFront:[20,24,34] },
   dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],
-           mtnZ1:[134,72,52], mtnZ2:[88,102,136], mtnZ3:[124,126,148], mtnZ4:[108,122,98], mtnZ5:[120,86,58],
+           mtnZ1:[134,72,52], mtnZ2:[88,102,136], mtnZ3:[96,102,112], mtnZ4:[108,122,98], mtnZ5:[120,86,58],
            strataTop:[104,114,140], strataMid:[92,106,88], strataBase:[46,50,68],
            footOlive:[86,96,54], footTan:[168,140,104], valley:[164,138,102], hillBack:[100,110,60], hillFront:[56,62,84] },
   day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],
-           mtnZ1:[168,88,64], mtnZ2:[124,142,172], mtnZ3:[168,172,188], mtnZ4:[150,172,142], mtnZ5:[158,112,70],
+           mtnZ1:[168,88,64], mtnZ2:[124,142,172], mtnZ3:[110,118,126], mtnZ4:[150,172,142], mtnZ5:[158,112,70],
            strataTop:[140,150,172], strataMid:[122,138,120], strataBase:[58,64,84],
            footOlive:[110,124,68], footTan:[206,178,136], valley:[199,170,128], hillBack:[124,136,74], hillFront:[70,78,104] }
 };
@@ -1021,13 +1021,14 @@ function vyTriPoly(tri, colorFn, seed) {
 
 /* The front tier is one wide valley. Behind it are 4 genuinely different mountain ranges, not copies of
    one shape at different scales: mid is bold with a few big widely-spaced peaks, dark is busy with many
-   small tight peaks, far is a gentle low-amplitude rolling ridge, and back0 is sparse - a few tall thin
-   spikes with long flat stretches between. They're free to overlap each other and the front range. */
+   small tight peaks, far and back0 peak at alternating x positions (interleaved with each other) so
+   together they read as two overlapping ridgelines rather than stacked copies. They're free to overlap
+   each other and the front range. */
 var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
 var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
 var VY_DARK_PTS  = [[0,172],[40,154],[80,175],[120,157],[160,196],[200,205],[240,193],[280,155],[320,173],[360,152],[400,172]];
-var VY_FAR_PTS   = [[0,169],[40,173],[80,178],[120,172],[160,189],[200,198],[240,187],[280,173],[320,178],[360,170],[400,168]];
-var VY_BACK0_PTS = [[0,165],[40,138],[80,168],[120,166],[160,177],[200,181],[240,173],[280,165],[320,168],[360,136],[400,165]];
+var VY_FAR_PTS   = [[0,168],[40,142],[80,180],[120,145],[160,183],[200,140],[240,185],[280,144],[320,178],[360,141],[400,168]];
+var VY_BACK0_PTS = [[0,162],[40,168],[80,122],[120,170],[160,118],[200,172],[240,126],[280,168],[320,120],[360,170],[400,162]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
@@ -1048,7 +1049,7 @@ function buildMountains(c) {
   var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.08);
   var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.16);
   var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.24);
-  var back0Base = vyLerpColor(c.mtnZ3, c.sky3, 0.34);
+  var back0Base = vyLerpColor(c.mtnZ3, c.sky3, 0.16);
   if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 10, 4, function(cx,cy,seed){ return vyShade(back0Base, (vySeeded(seed)-0.5)*26); }, 55);
   if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 4, function(cx,cy,seed){ return vyShade(farBase,   (vySeeded(seed)-0.5)*28); }, 155);
   if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 10, 4, function(cx,cy,seed){ return vyShade(darkBase,  (vySeeded(seed)-0.5)*28); }, 255);
