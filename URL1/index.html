@@ -585,9 +585,8 @@
               <circle id="vy-sun" r="17" fill="#f9d9b8" opacity="0.9"/>
             </g>
 
-            <!-- 5 symmetric valley tiers cascading toward the center - each tier is one shape spanning
+            <!-- 4 symmetric valley tiers cascading toward the center - each tier is one shape spanning
                  both walls, so left and right sides always match in color, nested back to front. -->
-            <g id="vy-mtn-back0-g"></g>
             <g id="vy-mtn-far-g"></g>
             <g id="vy-mtn-dark-g"></g>
             <g id="vy-mtn-mid-g"></g>
@@ -924,15 +923,15 @@ function getScoreColor(score) {
    hills; pale lake - sky runs blue (night/day) through pink (dawn/sunset) */
 var VY_KEYFRAMES = {
   night: { sky1:[6,10,22],   sky2:[16,20,36],   sky3:[26,24,38],
-           mtnZ1:[40,26,22], mtnZ2:[28,36,52], mtnZ3:[40,42,46], mtnZ4:[24,34,26], mtnZ5:[36,26,20],
+           mtnZ1:[40,26,22], mtnZ2:[28,36,52], mtnZ4:[24,34,26], mtnZ5:[36,26,20],
            strataTop:[34,38,50], strataMid:[26,32,26], strataBase:[14,16,24],
            footOlive:[28,36,22], footTan:[46,38,28], valley:[26,24,20], hillBack:[34,40,24], hillFront:[20,24,34] },
   dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],
-           mtnZ1:[134,72,52], mtnZ2:[88,102,136], mtnZ3:[96,102,112], mtnZ4:[108,122,98], mtnZ5:[120,86,58],
+           mtnZ1:[134,72,52], mtnZ2:[88,102,136], mtnZ4:[108,122,98], mtnZ5:[120,86,58],
            strataTop:[104,114,140], strataMid:[92,106,88], strataBase:[46,50,68],
            footOlive:[86,96,54], footTan:[168,140,104], valley:[164,138,102], hillBack:[100,110,60], hillFront:[56,62,84] },
   day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],
-           mtnZ1:[168,88,64], mtnZ2:[124,142,172], mtnZ3:[110,118,126], mtnZ4:[150,172,142], mtnZ5:[158,112,70],
+           mtnZ1:[168,88,64], mtnZ2:[124,142,172], mtnZ4:[150,172,142], mtnZ5:[158,112,70],
            strataTop:[140,150,172], strataMid:[122,138,120], strataBase:[58,64,84],
            footOlive:[110,124,68], footTan:[206,178,136], valley:[199,170,128], hillBack:[124,136,74], hillFront:[70,78,104] }
 };
@@ -1019,16 +1018,14 @@ function vyTriPoly(tri, colorFn, seed) {
   return '<polygon points="' + pts + '" fill="' + vyRgb(col) + '"/>';
 }
 
-/* The front tier is one wide valley. Behind it are 4 genuinely different mountain ranges, not copies of
+/* The front tier is one wide valley. Behind it are 3 genuinely different mountain ranges, not copies of
    one shape at different scales: mid is bold with a few big widely-spaced peaks, dark is busy with many
-   small tight peaks, far and back0 peak at alternating x positions (interleaved with each other) so
-   together they read as two overlapping ridgelines rather than stacked copies. They're free to overlap
-   each other and the front range. */
+   small tight peaks, and far is a gentle low-amplitude ridge. They're free to overlap each other and
+   the front range. */
 var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
 var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
 var VY_DARK_PTS  = [[0,172],[40,154],[80,175],[120,157],[160,196],[200,205],[240,193],[280,155],[320,173],[360,152],[400,172]];
 var VY_FAR_PTS   = [[0,166],[40,157],[80,174],[120,158],[160,175],[200,155],[240,176],[280,157],[320,173],[360,156],[400,166]];
-var VY_BACK0_PTS = [[0,158],[40,163],[80,140],[120,164],[160,138],[200,165],[240,143],[280,163],[320,139],[360,164],[400,158]];
 
 function vyLerpColor(a, b, t) {
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
@@ -1048,7 +1045,7 @@ var VY_FOOT2_PTS = [[150,274],[205,246],[262,256],[300,270]];
 var VY_FOOT3_PTS = [[278,272],[325,250],[385,264]];
 
 function buildMountains(c) {
-  var back0G = document.getElementById('vy-mtn-back0-g'), farG = document.getElementById('vy-mtn-far-g'),
+  var farG   = document.getElementById('vy-mtn-far-g'),
       darkG  = document.getElementById('vy-mtn-dark-g'),  midG = document.getElementById('vy-mtn-mid-g'),
       nearG  = document.getElementById('vy-mtn-near-g');
   /* Atmospheric haze: each tier sits at its own depth, so blend it toward the sky color by how far
@@ -1057,12 +1054,12 @@ function buildMountains(c) {
   var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.08);
   var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.16);
   var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.24);
-  var back0Base = vyLerpColor(c.mtnZ3, c.sky3, 0.16);
-  if (back0G) back0G.innerHTML = lowPolyMesh(VY_BACK0_PTS, 300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(back0Base, cx, 0.26, 0.16), (vySeeded(seed)-0.5)*26); }, 55);
+  /* The main valley (near) gets the strongest left/right tint so its two walls read as distinctly
+     shaded sides, not a mirrored single color; mid/dark carry a lighter version of the same drift. */
   if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155);
-  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 10, 4, function(cx,cy,seed){ return vyShade(darkBase,  (vySeeded(seed)-0.5)*28); }, 255);
-  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 10, 4, function(cx,cy,seed){ return vyShade(midBase,   (vySeeded(seed)-0.5)*30); }, 355);
-  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(nearBase,  (vySeeded(seed)-0.5)*24); }, 455);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(darkBase, cx, 0.16, 0.12), (vySeeded(seed)-0.5)*28); }, 255);
+  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(midBase, cx, 0.16, 0.12), (vySeeded(seed)-0.5)*30); }, 355);
+  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(vySideTint(nearBase, cx, 0.20, 0.24), (vySeeded(seed)-0.5)*24); }, 455);
 
   var footG = document.getElementById('vy-foot-g');
   if (footG) {
