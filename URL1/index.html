@@ -1022,14 +1022,16 @@ function vyTriPoly(tri, colorFn, seed) {
 }
 
 /* The front tier is one wide valley (wall-dip-subpeak-dip-flatsaddle). Dark/far/far2/back follow that
-   same valley pattern but each carries one dramatically taller peak on just one side - alternating
-   left, right, left, right as the tiers go back - instead of a mirrored subpeak, so the skyline zigzags
-   further back instead of stacking symmetrically. Mid stays its own bold, widely-spaced-peaks shape for
-   contrast. They're all free to overlap each other and the front range. */
+   same valley pattern but each carries one dramatically taller peak that dominates just one side -
+   alternating left, right, left, right as the tiers go back, so the skyline zigzags instead of stacking
+   symmetrically. Dark and far also get a few smaller jagged peaks on their *other* side (instead of
+   flat), so they read as a real multi-peak range, not a single spike over a flat line. Mid stays its own
+   bold, widely-spaced-peaks shape for contrast. They're all free to overlap each other and the front
+   range. */
 var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
 var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
-var VY_DARK_PTS  = [[0,182],[50,193],[65,148],[120,205],[165,218],[235,218],[280,205],[320,195],[350,197],[400,180]];
-var VY_FAR_PTS   = [[0,196],[50,200],[80,197],[120,203],[165,208],[235,208],[280,201],[335,144],[350,197],[400,194]];
+var VY_DARK_PTS  = [[0,182],[50,193],[65,148],[120,205],[165,218],[235,218],[260,178],[285,202],[310,168],[335,196],[360,180],[400,182]];
+var VY_FAR_PTS   = [[0,196],[30,175],[55,199],[80,170],[105,201],[130,192],[165,208],[235,208],[280,201],[335,144],[350,197],[400,194]];
 var VY_FAR2_PTS  = [[0,200],[50,205],[110,138],[130,208],[165,212],[235,212],[280,206],[320,202],[350,203],[400,198]];
 var VY_BACK_PTS  = [[0,206],[50,210],[80,207],[120,211],[165,216],[235,216],[265,132],[300,209],[350,208],[400,204]];
 
