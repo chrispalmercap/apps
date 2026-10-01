@@ -1063,13 +1063,13 @@ function buildMountains(c) {
   var nearBase  = c.mtnZ1;
   var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.08);
   var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.10);
-  var darkBase2 = vyShade(vyLerpColor(c.mtnZ2, c.sky3, 0.10), -30);
+  var darkBase2 = vyLerpColor(c.mtnZ3, c.sky3, 0.10);
   var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.15);
   var far2Base  = vyLerpColor(c.mtnZ3, c.sky3, 0.18);
   var backBase  = vyLerpColor(c.mtnZ7, c.sky3, 0.22);
   /* The main valley (near) gets the strongest left/right tint so its two walls read as distinctly
      shaded sides, not a mirrored single color; the rest carry a lighter version of the same drift.
-     Dark is split at the V into two blue halves (regular left, darker right); back is dusty rose. */
+     Dark is split at the V into blue-grey (left) and slate (right); back is dusty rose. */
   if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75);
   if (far2G)  far2G.innerHTML  = lowPolyMesh(VY_FAR2_PTS,  300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(far2Base, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 115);
   if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155);
