@@ -1063,7 +1063,7 @@ function buildMountains(c) {
   var nearBase  = c.mtnZ1;
   var midBase   = vyLerpColor(c.mtnZ5, c.sky3, 0.08);
   var darkBase  = vyLerpColor(c.mtnZ2, c.sky3, 0.10);
-  var darkBase2 = vyLerpColor(c.mtnZ3, c.sky3, 0.10);
+  var darkBase2 = vyShade(vyLerpColor(c.mtnZ3, c.sky3, 0.06), -42);
   var farBase   = vyLerpColor(c.mtnZ4, c.sky3, 0.15);
   var far2Base  = vyLerpColor(c.mtnZ3, c.sky3, 0.18);
   var backBase  = vyLerpColor(c.mtnZ7, c.sky3, 0.22);
