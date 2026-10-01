@@ -591,8 +591,7 @@
             <g id="vy-mtn-back-g"></g>
             <g id="vy-mtn-far2-g"></g>
             <g id="vy-mtn-far-g"></g>
-            <g id="vy-mtn-dark-r-g"></g>
-            <g id="vy-mtn-dark-l-g"></g>
+            <g id="vy-mtn-dark-g"></g>
             <g id="vy-mtn-mid-g"></g>
             <g id="vy-mtn-near-g"></g>
 
@@ -1029,8 +1028,7 @@ function vyTriPoly(tri, colorFn, seed) {
    (x=320), not centered, with smaller secondary peaks elsewhere. Mid stays the reference shape. */
 var VY_NEAR_PTS  = [[0,166],[50,197],[80,180],[120,228],[165,270],[235,270],[280,228],[320,180],[350,197],[400,164]];
 var VY_MID_PTS   = [[0,174],[40,162],[80,190],[120,199],[160,222],[200,231],[240,222],[280,199],[320,190],[360,160],[400,174]];
-var VY_DARK_L_PTS = [[0,185],[40,155],[80,178],[120,160],[160,238],[200,212],[220,198]];
-var VY_DARK_R_PTS = [[160,238],[200,207],[240,194],[280,160],[320,178],[360,155],[400,185]];
+var VY_DARK_PTS   = [[0,185],[40,155],[80,178],[120,160],[160,238],[200,212],[220,198],[240,194],[280,160],[320,178],[360,155],[400,185]];
 var VY_FAR_PTS   = [[0,195],[40,203],[80,165],[120,205],[160,170],[200,208],[240,170],[280,205],[320,165],[360,203],[400,195]];
 var VY_FAR2_PTS  = [[0,200],[40,195],[80,175],[120,198],[160,226],[200,235],[240,226],[280,178],[320,197],[360,192],[400,200]];
 var VY_BACK_PTS  = [[0,205],[40,198],[80,203],[120,180],[160,202],[200,203],[240,175],[280,201],[320,155],[360,195],[400,205]];
@@ -1047,6 +1045,14 @@ function vySideTint(base, cx, lightAmt, darkAmt) {
   return vyLerpColor(base, [20,18,22], ((t - 0.5) / 0.5) * darkAmt);
 }
 
+/* Smooth gradual blend from colorA to colorB as cx goes from x0 to x1 - used so a tier can shift
+   from one hue to another gradually (following its own slope) instead of a hard two-mesh seam. */
+function vyHueBlend(colorA, colorB, cx, x0, x1) {
+  var t = (cx - x0) / (x1 - x0);
+  t = Math.max(0, Math.min(1, t));
+  return vyLerpColor(colorA, colorB, t);
+}
+
 /* Small angular foothills right at the lake's edge, distinct olive/tan low-poly shapes */
 var VY_FOOT1_PTS = [[6,278],[55,248],[115,258],[172,274]];
 var VY_FOOT2_PTS = [[150,274],[205,246],[262,256],[300,270]];
@@ -1055,7 +1061,7 @@ var VY_FOOT3_PTS = [[278,272],[325,250],[385,264]];
 function buildMountains(c) {
   var backG  = document.getElementById('vy-mtn-back-g'), far2G = document.getElementById('vy-mtn-far2-g'),
       farG   = document.getElementById('vy-mtn-far-g'),
-      darkLG = document.getElementById('vy-mtn-dark-l-g'), darkRG = document.getElementById('vy-mtn-dark-r-g'),
+      darkG  = document.getElementById('vy-mtn-dark-g'),
       midG   = document.getElementById('vy-mtn-mid-g'),
       nearG  = document.getElementById('vy-mtn-near-g');
   /* Atmospheric haze: each tier sits at its own depth, so blend it toward the sky color by how far
@@ -1070,12 +1076,12 @@ function buildMountains(c) {
   var backBase  = vyLerpColor(c.mtnZ7, c.sky3, 0.22);
   /* The main valley (near) gets the strongest left/right tint so its two walls read as distinctly
      shaded sides, not a mirrored single color; the rest carry a lighter version of the same drift.
-     Dark is split at the V into blue-grey (left) and slate (right); back is dusty rose. */
+     Dark is one mesh that gradually blends from blue-grey (left) to neutral charcoal (right) across
+     the V, following its own slope instead of two flat-colored halves meeting at a hard seam. */
   if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75);
   if (far2G)  far2G.innerHTML  = lowPolyMesh(VY_FAR2_PTS,  300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(far2Base, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 115);
   if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155);
-  if (darkLG) darkLG.innerHTML = lowPolyMesh(VY_DARK_L_PTS, 340, 6, 4, function(cx,cy,seed){ return vyShade(darkBase,  (vySeeded(seed)-0.5)*28); }, 268);
-  if (darkRG) darkRG.innerHTML = lowPolyMesh(VY_DARK_R_PTS, 340, 6, 4, function(cx,cy,seed){ return vyShade(darkBase2, (vySeeded(seed)-0.5)*28); }, 318);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 20, 4, function(cx,cy,seed){ return vyShade(vyHueBlend(darkBase, darkBase2, cx, 100, 280), (vySeeded(seed)-0.5)*28); }, 268);
   if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   340, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(midBase, cx, 0.16, 0.12), (vySeeded(seed)-0.5)*30); }, 355);
   if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  340, 10, 3, function(cx,cy,seed){ return vyShade(vySideTint(nearBase, cx, 0.20, 0.24), (vySeeded(seed)-0.5)*24); }, 455);
 
