@@ -994,7 +994,7 @@ function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase) {
       var topY = vyInterpY(topPts, x);
       var y = topY + (baseY - topY) * (r / rows);
       var jseed = seedBase + r*97 + col*31;
-      if (col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
+      if (r > 0 && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
       if (r > 0 && r < rows)     y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
       row.push([x, y]);
     }
