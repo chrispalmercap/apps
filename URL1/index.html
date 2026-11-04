@@ -984,7 +984,7 @@ function vyInterpY(pts, x) {
   }
   return pts[pts.length-1][1];
 }
-function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase) {
+function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop) {
   var minX = topPts[0][0], maxX = topPts[topPts.length-1][0];
   var grid = [];
   for (var r = 0; r <= rows; r++) {
@@ -994,7 +994,7 @@ function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase) {
       var topY = vyInterpY(topPts, x);
       var y = topY + (baseY - topY) * (r / rows);
       var jseed = seedBase + r*97 + col*31;
-      if (r > 0 && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
+      if ((r > 0 || !straightTop) && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
       if (r > 0 && r < rows)     y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
       row.push([x, y]);
     }
@@ -1078,7 +1078,7 @@ function buildMountains(c) {
      shaded sides, not a mirrored single color; the rest carry a lighter version of the same drift.
      Dark is one mesh that gradually blends from blue-grey (left) to neutral charcoal (right) across
      the V, following its own slope instead of two flat-colored halves meeting at a hard seam. */
-  if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  300, 40, 5, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75);
+  if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  300, 40, 5, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75, true);
   if (far2G)  far2G.innerHTML  = lowPolyMesh(VY_FAR2_PTS,  300, 40, 4, function(cx,cy,seed){ return vyShade(vySideTint(far2Base, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 115);
   if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   300, 20, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155);
   if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  340, 20, 4, function(cx,cy,seed){ return vyShade(vyHueBlend(darkBase, darkBase2, cx, 100, 280), (vySeeded(seed)-0.5)*28); }, 268);
