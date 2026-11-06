@@ -932,11 +932,11 @@ var VY_KEYFRAMES = {
   dawn:  { sky1:[54,66,118], sky2:[176,132,158],sky3:[240,168,178],
            mtnZ1:[134,72,52], mtnZ2:[88,102,136], mtnZ3:[96,102,112], mtnZ4:[108,122,98], mtnZ5:[120,86,58], mtnZ7:[122,80,88],
            strataTop:[104,114,140], strataMid:[92,106,88], strataBase:[46,50,68],
-           footOlive:[86,96,54], footTan:[168,140,104], valley:[164,138,102], hillBack:[100,110,60], hillFront:[56,62,84] },
+           footOlive:[90,108,52], footTan:[184,160,120], valley:[130,146,78], hillBack:[78,104,50], hillFront:[30,36,52] },
   day:   { sky1:[92,148,212],sky2:[172,168,198],sky3:[246,196,206],
            mtnZ1:[168,88,64], mtnZ2:[124,142,172], mtnZ3:[110,118,126], mtnZ4:[150,172,142], mtnZ5:[158,112,70], mtnZ7:[156,104,110],
            strataTop:[140,150,172], strataMid:[122,138,120], strataBase:[58,64,84],
-           footOlive:[110,124,68], footTan:[206,178,136], valley:[199,170,128], hillBack:[124,136,74], hillFront:[70,78,104] }
+           footOlive:[102,132,58], footTan:[214,192,152], valley:[150,168,90], hillBack:[92,122,58], hillFront:[34,40,58] }
 };
 
 function vyLerp(a, b, t) {
@@ -1100,11 +1100,11 @@ var VY_LAKE_TOP_PTS = [[16,272],[80,258],[160,255],[240,255],[320,260],[384,272]
 function buildLake(c, reflX, reflWeight, isSun) {
   var lakeG = document.getElementById('vy-lake-g');
   if (!lakeG) return;
-  var waterBase = [150, 170, 178];
+  var waterBase = [70, 130, 135];
   var lakeColor = [
-    Math.round(waterBase[0]*0.55 + c.sky3[0]*0.45),
-    Math.round(waterBase[1]*0.55 + c.sky3[1]*0.45),
-    Math.round(waterBase[2]*0.55 + c.sky3[2]*0.45)
+    Math.round(waterBase[0]*0.65 + c.sky3[0]*0.35),
+    Math.round(waterBase[1]*0.65 + c.sky3[1]*0.35),
+    Math.round(waterBase[2]*0.65 + c.sky3[2]*0.35)
   ];
   var html = '<path d="M16,272 C120,248 280,248 384,272 Z" fill="rgba(0,0,0,0.09)"/>';
   html += lowPolyMesh(VY_LAKE_TOP_PTS, 304, 9, 3, function(cx, cy, seed) {
@@ -1207,7 +1207,7 @@ function applyValleyScene(p) {
   var vf = document.getElementById('vy-valley');
   if (vf) vf.setAttribute('fill', vyRgb(c.valley));
 
-  vySetAll('.vy-bg-tree', vyRgb(vyShade(c.valley, -55)));
+  vySetAll('.vy-bg-tree', vyRgb(vyShade(c.hillFront, -10)));
 
   window.VY_MEADOW_COLOR = c.valley;
   var hillsBg = document.getElementById('vy-hills-bg');
