@@ -984,7 +984,7 @@ function vyInterpY(pts, x) {
   }
   return pts[pts.length-1][1];
 }
-function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop) {
+function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, jitterBase) {
   var minX = topPts[0][0], maxX = topPts[topPts.length-1][0];
   var grid = [];
   for (var r = 0; r <= rows; r++) {
@@ -995,7 +995,7 @@ function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop) 
       var y = topY + (baseY - topY) * (r / rows);
       var jseed = seedBase + r*97 + col*31;
       if ((r > 0 || !straightTop) && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
-      if (r > 0 && r < rows)     y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
+      if (r > 0 && (r < rows || jitterBase)) y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
       row.push([x, y]);
     }
     grid.push(row);
@@ -1101,9 +1101,9 @@ function buildMountains(c) {
   var hillGreen1 = vyLerpColor(c.footOlive, c.hillBack, 0.1);
   var hillGreen2 = vyLerpColor(c.footOlive, c.hillBack, 0.6);
   var hillGreen3 = vyShade(c.hillBack, -30);
-  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801);
-  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821);
-  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 10, 3, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841);
+  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, true);
+  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, true);
+  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 10, 3, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, true);
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
