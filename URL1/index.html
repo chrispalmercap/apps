@@ -1102,9 +1102,9 @@ function buildMountains(c) {
   var hillGreen1 = vyLerpColor(c.footOlive, c.hillBack, 0.1);
   var hillGreen2 = vyLerpColor(c.footOlive, c.hillBack, 0.6);
   var hillGreen3 = vyShade(c.hillBack, -30);
-  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 6, 2, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35);
-  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 6, 2, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, false, 0.35);
-  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 5, 2, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, false, 0.35);
+  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 3, 1, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35);
+  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 3, 1, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, false, 0.35);
+  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 3, 1, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, false, 0.35);
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
