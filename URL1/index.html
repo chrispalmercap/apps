@@ -984,7 +984,8 @@ function vyInterpY(pts, x) {
   }
   return pts[pts.length-1][1];
 }
-function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, jitterBase) {
+function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, jitterBase, jitterAmt) {
+  if (jitterAmt === undefined) jitterAmt = 1;
   var minX = topPts[0][0], maxX = topPts[topPts.length-1][0];
   var grid = [];
   for (var r = 0; r <= rows; r++) {
@@ -994,8 +995,8 @@ function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, 
       var topY = vyInterpY(topPts, x);
       var y = topY + (baseY - topY) * (r / rows);
       var jseed = seedBase + r*97 + col*31;
-      if ((r > 0 || !straightTop) && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7;
-      if (r > 0 && (r < rows || jitterBase)) y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6;
+      if ((r > 0 || !straightTop) && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7 * jitterAmt;
+      if (r > 0 && (r < rows || jitterBase)) y += (vySeeded(jseed+1) - 0.5) * ((baseY-topY)/rows || 10) * 0.6 * jitterAmt;
       row.push([x, y]);
     }
     grid.push(row);
@@ -1083,12 +1084,12 @@ function buildMountains(c) {
      shaded sides, not a mirrored single color; the rest carry a lighter version of the same drift.
      Dark is one mesh that gradually blends from blue-grey (left) to neutral charcoal (right) across
      the V, following its own slope instead of two flat-colored halves meeting at a hard seam. */
-  if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  275, 40, 5, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75, true);
-  if (far2G)  far2G.innerHTML  = lowPolyMesh(VY_FAR2_PTS,  275, 40, 4, function(cx,cy,seed){ return vyShade(vySideTint(far2Base, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 115);
-  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   275, 20, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155);
-  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  275, 20, 4, function(cx,cy,seed){ return vyShade(vyHueBlend(darkBase, darkBase2, cx, 100, 280), (vySeeded(seed)-0.5)*28); }, 268);
-  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   275, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(midBase, cx, 0.16, 0.12), (vySeeded(seed)-0.5)*30); }, 355);
-  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  275, 10, 3, function(cx,cy,seed){ return vyShade(vySideTint(nearBase, cx, 0.20, 0.24), (vySeeded(seed)-0.5)*24); }, 455);
+  if (backG)  backG.innerHTML  = lowPolyMesh(VY_BACK_PTS,  275, 40, 5, function(cx,cy,seed){ return vyShade(vySideTint(backBase, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 75, true, false, 0.7);
+  if (far2G)  far2G.innerHTML  = lowPolyMesh(VY_FAR2_PTS,  275, 40, 4, function(cx,cy,seed){ return vyShade(vySideTint(far2Base, cx, 0.24, 0.16), (vySeeded(seed)-0.5)*26); }, 115, false, false, 0.7);
+  if (farG)   farG.innerHTML   = lowPolyMesh(VY_FAR_PTS,   275, 20, 4, function(cx,cy,seed){ return vyShade(vySideTint(farBase, cx, 0.22, 0.14), (vySeeded(seed)-0.5)*28); }, 155, false, false, 0.7);
+  if (darkG)  darkG.innerHTML  = lowPolyMesh(VY_DARK_PTS,  275, 20, 4, function(cx,cy,seed){ return vyShade(vyHueBlend(darkBase, darkBase2, cx, 100, 280), (vySeeded(seed)-0.5)*28); }, 268, false, false, 0.7);
+  if (midG)   midG.innerHTML   = lowPolyMesh(VY_MID_PTS,   275, 10, 4, function(cx,cy,seed){ return vyShade(vySideTint(midBase, cx, 0.16, 0.12), (vySeeded(seed)-0.5)*30); }, 355, false, false, 0.7);
+  if (nearG)  nearG.innerHTML  = lowPolyMesh(VY_NEAR_PTS,  275, 10, 3, function(cx,cy,seed){ return vyShade(vySideTint(nearBase, cx, 0.20, 0.24), (vySeeded(seed)-0.5)*24); }, 455, false, false, 0.7);
 
   var layer1 = document.getElementById('vy-base-layer1'),
       layer2 = document.getElementById('vy-base-layer2');
@@ -1101,9 +1102,9 @@ function buildMountains(c) {
   var hillGreen1 = vyLerpColor(c.footOlive, c.hillBack, 0.1);
   var hillGreen2 = vyLerpColor(c.footOlive, c.hillBack, 0.6);
   var hillGreen3 = vyShade(c.hillBack, -30);
-  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801);
-  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 14, 3, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821);
-  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 10, 3, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841);
+  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 6, 2, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35);
+  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 6, 2, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, false, 0.35);
+  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 5, 2, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, false, 0.35);
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
