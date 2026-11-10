@@ -1139,6 +1139,19 @@ function buildLake(c, reflX, reflWeight, isSun) {
     Math.round(waterBase[2]*0.65 + c.sky3[2]*0.35)
   ];
   var html = '<rect x="0" y="295" width="400" height="45" fill="' + vyRgb(lakeColor) + '"/>';
+
+  /* Subtle mirrored reflection of the mountains/foothills: flipped and compressed (scale 0.35) about
+     the lake's top edge (y=295) so it fits the lake's short height, clipped to the lake rect, blurred
+     and low-opacity so it reads as a soft shimmer rather than a sharp duplicate. */
+  var reflScale = 0.35, reflAnchor = 295;
+  var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
+  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="295" width="400" height="45"/></clipPath></defs>';
+  html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.22" filter="url(#vy-soft-blur)">';
+  html += '<g transform="translate(0,' + (reflAnchor*(1+reflScale)).toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
+  for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
+  html += '</g></g>';
+  html += '<rect x="0" y="295" width="400" height="45" fill="' + vyRgb(lakeColor) + '" opacity="0.28"/>';
+
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
   html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="318" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
