@@ -984,7 +984,27 @@ function vyInterpY(pts, x) {
   }
   return pts[pts.length-1][1];
 }
-function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, jitterBase, jitterAmt) {
+/* Catmull-Rom spline through the same points vyInterpY uses, so the curve rounds smoothly through
+   each point instead of meeting at a sharp straight-line corner. Used only where smoothTop is passed. */
+function vyCatmullY(pts, x) {
+  var n = pts.length;
+  for (var i = 0; i < n - 1; i++) {
+    var a = pts[i], b = pts[i+1];
+    if (x >= a[0] && x <= b[0]) {
+      var p0 = pts[Math.max(0, i-1)], p1 = a, p2 = b, p3 = pts[Math.min(n-1, i+2)];
+      var t = (b[0] === a[0]) ? 0 : (x - a[0]) / (b[0] - a[0]);
+      var t2 = t*t, t3 = t2*t;
+      return 0.5 * (
+        (2 * p1[1]) +
+        (-p0[1] + p2[1]) * t +
+        (2*p0[1] - 5*p1[1] + 4*p2[1] - p3[1]) * t2 +
+        (-p0[1] + 3*p1[1] - 3*p2[1] + p3[1]) * t3
+      );
+    }
+  }
+  return pts[n-1][1];
+}
+function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, jitterBase, jitterAmt, smoothTop) {
   if (jitterAmt === undefined) jitterAmt = 1;
   var minX = topPts[0][0], maxX = topPts[topPts.length-1][0];
   var grid = [];
@@ -992,7 +1012,7 @@ function lowPolyMesh(topPts, baseY, cols, rows, colorFn, seedBase, straightTop, 
     var row = [];
     for (var col = 0; col <= cols; col++) {
       var x = minX + (maxX - minX) * (col / cols);
-      var topY = vyInterpY(topPts, x);
+      var topY = smoothTop ? vyCatmullY(topPts, x) : vyInterpY(topPts, x);
       var y = topY + (baseY - topY) * (r / rows);
       var jseed = seedBase + r*97 + col*31;
       if ((r > 0 || !straightTop) && col > 0 && col < cols) x += (vySeeded(jseed) - 0.5) * ((maxX-minX)/cols) * 0.7 * jitterAmt;
@@ -1102,9 +1122,9 @@ function buildMountains(c) {
   var hillGreen1 = vyLerpColor(c.footOlive, c.hillBack, 0.1);
   var hillGreen2 = vyLerpColor(c.footOlive, c.hillBack, 0.6);
   var hillGreen3 = vyShade(c.hillBack, -30);
-  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 12, 1, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35);
-  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 10, 1, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, false, 0.35);
-  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 7, 1, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, false, 0.35);
+  if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 6, 1, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35, true);
+  if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 285, 5, 1, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*22); }, 821, false, false, 0.35, true);
+  if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 295, 4, 1, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*22); }, 841, false, false, 0.35, true);
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
