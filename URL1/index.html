@@ -1164,8 +1164,6 @@ function buildLake(c, reflX, reflWeight, isSun) {
   for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
   html += '</g></g>';
 
-  html += '<rect x="0" y="299" width="400" height="4" fill="rgba(255,255,255,0.10)"/>';
-
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
   html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="330" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
