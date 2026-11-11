@@ -1156,7 +1156,7 @@ function buildLake(c, reflX, reflWeight, isSun) {
   /* Subtle mirrored reflection of the mountains/foothills: flipped and compressed (scale 0.35) about
      the lake's top edge (y=299) so it fits the lake's short height, clipped to the lake rect, blurred
      and low-opacity so it reads as a soft shimmer rather than a sharp duplicate. */
-  var reflScale = 0.35, reflAnchor = 299;
+  var reflScale = 0.35, reflAnchor = 270;
   var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
   html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="299" width="400" height="61"/></clipPath></defs>';
   html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.5" filter="url(#vy-soft-blur)">';
