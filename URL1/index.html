@@ -1153,14 +1153,16 @@ function buildLake(c, reflX, reflWeight, isSun) {
   ];
   var html = '<rect x="0" y="299" width="400" height="61" fill="' + vyRgb(lakeColor) + '"/>';
 
-  /* Subtle mirrored reflection of the mountains/foothills: flipped and compressed (scale 0.35) about
-     the lake's top edge (y=299) so it fits the lake's short height, clipped to the lake rect, blurred
-     and low-opacity so it reads as a soft shimmer rather than a sharp duplicate. */
-  var reflScale = 0.35, reflAnchor = 270;
+  /* Subtle mirrored reflection of the mountains/foothills. Maps mountain-base (y=275, the shoreline) to
+     the lake's top edge, and a reference peak height (y=140) to the lake's bottom edge, so real
+     mountain/foothill content fills the entire visible lake band instead of mostly empty sky. */
+  var lakeTop = 299, lakeBottom = 360, baseSrc = 275, peakSrc = 140;
+  var reflScale = (lakeBottom - lakeTop) / (baseSrc - peakSrc);
+  var reflT = lakeTop + reflScale * baseSrc;
   var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
   html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="299" width="400" height="61"/></clipPath></defs>';
   html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.5" filter="url(#vy-soft-blur)">';
-  html += '<g transform="translate(0,' + (reflAnchor*(1+reflScale)).toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
+  html += '<g transform="translate(0,' + reflT.toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
   for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
   html += '</g></g>';
 
