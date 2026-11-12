@@ -630,7 +630,7 @@
             <g id="vy-foothill-3-g"></g>
 
             <!-- 4 thin rectangular layers under the lake -->
-            <rect id="vy-base-layer3" x="0" y="360" width="400" height="65" fill="url(#vy-layer3-grad)"/>
+            <rect id="vy-base-layer3" x="0" y="370" width="400" height="55" fill="url(#vy-layer3-grad)"/>
             <rect id="vy-base-layer4" x="0" y="425" width="400" height="64" fill="url(#vy-layer4-grad)"/>
             <rect id="vy-base-layer5" x="0" y="489" width="400" height="64" fill="url(#vy-layer5-grad)"/>
             <rect id="vy-base-layer6" x="0" y="553" width="400" height="65" fill="url(#vy-layer6-grad)"/>
@@ -1222,23 +1222,23 @@ function buildLake(c, reflX, reflWeight, isSun) {
     Math.round(waterBase[1]*0.65 + c.sky3[1]*0.35),
     Math.round(waterBase[2]*0.65 + c.sky3[2]*0.35)
   ];
-  var html = '<rect x="0" y="299" width="400" height="61" fill="' + vyRgb(lakeColor) + '"/>';
+  var html = '<rect x="0" y="299" width="400" height="71" fill="' + vyRgb(lakeColor) + '"/>';
 
   /* Subtle mirrored reflection of the mountains/foothills. Maps mountain-base (y=275, the shoreline) to
      the lake's top edge, and a reference peak height (y=140) to the lake's bottom edge, so real
      mountain/foothill content fills the entire visible lake band instead of mostly empty sky. */
-  var lakeTop = 299, lakeBottom = 360, baseSrc = 275, peakSrc = 140;
+  var lakeTop = 299, lakeBottom = 370, baseSrc = 275, peakSrc = 140;
   var reflScale = (lakeBottom - lakeTop) / (baseSrc - peakSrc);
   var reflT = lakeTop + reflScale * baseSrc;
   var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
-  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="299" width="400" height="61"/></clipPath></defs>';
+  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="299" width="400" height="71"/></clipPath></defs>';
   html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.5" filter="url(#vy-soft-blur)">';
   html += '<g transform="translate(0,' + reflT.toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
   for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
   html += '</g></g>';
 
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
-  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="330" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
+  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="335" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
 }
 
