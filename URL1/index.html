@@ -81,7 +81,7 @@
     /* Valley sky-progression scene (replaces the circular score ring) - full-bleed, no card frame */
     .valley-card {
       position: relative; width: calc(100% + 32px); margin-left: -16px;
-      height: clamp(340px, 50vh, 520px); flex-shrink: 0; overflow: hidden;
+      height: clamp(400px, 68vh, 600px); flex-shrink: 0; overflow: hidden;
     }
     .valley-card svg { display: block; width: 100%; height: 100%; }
     #vy-star { transition: opacity 1.4s ease; }
@@ -465,8 +465,6 @@
     .home-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:0; position:relative; isolation:isolate; }
     .score-glow-bg { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:100vw; height:120%; pointer-events:none; z-index:-1; }
     /* Hills + pine-tree row: one continuous flowing scene, trees grow in on load */
-    .rings-sticky { position:sticky; top:52px; z-index:10; width:calc(100% + 32px); margin-left:-16px; padding:0; height:210px; overflow:hidden; background: linear-gradient(180deg, #0d1a17 0%, #0a1512 100%); background-attachment:fixed; transition: background 1.6s ease; }
-    #hills-svg { display:block; width:100%; height:100%; }
     .hill-tree-hit { cursor:pointer; -webkit-tap-highlight-color:transparent; }
     .hill-tree-hit:active .tree-group { transform: scale(0.94) !important; }
     .tree-group { transition: transform 0.9s cubic-bezier(.34,1.2,.4,1), opacity 0.3s ease; }
@@ -536,7 +534,7 @@
     <div class="home-scene">
       <div class="home-score-area">
         <div class="valley-card" style="cursor:pointer" onclick="openBodyScore()">
-          <svg id="valley-svg" viewBox="0 0 400 360" preserveAspectRatio="xMidYMax slice">
+          <svg id="valley-svg" viewBox="0 0 400 618" preserveAspectRatio="xMidYMax slice">
             <defs>
               <linearGradient id="vy-sky-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop id="vy-stop-1" offset="0%"  stop-color="#050a16"/>
@@ -562,6 +560,26 @@
               <linearGradient id="vy-layer2-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop id="vy-layer2-stop1" offset="0%" stop-color="#a8c47a"/>
                 <stop id="vy-layer2-stop2" offset="100%" stop-color="#7f9e58"/>
+              </linearGradient>
+              <linearGradient id="vy-layer3-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-layer3-stop1" offset="0%" stop-color="#6fae9e"/>
+                <stop id="vy-layer3-stop2" offset="100%" stop-color="#4f8a7c"/>
+              </linearGradient>
+              <linearGradient id="vy-layer4-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-layer4-stop1" offset="0%" stop-color="#5c9a7e"/>
+                <stop id="vy-layer4-stop2" offset="100%" stop-color="#3f7962"/>
+              </linearGradient>
+              <linearGradient id="vy-layer5-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-layer5-stop1" offset="0%" stop-color="#4a8a70"/>
+                <stop id="vy-layer5-stop2" offset="100%" stop-color="#306654"/>
+              </linearGradient>
+              <linearGradient id="vy-layer6-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-layer6-stop1" offset="0%" stop-color="#3a7862"/>
+                <stop id="vy-layer6-stop2" offset="100%" stop-color="#245244"/>
+              </linearGradient>
+              <linearGradient id="vy-ringrow-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop id="vy-ringrow-stop1" offset="0%" stop-color="#16342c"/>
+                <stop id="vy-ringrow-stop2" offset="100%" stop-color="#0a1512"/>
               </linearGradient>
               <filter id="vy-soft-blur" x="-60%" y="-60%" width="220%" height="220%">
                 <feGaussianBlur stdDeviation="6"/>
@@ -614,11 +632,27 @@
             <g id="vy-foothill-1-g"></g>
             <g id="vy-foothill-2-g"></g>
             <g id="vy-foothill-3-g"></g>
+
+            <!-- 4 thin rectangular layers under the lake -->
+            <rect id="vy-base-layer3" x="0" y="360" width="400" height="12" fill="url(#vy-layer3-grad)"/>
+            <rect id="vy-base-layer4" x="0" y="372" width="400" height="12" fill="url(#vy-layer4-grad)"/>
+            <rect id="vy-base-layer5" x="0" y="384" width="400" height="12" fill="url(#vy-layer5-grad)"/>
+            <rect id="vy-base-layer6" x="0" y="396" width="400" height="12" fill="url(#vy-layer6-grad)"/>
+
+            <!-- 4 poly hills overlapping those layers, 2 per side, each tapering near the middle -->
+            <g id="vy-hill-l1-g"></g>
+            <g id="vy-hill-r1-g"></g>
+            <g id="vy-hill-l2-g"></g>
+            <g id="vy-hill-r2-g"></g>
+
+            <!-- Interactive metric-tree row, merged into the same coordinate space (was a separate
+                 sticky SVG; now a translated group so the whole scene is one continuous canvas) -->
+            <g transform="translate(0,408)">
+              <rect id="vy-ringrow-bg" x="0" y="0" width="400" height="210" fill="url(#vy-ringrow-grad)"/>
+              <g id="vy-ringrow-g"></g>
+            </g>
           </svg>
         </div>
-      </div>
-      <div class="rings-sticky">
-        <svg id="hills-svg" viewBox="0 0 400 210" preserveAspectRatio="xMidYMax slice"></svg>
       </div>
       <div style="width:100%;padding:0 0;margin-top:2px;">
         <div id="ring-divider-line" style="height:2px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.5) 30%,rgba(100,160,255,0.85) 50%,rgba(100,160,255,0.5) 70%,transparent 100%);box-shadow:0 0 10px rgba(100,160,255,0.4),0 0 24px rgba(100,160,255,0.18)"></div>
@@ -1092,6 +1126,16 @@ var VY_FOOTHILL1_PTS = [[0,252],[70,234],[110,246],[150,261],[235,275]];
 var VY_FOOTHILL2_PTS = [[195,287],[260,264],[295,261],[330,253],[400,271]];
 var VY_FOOTHILL3_PTS = [[260,299],[290,282],[320,268],[360,255],[400,258]];
 
+/* 4 poly hills under the lake, overlapping the 4 thin layers there (layer3-6, y=360-408). 2 on the
+   left (hill L1 -> layer3's bottom, hill L2 -> layer5's bottom, painted after/in front of L1), 2 on
+   the right (hill R1 -> layer4's bottom, hill R2 -> layer6's bottom, painted after/in front of R1).
+   All taper to a point near the middle of the canvas, same tapered-wedge/Catmull-Rom style as the
+   foothills above the lake. */
+var VY_HILL_L1_PTS = [[0,345],[55,328],[130,352],[200,372]];
+var VY_HILL_L2_PTS = [[0,365],[50,345],[120,372],[190,396]];
+var VY_HILL_R1_PTS = [[200,384],[275,362],[345,335],[400,355]];
+var VY_HILL_R2_PTS = [[210,408],[285,385],[348,355],[400,378]];
+
 function buildMountains(c) {
   var backG  = document.getElementById('vy-mtn-back-g'), far2G = document.getElementById('vy-mtn-far2-g'),
       farG   = document.getElementById('vy-mtn-far-g'),
@@ -1138,6 +1182,37 @@ function buildMountains(c) {
   if (fh1G) fh1G.innerHTML = lowPolyMesh(VY_FOOTHILL1_PTS, 275, 6, 1, function(cx, cy, seed) { return vyShade(hillGreen1, (vySeeded(seed)-0.5)*22); }, 801, false, false, 0.35, true);
   if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 287, 5, 1, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*38); }, 821, false, false, 0.35, true);
   if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 299, 4, 1, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*38); }, 841, false, false, 0.35, true);
+
+  var layer3Base = vyLerpColor(c.hillBack, [60, 150, 135], 0.5);
+  var layer3Top = document.getElementById('vy-layer3-stop1'), layer3Bot = document.getElementById('vy-layer3-stop2');
+  if (layer3Top) layer3Top.setAttribute('stop-color', vyRgb(vyShade(layer3Base, 18)));
+  if (layer3Bot) layer3Bot.setAttribute('stop-color', vyRgb(vyShade(layer3Base, -10)));
+
+  var layer4Base = vyLerpColor(c.hillBack, [45, 130, 110], 0.55);
+  var layer4Top = document.getElementById('vy-layer4-stop1'), layer4Bot = document.getElementById('vy-layer4-stop2');
+  if (layer4Top) layer4Top.setAttribute('stop-color', vyRgb(vyShade(layer4Base, 14)));
+  if (layer4Bot) layer4Bot.setAttribute('stop-color', vyRgb(vyShade(layer4Base, -14)));
+
+  var layer5Base = vyShade(c.hillBack, -8);
+  var layer5Top = document.getElementById('vy-layer5-stop1'), layer5Bot = document.getElementById('vy-layer5-stop2');
+  if (layer5Top) layer5Top.setAttribute('stop-color', vyRgb(vyShade(layer5Base, 10)));
+  if (layer5Bot) layer5Bot.setAttribute('stop-color', vyRgb(vyShade(layer5Base, -18)));
+
+  var layer6Base = vyShade(c.hillBack, -22);
+  var layer6Top = document.getElementById('vy-layer6-stop1'), layer6Bot = document.getElementById('vy-layer6-stop2');
+  if (layer6Top) layer6Top.setAttribute('stop-color', vyRgb(vyShade(layer6Base, 8)));
+  if (layer6Bot) layer6Bot.setAttribute('stop-color', vyRgb(vyShade(layer6Base, -20)));
+
+  var hillL1G = document.getElementById('vy-hill-l1-g'), hillL2G = document.getElementById('vy-hill-l2-g'),
+      hillR1G = document.getElementById('vy-hill-r1-g'), hillR2G = document.getElementById('vy-hill-r2-g');
+  var hillGreenL1 = vyLerpColor(c.footOlive, c.hillBack, 0.15);
+  var hillGreenR1 = vyLerpColor(c.footOlive, c.hillBack, 0.45);
+  var hillGreenL2 = vyShade(c.hillBack, -14);
+  var hillGreenR2 = vyShade(c.hillBack, -30);
+  if (hillL1G) hillL1G.innerHTML = lowPolyMesh(VY_HILL_L1_PTS, 372, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL1, (vySeeded(seed)-0.5)*24); }, 861, false, false, 0.35, true);
+  if (hillR1G) hillR1G.innerHTML = lowPolyMesh(VY_HILL_R1_PTS, 384, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR1, (vySeeded(seed)-0.5)*30); }, 881, false, false, 0.35, true);
+  if (hillL2G) hillL2G.innerHTML = lowPolyMesh(VY_HILL_L2_PTS, 396, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL2, (vySeeded(seed)-0.5)*34); }, 901, false, false, 0.35, true);
+  if (hillR2G) hillR2G.innerHTML = lowPolyMesh(VY_HILL_R2_PTS, 408, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR2, (vySeeded(seed)-0.5)*38); }, 921, false, false, 0.35, true);
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
@@ -1270,8 +1345,9 @@ function applyValleyScene(p) {
   document.body.style.background = 'linear-gradient(180deg,' + vyRgb(c.sky1) + ' 0%,' + vyRgb(c.sky3) + ' 55%,' + vyRgb(c.valley) + ' 100%)';
   var bgGlow = document.getElementById('bg-glow');
   if (bgGlow) bgGlow.style.background = 'radial-gradient(ellipse 60% 60% at 50% 100%, rgba(' + c.sky3.join(',') + ',' + (0.10 + g*0.14).toFixed(2) + ') 0%, transparent 70%)';
-  var sticky = document.querySelector('.rings-sticky');
-  if (sticky) sticky.style.background = 'linear-gradient(180deg,' + vyRgb(c.valley) + ' 0%, ' + vyRgb(c.hillFront) + ' 100%)';
+  var ringBgTop = document.getElementById('vy-ringrow-stop1'), ringBgBot = document.getElementById('vy-ringrow-stop2');
+  if (ringBgTop) ringBgTop.setAttribute('stop-color', vyRgb(c.valley));
+  if (ringBgBot) ringBgBot.setAttribute('stop-color', vyRgb(c.hillFront));
 }
 
 function updateRingDivider(color) {
@@ -1338,7 +1414,7 @@ function pineSVG(pct, color, cx, crestY) {
 }
 
 function renderRingRow() {
-  var svg = document.getElementById('hills-svg');
+  var svg = document.getElementById('vy-ringrow-g');
   if (!svg) return;
   var slotW = 400 / RINGS.length;
 
