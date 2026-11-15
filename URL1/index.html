@@ -473,6 +473,22 @@
     .r-name-lbl { font-size:6.6px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; fill:#93a5c2; }
     /* Preview panel */
     .ring-preview-wrap { width:100%; padding:0 0 48px; }
+    #ring-sticky-header {
+      position: sticky; top: 52px; z-index: 50; width: calc(100% + 32px); margin-left: -16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px; background: rgba(7,11,21,0.95);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    #ring-sticky-info { display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden; }
+    #ring-sticky-icon { font-size: 15px; flex-shrink: 0; }
+    #ring-sticky-name { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #ring-sticky-pct { font-size: 16px; font-weight: 900; flex-shrink: 0; }
+    #ring-sticky-close {
+      flex-shrink: 0; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    #ring-sticky-close:active { opacity: 0.7; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
     .rp-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(22,32,64,0.9) 100%); border:1px solid var(--border); border-radius:18px; padding:16px; box-shadow:var(--shadow); animation:previewIn 0.22s cubic-bezier(.34,1.56,.64,1); }
     .rp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; }
@@ -656,6 +672,14 @@
         </div>
       </div>
       <div id="ring-preview-section" style="display:none">
+        <div id="ring-sticky-header">
+          <div id="ring-sticky-info">
+            <span id="ring-sticky-icon"></span>
+            <span id="ring-sticky-name"></span>
+            <span id="ring-sticky-pct"></span>
+          </div>
+          <button id="ring-sticky-close" onclick="closeRingPreview()">&#8249; Menu</button>
+        </div>
         <div style="width:100%;padding:0 0;margin-top:2px;">
           <div id="ring-divider-line" style="height:2px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.5) 30%,rgba(100,160,255,0.85) 50%,rgba(100,160,255,0.5) 70%,transparent 100%);box-shadow:0 0 10px rgba(100,160,255,0.4),0 0 24px rgba(100,160,255,0.18)"></div>
         </div>
@@ -1460,11 +1484,27 @@ function setWheelActive(idx) {
   updateRingDivider(RINGS[idx].color);
   renderRingPreview(idx);
 
+  var ring = RINGS[idx];
+  var stickyIcon = document.getElementById('ring-sticky-icon'),
+      stickyName = document.getElementById('ring-sticky-name'),
+      stickyPct  = document.getElementById('ring-sticky-pct');
+  if (stickyIcon) stickyIcon.textContent = ring.icon;
+  if (stickyName) stickyName.textContent = ring.name;
+  if (stickyPct)  { stickyPct.textContent = Math.round(ring.pct * 100) + '%'; stickyPct.style.color = ring.color; }
+
   var section = document.getElementById('ring-preview-section');
   if (section) {
     section.style.display = '';
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+function closeRingPreview() {
+  var section = document.getElementById('ring-preview-section');
+  if (section) section.style.display = 'none';
+  var hits = document.querySelectorAll('.hill-tree-hit');
+  for (var i = 0; i < hits.length; i++) hits[i].style.opacity = '1';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function wheelStep(dir) {
