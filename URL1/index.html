@@ -561,10 +561,6 @@
                 <stop id="vy-layer2-stop1" offset="0%" stop-color="#a8c47a"/>
                 <stop id="vy-layer2-stop2" offset="100%" stop-color="#7f9e58"/>
               </linearGradient>
-              <linearGradient id="vy-layer3-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop id="vy-layer3-stop1" offset="0%" stop-color="#6fae9e"/>
-                <stop id="vy-layer3-stop2" offset="100%" stop-color="#4f8a7c"/>
-              </linearGradient>
               <linearGradient id="vy-layer4-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop id="vy-layer4-stop1" offset="0%" stop-color="#5c9a7e"/>
                 <stop id="vy-layer4-stop2" offset="100%" stop-color="#3f7962"/>
@@ -630,7 +626,6 @@
             <g id="vy-foothill-3-g"></g>
 
             <!-- 4 thin rectangular layers under the lake -->
-            <rect id="vy-base-layer3" x="0" y="370" width="400" height="55" fill="url(#vy-layer3-grad)"/>
             <rect id="vy-base-layer4" x="0" y="425" width="400" height="64" fill="url(#vy-layer4-grad)"/>
             <rect id="vy-base-layer5" x="0" y="489" width="400" height="64" fill="url(#vy-layer5-grad)"/>
             <rect id="vy-base-layer6" x="0" y="553" width="400" height="65" fill="url(#vy-layer6-grad)"/>
@@ -1179,11 +1174,6 @@ function buildMountains(c) {
   if (fh2G) fh2G.innerHTML = lowPolyMesh(VY_FOOTHILL2_PTS, 287, 5, 1, function(cx, cy, seed) { return vyShade(hillGreen2, (vySeeded(seed)-0.5)*38); }, 821, false, false, 0.35, true);
   if (fh3G) fh3G.innerHTML = lowPolyMesh(VY_FOOTHILL3_PTS, 307, 4, 1, function(cx, cy, seed) { return vyShade(hillGreen3, (vySeeded(seed)-0.5)*38); }, 841, false, false, 0.35, true);
 
-  var layer3Base = vyLerpColor(c.hillBack, [60, 150, 135], 0.5);
-  var layer3Top = document.getElementById('vy-layer3-stop1'), layer3Bot = document.getElementById('vy-layer3-stop2');
-  if (layer3Top) layer3Top.setAttribute('stop-color', vyRgb(vyShade(layer3Base, 18)));
-  if (layer3Bot) layer3Bot.setAttribute('stop-color', vyRgb(vyShade(layer3Base, -10)));
-
   var layer4Base = vyLerpColor(c.hillBack, [45, 130, 110], 0.55);
   var layer4Top = document.getElementById('vy-layer4-stop1'), layer4Bot = document.getElementById('vy-layer4-stop2');
   if (layer4Top) layer4Top.setAttribute('stop-color', vyRgb(vyShade(layer4Base, 14)));
@@ -1222,23 +1212,23 @@ function buildLake(c, reflX, reflWeight, isSun) {
     Math.round(waterBase[1]*0.65 + c.sky3[1]*0.35),
     Math.round(waterBase[2]*0.65 + c.sky3[2]*0.35)
   ];
-  var html = '<rect x="0" y="307" width="400" height="63" fill="' + vyRgb(lakeColor) + '"/>';
+  var html = '<rect x="0" y="307" width="400" height="118" fill="' + vyRgb(lakeColor) + '"/>';
 
   /* Subtle mirrored reflection of the mountains/foothills. Maps mountain-base (y=275, the shoreline) to
      the lake's top edge, and a reference peak height (y=140) to the lake's bottom edge, so real
      mountain/foothill content fills the entire visible lake band instead of mostly empty sky. */
-  var lakeTop = 307, lakeBottom = 370, baseSrc = 275, peakSrc = 140;
+  var lakeTop = 307, lakeBottom = 425, baseSrc = 275, peakSrc = 140;
   var reflScale = (lakeBottom - lakeTop) / (baseSrc - peakSrc);
   var reflT = lakeTop + reflScale * baseSrc;
   var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
-  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="307" width="400" height="63"/></clipPath></defs>';
+  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="307" width="400" height="118"/></clipPath></defs>';
   html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.5" filter="url(#vy-soft-blur)">';
   html += '<g transform="translate(0,' + reflT.toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
   for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
   html += '</g></g>';
 
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
-  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="339" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
+  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="366" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
 }
 
