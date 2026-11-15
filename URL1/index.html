@@ -81,8 +81,8 @@
     }
     /* Valley sky-progression scene (replaces the circular score ring) - full-bleed, no card frame */
     .valley-card {
-      position: relative; width: calc(100% + 32px); margin-left: -16px;
-      aspect-ratio: 400 / 678; max-height: calc(100dvh - 100px); flex-shrink: 0; overflow: hidden;
+      position: relative; width: calc(100% + 32px); margin: 0 -16px;
+      height: calc(100dvh - 52px); flex-shrink: 0; overflow: hidden;
     }
     .valley-card svg { display: block; width: 100%; height: 100%; }
     #vy-star { transition: opacity 1.4s ease; }
@@ -462,7 +462,7 @@
     .pf-cond-option:hover { background: var(--surface2); }
 
     /* ── HOME LAYOUT ── */
-    .home-scene { display:flex; flex-direction:column; align-items:center; padding:0 0 16px; margin-top:-12px; width:100%; }
+    .home-scene { display:flex; flex-direction:column; align-items:center; padding:0; margin:-12px 0 -32px; width:100%; }
     .home-score-area { display:flex; flex-direction:column; align-items:center; margin-bottom:0; position:relative; isolation:isolate; width:100%; }
     .score-glow-bg { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:100vw; height:120%; pointer-events:none; z-index:-1; }
     /* Hills + pine-tree row: one continuous flowing scene, trees grow in on load */
@@ -474,22 +474,6 @@
     .r-name-lbl { font-size:6.6px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; fill:#93a5c2; }
     /* Preview panel */
     .ring-preview-wrap { width:100%; padding:0 0 48px; }
-    #ring-sticky-header {
-      position: sticky; top: 52px; z-index: 50; width: calc(100% + 32px); margin-left: -16px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 10px 16px; background: rgba(7,11,21,0.95);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    #ring-sticky-info { display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden; }
-    #ring-sticky-icon { font-size: 15px; flex-shrink: 0; }
-    #ring-sticky-name { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    #ring-sticky-pct { font-size: 16px; font-weight: 900; flex-shrink: 0; }
-    #ring-sticky-close {
-      flex-shrink: 0; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-      border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer;
-    }
-    #ring-sticky-close:active { opacity: 0.7; }
     @keyframes previewIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
     .rp-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(22,32,64,0.9) 100%); border:1px solid var(--border); border-radius:18px; padding:16px; box-shadow:var(--shadow); animation:previewIn 0.22s cubic-bezier(.34,1.56,.64,1); }
     .rp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; }
@@ -541,7 +525,7 @@
 </div>
 
 <div id="bar-detail" style="display:none">
-  <button class="back-btn" onclick="goHome()">&#8249; Back</button>
+  <button class="back-btn" onclick="goHome()">&#x1F3D4;&#xFE0F; Menu</button>
   <span class="t-date" id="det-ring-name"></span>
   <div style="width:56px"></div>
 </div>
@@ -551,7 +535,7 @@
     <div class="home-scene">
       <div class="home-score-area">
         <div class="valley-card" style="cursor:pointer" onclick="openBodyScore()">
-          <svg id="valley-svg" viewBox="0 0 400 678" preserveAspectRatio="xMidYMax slice">
+          <svg id="valley-svg" viewBox="0 0 400 678" preserveAspectRatio="xMidYMin slice">
             <defs>
               <linearGradient id="vy-sky-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop id="vy-stop-1" offset="0%"  stop-color="#050a16"/>
@@ -666,26 +650,10 @@
             <!-- Interactive metric-tree row, merged into the same coordinate space (was a separate
                  sticky SVG; now a translated group so the whole scene is one continuous canvas).
                  No background rect here - layers 4-6 now extend underneath it as the backdrop. -->
-            <g transform="translate(0,468)">
+            <g id="vy-ringrow-wrap" transform="translate(0,468)">
               <g id="vy-ringrow-g"></g>
             </g>
           </svg>
-        </div>
-      </div>
-      <div id="ring-preview-section" style="display:none">
-        <div id="ring-sticky-header">
-          <div id="ring-sticky-info">
-            <span id="ring-sticky-icon"></span>
-            <span id="ring-sticky-name"></span>
-            <span id="ring-sticky-pct"></span>
-          </div>
-          <button id="ring-sticky-close" onclick="closeRingPreview()">&#8249; Menu</button>
-        </div>
-        <div style="width:100%;padding:0 0;margin-top:2px;">
-          <div id="ring-divider-line" style="height:2px;background:linear-gradient(90deg,transparent 0%,rgba(100,160,255,0.5) 30%,rgba(100,160,255,0.85) 50%,rgba(100,160,255,0.5) 70%,transparent 100%);box-shadow:0 0 10px rgba(100,160,255,0.4),0 0 24px rgba(100,160,255,0.18)"></div>
-        </div>
-        <div class="ring-preview-wrap">
-          <div id="ring-preview"></div>
         </div>
       </div>
     </div>
@@ -947,6 +915,12 @@ function init() {
   seedValleyStars();
   applyValleyScene(0);
   setTimeout(function() { applyValleyScene(s); }, 80);
+  requestAnimationFrame(function() { requestAnimationFrame(vyFitLayout); });
+  var vyResizeT = null;
+  window.addEventListener('resize', function() {
+    clearTimeout(vyResizeT);
+    vyResizeT = setTimeout(vyFitLayout, 150);
+  }, { passive: true });
 
   var n = 0, step = s / 60;
   var t = setInterval(function() {
@@ -1164,7 +1138,37 @@ var VY_HILL_L2_PTS = [[0,552],[50,532],[120,559],[190,583]];
 var VY_HILL_R1_PTS = [[200,489],[275,467],[345,440],[400,460]];
 var VY_HILL_R2_PTS = [[210,678],[285,655],[348,625],[400,648]];
 
+/* Everything from the lake's bottom edge down (lake, hills, layers 4-6, the ring row) sits in a
+   flexible band whose height stretches/shrinks by vyExtraH so the scene's viewBox aspect ratio can
+   match the actual device viewport exactly - no side cropping, no empty gap. Everything above the
+   lake (sky, mountains, layers 1-2, lake top) stays fixed. */
+var vyExtraH = 0;
+var vyLastP = 0;
+
+function vyShiftPts(pts, dy) {
+  if (!dy) return pts;
+  var out = [];
+  for (var i = 0; i < pts.length; i++) out.push([pts[i][0], pts[i][1] + dy]);
+  return out;
+}
+
+function vyFitLayout() {
+  var card = document.querySelector('.valley-card');
+  var svg = document.getElementById('valley-svg');
+  if (!card || !svg) return;
+  var rect = card.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  var neededH = 400 * (rect.height / rect.width);
+  neededH = Math.max(560, Math.min(950, neededH));
+  var newExtra = neededH - 678;
+  if (Math.abs(newExtra - vyExtraH) < 1) return;
+  vyExtraH = newExtra;
+  svg.setAttribute('viewBox', '0 0 400 ' + (678 + vyExtraH).toFixed(2));
+  applyValleyScene(vyLastP);
+}
+
 function buildMountains(c) {
+  var eh = vyExtraH;
   var backG  = document.getElementById('vy-mtn-back-g'), far2G = document.getElementById('vy-mtn-far2-g'),
       farG   = document.getElementById('vy-mtn-far-g'),
       darkG  = document.getElementById('vy-mtn-dark-g'),
@@ -1242,10 +1246,20 @@ function buildMountains(c) {
   var hillGreenR1 = vyLerpColor(c.footOlive, c.hillBack, 0.45);
   var hillGreenL2 = vyShade(c.hillBack, -14);
   var hillGreenR2 = vyShade(c.hillBack, -30);
-  if (hillL1G) hillL1G.innerHTML = lowPolyMesh(VY_HILL_L1_PTS, 425, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL1, (vySeeded(seed)-0.5)*24); }, 861, false, false, 0.35, true);
-  if (hillR1G) hillR1G.innerHTML = lowPolyMesh(VY_HILL_R1_PTS, 489, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR1, (vySeeded(seed)-0.5)*30); }, 881, false, false, 0.35, true);
-  if (hillL2G) hillL2G.innerHTML = lowPolyMesh(VY_HILL_L2_PTS, 583, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL2, (vySeeded(seed)-0.5)*34); }, 901, false, false, 0.35, true);
-  if (hillR2G) hillR2G.innerHTML = lowPolyMesh(VY_HILL_R2_PTS, 678, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR2, (vySeeded(seed)-0.5)*38); }, 921, false, false, 0.35, true);
+  if (hillL1G) hillL1G.innerHTML = lowPolyMesh(vyShiftPts(VY_HILL_L1_PTS, eh), 425 + eh, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL1, (vySeeded(seed)-0.5)*24); }, 861, false, false, 0.35, true);
+  if (hillR1G) hillR1G.innerHTML = lowPolyMesh(vyShiftPts(VY_HILL_R1_PTS, eh), 489 + eh, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR1, (vySeeded(seed)-0.5)*30); }, 881, false, false, 0.35, true);
+  if (hillL2G) hillL2G.innerHTML = lowPolyMesh(vyShiftPts(VY_HILL_L2_PTS, eh), 583 + eh, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenL2, (vySeeded(seed)-0.5)*34); }, 901, false, false, 0.35, true);
+  if (hillR2G) hillR2G.innerHTML = lowPolyMesh(vyShiftPts(VY_HILL_R2_PTS, eh), 678 + eh, 5, 1, function(cx, cy, seed) { return vyShade(hillGreenR2, (vySeeded(seed)-0.5)*38); }, 921, false, false, 0.35, true);
+
+  var layer4El = document.getElementById('vy-base-layer4'), layer4bEl = document.getElementById('vy-base-layer4b'),
+      layer5El = document.getElementById('vy-base-layer5'), layer5bEl = document.getElementById('vy-base-layer5b'),
+      layer6El = document.getElementById('vy-base-layer6'), ringWrapEl = document.getElementById('vy-ringrow-wrap');
+  if (layer4El)  layer4El.setAttribute('y', 425 + eh);
+  if (layer4bEl) layer4bEl.setAttribute('y', 489 + eh);
+  if (layer5El)  layer5El.setAttribute('y', 519 + eh);
+  if (layer5bEl) layer5bEl.setAttribute('y', 583 + eh);
+  if (layer6El)  layer6El.setAttribute('y', 613 + eh);
+  if (ringWrapEl) ringWrapEl.setAttribute('transform', 'translate(0,' + (468 + eh) + ')');
 }
 
 /* Lake: flat rectangle (moved down to the foreground edge, straight across instead of a curved lens)
@@ -1259,23 +1273,25 @@ function buildLake(c, reflX, reflWeight, isSun) {
     Math.round(waterBase[1]*0.65 + c.sky3[1]*0.35),
     Math.round(waterBase[2]*0.65 + c.sky3[2]*0.35)
   ];
-  var html = '<rect x="0" y="307" width="400" height="118" fill="' + vyRgb(lakeColor) + '"/>';
+  var lakeTop = 307, lakeBottom = 425 + vyExtraH, baseSrc = 275, peakSrc = 140;
+  var lakeH = lakeBottom - lakeTop;
+  var html = '<rect x="0" y="' + lakeTop + '" width="400" height="' + lakeH.toFixed(2) + '" fill="' + vyRgb(lakeColor) + '"/>';
 
   /* Subtle mirrored reflection of the mountains/foothills. Maps mountain-base (y=275, the shoreline) to
      the lake's top edge, and a reference peak height (y=140) to the lake's bottom edge, so real
      mountain/foothill content fills the entire visible lake band instead of mostly empty sky. */
-  var lakeTop = 307, lakeBottom = 425, baseSrc = 275, peakSrc = 140;
-  var reflScale = (lakeBottom - lakeTop) / (baseSrc - peakSrc);
+  var reflScale = lakeH / (baseSrc - peakSrc);
   var reflT = lakeTop + reflScale * baseSrc;
   var reflGroups = ['vy-mtn-back-g','vy-mtn-far2-g','vy-mtn-far-g','vy-mtn-dark-g','vy-mtn-mid-g','vy-mtn-near-g','vy-foothill-1-g','vy-foothill-2-g','vy-foothill-3-g'];
-  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="307" width="400" height="118"/></clipPath></defs>';
+  html += '<defs><clipPath id="vy-lake-reflclip"><rect x="0" y="' + lakeTop + '" width="400" height="' + lakeH.toFixed(2) + '"/></clipPath></defs>';
   html += '<g clip-path="url(#vy-lake-reflclip)" opacity="0.5" filter="url(#vy-soft-blur)">';
   html += '<g transform="translate(0,' + reflT.toFixed(2) + ') scale(1,' + (-reflScale).toFixed(2) + ')">';
   for (var ri = 0; ri < reflGroups.length; ri++) html += '<use href="#' + reflGroups[ri] + '"/>';
   html += '</g></g>';
 
   var reflRgb = isSun ? [255,214,186] : [214,224,240];
-  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="366" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
+  var reflHighlightY = lakeTop + lakeH * 0.5;
+  html += '<ellipse cx="' + reflX.toFixed(1) + '" cy="' + reflHighlightY.toFixed(1) + '" rx="' + (34 + reflWeight*12).toFixed(1) + '" ry="' + (10 + reflWeight*4).toFixed(1) + '" fill="rgba(' + reflRgb.join(',') + ',' + (0.5*reflWeight).toFixed(2) + ')" filter="url(#vy-soft-blur)"/>';
   lakeG.innerHTML = html;
 }
 
@@ -1336,6 +1352,7 @@ function miniPineSVG(cx, baseY, scale, cls) {
 /* Small, unobtrusive background trees at the mountain base for extra realism */
 function applyValleyScene(p) {
   p = Math.max(0, Math.min(100, p));
+  vyLastP = p;
   var c = vySkyColors(p);
   var pos = vyCelestialPos(p);
 
@@ -1470,8 +1487,6 @@ function renderRingRow() {
     for (var gi2 = 0; gi2 < groups.length; gi2++) groups[gi2].style.transform = 'scale(1)';
   }, 120);
 
-  updateRingDivider(RINGS[wheelActiveIdx].color);
-  renderRingPreview(wheelActiveIdx);
 }
 
 function setWheelActive(idx) {
@@ -1482,30 +1497,7 @@ function setWheelActive(idx) {
     var act = i === idx;
     hits[i].style.opacity = scrolled ? (act ? '1' : '0.3') : '1';
   }
-  updateRingDivider(RINGS[idx].color);
-  renderRingPreview(idx);
-
-  var ring = RINGS[idx];
-  var stickyIcon = document.getElementById('ring-sticky-icon'),
-      stickyName = document.getElementById('ring-sticky-name'),
-      stickyPct  = document.getElementById('ring-sticky-pct');
-  if (stickyIcon) stickyIcon.textContent = ring.icon;
-  if (stickyName) stickyName.textContent = ring.name;
-  if (stickyPct)  { stickyPct.textContent = Math.round(ring.pct * 100) + '%'; stickyPct.style.color = ring.color; }
-
-  var section = document.getElementById('ring-preview-section');
-  if (section) {
-    section.style.display = '';
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function closeRingPreview() {
-  var section = document.getElementById('ring-preview-section');
-  if (section) section.style.display = 'none';
-  var hits = document.querySelectorAll('.hill-tree-hit');
-  for (var i = 0; i < hits.length; i++) hits[i].style.opacity = '1';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  openDetail(idx);
 }
 
 function wheelStep(dir) {
