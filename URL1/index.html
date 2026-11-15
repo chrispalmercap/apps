@@ -28,6 +28,7 @@
       background-attachment: fixed;
       color: var(--text);
       min-height: 100vh;
+      overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
       transition: background 1.8s ease;
     }
@@ -81,7 +82,7 @@
     /* Valley sky-progression scene (replaces the circular score ring) - full-bleed, no card frame */
     .valley-card {
       position: relative; width: calc(100% + 32px); margin-left: -16px;
-      aspect-ratio: 400 / 678; max-height: calc(100dvh - 52px); flex-shrink: 0; overflow: hidden;
+      aspect-ratio: 400 / 678; max-height: calc(100dvh - 100px); flex-shrink: 0; overflow: hidden;
     }
     .valley-card svg { display: block; width: 100%; height: 100%; }
     #vy-star { transition: opacity 1.4s ease; }
